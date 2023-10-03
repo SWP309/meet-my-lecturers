@@ -3,13 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/WebApplication1/web/global.css</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/WebApplication1/web/public/2021fptulong-1-1@2x.png</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/WebApplication1/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/WebApplication1/web/public/google.svg</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/WebApplication1/src/java/sample/controllers/MainController.java</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/WebApplication1/web/index.css</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/WebApplication1/web/login.html</file>
+            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/loginByGoogle/LoginGoogleHandler.java</file>
+            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/web/global.css</file>
+            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/controllers/loginServlet.java</file>
+            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/web/login.html</file>
+            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/basicObject/Lecture.java</file>
+            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/basicObject/UserGoogleDto.java</file>
+            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/loginByGoogle/Constants.java</file>
+            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/basicObject/Student.java</file>
+            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/basicObject/Admin.java</file>
+            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/web/index.css</file>
+            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/controllers/MainController.java</file>
         </group>
     </open-files>
 </project-private>
