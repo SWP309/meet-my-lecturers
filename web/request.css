@@ -1,0 +1,361 @@
+.header-child1 {
+  position: absolute;
+  top: 146.5px;
+  left: -0.5px;
+  border-top: 1px solid var(--color-black);
+  box-sizing: border-box;
+  width: 1468px;
+  height: 1px;
+}
+.fptu-eng-1-icon1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 268.95px;
+  height: 132px;
+  object-fit: cover;
+}
+.header-child2,
+.header-child3 {
+  position: absolute;
+  top: 22.5px;
+  left: 1351.38px;
+  border-right: 1px solid var(--color-black);
+  box-sizing: border-box;
+  width: 1px;
+  height: 99px;
+}
+.header-child3 {
+  top: 23.5px;
+  left: 1101.79px;
+}
+.account-icon1 {
+  position: absolute;
+  top: 36px;
+  left: 1370.22px;
+  width: 72.84px;
+  height: 72px;
+}
+.requestbutton-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: var(--br-21xl);
+  background-color: var(--color-chocolate);
+  width: 234.31px;
+  height: 65px;
+}
+.request1 {
+  position: absolute;
+  top: 10px;
+  left: 93.72px;
+  display: inline-block;
+  width: 128.36px;
+  height: 25px;
+}
+.icon1,
+.requestbutton1 {
+  position: absolute;
+  top: 16px;
+  left: 34.64px;
+  width: 33.62px;
+  height: 33px;
+}
+.requestbutton1 {
+  top: 42px;
+  left: 857.79px;
+  width: 234.31px;
+  height: 65px;
+}
+.viewbookedslotbutton-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: var(--br-21xl);
+  background-color: var(--color-chocolate);
+  width: 332.11px;
+  height: 66px;
+}
+.view-booked-slot1 {
+  position: absolute;
+  top: 13px;
+  left: 61.12px;
+  display: inline-block;
+  width: 256.73px;
+  height: 36px;
+}
+.bookedslot-icon1 {
+  position: absolute;
+  height: 46.97%;
+  width: 9.8%;
+  top: 27.27%;
+  right: 84.67%;
+  bottom: 25.76%;
+  left: 5.53%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.logout-icon1,
+.viewbookedslotbutton1 {
+  position: absolute;
+  top: 42px;
+  left: 511.41px;
+  width: 332.11px;
+  height: 66px;
+}
+.logout-icon1 {
+  height: 55.38%;
+  width: 15.2%;
+  top: 20%;
+  right: 70.01%;
+  bottom: 24.62%;
+  left: 14.79%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.logoutbutton1 {
+  position: absolute;
+  top: 41px;
+  left: 1110.44px;
+  width: 234.31px;
+  height: 65px;
+}
+.header1 {
+  align-self: stretch;
+  position: relative;
+  height: 147px;
+  z-index: 0;
+}
+.back,
+.back-icon {
+  position: relative;
+  width: 32.49px;
+  height: 33px;
+}
+.back {
+  display: inline-block;
+  width: 79px;
+  height: 26px;
+  flex-shrink: 0;
+}
+.backbutton {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 20px;
+  gap: 16px;
+  z-index: 1;
+}
+.infor-child {
+  align-self: stretch;
+  position: relative;
+  border-radius: 20px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-black);
+  box-sizing: border-box;
+  height: 583px;
+  z-index: 0;
+}
+.infor-child1,
+.infor-child2,
+.infor-child3,
+.infor-inner,
+.infor-item,
+.rectangle-div {
+  position: absolute;
+  margin: 0 !important;
+  top: 202.22px;
+  left: 506.96px;
+  background-color: var(--color-gainsboro);
+  width: 647.69px;
+  height: 46.55px;
+  z-index: 1;
+}
+.infor-child1,
+.infor-child2,
+.infor-child3,
+.infor-inner,
+.rectangle-div {
+  top: 267.08px;
+  z-index: 2;
+}
+.infor-child1,
+.infor-child2,
+.infor-child3,
+.rectangle-div {
+  top: 335px;
+  width: 766.76px;
+  height: 143.46px;
+  z-index: 3;
+}
+.infor-child1,
+.infor-child2,
+.infor-child3 {
+  top: 135.07px;
+  width: 647.69px;
+  height: 46.55px;
+  z-index: 4;
+}
+.infor-child2,
+.infor-child3 {
+  top: 71.73px;
+  z-index: 5;
+}
+.infor-child3 {
+  top: 11.45px;
+  z-index: 6;
+}
+.description,
+.end-time,
+.lecture,
+.semester,
+.start-time,
+.subject-code {
+  position: absolute;
+  margin: 0 !important;
+  top: 15.26px;
+  left: 66.75px;
+  display: inline-block;
+  width: 665.73px;
+  height: 42.73px;
+  flex-shrink: 0;
+  z-index: 7;
+}
+.description,
+.end-time,
+.semester,
+.start-time,
+.subject-code {
+  top: 75.55px;
+  width: 1064.44px;
+  height: 43.5px;
+  z-index: 8;
+}
+.description,
+.end-time,
+.semester,
+.start-time {
+  top: 143.46px;
+  width: 808.25px;
+  z-index: 9;
+}
+.description,
+.end-time,
+.start-time {
+  top: 209.09px;
+  width: 878.62px;
+  height: 42.73px;
+  z-index: 10;
+}
+.description,
+.end-time {
+  top: 274.71px;
+  width: 799.23px;
+  z-index: 11;
+}
+.description {
+  top: 341.1px;
+  width: 398.71px;
+  height: 31.29px;
+  z-index: 12;
+}
+.sendrequestbutton-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: var(--br-21xl);
+  background-color: #4caf50;
+  width: 282px;
+  height: 77px;
+}
+.send-request {
+  position: absolute;
+  top: 14px;
+  left: 29px;
+  display: inline-block;
+  width: 250px;
+  height: 49px;
+}
+.sendrequestbutton {
+  position: absolute;
+  margin: 0 !important;
+  top: 492px;
+  left: 599px;
+  width: 282px;
+  height: 77px;
+  z-index: 13;
+}
+.infor {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 60px;
+  position: relative;
+  mix-blend-mode: darken;
+  z-index: 2;
+  font-size: var(--font-size-16xl);
+}
+.vector-icon,
+.vector-icon1,
+.vector-icon2 {
+  position: relative;
+  width: 2px;
+  height: 7.67px;
+  z-index: 0;
+}
+.vector-icon1,
+.vector-icon2 {
+  z-index: 1;
+}
+.vector-icon2 {
+  width: 29px;
+  height: 27.5px;
+  z-index: 2;
+}
+.vector-icon3 {
+  position: absolute;
+  margin: 0 !important;
+  height: 7.84%;
+  width: 107.41%;
+  top: 36.08%;
+  right: -3.7%;
+  bottom: 56.08%;
+  left: -3.7%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+  z-index: 3;
+}
+.schedule,
+.student-request {
+  display: flex;
+  justify-content: flex-start;
+}
+.schedule {
+  margin: 0 !important;
+  position: absolute;
+  top: 240px;
+  left: 1182px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  z-index: 3;
+}
+.student-request {
+  position: relative;
+  background-color: var(--color-white);
+  width: 100%;
+  height: 916px;
+  overflow: hidden;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  font-size: var(--font-size-11xl);
+  color: var(--color-black);
+  font-family: var(--font-lexend);
+}

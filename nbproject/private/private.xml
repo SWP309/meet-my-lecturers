@@ -3,17 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/loginByGoogle/LoginGoogleHandler.java</file>
-            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/web/global.css</file>
-            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/controllers/loginServlet.java</file>
-            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/web/login.html</file>
-            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/basicObject/Lecture.java</file>
-            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/basicObject/UserGoogleDto.java</file>
-            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/loginByGoogle/Constants.java</file>
-            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/basicObject/Student.java</file>
-            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/basicObject/Admin.java</file>
-            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/web/index.css</file>
-            <file>file:/C:/Users/Minh%20Khang/Desktop/SWP391/meet-my-lecturers/src/java/sample/controllers/MainController.java</file>
+            <file>file:/D:/NetBeansProjects/meet-my-lecturers/src/java/sample/controllers/MainController.java</file>
+            <file>file:/D:/NetBeansProjects/meet-my-lecturers/src/java/sample/requests/RequestDAO.java</file>
+            <file>file:/D:/NetBeansProjects/meet-my-lecturers/web/request.jsp</file>
+            <file>file:/D:/NetBeansProjects/meet-my-lecturers/web/request.css</file>
+            <file>file:/D:/NetBeansProjects/meet-my-lecturers/src/java/sample/controllers/CreateRequestServlet.java</file>
+            <file>file:/D:/NetBeansProjects/meet-my-lecturers/web/login.html</file>
+            <file>file:/D:/NetBeansProjects/meet-my-lecturers/src/java/sample/users/UserDTO.java</file>
         </group>
     </open-files>
 </project-private>

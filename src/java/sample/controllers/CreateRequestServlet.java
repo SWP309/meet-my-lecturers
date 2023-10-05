@@ -5,20 +5,23 @@
  */
 package sample.controllers;
 
-import sample.basicObject.UserGoogleDto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import sample.requests.RequestDAO;
+import sample.requests.RequestDTO;
 
 /**
  *
- * @author Minh Khang
+ * @author CHIBAO
  */
-public class loginServlet extends HttpServlet {
+public class CreateRequestServlet extends HttpServlet {
 
+    private static final String ERROR = "request.jsp";
+    private static final String SUCCESS = "login.html";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,12 +34,24 @@ public class loginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            UserGoogleDto dto = new UserGoogleDto();
+        String url = ERROR;
+        try{
+            String lecturer = request.getParameter("txtLecturer");
+            String subjectCode = request.getParameter("txtSubjectCode");
+            String semester = request.getParameter("txtSemester");
+            String startTime = request.getParameter("txtStartTime");
+            String endTime = request.getParameter("txtEndTime");
+            String description = request.getParameter("txtDescription");
+            RequestDAO requestDAO = new RequestDAO();
+            RequestDTO requestDTO = new RequestDTO(false, subjectCode,   //lam sao de ID tu dong tao va tang
+                    startTime, endTime, description, startTime, lecturer);   //phai lay dc student ID dua vao luc dang nhap
+            boolean checkCreated = requestDAO.createARequest(requestDTO);
+        } catch (Exception e){
             
-            dto = (UserGoogleDto) request.getAttribute("UserGG");
-            out.println("hello " + dto.getEmail());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -77,4 +92,5 @@ public class loginServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }
