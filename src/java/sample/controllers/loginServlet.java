@@ -36,7 +36,6 @@ public class loginServlet extends HttpServlet {
             
             dto = (UserGoogleDto) request.getAttribute("UserGG");
             out.println("hello " + dto.getEmail());
-            out.print("and " + dto.getName());
         }
     }
 
