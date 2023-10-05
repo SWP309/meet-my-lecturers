@@ -6,7 +6,6 @@
 package sample.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,20 +16,25 @@ import javax.servlet.http.HttpServletResponse;
  * @author PC
  */
 public class MainController extends HttpServlet {
-    private static final String LOGIN_PAGE="login.html";
-    
+    private static final String LOGIN_PAGE = "login.html";
+    private static final String REQUEST_PAGE = "request.jsp";
+    private static final String REQUEST_ACTION = "CreateRequestServlet";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String url= LOGIN_PAGE;
+        String url = LOGIN_PAGE;
         try {
-            String action= request.getParameter("action");
-            if(action== null){
-                url=LOGIN_PAGE;
-            } 
+            String action = request.getParameter("action");
+            if(action == null){
+                url = LOGIN_PAGE;
+            } else if (action.equals("Request")) {
+                url = REQUEST_PAGE;
+            } else if (action.equals("Send request")) {
+                url = REQUEST_ACTION;
+            }
         } catch (Exception e) {
-            log("Error at MainController: "+ e.toString());
+            log("Error at MainController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
