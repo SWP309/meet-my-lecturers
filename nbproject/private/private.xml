@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/NetBeansProjects/meet-my-lecturers/src/java/sample/controllers/MainController.java</file>
-            <file>file:/D:/NetBeansProjects/meet-my-lecturers/src/java/sample/requests/RequestDAO.java</file>
-            <file>file:/D:/NetBeansProjects/meet-my-lecturers/web/request.jsp</file>
-            <file>file:/D:/NetBeansProjects/meet-my-lecturers/web/request.css</file>
             <file>file:/D:/NetBeansProjects/meet-my-lecturers/src/java/sample/controllers/CreateRequestServlet.java</file>
+            <file>file:/D:/NetBeansProjects/meet-my-lecturers/src/java/sample/controllers/MainController.java</file>
             <file>file:/D:/NetBeansProjects/meet-my-lecturers/web/login.html</file>
-            <file>file:/D:/NetBeansProjects/meet-my-lecturers/src/java/sample/users/UserDTO.java</file>
+            <file>file:/D:/NetBeansProjects/meet-my-lecturers/src/java/sample/requests/RequestDTO.java</file>
+            <file>file:/D:/NetBeansProjects/meet-my-lecturers/src/java/sample/requests/RequestDAO.java</file>
         </group>
     </open-files>
 </project-private>
