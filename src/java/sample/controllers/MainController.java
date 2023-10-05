@@ -17,7 +17,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author PC
  */
 public class MainController extends HttpServlet {
-    private static final String LOGIN_PAGE="login.html";
+    private static final String LOGIN_PAGE="StudentHome.html";
+    
+    private static final String VIEWBOOKING="ViewBooking";
+    private static final String VIEW_BOOKING_PAGE="BookingView.html";
     
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -28,7 +31,9 @@ public class MainController extends HttpServlet {
             String action= request.getParameter("action");
             if(action== null){
                 url=LOGIN_PAGE;
-            } 
+            } else if (VIEWBOOKING.equals(action)) {
+                url = VIEW_BOOKING_PAGE;
+            }
         } catch (Exception e) {
             log("Error at MainController: "+ e.toString());
         } finally {
