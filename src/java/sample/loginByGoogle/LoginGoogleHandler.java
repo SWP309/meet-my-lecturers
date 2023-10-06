@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import sample.basicObject.UserGoogleDto;
+import sample.users.UserGoogleDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.IOException;

@@ -5,13 +5,16 @@
  */
 package sample.controllers;
 
-import sample.basicObject.UserGoogleDto;
+import sample.users.UserGoogleDto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import sample.users.UserDAO;
+import sample.users.UserDTO;
 
 /**
  *
@@ -33,9 +36,36 @@ public class loginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             UserGoogleDto dto = new UserGoogleDto();
-            
+
             dto = (UserGoogleDto) request.getAttribute("UserGG");
-            out.println("hello " + dto.getEmail());
+            String email = dto.getEmail();
+            UserDTO us = UserDAO.getUser(email);
+            boolean flag = false;
+            if (us != null) {
+                if (us.getUserEmail().equals(email)) {
+                    flag = true;
+                    HttpSession session = request.getSession();
+                    session.setAttribute("loginedUser", us);
+                    if (us.getRoleID().equals("AD")) {
+                        response.sendRedirect("MainServlet?action=3");
+                    } else {
+                        response.sendRedirect("MainServlet?action=4");
+                    }
+                } else {
+                    flag = false;
+
+                }
+            } else {
+                flag = false;
+
+            }
+            if (!flag) {
+                String msg = "invalid userid or password";
+                request.setAttribute("Error", msg);
+                request.getRequestDispatcher("MainServlet?action=1").forward(request, response);
+            }
+        } catch(Exception e){
+            e.printStackTrace();
         }
     }
 
