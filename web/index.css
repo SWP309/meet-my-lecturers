@@ -35,19 +35,31 @@
   height: 701px;
   z-index: 0;
 }
-.google-icon {
+.google-icon,
+.iconid-child {
   position: absolute;
+  width: 194px;
+  height: 63px;
+}
+.google-icon {
   margin: 0 !important;
   top: 454px;
   left: calc(50% - 209.5px);
-  width: 418px;
-  height: 63px;
   z-index: 1;
+}
+.iconid-child {
+  top: 0;
+  left: calc(50% - 97px);
+  border-radius: 40px;
+  background-color: #fff;
+  border: 1px solid #e1b49a;
+  box-sizing: border-box;
+  mix-blend-mode: normal;
 }
 .feid {
   position: absolute;
-  top: 0;
-  left: calc(50% - 5px);
+  top: 22px;
+  left: calc(50% + 4px);
   display: inline-block;
   width: 48px;
   height: 21px;
@@ -55,65 +67,28 @@
 .vector-icon,
 .vector-icon1 {
   position: absolute;
-  height: 90.48%;
-  top: 0;
-  bottom: 9.52%;
-  left: calc(50% - 44px);
+  height: 30.16%;
+  top: 34.92%;
+  bottom: 34.92%;
+  left: calc(50% - 35px);
   max-height: 100%;
   width: 24px;
 }
 .vector-icon1 {
-  height: 44.94%;
-  top: 10.12%;
-  bottom: 44.94%;
+  height: 14.98%;
+  top: 38.29%;
+  bottom: 46.73%;
 }
 .iconid {
   position: absolute;
   margin: 0 !important;
-  top: 476px;
-  left: calc(50% + 77.5px);
-  width: 86px;
-  height: 21px;
+  top: 454px;
+  left: calc(50% + 14.5px);
+  width: 194px;
+  height: 63px;
   z-index: 2;
   font-size: 20px;
   font-family: "Lohit Tamil";
-}
-.selectcampus-child {
-  position: absolute;
-  top: 0;
-  left: calc(50% - 179px);
-  border-radius: 40px;
-  background-color: #ebebeb;
-  width: 358px;
-  height: 67px;
-}
-.vector-icon2 {
-  position: absolute;
-  height: 27.91%;
-  top: 46.94%;
-  bottom: 25.15%;
-  left: calc(50% + 130.25px);
-  max-height: 100%;
-  width: 22.32px;
-}
-.select-campus {
-  position: absolute;
-  top: 11px;
-  left: calc(50% - 158px);
-  display: inline-block;
-  width: 263px;
-  height: 43px;
-}
-.selectcampus {
-  position: absolute;
-  margin: 0 !important;
-  top: 259px;
-  left: calc(50% - 179.5px);
-  width: 358px;
-  height: 67px;
-  z-index: 3;
-  font-size: 36px;
-  font-family: Lexend;
 }
 .formlogin {
   position: absolute;
@@ -166,14 +141,6 @@
   font-size: 36px;
   font-family: "Lohit Tamil";
 }
-.footer-child {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #f8d867;
-  width: 1440px;
-  height: 106px;
-}
 .fpt-university1 {
   text-decoration: underline;
 }
@@ -192,6 +159,7 @@
 .footer,
 .login {
   position: relative;
+  background-color: #f8d867;
   width: 1440px;
   height: 106px;
   font-size: 16px;
@@ -205,7 +173,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 54px;
