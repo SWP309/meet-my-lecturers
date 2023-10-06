@@ -1,41 +1,44 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sample.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author PC
- */
 public class MainController extends HttpServlet {
-    private static final String LOGIN_PAGE="StudentHome.html";
+    private static final String LOGIN_PAGE = "login.html";
     
-    private static final String VIEWBOOKING="ViewBooking";
-    private static final String VIEW_BOOKING_PAGE="BookingView.html";
+    private static final String REQUEST_PAGE = "request.jsp";
+    private static final String REQUEST = "Request";
     
+    private static final String CREATE_REQUEST = "Create request";
+    private static final String REQUEST_ACTION = "CreateRequestServlet";
+
+    private static final String LOGIN_STUDENT_PAGE = "StudentHome.html";
+    
+    private static final String VIEWBOOKING = "ViewBooking";
+    private static final String VIEW_BOOKING_PAGE = "BookingView.html";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String url= LOGIN_PAGE;
+        String url = LOGIN_STUDENT_PAGE;
         try {
-            String action= request.getParameter("action");
-            if(action== null){
-                url=LOGIN_PAGE;
+            String action = request.getParameter("action");
+            if(action == null){
+                url = LOGIN_STUDENT_PAGE;
+            } else if (REQUEST.equals(action)) {
+                url = REQUEST_PAGE;
+            } else if (CREATE_REQUEST.equals(action)) {
+                url = REQUEST_ACTION;
             } else if (VIEWBOOKING.equals(action)) {
                 url = VIEW_BOOKING_PAGE;
             }
+
         } catch (Exception e) {
-            log("Error at MainController: "+ e.toString());
+            log("Error at MainController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
