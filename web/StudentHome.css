@@ -24,7 +24,7 @@
     padding: -1px 20px; /* Khoảng cách bên trong nút */
 }
 .view-booking:hover {
-    background-color: #0056b3; /* Màu nền thay đổi khi di chuột qua */
+    background-color: #f27125; /* Màu nền thay đổi khi di chuột qua */
 }
 .frame-container {
     border-radius: 12px;

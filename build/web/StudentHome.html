@@ -22,6 +22,10 @@
                 var form = document.querySelector('.frame-container form');
                 form.submit();
             }
+             function submitFormRequest() {
+                var form = document.querySelector('.frame-parent1 form');
+                form.submit();
+            }
         </script>
 
     </head>
@@ -42,8 +46,18 @@
                             </form>
                             <div class="bookedslot-wrapper">
                                 <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
+                                <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
                             </div>
                             <div class="view-booking" onclick="submitForm()">View Booking</div>
+                        </div>
+                        <div class="frame-parent1">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="Request" />
+                            </form>
+                            <div class="bookedslot-wrapper">
+                                <div class="request">+</div>
+                            </div>
+                           <div class="request" onclick="submitFormRequest()">Request</div>
                         </div>
                         <div class="frame-div">
                             <div class="logout-wrapper">
@@ -52,12 +66,6 @@
                             <div class="request">
                                 <p class="logout1">Logout</p>
                             </div>
-                        </div>
-                        <div class="frame-parent1">
-                            <div class="bookedslot-wrapper">
-                                <div class="request">+</div>
-                            </div>
-                            <div class="request">Request</div>
                         </div>
                     </div>
                     <img class="frame-item" alt="" src="./public/StudentHome/user.png" />
