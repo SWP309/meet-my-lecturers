@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MainController extends HttpServlet {
     private static final String LOGIN_PAGE = "login.html";
+    private static final String LOGIN_ADMIN_PAGE = "adminPage.jsp";
+    
     
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
@@ -27,14 +29,16 @@ public class MainController extends HttpServlet {
         String url = LOGIN_PAGE;
         try {
             String action = request.getParameter("action");
-            if(action == null){
+            if(action == null || action.isEmpty()){
                 url = LOGIN_PAGE;
-            } else if (REQUEST.equals(action)) {
-                url = REQUEST_PAGE;
-            } else if (CREATE_REQUEST.equals(action)) {
-                url = REQUEST_ACTION;
-            } else if (VIEWBOOKING.equals(action)) {
-                url = VIEW_BOOKING_PAGE;
+            } else if (action.equals("1")) {
+                url = "loginServlet";
+            } else if (action.equals("2")) {
+                url = "adminPage.jsp";
+            } else if (action.equals("3")) {
+                url = "loginFeID.jsp";
+            } else if (action.equals("4")){
+                url = "loginByFeID";
             }
 
         } catch (Exception e) {
