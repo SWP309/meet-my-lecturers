@@ -9,7 +9,7 @@
  */
 public class Constants {
 
-	public static String GOOGLE_CLIENT_ID = "79561996257-nmthban7n70ao86brs9plr3mvpo1qdml.apps.googleusercontent.com";
+	public static String GOOGLE_CLIENT_ID = "79561996257-0ctstd2ursldvmmufi3vpq6k6rp4ftrg.apps.googleusercontent.com";
 
 	public static String GOOGLE_CLIENT_SECRET = "REPLACE_WITH_GOOGLE_CLIENT_SECRET";
 

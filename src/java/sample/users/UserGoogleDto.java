@@ -1,4 +1,4 @@
-package sample.basicObject;
+package sample.users;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

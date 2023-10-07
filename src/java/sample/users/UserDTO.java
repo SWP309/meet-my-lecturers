@@ -1,38 +1,31 @@
 package sample.users;
 
+import java.util.Objects;
+
 public class UserDTO {
     private String userID;
     private String userName;
     private String userEmail;
     private boolean userStatus;
-    private String timetableID;
     private String roleID;
     private String password;
-    private String requestID;
-    private String freeSlotID;
-
+    
     public UserDTO() {
         this.userID = "";
         this.userName = "";
         this.userEmail = "";
         this.userStatus = true;
-        this.timetableID = "";
         this.roleID = "";
         this.password = "";
-        this.requestID = "";
-        this.freeSlotID = "";
     }
 
-    public UserDTO(String userID, String userName, String userEmail, boolean userStatus, String timetableID, String roleID, String password, String requestID, String freeSlotID) {
+    public UserDTO(String userID, String userName, String userEmail, boolean userStatus, String roleID, String password) {
         this.userID = userID;
         this.userName = userName;
         this.userEmail = userEmail;
         this.userStatus = userStatus;
-        this.timetableID = timetableID;
         this.roleID = roleID;
         this.password = password;
-        this.requestID = requestID;
-        this.freeSlotID = freeSlotID;
     }
 
     /**
@@ -92,20 +85,6 @@ public class UserDTO {
     }
 
     /**
-     * @return the timetableID
-     */
-    public String getTimetableID() {
-        return timetableID;
-    }
-
-    /**
-     * @param timetableID the timetableID to set
-     */
-    public void setTimetableID(String timetableID) {
-        this.timetableID = timetableID;
-    }
-
-    /**
      * @return the roleID
      */
     public String getRoleID() {
@@ -133,34 +112,17 @@ public class UserDTO {
         this.password = password;
     }
 
-    /**
-     * @return the requestID
-     */
-    public String getRequestID() {
-        return requestID;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof UserDTO) {
+            UserDTO another = (UserDTO) obj;
+            if (this.roleID.equals(another.roleID)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    /**
-     * @param requestID the requestID to set
-     */
-    public void setRequestID(String requestID) {
-        this.requestID = requestID;
-    }
-
-    /**
-     * @return the freeSlotID
-     */
-    public String getFreeSlotID() {
-        return freeSlotID;
-    }
-
-    /**
-     * @param freeSlotID the freeSlotID to set
-     */
-    public void setFreeSlotID(String freeSlotID) {
-        this.freeSlotID = freeSlotID;
-    }
-    
     
 }
         
