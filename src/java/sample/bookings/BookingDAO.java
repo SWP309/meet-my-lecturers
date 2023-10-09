@@ -18,11 +18,13 @@ import sample.utils.DBUtils;
  * @author PC
  */
 public class BookingDAO {
-       private static String BOOKING_VIEW= "SELECT  fs.subjectCode,u.userName,b.semesterName,fs.startTime,s.endTime  FROM Bookings b JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID JOIN  User u ON b.userID = u.userID";
-        
-       
-       
-       public List<BookingDTO> Getlistbooking() throws SQLException {
+    private static String BOOKING_VIEW = "SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, u.userName\n" +
+            "FROM Bookings b \n" +
+            "JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n" +
+            "JOIN Users u ON b.studentID = u.userID\n" +
+            "JOIN Users u1 ON fs.lecturerID = u1.userID;";
+
+    public List<BookingDTO> Getlistbooking() throws SQLException {
         List<BookingDTO> listBooking = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -33,12 +35,12 @@ public class BookingDAO {
                 ptm = conn.prepareStatement(BOOKING_VIEW);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    String subjectCode = rs.getString("userID");
-                    String userName = rs.getString("fullName");
-                    String semesterName = rs.getString("roleID");
+                    String subjectCode = rs.getString("subjectCode");
+                    String lectureName = rs.getString("lectureName");
                     java.sql.Date startTime = rs.getDate("startTime");
                     java.sql.Date endTime = rs.getDate("endTime");
-                    listBooking.add(new BookingDTO(subjectCode, userName, semesterName, startTime, endTime));
+                    String userName = rs.getString("userName");
+                    listBooking.add(new BookingDTO(subjectCode, lectureName, startTime, endTime, userName));
                 }
             }
         } catch (Exception e) {
@@ -56,5 +58,5 @@ public class BookingDAO {
         }
         return listBooking;
     }
-    
 }
+
