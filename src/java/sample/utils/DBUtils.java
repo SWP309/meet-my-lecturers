@@ -26,6 +26,7 @@ public class DBUtils {
         con = DriverManager.getConnection(url, USERNAME, PASSWORD);
         return con;
     }
+  
     
 //    public static void main(String[] args) throws ClassNotFoundException, SQLException {
 //        DBUtils.getConnection();
