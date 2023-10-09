@@ -45,12 +45,12 @@ public class loginByFeID extends HttpServlet {
                     flag = true;
                     HttpSession session = request.getSession();
                     session.setAttribute("loginedUser", us);
-                    System.out.println(us.getRoleID().equals("3"));
                     if (us.getRoleID().equals("3")) {
-                        response.sendRedirect("MainController?action=2");
-                    } else {
-//                        response.sendRedirect("errorpage.html");
-                        response.sendRedirect("errorPage.html");
+                        response.sendRedirect("MainController?action=studentPage");
+                    } else if((us.getRoleID().equals("2"))) {
+                        response.sendRedirect("MainController?action=lecturerPage");
+                    } else if((us.getRoleID().equals("1"))) {
+                        response.sendRedirect("MainController?action=adminPage");
                     }
                 } else {
 //                    response.sendRedirect("errorpage.html");
