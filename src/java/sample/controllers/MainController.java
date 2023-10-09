@@ -19,23 +19,23 @@ public class MainController extends HttpServlet {
     private static final String LOGIN_STUDENT_PAGE = "StudentHome.html";
     
     private static final String VIEWBOOKING = "ViewBooking";
-    private static final String VIEW_BOOKING_PAGE = "BookingView.html";
+    private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = LOGIN_PAGE;
+        String url = LOGIN_STUDENT_PAGE;
         try {
             String action = request.getParameter("action");
             if(action == null){
-                url = LOGIN_PAGE;
+                url = LOGIN_STUDENT_PAGE;
             } else if (REQUEST.equals(action)) {
                 url = REQUEST_PAGE;
             } else if (CREATE_REQUEST.equals(action)) {
                 url = REQUEST_ACTION;
             } else if (VIEWBOOKING.equals(action)) {
-                url = VIEW_BOOKING_PAGE;
-            }
+                url = VIEW_BOOKING_CONTROLLER;
+            } 
 
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
