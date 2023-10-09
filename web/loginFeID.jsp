@@ -13,7 +13,7 @@
     </head>
     <body>
         <form action="MainController" method="post">
-            <input type="hidden" value="4" name="action"/>
+            <input type="hidden" value="loginFeIDAction" name="action"/>
             <p><input type="text" name="txtemail" placeholder="enter email" required=""/>*</p>
             <p><input type="password" name="txtpassword" placeholder="enter password" required=""/>*</p>
             <p><input type="submit" value="login"/></p>

@@ -38,7 +38,7 @@ public class LoginGoogleHandler extends HttpServlet {
 		UserGoogleDto user = getUserInfo(accessToken);
 		System.out.println(user);
                 request.setAttribute("UserGG", user);
-                request.getRequestDispatcher("MainController?action=1").forward(request, response);
+                request.getRequestDispatcher("MainController?action=login").forward(request, response);
 	}
 
 	public static String getToken(String code) throws ClientProtocolException, IOException {

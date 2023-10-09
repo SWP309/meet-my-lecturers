@@ -39,22 +39,18 @@ public class loginServlet extends HttpServlet {
             dto = (UserGoogleDto) request.getAttribute("UserGG");
             String email = dto.getEmail();
             UserDTO us = UserDAO.getUserByMail(email);
-            System.out.println(us.getRoleID());
-            System.out.println("Hello: " + dto.getEmail());
             boolean flag = false;
-            System.out.println(us);
             if (us != null) {
                 if (us.getUserEmail().equals(email)) {
-                    System.out.println(us.getRoleID()  + "vs 3 " + us.getRoleID().equals("3"));
                     flag = true;
                     HttpSession session = request.getSession();
                     session.setAttribute("loginedUser", us);
-                    System.out.println("us.getRoleID(): " + us.getRoleID());
-                    if (us.getRoleID().equals("1")) {
-                        System.out.println("Hello role " + us.getUserName());
-                        response.sendRedirect("MainController?action=2");
+                    if (us.getRoleID().equals("3")) {
+                        response.sendRedirect("MainController?action=studentPage");
                     } else if((us.getRoleID().equals("2"))) {
-                        response.sendRedirect("MainController?action=2");
+                        response.sendRedirect("MainController?action=lecturerPage");
+                    } else if((us.getRoleID().equals("1"))) {
+                        response.sendRedirect("MainController?action=adminPage");
                     }
                 } else {
                     //response.sendRedirect("errorpage.html");
@@ -70,7 +66,7 @@ public class loginServlet extends HttpServlet {
                 String msg = "invalid userid or password";
                 // luu vao o nho request de dem qua loginpage.jsp
                 request.setAttribute("Error", msg);
-//                request.getRequestDispatcher("MainController?action=1").forward(request, response);
+                request.getRequestDispatcher("MainController?action=1").forward(request, response);
             }
         } catch(Exception e){
             e.printStackTrace();
