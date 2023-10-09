@@ -45,12 +45,12 @@ public class UserDAO {
             ResultSet rs = pst.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
-                    String id = rs.getString("userID");
-                    String name = rs.getString("userName");
-                    String email = rs.getString("userEmail");
+                    String id = rs.getString("userID").trim();
+                    String name = rs.getString("userName").trim();
+                    String email = rs.getString("userEmail").trim();
                     boolean status = rs.getBoolean("userStatus");
-                    String roleID = rs.getString("roleID");
-                    String password = rs.getString("password");
+                    String roleID = rs.getString("roleID").trim();
+                    String password = rs.getString("password").trim();
                     us = new UserDTO(id, name, email, status, roleID, password);
                 }
             }
