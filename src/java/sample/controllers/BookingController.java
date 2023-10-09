@@ -13,8 +13,8 @@ import sample.bookings.BookingDTO;
 @WebServlet(name = "BookingController", urlPatterns = {"/BookingController"})
 public class BookingController extends HttpServlet {
 
-    private static final String ERROR = "BookingView.html";
-    private static final String SUCCESS = "BookingView.html";
+    private static final String ERROR = "BookingView.jsp";
+    private static final String SUCCESS = "BookingView.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
