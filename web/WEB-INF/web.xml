@@ -5,8 +5,8 @@
         <servlet-class>sample.controllers.MainController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>loginServlet</servlet-name>
-        <servlet-class>sample.controllers.loginServlet</servlet-class>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>sample.controllers.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateRequestServlet</servlet-name>
@@ -17,16 +17,20 @@
         <servlet-class>sample.controllers.BookingController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>loginByFeID</servlet-name>
-        <servlet-class>sample.controllers.loginByFeID</servlet-class>
+        <servlet-name>LoginByFeID</servlet-name>
+        <servlet-class>sample.controllers.LoginByFeID</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>sample.controllers.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>loginServlet</servlet-name>
-        <url-pattern>/loginServlet</url-pattern>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateRequestServlet</servlet-name>
@@ -37,8 +41,12 @@
         <url-pattern>/BookingController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>loginByFeID</servlet-name>
-        <url-pattern>/loginByFeID</url-pattern>
+        <servlet-name>LoginByFeID</servlet-name>
+        <url-pattern>/LoginByFeID</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
