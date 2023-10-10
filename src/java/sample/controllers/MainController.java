@@ -24,11 +24,11 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = LOGIN_STUDENT_PAGE;
+        String url = LOGIN_PAGE;
         try {
             String action = request.getParameter("action");
             if(action == null){
-                url = LOGIN_STUDENT_PAGE;
+                url = LOGIN_PAGE;
             } else if (REQUEST.equals(action)) {
                 url = REQUEST_PAGE;
             } else if (CREATE_REQUEST.equals(action)) {
