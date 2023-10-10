@@ -6,6 +6,9 @@
   height: 60px;
   object-fit: cover;
 }
+.boxoftable{
+    width: 100%;
+}
 .bookedslot-icon {
   position: relative;
   width: 22px;
