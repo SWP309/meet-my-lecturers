@@ -1,385 +1,206 @@
 .fptu-eng-1-icon {
-  position: absolute;
-  top: 4px;
-  left: 53px;
-  width: 149px;
-  height: 60px;
-  object-fit: cover;
+    position: absolute;
+    top: 4px;
+    left: 53px;
+    width: 149px;
+    height: 60px;
+    object-fit: cover;
 }
 .boxoftable{
-    width: 100%;
+    width: 80%;
 }
 .bookedslot-icon {
-  position: relative;
-  width: 22px;
-  height: 25px;
+    position: relative;
+    width: 22px;
+    height: 25px;
 }
 .bookedslot-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 .view-booking {
-  position: relative;
-  line-height: 25px;
+    position: relative;
+    line-height: 25px;
 }
 .frame-container {
-  border-radius: 12px;
-  background-color: #f27125;
-  width: 176px;
-  height: 43px;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 10px 16px;
-  box-sizing: border-box;
-  gap: 8px;
+    border-radius: 12px;
+    background-color: #f27125;
+    width: 176px;
+    height: 43px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10px 16px;
+    box-sizing: border-box;
+    gap: 8px;
 }
 .div {
-  position: relative;
+    position: relative;
 }
 .frame-div {
-  border-radius: 12px;
-  background-color: #f27125;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 10px 16px;
-  gap: 8px;
+    border-radius: 12px;
+    background-color: #f27125;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10px 16px;
+    gap: 8px;
 }
 .logout-icon {
-  position: relative;
-  width: 13px;
-  height: 25px;
+    position: relative;
+    width: 13px;
+    height: 25px;
 }
 .logout-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 .logout1 {
-  margin: 0;
+    margin: 0;
 }
 .frame-group,
 .frame-parent1 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 .frame-parent1 {
-  border-radius: 12px;
-  background-color: #f27125;
-  width: 123px;
-  height: 43px;
-  align-items: flex-start;
-  padding: 10px 16px;
-  box-sizing: border-box;
-  gap: 8px;
+    border-radius: 12px;
+    background-color: #f27125;
+    width: 123px;
+    height: 43px;
+    align-items: flex-start;
+    padding: 10px 16px;
+    box-sizing: border-box;
+    gap: 8px;
 }
 .frame-group {
-  align-items: flex-end;
-  gap: 16px;
+    align-items: flex-end;
+    gap: 16px;
 }
 .frame-item {
-  position: relative;
-  width: 48px;
-  height: 42px;
+    position: relative;
+    width: 48px;
+    height: 42px;
 }
 .frame-parent {
-  position: absolute;
-  top: 12px;
-  left: 878px;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 20px;
+    position: absolute;
+    top: 12px;
+    left: 970px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 20px;
 }
-.fptu-eng-1-parent,
-.slot-6-child {
-  position: relative;
-  background-color: #fff;
-  border: 1px solid #000;
-  box-sizing: border-box;
-  width: 1440px;
-  height: 68px;
+.fptu-eng-1-parent {
+    position: relative;
+    background-color: #fff;
+    border-top: 1px solid #000;
+    border-bottom:1px solid #000;
+    box-sizing: border-box;
+    width: 100%; /* Chiều rộng 100% để kéo đến hết màn hình */
+    height: 68px;
+    margin-left: auto; /* Căn lề trái và phải tự động */
+    margin-right: auto;
 }
-.slot-6-child {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 30px;
-  width: 272.58px;
-  height: 252.25px;
-}
+
 .cancelbutton-child {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 40px;
-  background-color: #d70000;
-  width: 104.84px;
-  height: 45.2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 40px;
+    background-color: #d70000;
+    width: 104.84px;
+    height: 45.2px;
 }
 .cancel {
-  position: absolute;
-  top: 10.51px;
-  left: 19.92px;
-  display: inline-block;
-  width: 76.53px;
-  height: 23.12px;
+    position: absolute;
+    top: 10.51px;
+    left: 19.92px;
+    display: inline-block;
+    width: 76.53px;
+    height: 23.12px;
 }
 .cancelbutton {
-  position: absolute;
-  top: 176.58px;
-  left: 137.34px;
-  width: 104.84px;
-  height: 45.2px;
+    position: absolute;
+    top: 176.58px;
+    left: 137.34px;
+    width: 104.84px;
+    height: 45.2px;
 }
-.div1,
-.div2,
-.fall23,
-.lamnn15,
-.swe391 {
-  position: absolute;
-  top: 97.75px;
-  left: 107.98px;
-  display: inline-block;
-  width: 131.05px;
-  height: 17.87px;
-}
-.div2,
-.fall23,
-.lamnn15,
-.swe391 {
-  top: 129.28px;
-}
-.fall23,
-.lamnn15,
-.swe391 {
-  top: 63.06px;
-  left: 187.66px;
-  width: 54.52px;
-  height: 23.12px;
-}
-.lamnn15,
-.swe391 {
-  top: 34.68px;
-  left: 171.93px;
-  width: 63.95px;
-}
-.lamnn15 {
-  top: 4.2px;
-  left: 156.21px;
-  width: 80.72px;
-  height: 21.02px;
-}
-.end-time,
-.lecturename,
-.semester,
-.start-time,
-.subject-code {
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 18px;
-  display: inline-block;
-  width: 127.9px;
-  height: 22.07px;
-}
-.end-time,
-.lecturename,
-.semester,
-.start-time {
-  top: 60.96px;
-  width: 95.4px;
-  height: 24.17px;
-}
-.end-time,
-.lecturename,
-.start-time {
-  top: 30.48px;
-  width: 130px;
-  height: 22.07px;
-}
-.end-time,
-.start-time {
-  top: 125.08px;
-  width: 91.21px;
-}
-.start-time {
-  top: 93.54px;
-  width: 101.69px;
-  height: 23.12px;
-}
+
 .meetbutton-child {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 10px;
-  background-color: #4caf50;
-  width: 81.77px;
-  height: 21.02px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+    background-color: #4caf50;
+    width: 81.77px;
+    height: 21.02px;
 }
-.meet-link {
-  position: absolute;
-  top: 3.15px;
-  left: 16.77px;
-  display: inline-block;
-  width: 51.37px;
-  height: 12.61px;
-}
-.meetbutton {
-  top: 153.45px;
-  left: 0;
-  width: 81.77px;
-  height: 21.02px;
-  font-size: 10px;
-  color: #fff;
-}
-.infor,
-.meetbutton,
-.slot-6 {
-  position: absolute;
-}
-.infor {
-  top: 12.61px;
-  left: 20.97px;
-  width: 242.17px;
-  height: 174.48px;
-  font-size: 15px;
-  color: #000;
-}
-.slot-6 {
-  top: 344.75px;
-  left: 789.42px;
-  width: 272.58px;
-  height: 252.25px;
-}
+
 .cancelbutton1,
 .slot-4,
 .slot-5 {
-  position: absolute;
-  top: 176.58px;
-  left: 133.14px;
-  width: 104.84px;
-  height: 45.2px;
+    position: absolute;
+    top: 176.58px;
+    left: 133.14px;
+    width: 104.84px;
+    height: 45.2px;
 }
-.slot-4,
-.slot-5 {
-  top: 344.75px;
-  left: 389.99px;
-  width: 272.58px;
-  height: 252.25px;
-}
-.slot-4 {
-  left: 0;
-}
-.meetbutton3 {
-  top: 159.76px;
-  left: 0;
-  width: 81.77px;
-  height: 21.02px;
-  font-size: 10px;
-  color: #fff;
-}
-.infor3,
-.meetbutton3,
-.slot-3 {
-  position: absolute;
-}
-.infor3 {
-  top: 12.61px;
-  left: 20.97px;
-  width: 242.17px;
-  height: 180.78px;
-  font-size: 15px;
-  color: #000;
-}
-.slot-3 {
-  top: 0;
-  left: 789.42px;
-  width: 272.58px;
-  height: 252.25px;
-}
-.infor4,
-.meetbutton4 {
-  position: absolute;
-  top: 156.61px;
-  left: 0;
-  width: 81.77px;
-  height: 21.02px;
-  font-size: 10px;
-  color: #fff;
-}
-.infor4 {
-  top: 12.61px;
-  left: 20.97px;
-  width: 242.17px;
-  height: 177.63px;
-  font-size: 15px;
-  color: #000;
-}
-.slot-1,
-.slot-2 {
-  position: absolute;
-  top: 0;
-  left: 389.99px;
-  width: 272.58px;
-  height: 252.25px;
-}
-.slot-1 {
-  left: 0;
-}
+
 .listslot {
-  position: relative;
-  width: 1062px;
-  height: 597px;
+    position: relative;
+    width: 1062px;
+    height: 597px;
 }
 .back {
-  position: absolute;
-  top: 0;
-  left: 46px;
-  display: inline-block;
-  width: 79px;
-  height: 26px;
+    position: absolute;
+    top: 0;
+    left: 46px;
+    display: inline-block;
+    width: 79px;
+    height: 26px;
 }
 .back-icon {
-  position: absolute;
-  height: 94.29%;
-  width: 25.99%;
-  top: 8.57%;
-  right: 74.81%;
-  bottom: -2.86%;
-  left: -0.8%;
-  max-width: 100%;
-  overflow: hidden;
-  max-height: 100%;
+    position: absolute;
+    height: 94.29%;
+    width: 25.99%;
+    top: 8.57%;
+    right: 74.81%;
+    bottom: -2.86%;
+    left: -0.8%;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
 }
 .backbutton {
-  position: relative;
-  width: 125px;
-  height: 35px;
-  font-size: 30px;
-  color: #000;
+    position: relative;
+    width: 125px;
+    height: 35px;
+    font-size: 30px;
+    color: #000;
 }
 .student-viewbookedslot {
-  position: relative;
-  background-color: #fff;
-  width: 100%;
-  height: 1024px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 160px;
-  text-align: left;
-  font-size: 17px;
-  color: #fff;
-  font-family: Lexend;
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 865px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 280px;
+    text-align: left;
+    font-size: 17px;
+    color: #fff;
+    font-family: Lexend;
 }
