@@ -14,11 +14,11 @@ import java.sql.Date;
 public class BookingDTO {
 
     private String subjectCode;
-     private String lectureName;
+    private String lectureName;
     private java.sql.Date startTime;
     private java.sql.Date endTime;
     private String userName;
-    
+
     public BookingDTO() {
         this.subjectCode = "";
         this.userName = "";
@@ -28,6 +28,7 @@ public class BookingDTO {
     }
 
     public BookingDTO(String subjectCode, String lectureName, Date startTime, Date endTime, String userName) {
+
         this.subjectCode = subjectCode;
         this.lectureName = lectureName;
         this.startTime = startTime;
@@ -74,7 +75,5 @@ public class BookingDTO {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
-   
 
 }

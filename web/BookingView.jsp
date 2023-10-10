@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page import="java.util.List"%>
 <%@page import="sample.bookings.BookingDTO"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -22,7 +23,7 @@
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
             />
-         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </head>
@@ -65,6 +66,8 @@
                     <img class="frame-item" alt="" src="public/BookingView/group-33.svg" />
                 </div>
             </div>
+            
+
             <div class="boxoftable">
                 <c:if test="${requestScope.LIST_BOOKING !=null}">
                     <c:if test="${not empty requestScope.LIST_BOOKING}">
@@ -85,26 +88,26 @@
                                     <tr>
                                         <td>${counter.count}</td>
                                         <td>
-                                           <span>${bookings.subjectCode}</span>
+                                            <span>${bookings.subjectCode}</span>
                                         </td>
                                         <td>
-                                           <span>${bookings.lectureName}</span>
+                                            <span>${bookings.lectureName}</span>
 
                                         </td>
                                         <td>
-                                    <fmt:formatDate value="${bookings.startTime}" pattern="dd/MM/yyyy HH:mm:ss" />
-                                    </td>
-                                    <td>
-                                    <fmt:formatDate value="${bookings.endTime}" pattern="dd/MM/yyyy HH:mm:ss" />
-                                    </td>
-                                    <td>
-                                        <c:url var="deleteLink" value="MainController">
-                                            <c:param name="action" value="Delete"></c:param>
-                                            <c:param name="search" value="${param.search}"></c:param>
-                                            <c:param name="userID" value="${user.userID}"></c:param>
-                                        </c:url>
-                                        <a href="${deleteLink}">Delete</a>
-                                    </td>
+                                            <fmt:formatDate value="${bookings.startTime}" pattern="dd/MM/yyyy HH:mm:ss" />
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate value="${bookings.endTime}" pattern="dd/MM/yyyy HH:mm:ss" />
+                                        </td>
+                                        <td>
+                                            <c:url var="deleteLink" value="MainController">
+                                                <c:param name="action" value="Delete"></c:param>
+                                                <c:param name="search" value="${param.search}"></c:param>
+                                                <c:param name="userID" value="${user.userID}"></c:param>
+                                            </c:url>
+                                            <a href="${deleteLink}">Delete</a>
+                                        </td>
                                     </tr>
                                 </form>
                             </c:forEach>
@@ -114,13 +117,11 @@
 
                     </c:if>
                 </c:if>
-
             </div>
-
-            <div class="backbutton">
-                <div class="back">Back</div>
-                <img class="back-icon" alt="" src="public/BookingView/back.svg" />
+                <div class="backbutton">
+                    <div class="back">Back</div>
+                    <img class="back-icon" alt="" src="public/BookingView/back.svg" />
+                </div>
             </div>
-        </div>
     </body>
 </html>
