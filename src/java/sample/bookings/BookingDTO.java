@@ -14,25 +14,25 @@ import java.sql.Date;
 public class BookingDTO {
 
     private String subjectCode;
-    private String userName;
-    private String semesterName;
+     private String lectureName;
     private java.sql.Date startTime;
     private java.sql.Date endTime;
-
+    private String userName;
+    
     public BookingDTO() {
         this.subjectCode = "";
         this.userName = "";
-        this.semesterName = "";
         this.startTime = null;
         this.endTime = null;
+        this.userName = "";
     }
 
-    public BookingDTO(String subjectCode, String userName, String semesterName, Date startTime, Date endTime) {
+    public BookingDTO(String subjectCode, String lectureName, Date startTime, Date endTime, String userName) {
         this.subjectCode = subjectCode;
-        this.userName = userName;
-        this.semesterName = semesterName;
+        this.lectureName = lectureName;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.userName = userName;
     }
 
     public String getSubjectCode() {
@@ -43,20 +43,12 @@ public class BookingDTO {
         this.subjectCode = subjectCode;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getLectureName() {
+        return lectureName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getSemesterName() {
-        return semesterName;
-    }
-
-    public void setSemesterName(String semesterName) {
-        this.semesterName = semesterName;
+    public void setLectureName(String lectureName) {
+        this.lectureName = lectureName;
     }
 
     public Date getStartTime() {
@@ -74,5 +66,15 @@ public class BookingDTO {
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+   
 
 }
