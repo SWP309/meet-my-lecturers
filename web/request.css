@@ -202,6 +202,7 @@
   padding: 10px 16px;
   box-sizing: border-box;
   gap: 8px;
+  cursor: pointer;
 }
 .div {
   position: relative;

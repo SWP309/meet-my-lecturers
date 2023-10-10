@@ -8,23 +8,23 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MainController extends HttpServlet {
 
-    private static final String LOGIN_PAGE = "login.html";
+    private static final String LOGIN_PAGE = "login.jsp";
     private static final String LOGIN_BY_GOOGLE = "login";
-    private static final String LOGIN_BY_GOOGLE_ACTION = "loginServlet";
+    private static final String LOGIN_BY_GOOGLE_ACTION = "LoginServlet";
 
     private static final String LOGIN_BY_FEID = "loginFeID";
-    private static final String LOGIN_BY_FEID_ACTION = "loginFeID.jsp";
-    private static final String LOGIN_BY_FEID_SERVLET = "loginByFeID";
+    private static final String LOGIN_BY_FEID_ACTION = "LoginFeID.jsp";
+    private static final String LOGIN_BY_FEID_SERVLET = "LoginByFeID";
     private static final String LOGIN_BY_FEID_ACTION_CHECK = "loginFeIDAction";
 
-    private static final String STUDENT_PAGE = "studentPage";
-    private static final String STUDENT_PAGE_ACTION = "StudentHome.html";
+    private static final String STUDENT_PAGE = "StudentPage";
+    private static final String STUDENT_PAGE_ACTION = "StudentHome.jsp";
 
-    private static final String LECTURER_PAGE = "lecturerPage";
-    private static final String LECTURER_PAGE_ACTION = "lecturerPage.jsp";
+    private static final String LECTURER_PAGE = "LecturerPage";
+    private static final String LECTURER_PAGE_ACTION = "LecturerPage.jsp";
 
-    private static final String ADMIN_PAGE = "adminPage.jsp";
-    private static final String ADMIN_PAGE_ACTION = "adminPage.jsp";
+    private static final String ADMIN_PAGE = "AdminPage.jsp";
+    private static final String ADMIN_PAGE_ACTION = "AdminPage.jsp";
 
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
@@ -32,11 +32,12 @@ public class MainController extends HttpServlet {
     private static final String CREATE_REQUEST = "Create request";
     private static final String REQUEST_ACTION = "CreateRequestServlet";
 
-    private static final String LOGIN_STUDENT_PAGE = "StudentHome.html";
-
     private static final String VIEWBOOKING = "ViewBooking";
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
-
+    
+    private static final String LOGOUT = "Logout";
+    private static final String LOGOUT_ACTION = "LogoutServlet";
+  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -63,6 +64,8 @@ public class MainController extends HttpServlet {
                 url = VIEW_BOOKING_CONTROLLER;
             } else if (REQUEST.equals(action)) {
                 url = REQUEST_PAGE;
+            } else if (LOGOUT.equals(action)) {
+                url = LOGOUT_ACTION;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());

@@ -1,3 +1,11 @@
+<%-- 
+    Document   : StudentHome
+    Created on : Oct 10, 2023, 9:25:31 PM
+    Author     : Minh Khang
+--%>
+
+<%@page import="sample.users.UserDTO"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,11 +30,11 @@
                 var form = document.querySelector('.frame-container form');
                 form.submit();
             }
-             function submitFormRequest() {
+            function submitFormRequest() {
                 var form = document.querySelector('.frame-parent1 form');
                 form.submit();
             }
-            function submitFormLogout(){
+            function submitFormLogout() {
                 var form = document.querySelector('.frame-div form')
                 form.submit();
             }
@@ -34,7 +42,13 @@
 
     </head>
     <body>
-        
+        <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+            } else {
+                response.sendRedirect("MainController");
+            }
+        %>
         <div class="student-home">
             <div class="fptu-eng-1-parent">
                 <img
@@ -62,7 +76,7 @@
                             <div class="bookedslot-wrapper">
                                 <div class="request">+</div>
                             </div>
-                           <div class="request">Request</div>
+                            <div class="request">Request</div>
                         </div>
                         <div class="frame-div" onclick="submitFormLogout()">
                             <form action="MainController" method="POST" style="display: none;">

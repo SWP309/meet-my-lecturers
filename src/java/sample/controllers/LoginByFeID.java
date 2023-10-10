@@ -19,7 +19,7 @@ import sample.users.UserDTO;
  *
  * @author Minh Khang
  */
-public class loginByFeID extends HttpServlet {
+public class LoginByFeID extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
