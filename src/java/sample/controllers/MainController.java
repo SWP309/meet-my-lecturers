@@ -11,15 +11,15 @@ public class MainController extends HttpServlet {
     private static final String LOGIN_PAGE = "login.html";
     private static final String LOGIN_BY_GOOGLE = "login";
     private static final String LOGIN_BY_GOOGLE_ACTION = "loginServlet";
-    
+
     private static final String LOGIN_BY_FEID = "loginFeID";
     private static final String LOGIN_BY_FEID_ACTION = "loginFeID.jsp";
     private static final String LOGIN_BY_FEID_SERVLET = "loginByFeID";
     private static final String LOGIN_BY_FEID_ACTION_CHECK = "loginFeIDAction";
-    
+
     private static final String STUDENT_PAGE = "studentPage";
-    private static final String STUDENT_PAGE_ACTION = "studentPage.jsp";
-    
+    private static final String STUDENT_PAGE_ACTION = "StudentHome.html";
+
     private static final String LECTURER_PAGE = "lecturerPage";
     private static final String LECTURER_PAGE_ACTION = "lecturerPage.jsp";
 
@@ -35,7 +35,7 @@ public class MainController extends HttpServlet {
     private static final String LOGIN_STUDENT_PAGE = "StudentHome.html";
 
     private static final String VIEWBOOKING = "ViewBooking";
-    private static final String VIEW_BOOKING_PAGE = "BookingView.html";
+    private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -57,6 +57,12 @@ public class MainController extends HttpServlet {
                 url = LECTURER_PAGE_ACTION;
             } else if (action.equals(ADMIN_PAGE)) {
                 url = ADMIN_PAGE_ACTION;
+            } else if (CREATE_REQUEST.equals(action)) {
+                url = REQUEST_ACTION;
+            } else if (VIEWBOOKING.equals(action)) {
+                url = VIEW_BOOKING_CONTROLLER;
+            } else if (REQUEST.equals(action)) {
+                url = REQUEST_PAGE;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());

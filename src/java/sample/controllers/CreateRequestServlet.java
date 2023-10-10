@@ -21,7 +21,7 @@ import sample.requests.RequestDTO;
 public class CreateRequestServlet extends HttpServlet {
 
     private static final String ERROR = "request.jsp";
-    private static final String SUCCESS = "login.html";
+    private static final String SUCCESS = "StudentHome.html";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
