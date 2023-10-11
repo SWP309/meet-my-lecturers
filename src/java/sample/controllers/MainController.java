@@ -36,6 +36,9 @@ public class MainController extends HttpServlet {
 
     private static final String VIEWBOOKING = "ViewBooking";
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
+    
+    private static final String CANCEL = "cancel";
+    private static final String CANCEL_CONTROLLER = "CancelController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -63,6 +66,8 @@ public class MainController extends HttpServlet {
                 url = VIEW_BOOKING_CONTROLLER;
             } else if (REQUEST.equals(action)) {
                 url = REQUEST_PAGE;
+            } else if (CANCEL.equals(action)) {
+                url = CANCEL_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());

@@ -28,6 +28,7 @@ public class BookingController extends HttpServlet {
             String email=request.getParameter(us.getUserEmail());
             BookingDAO dao = new BookingDAO();
             List<BookingDTO> listBooking = dao.Getlistbooking(us.getUserEmail());
+            System.out.println(listBooking.toString());
             if (listBooking.size() > 0) {
                 request.setAttribute("LIST_BOOKING", listBooking);
                 url = SUCCESS;
