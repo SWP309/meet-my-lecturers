@@ -12,6 +12,52 @@
         <title>Create Free Slot</title>
     </head>
     <body>
-        
+        <form action="MainController" method="POST">
+            
+            <input type="hidden" value="createFreeSlotAction" name="action"/>
+            
+            <table>
+                <tr>
+                    <td>Subject code:</td>
+                    <td><input type="text" name="txtSubjectCode" placeholder="ex:SWP391...etc" required=""></td>
+                </tr>
+                <tr>
+                    <td>Start time:</td>
+                    <td><input type="datetime-local" name="txtStartTime" required=""></td>
+                </tr>
+                <tr>
+                    <td>End time:</td>
+                    <td><input type="datetime-local" name="txtEndTime" required=""></td>
+                </tr>
+                <tr>
+                    <td>Capacity:</td>
+                    <td><input type="number" name="txtCapacity" placeholder="need more than 2 student" required=""></td>
+                </tr>
+<!--                <tr>
+                    <td>Repeated Times:</td>
+                    <td><input type="number" name="repeatedTimes"></td>
+                </tr>-->
+                <tr>
+                    <td>Password: (if necessary)</td>
+                    <td><input type="password" name="txtPassword"></td>
+                </tr>
+                <tr>
+                    <td>Meet link:</td>
+                    <td><input type="text" name="txtMeetLink" placeholder="ex:meet.google.com/...etc" required=""></td>
+                </tr>
+                <tr>
+                    <td>Count:</td>
+                    <td><input type="number" name="txtCount"></td>
+                </tr>
+                <tr>
+                    <td>Setting by:</td>
+                    <td><input type="text" name="txtLecturerID" placeholder="ex:GVxxxx (your lecturer id)" required=""></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Create"></td>
+                </tr>
+            </table>
+        </form>
     </body>
 </html>
