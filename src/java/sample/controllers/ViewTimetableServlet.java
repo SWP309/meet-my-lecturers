@@ -1,53 +1,56 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sample.controllers;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import sample.slots.SlotDTO;
+import sample.subjects.SubjectDTO;
+import sample.timetables.TimetableDAO;
+import sample.timetables.TimetableDTO;
 
-public class MainController extends HttpServlet {
-    private static final String LOGIN_PAGE = "login.html";
+/**
+ *
+ * @author CHIBAO
+ */
+public class ViewTimetableServlet extends HttpServlet { 
     
-    private static final String REQUEST_PAGE = "request.jsp";
-    private static final String REQUEST = "Request";
-    private static final String BACK_TO_REQUEST = "BackToRequest";
-    
-    private static final String CREATE_REQUEST = "Create request";
-    private static final String REQUEST_ACTION = "CreateRequestServlet";
-
-    private static final String LOGIN_STUDENT_PAGE = "StudentHome.html";
-    
-    private static final String VIEWBOOKING = "ViewBooking";
-    private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
-    
-    private static final String VIEWTIMETABLE = "View Timetable";
-    private static final String VIEW_TIMETABLE_CONTROLLER = "ViewTimetableServlet";
+    public final String ERROR = "request.jsp";
+    public final String SUCCESS = "TimetableView.jsp"; 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = LOGIN_STUDENT_PAGE;
+        String url = ERROR;
         try {
-            String action = request.getParameter("action");
-            if(action == null){
-                url = LOGIN_STUDENT_PAGE;
-            } else if (REQUEST.equals(action)) {
-                url = REQUEST_PAGE;
-            } else if (CREATE_REQUEST.equals(action)) {
-                url = REQUEST_ACTION;
-            } else if (VIEWBOOKING.equals(action)) {
-                url = VIEW_BOOKING_CONTROLLER;
-            } else if (VIEWTIMETABLE.equals(action)) {
-                url = VIEW_TIMETABLE_CONTROLLER;
-            } else if (BACK_TO_REQUEST.equals(action)) {
-                url = REQUEST_ACTION;
+            String lecturerID = request.getParameter("txtLecturer");
+            String semesterID = request.getParameter("txtSemester");
+            TimetableDAO timetableDAO = new TimetableDAO();
+            timetableDAO.getListTimetables(lecturerID, semesterID);
+            List<TimetableDTO> timetables = timetableDAO.getTimetables();
+            List<SubjectDTO> subjects = timetableDAO.getSubjects();
+            List<SlotDTO> slots = timetableDAO.getSlots();
+            if (timetables != null) {
+                request.setAttribute("TB_TIMETABLES", timetables); 
+                request.setAttribute("TB_SUBJECTS", subjects);
+                request.setAttribute("TB_SLOTS", slots);
+                url = SUCCESS;
+            } else {
+                request.setAttribute("TB_MESSAGE", "No line matched!!Please try checking again LecturerID at View All Lecturer at the top!!");
             }
-
-        } catch (Exception e) {
-            log("Error at MainController: " + e.toString());
-        } finally {
+        } catch (ClassNotFoundException | SQLException ex) {
+            log("Error at ViewTimetableServlet" + ex.toString());
+        }  finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

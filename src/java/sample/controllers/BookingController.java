@@ -21,8 +21,9 @@ public class BookingController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
+            String email=request.getParameter("email");
             BookingDAO dao = new BookingDAO();
-            List<BookingDTO> listBooking = dao.Getlistbooking();
+            List<BookingDTO> listBooking = dao.Getlistbooking(email);
             if (listBooking.size() > 0) {
                 request.setAttribute("LIST_BOOKING", listBooking);
                 url = SUCCESS;

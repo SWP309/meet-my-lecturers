@@ -6,7 +6,10 @@
 package sample.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,9 +49,12 @@ public class CreateRequestServlet extends HttpServlet {
             RequestDTO requestDTO = new RequestDTO(false, subjectCode,   //lam sao de ID tu dong tao va tang
                     startTime, endTime, description, startTime, lecturer);   //phai lay dc student ID dua vao luc dang nhap
             boolean checkCreated = requestDAO.createARequest(requestDTO);
-        } catch (Exception e){
-            
-        } finally {
+            if (checkCreated) {
+                url = SUCCESS;
+            }
+        } catch (SQLException | ClassNotFoundException | ParseException ex) {
+            log("Error at CreateRequestServlet" + ex.toString());
+        }  finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
         

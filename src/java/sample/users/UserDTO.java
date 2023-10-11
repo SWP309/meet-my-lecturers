@@ -1,6 +1,8 @@
 package sample.users;
 
-public class UserDTO {
+import java.io.Serializable;
+
+public class UserDTO implements Serializable{
     private String userID;
     private String userName;
     private String userEmail;

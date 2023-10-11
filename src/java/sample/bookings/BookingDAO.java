@@ -18,13 +18,15 @@ import sample.utils.DBUtils;
  * @author PC
  */
 public class BookingDAO {
-    private static String BOOKING_VIEW = "SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, u.userName\n" +
-            "FROM Bookings b \n" +
-            "JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n" +
-            "JOIN Users u ON b.studentID = u.userID\n" +
-            "JOIN Users u1 ON fs.lecturerID = u1.userID;";
 
-    public List<BookingDTO> Getlistbooking() throws SQLException {
+    private static String BOOKING_VIEW = "SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, u.userName\n"
+            + "FROM Bookings b\n"
+            + "JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
+            + "JOIN Users u ON b.studentID = u.userID\n"
+            + "JOIN Users u1 ON fs.lecturerID = u1.userID\n"
+            + "WHERE u.userName = ?";
+
+    public List<BookingDTO> Getlistbooking(String username) throws SQLException {
         List<BookingDTO> listBooking = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -33,6 +35,7 @@ public class BookingDAO {
             conn = DBUtils.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(BOOKING_VIEW);
+                ptm.setString(1, username);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
                     String subjectCode = rs.getString("subjectCode");
@@ -59,4 +62,3 @@ public class BookingDAO {
         return listBooking;
     }
 }
-
