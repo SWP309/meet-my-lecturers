@@ -1,5 +1,7 @@
 package sample.users;
 
-public class UserDAO {
+import java.io.Serializable;
+
+public class UserDAO implements Serializable{
     
 }

@@ -12,6 +12,7 @@ public class MainController extends HttpServlet {
     
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
+    private static final String BACK_TO_REQUEST = "BackToRequest";
     
     private static final String CREATE_REQUEST = "Create request";
     private static final String REQUEST_ACTION = "CreateRequestServlet";
@@ -20,6 +21,9 @@ public class MainController extends HttpServlet {
     
     private static final String VIEWBOOKING = "ViewBooking";
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
+    
+    private static final String VIEWTIMETABLE = "View Timetable";
+    private static final String VIEW_TIMETABLE_CONTROLLER = "ViewTimetableServlet";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -35,7 +39,11 @@ public class MainController extends HttpServlet {
                 url = REQUEST_ACTION;
             } else if (VIEWBOOKING.equals(action)) {
                 url = VIEW_BOOKING_CONTROLLER;
-            } 
+            } else if (VIEWTIMETABLE.equals(action)) {
+                url = VIEW_TIMETABLE_CONTROLLER;
+            } else if (BACK_TO_REQUEST.equals(action)) {
+                url = REQUEST_ACTION;
+            }
 
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());

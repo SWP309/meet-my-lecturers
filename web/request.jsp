@@ -26,36 +26,39 @@
 
 
                 <div class="infor">
-
-                    <div class="lectucrer">
-                        <div class="lectucrer-child">"></</div>
-                        <div class="lecturer">
-                            Lecturer:<input type="text" name="txtLecturer" value="" />
+                    <form action="MainController" method="POST">
+                    <div class="semester">
+                        <div class="semester-child"></div>
+                        <div class="semester1">
+                            SemesterID(ex:FA23):<input type="text" name="txtSemester" value="${param.txtSemester}" />
                         </div>
                     </div>
-                </div>
+                        <div class="lectucrer">
+                            <div class="lectucrer-child">"></</div>
+                                <div class="lecturer">
+                                    LecturerID:<input type="text" name="txtLecturer" value="${param.txtLecturer}" />
+                                    <input type="submit" name="action" value="View Timetable" />    
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 <div class="subject-code">
                     <div class="lectucrer-child"></div>
                     <div class="subject-code1">
                         Subject code:<input type="text" name="txtSubjectCode" value="" />
                     </div>
                 </div>
-                <div class="semester">
-                    <div class="semester-child"></div>
-                    <div class="semester1">
-                        Semester:<input type="text" name="txtSemester" value="" />
-                    </div>
-                </div>
+                
                 <div class="start-time">
                     <div class="semester-child"></div>
                     <div class="start-time1">
-                        Start time(YYYY-MM-DD HH: MI: SS):<input type="datetime-local" name="txtStartTime" value="" />
+                        Start time:<input type="datetime-local" name="txtStartTime" value="" />
                     </div>
                 </div>
                 <div class="end-time">
                     <div class="semester-child"></div>
                     <div class="end-time1"> 
-                        End time(YYYY-MM-DD HH: MI: SS):<input type="datetime-local" name="txtEndTime" value="" />
+                        End time:<input type="datetime-local" name="txtEndTime" value="" />
                     </div>
                 </div>
                 <div class="description">
