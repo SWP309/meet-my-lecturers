@@ -1,3 +1,4 @@
+<%@page import="sample.users.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page import="java.util.List"%>
@@ -26,47 +27,66 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script>
+            function submitFormLogout() {
+                var form = document.querySelector('.frame-div form')
+                form.submit();
+            }
+        </script>
     </head>
     <body>
+        <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+            } else {
+                response.sendRedirect("MainController");
+            }
+        %>
         <div class="student-viewbookedslot">
             <div class="fptu-eng-1-parent">
                 <img
                     class="fptu-eng-1-icon"
                     alt=""
-                    src="public/BookingView/2021fptueng-1@2x.png"
+                    src="./public/StudentHome/2021fptueng-1@2x.png"
                     />
 
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-container">
+                        <div class="frame-container" onclick="submitForm()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="ViewBooking" />
+                            </form>
                             <div class="bookedslot-wrapper">
-                                <img
-                                    class="bookedslot-icon"
-                                    alt=""
-                                    src="public/BookingView/bookedslot.svg"
-                                    />
+                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
+                                <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
                             </div>
-                            <div class="view-booking">View Booking</div>
+                            <div class="view-booking" >View Booking</div>
                         </div>
-                        <div class="frame-div">
+                        <div class="frame-parent1" onclick="submitFormRequest()">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="Request" />
+                            </form>
                             <div class="bookedslot-wrapper">
-                                <div class="div">+</div>
+                                <div class="request">+</div>
                             </div>
-                            <div class="div">Request</div>
+                            <div class="request">Request</div>
                         </div>
-                        <div class="frame-parent1">
+                        <div class="frame-div" onclick="submitFormLogout()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="Logout" />
+                            </form>
                             <div class="logout-wrapper">
-                                <img class="logout-icon" alt="" src="public/BookingView/logout.svg" />
+                                <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
                             </div>
-                            <div class="div">
+                            <div class="request">
                                 <p class="logout1">Logout</p>
                             </div>
                         </div>
                     </div>
-                    <img class="frame-item" alt="" src="public/BookingView/group-33.svg" />
+                    <img class="frame-item" alt="" src="./public/StudentHome/user.png" />
                 </div>
             </div>
-            
+
 
             <div class="boxoftable">
                 <c:if test="${requestScope.LIST_BOOKING !=null}">
@@ -118,10 +138,10 @@
                     </c:if>
                 </c:if>
             </div>
-                <div class="backbutton">
-                    <div class="back">Back</div>
-                    <img class="back-icon" alt="" src="public/BookingView/back.svg" />
-                </div>
+            <div class="backbutton">
+                <div class="back">Back</div>
+                <img class="back-icon" alt="" src="public/BookingView/back.svg" />
             </div>
+        </div>
     </body>
 </html>
