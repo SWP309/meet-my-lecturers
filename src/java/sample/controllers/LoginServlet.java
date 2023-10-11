@@ -40,8 +40,7 @@ public class LoginServlet extends HttpServlet {
             String email = dto.getEmail();
             UserDTO us = UserDAO.getUserByMail(email);
             boolean flag = false;
-            if (us != null) {
-                if (us.getUserEmail().equals(email)) {
+            if (us != null) {                
                     flag = true;
                     HttpSession session = request.getSession();
                     session.setAttribute("loginedUser", us);
@@ -51,10 +50,7 @@ public class LoginServlet extends HttpServlet {
                         response.sendRedirect("MainController?action=LecturerPage");
                     } else if ((us.getRoleID().equals("1"))) {
                         response.sendRedirect("MainController?action=AdminPage");
-                    }
-                } else {
-                    flag = false;
-                }
+                    }                
             } else {
                 flag = false;
             }

@@ -53,20 +53,15 @@ public class LoginByFeID extends HttpServlet {
                         response.sendRedirect("MainController?action=AdminPage");
                     }
                 } else {
-//                    response.sendRedirect("errorpage.html");
-                    flag = false;
-                    
+                    flag = false;                   
                 }
             } else {
-//                response.sendRedirect("errorpage.html");
-                flag = false;
-                
+                flag = false;                
             }
             if(!flag){
-                String msg = "invalid userid or password";
-                // luu vao o nho request de dem qua loginpage.jsp
+                String msg = "Invalid userid or password";
                 request.setAttribute("Error", msg);
-                request.getRequestDispatcher("MainServlet?action=1").forward(request, response);
+                request.getRequestDispatcher("MainController?action=").forward(request, response);
             }
         } catch(Exception e){
             e.printStackTrace();
