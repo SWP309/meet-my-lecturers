@@ -9,9 +9,9 @@
  */
 public class Constants {
 
-	public static String GOOGLE_CLIENT_ID = "79561996257-nmthban7n70ao86brs9plr3mvpo1qdml.apps.googleusercontent.com";
+	public static String GOOGLE_CLIENT_ID = "79561996257-0ctstd2ursldvmmufi3vpq6k6rp4ftrg.apps.googleusercontent.com";
 
-	public static String GOOGLE_CLIENT_SECRET = "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";
+	public static String GOOGLE_CLIENT_SECRET = "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";
 
 	public static String GOOGLE_REDIRECT_URI = "http://localhost:8080/meet-my-lecturers/LoginGoogleHandler";
 
