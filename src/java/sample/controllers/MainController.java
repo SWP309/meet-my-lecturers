@@ -25,6 +25,9 @@ public class MainController extends HttpServlet {
 
     private static final String ADMIN_PAGE = "AdminPage.jsp";
     private static final String ADMIN_PAGE_ACTION = "AdminPage.jsp";
+    
+    private static final String CREATE_FREE_SLOT_SERVLET = "CreateFreeSlotServlet";
+    private static final String CREATE_FREE_SLOT_ACTION = "createFreeSlotAction";
 
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
@@ -58,6 +61,8 @@ public class MainController extends HttpServlet {
                 url = LECTURER_PAGE_ACTION;
             } else if (action.equals(ADMIN_PAGE)) {
                 url = ADMIN_PAGE_ACTION;
+            } else if (action.equals(CREATE_FREE_SLOT_ACTION)) {
+                url = CREATE_FREE_SLOT_SERVLET;
             } else if (CREATE_REQUEST.equals(action)) {
                 url = REQUEST_ACTION;
             } else if (VIEWBOOKING.equals(action)) {
