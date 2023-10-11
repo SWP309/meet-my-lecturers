@@ -12,8 +12,8 @@ import sample.bookings.BookingDAO;
 import sample.bookings.BookingDTO;
 import sample.users.UserDTO;
 
-@WebServlet(name = "BookingController", urlPatterns = {"/BookingController"})
-public class BookingController extends HttpServlet {
+@WebServlet(name = "CancelController", urlPatterns = {"/CancelController"})
+public class CancelController extends HttpServlet {
 
     private static final String ERROR = "BookingView.jsp";
     private static final String SUCCESS = "BookingView.jsp";
@@ -21,26 +21,34 @@ public class BookingController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
         String url = ERROR;
         try {
             HttpSession session = request.getSession();
+            String bookingID = request.getParameter("bookingID"); // Lấy bookingID từ yêu cầu
+//            BookingDTO listBooking = (BookingDTO) request.getAttribute("LIST_BOOKING");
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            String email=request.getParameter(us.getUserEmail());
-            BookingDAO dao = new BookingDAO();
-            List<BookingDTO> listBooking = dao.Getlistbooking(us.getUserEmail());
-            System.out.println(listBooking.toString());
-            if (listBooking.size() > 0) {
-                request.setAttribute("LIST_BOOKING", listBooking);
-                url = SUCCESS;
+            System.out.println(bookingID);
+            if (bookingID != null) {
+                BookingDAO dao = new BookingDAO();
+                boolean checkUpdate = dao.Cancel(bookingID);
+                System.out.println(checkUpdate);
+                if (checkUpdate) {
+                    List<BookingDTO> updatedBookings = dao.Getlistbooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                    request.setAttribute("LIST_BOOKING", updatedBookings);
+                    url = SUCCESS;
+                }
+            } else {
+                request.setAttribute("ERROR", "Invalid booking ID.");
             }
         } catch (Exception e) {
-            log("Error at SearchController: " + e.toString());
+            log("Error at UpdateController: " + e.toString());
+            request.setAttribute("ERROR", "An error occurred.");
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
-  
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

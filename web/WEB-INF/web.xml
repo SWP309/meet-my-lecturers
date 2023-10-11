@@ -20,6 +20,10 @@
         <servlet-name>loginByFeID</servlet-name>
         <servlet-class>sample.controllers.loginByFeID</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CancelController</servlet-name>
+        <servlet-class>sample.controllers.CancelController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>loginByFeID</servlet-name>
         <url-pattern>/loginByFeID</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelController</servlet-name>
+        <url-pattern>/CancelController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
