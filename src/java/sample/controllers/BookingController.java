@@ -7,8 +7,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import sample.bookings.BookingDAO;
 import sample.bookings.BookingDTO;
+import sample.users.UserDTO;
 
 @WebServlet(name = "BookingController", urlPatterns = {"/BookingController"})
 public class BookingController extends HttpServlet {
@@ -21,9 +23,12 @@ public class BookingController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String email=request.getParameter("email");
+            HttpSession session = request.getSession();
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            String email=request.getParameter(us.getUserEmail());
             BookingDAO dao = new BookingDAO();
-            List<BookingDTO> listBooking = dao.Getlistbooking(email);
+            List<BookingDTO> listBooking = dao.Getlistbooking(us.getUserEmail());
+            System.out.println(listBooking.toString());
             if (listBooking.size() > 0) {
                 request.setAttribute("LIST_BOOKING", listBooking);
                 url = SUCCESS;

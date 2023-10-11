@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import sample.basicObject.UserGoogleDto;
+import sample.users.UserGoogleDto;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class LoginGoogleHandler extends HttpServlet {
 		UserGoogleDto user = getUserInfo(accessToken);
 		System.out.println(user);
                 request.setAttribute("UserGG", user);
-                request.getRequestDispatcher("loginServlet").forward(request, response);
+                request.getRequestDispatcher("MainController?action=login").forward(request, response);
 	}
 
 	public static String getToken(String code) throws ClientProtocolException, IOException {

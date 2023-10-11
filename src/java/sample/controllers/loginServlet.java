@@ -5,13 +5,16 @@
  */
 package sample.controllers;
 
-import sample.basicObject.UserGoogleDto;
+import sample.users.UserGoogleDto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import sample.users.UserDAO;
+import sample.users.UserDTO;
 
 /**
  *
@@ -32,10 +35,41 @@ public class loginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            UserGoogleDto dto = new UserGoogleDto();
-            
+            UserGoogleDto dto = new UserGoogleDto();            
             dto = (UserGoogleDto) request.getAttribute("UserGG");
-            out.println("hello " + dto.getEmail());
+            String email = dto.getEmail();
+            UserDTO us = UserDAO.getUserByMail(email);
+            boolean flag = false;
+            if (us != null) {
+                if (us.getUserEmail().equals(email)) {
+                    flag = true;
+                    HttpSession session = request.getSession();
+                    session.setAttribute("loginedUser", us);
+                    if (us.getRoleID().equals("3")) {
+                        response.sendRedirect("MainController?action=studentPage");
+                    } else if((us.getRoleID().equals("2"))) {
+                        response.sendRedirect("MainController?action=lecturerPage");
+                    } else if((us.getRoleID().equals("1"))) {
+                        response.sendRedirect("MainController?action=adminPage");
+                    }
+                } else {
+                    //response.sendRedirect("errorpage.html");
+                    flag = false;
+                    
+                }
+            } else {
+                //response.sendRedirect("errorpage.html");
+                flag = false;
+                
+            }
+            if(!flag){
+                String msg = "invalid userid or password";
+                // luu vao o nho request de dem qua loginpage.jsp
+                request.setAttribute("Error", msg);
+                request.getRequestDispatcher("MainController?action=1").forward(request, response);
+            }
+        } catch(Exception e){
+            e.printStackTrace();
         }
     }
 

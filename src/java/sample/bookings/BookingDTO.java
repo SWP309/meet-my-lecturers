@@ -6,6 +6,7 @@
 package sample.bookings;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -14,25 +15,28 @@ import java.sql.Date;
 public class BookingDTO {
 
     private String subjectCode;
-     private String lectureName;
-    private java.sql.Date startTime;
-    private java.sql.Date endTime;
+    private String lectureName;
+    private String startTime;
+    private String endTime;
     private String userName;
-    
+    private String bookingID;
+
     public BookingDTO() {
         this.subjectCode = "";
-        this.userName = "";
+        this.lectureName = "";
         this.startTime = null;
         this.endTime = null;
         this.userName = "";
+        this.bookingID = "";
     }
 
-    public BookingDTO(String subjectCode, String lectureName, Date startTime, Date endTime, String userName) {
+    public BookingDTO(String subjectCode, String lectureName, String startTime, String endTime, String userName, String bookingID) {
         this.subjectCode = subjectCode;
         this.lectureName = lectureName;
         this.startTime = startTime;
         this.endTime = endTime;
         this.userName = userName;
+        this.bookingID = bookingID;
     }
 
     public String getSubjectCode() {
@@ -51,19 +55,19 @@ public class BookingDTO {
         this.lectureName = lectureName;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
@@ -75,6 +79,14 @@ public class BookingDTO {
         this.userName = userName;
     }
 
-   
+    public String getBookingID() {
+        return bookingID;
+    }
+
+    public void setBookingID(String bookingID) {
+        this.bookingID = bookingID;
+    }
+
+    
 
 }
