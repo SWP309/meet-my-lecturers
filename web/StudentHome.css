@@ -1,3 +1,7 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
 .fptu-eng-1-icon {
     position: relative;
     width: 149px;
@@ -107,7 +111,7 @@
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     box-sizing: border-box;
-    width: 1440px;
+    width: 100vw;
     height: 68px;
     display: flex;
     flex-direction: row;

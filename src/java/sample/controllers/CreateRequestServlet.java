@@ -22,6 +22,7 @@ public class CreateRequestServlet extends HttpServlet {
 
     private static final String ERROR = "request.jsp";
     private static final String SUCCESS = "StudentHome.html";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,7 +36,7 @@ public class CreateRequestServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        try{
+        try {
             String lecturer = request.getParameter("txtLecturer");
             String subjectCode = request.getParameter("txtSubjectCode");
             String semester = request.getParameter("txtSemester");
@@ -43,15 +44,15 @@ public class CreateRequestServlet extends HttpServlet {
             String endTime = request.getParameter("txtEndTime");
             String description = request.getParameter("txtDescription");
             RequestDAO requestDAO = new RequestDAO();
-            RequestDTO requestDTO = new RequestDTO(false, subjectCode,   //lam sao de ID tu dong tao va tang
+            RequestDTO requestDTO = new RequestDTO(false, subjectCode, //lam sao de ID tu dong tao va tang
                     startTime, endTime, description, startTime, lecturer);   //phai lay dc student ID dua vao luc dang nhap
             boolean checkCreated = requestDAO.createARequest(requestDTO);
-        } catch (Exception e){
-            
+        } catch (Exception e) {
+
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
