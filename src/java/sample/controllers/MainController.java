@@ -26,7 +26,7 @@ public class MainController extends HttpServlet {
     private static final String ADMIN_PAGE = "AdminPage.jsp";
     private static final String ADMIN_PAGE_ACTION = "AdminPage.jsp";
     
-    private static final String CREATE_FREE_SLOT_SERVLET = "CreateFreeSlotServlet";
+    private static final String CREATE_FREE_SLOT_SERVLET = "newfreeslot";// lay theo ten of urlPatterns trong createfreeslotservlet
     private static final String CREATE_FREE_SLOT_ACTION = "createFreeSlotAction";
 
     private static final String REQUEST_PAGE = "request.jsp";
