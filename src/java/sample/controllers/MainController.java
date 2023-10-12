@@ -25,6 +25,9 @@ public class MainController extends HttpServlet {
     private static final String VIEWTIMETABLE = "View Timetable";
     private static final String VIEW_TIMETABLE_CONTROLLER = "ViewTimetableServlet";
     
+    private static final String VIEW_LECTURER = "ViewAllLecturers";
+    private static final String VIEW_LECTURER_CONTROLLER = "ViewLecturerServlet";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -43,8 +46,9 @@ public class MainController extends HttpServlet {
                 url = VIEW_TIMETABLE_CONTROLLER;
             } else if (BACK_TO_REQUEST.equals(action)) {
                 url = REQUEST_ACTION;
+            } else if (VIEW_LECTURER.equals(action)) {
+                url = VIEW_LECTURER_CONTROLLER;
             }
-
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
         } finally {

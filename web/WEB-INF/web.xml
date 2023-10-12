@@ -20,6 +20,10 @@
         <servlet-name>ViewTimetableServlet</servlet-name>
         <servlet-class>sample.controllers.ViewTimetableServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewLecturerServlet</servlet-name>
+        <servlet-class>sample.controllers.ViewLecturerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>ViewTimetableServlet</servlet-name>
         <url-pattern>/ViewTimetableServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewLecturerServlet</servlet-name>
+        <url-pattern>/ViewLecturerServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
