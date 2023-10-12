@@ -37,9 +37,12 @@ public class CancelController extends HttpServlet {
                     List<BookingDTO> updatedBookings = dao.Getlistbooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
                     request.setAttribute("LIST_BOOKING", updatedBookings);
                     url = SUCCESS;
+                    if (updatedBookings == null || updatedBookings.isEmpty()) {
+                        request.setAttribute("ERROR", "List of Booking is null. Do not have any things to show");
+                    }
                 }
             } else {
-                request.setAttribute("ERROR", "Invalid booking ID.");
+                request.setAttribute("ERROR", "List of Booking is null. Do not have any things to show");
             }
         } catch (Exception e) {
             log("Error at UpdateController: " + e.toString());
