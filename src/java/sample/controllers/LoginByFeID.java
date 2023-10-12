@@ -11,17 +11,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sample.requests.RequestDAO;
-import sample.requests.RequestDTO;
+import javax.servlet.http.HttpSession;
+import sample.users.UserDAO;
+import sample.users.UserDTO;
 
 /**
  *
- * @author CHIBAO
+ * @author Minh Khang
  */
-public class CreateRequestServlet extends HttpServlet {
-
-    private static final String ERROR = "request.jsp";
-    private static final String SUCCESS = "StudentHome.html";
+public class LoginByFeID extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,24 +33,39 @@ public class CreateRequestServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
-        try {
-            String lecturer = request.getParameter("txtLecturer");
-            String subjectCode = request.getParameter("txtSubjectCode");
-            String semester = request.getParameter("txtSemester");
-            String startTime = request.getParameter("txtStartTime");
-            String endTime = request.getParameter("txtEndTime");
-            String description = request.getParameter("txtDescription");
-            RequestDAO requestDAO = new RequestDAO();
-            RequestDTO requestDTO = new RequestDTO(false, subjectCode, //lam sao de ID tu dong tao va tang
-                    startTime, endTime, description, startTime, lecturer);   //phai lay dc student ID dua vao luc dang nhap
-            boolean checkCreated = requestDAO.createARequest(requestDTO);
-        } catch (Exception e) {
-
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            String email = request.getParameter("txtemail");
+            String password = request.getParameter("txtpassword");
+            UserDTO us = UserDAO.getUser(email);
+            boolean flag = false;
+            
+            if (us != null) {
+                if (us.getPassword().equals(password)) {
+                    flag = true;
+                    HttpSession session = request.getSession();
+                    session.setAttribute("loginedUser", us);
+                    if (us.getRoleID().equals("3")) {
+                        response.sendRedirect("MainController?action=StudentPage");
+                    } else if((us.getRoleID().equals("2"))) {
+                        response.sendRedirect("MainController?action=LecturerPage");
+                    } else if((us.getRoleID().equals("1"))) {
+                        response.sendRedirect("MainController?action=AdminPage");
+                    }
+                } else {
+                    flag = false;                   
+                }
+            } else {
+                flag = false;                
+            }
+            if(!flag){
+                String msg = "Invalid userid or password";
+                request.setAttribute("Error", msg);
+                request.getRequestDispatcher("MainController?action=").forward(request, response);
+            }
+        } catch(Exception e){
+            e.printStackTrace();
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
