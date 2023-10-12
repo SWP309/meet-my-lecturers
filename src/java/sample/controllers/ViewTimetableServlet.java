@@ -8,8 +8,6 @@ package sample.controllers;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +47,7 @@ public class ViewTimetableServlet extends HttpServlet {
                 request.setAttribute("TB_MESSAGE", "No line matched!!Please try checking again LecturerID at View All Lecturer at the top!!");
             }
         } catch (ClassNotFoundException | SQLException ex) {
-            log("Error at ViewTimetableServlet" + ex.toString());
+            log("Error at ViewTimetableServlet: " + ex.toString());
         }  finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

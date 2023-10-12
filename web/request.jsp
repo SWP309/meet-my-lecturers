@@ -17,6 +17,12 @@
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
             />
+        <script>
+            function submitFormViewLecturer() {
+                var form = document.querySelector('.frame-container form');
+                form.submit();
+            }
+        </script>
     </head>
     <body>
         <form action="MainController" method="POST">
@@ -94,7 +100,10 @@
 
             <div class="frame-parent">
                 <div class="frame-group">
-                    <div class="frame-container">
+                    <div class="frame-container" onclick="submitFormViewLecturer()">
+                        <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="ViewAllLecturers" />
+                            </form>
                         <div class="bookedslot-wrapper">
                             <img
                                 class="bookedslot-icon"
@@ -102,7 +111,7 @@
                                 src="./public/request/bookedslot.svg"
                                 />
                         </div>
-                        <div class="view-booking">View Booking</div>
+                        <div class="view-all-lecturers">View All Lecturers</div>
                     </div>
                     <div class="frame-div">
                         <div class="bookedslot-wrapper">

@@ -186,22 +186,23 @@
   align-items: center;
   justify-content: center;
 }
-.view-booking {
+.view-all-lecturers {
   position: relative;
   line-height: 25px;
 }
 .frame-container {
-  border-radius: 12px;
-  background-color: #f27125;
-  width: 176px;
-  height: 43px;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 10px 16px;
-  box-sizing: border-box;
-  gap: 8px;
+    border-radius: 12px;
+    background-color: #f27125;
+    width: 176px;
+    height: 43px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 16px;
+    box-sizing: border-box;
+    gap: 8px;
+    cursor: pointer;
 }
 .div {
   position: relative;
