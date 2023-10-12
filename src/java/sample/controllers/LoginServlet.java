@@ -5,6 +5,7 @@
  */
 package sample.controllers;
 
+import sample.users.UserGoogleDto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,7 +20,7 @@ import sample.users.UserDTO;
  *
  * @author Minh Khang
  */
-public class loginByFeID extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,41 +35,31 @@ public class loginByFeID extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String email = request.getParameter("txtemail");
-            String password = request.getParameter("txtpassword");
-            UserDTO us = UserDAO.getUser(email);
+            UserGoogleDto dto = new UserGoogleDto();
+            dto = (UserGoogleDto) request.getAttribute("UserGG");
+            String email = dto.getEmail();
+            UserDTO us = UserDAO.getUserByMail(email);
             boolean flag = false;
-            
-            if (us != null) {
-                if (us.getPassword().equals(password)) {
+            if (us != null) {                
                     flag = true;
                     HttpSession session = request.getSession();
                     session.setAttribute("loginedUser", us);
                     if (us.getRoleID().equals("3")) {
-                        response.sendRedirect("MainController?action=studentPage");
-                    } else if((us.getRoleID().equals("2"))) {
-                        response.sendRedirect("MainController?action=lecturerPage");
-                    } else if((us.getRoleID().equals("1"))) {
-                        response.sendRedirect("MainController?action=adminPage");
-                    }
-                } else {
-//                    response.sendRedirect("errorpage.html");
-                    flag = false;
-                    
-                }
+                        response.sendRedirect("MainController?action=StudentPage");
+                    } else if ((us.getRoleID().equals("2"))) {
+                        response.sendRedirect("MainController?action=LecturerPage");
+                    } else if ((us.getRoleID().equals("1"))) {
+                        response.sendRedirect("MainController?action=AdminPage");
+                    }                
             } else {
-//                response.sendRedirect("errorpage.html");
                 flag = false;
-                
             }
-            if(!flag){
-                String msg = "invalid userid or password";
-                // luu vao o nho request de dem qua loginpage.jsp
+            if (!flag) {
+                String msg = "Your email is not granted access to the system";
                 request.setAttribute("Error", msg);
-                request.getRequestDispatcher("MainServlet?action=1").forward(request, response);
+                request.getRequestDispatcher("MainController?action=").forward(request, response);
             }
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -111,5 +102,4 @@ public class loginByFeID extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

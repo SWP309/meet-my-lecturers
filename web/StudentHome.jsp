@@ -1,3 +1,11 @@
+<%-- 
+    Document   : StudentHome
+    Created on : Oct 10, 2023, 9:25:31 PM
+    Author     : Minh Khang
+--%>
+
+<%@page import="sample.users.UserDTO"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,19 +25,55 @@
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
             />
+         <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+            } else {
+                response.sendRedirect("MainController");
+            }
+        %>
         <script>
             function submitForm() {
                 var form = document.querySelector('.frame-container form');
                 form.submit();
             }
-             function submitFormRequest() {
+            function submitFormRequest() {
                 var form = document.querySelector('.frame-parent1 form');
                 form.submit();
+            }
+            function submitFormLogout() {
+                var form = document.querySelector('.frame-div form');
+                form.submit();
+            }
+             var userDTO = {
+                userID: "<%= us.getUserID()%>",
+                userName: "<%= us.getUserName()%>",
+                userEmail: "<%= us.getUserEmail()%>"
+            };
+            
+            function showUserInfo() {
+                var userInfo = document.getElementById("user-info");
+                // Thay đổi nội dung thông tin người dùng ở đây bằng dữ liệu từ UserDTO
+//                document.getElementById("user-id").textContent = "User ID: " + userDTO.userID;
+//                document.getElementById("user-name").textContent = "User Name: " + userDTO.userName;
+//                document.getElementById("user-email").textContent = "User Email: " + userDTO.userEmail;
+
+                userInfo.style.display = "block"; // Hiển thị thông tin người dùng
+                var userID = userDTO.userID;
+                var userName = userDTO.userName;
+                var userEmail = userDTO.userEmail;
+
+                Swal.fire({
+                    title: 'User Information',
+                    html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
+                            + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
+                });
             }
         </script>
 
     </head>
     <body>
+       
         <div class="student-home">
             <div class="fptu-eng-1-parent">
                 <img
@@ -40,7 +84,7 @@
 
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-container">
+                        <div class="frame-container" onclick="submitForm()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="ViewBooking" />
                             </form>
@@ -48,18 +92,21 @@
                                 <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
                                 <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
                             </div>
-                            <div class="view-booking" onclick="submitForm()">View Booking</div>
+                            <div class="view-booking" >View Booking</div>
                         </div>
-                        <div class="frame-parent1">
+                        <div class="frame-parent1" onclick="submitFormRequest()">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="Request" />
                             </form>
                             <div class="bookedslot-wrapper">
                                 <div class="request">+</div>
                             </div>
-                           <div class="request" onclick="submitFormRequest()">Request</div>
+                            <div class="request">Request</div>
                         </div>
-                        <div class="frame-div">
+                        <div class="frame-div" onclick="submitFormLogout()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="Logout" />
+                            </form>
                             <div class="logout-wrapper">
                                 <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
                             </div>
@@ -67,8 +114,16 @@
                                 <p class="logout1">Logout</p>
                             </div>
                         </div>
+                     <div>
+                        <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
+                             onmouseover="showUserInfo()" onmouseout="hideUserInfo()" />
+                        <div id="user-info" style="display: none;">
+                            <p id="user-id">User ID: <span></span></p>
+                            <p id="user-name">User Name: <span></span></p>
+                            <p id="user-email">User Email: <span></span></p>
+                        </div>
                     </div>
-                    <img class="frame-item" alt="" src="./public/StudentHome/user.png" />
+                    </div>
                 </div>
             </div>
             <div class="searchfunction">

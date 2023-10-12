@@ -1,3 +1,10 @@
+<%-- 
+    Document   : login
+    Created on : Oct 10, 2023, 9:04:07 PM
+    Author     : Minh Khang
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -42,7 +49,17 @@
                         </div>
                     </a>
                 </div>
-                <div class="error-appear-here">Error appear here</div>
+
+                <div class="error-appear-here">
+                    <%
+                        String msg = (String) request.getAttribute("Error");
+                        if (msg != null) {
+                    %>
+                    <h2 id="123" style="color:red"><%=    msg%></h2>
+                    <%
+                        }
+                    %>
+                </div>
             </div>
             <div class="logo">
                 <img
