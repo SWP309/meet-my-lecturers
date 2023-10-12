@@ -47,16 +47,6 @@
 
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-container">
-                            <div class="bookedslot-wrapper">
-                                <img
-                                    class="bookedslot-icon"
-                                    alt=""
-                                    src="public/BookingView/bookedslot.svg"
-                                    />
-                            </div>
-                            <div class="view-booking">View Booking</div>
-                        </div>
                         <div class="frame-div">
                             <div class="bookedslot-wrapper">
                                 <div class="div">+</div>
@@ -80,15 +70,14 @@
             <div class="boxoftable">
                 <c:if test="${requestScope.LIST_BOOKING !=null}">
                     <c:if test="${not empty requestScope.LIST_BOOKING}">
-                        <table class="table table-hover table-primary">
+                        <table class="table table-hover table-primary table-rounded">
                             <thead>
                                 <tr class="table-danger">
                                     <th>No</th>
-                                    <th>subjectCode</th>
+                                    <th>Subject Code</th>
                                     <th>Lecturer's Name</th>
                                     <th>Start Time</th>
                                     <th>End Time</th>
-                                    <th>${bookings.bookingID}</th>
                                     <th>Cancel</th>
                                 </tr>
                             </thead>
@@ -110,11 +99,8 @@
                                             <span>${bookings.endTime}</span>
                                         </td>
                                         <td>
-                                            <span style="visibility: hidden;">${bookings.bookingID}</span>
-                                        </td>
-                                        <td>
                                             <input type="hidden" name="bookingID" value="${bookings.bookingID}">
-                                            <button type="submit" name="action" value="cancel">Cancel</button>
+                                            <button type="submit" name="action" value="cancel"class="btn btn-danger">Cancel</button>
                                         </td>
                                     </tr>
                                 </form>
@@ -131,5 +117,8 @@
                 <img class="back-icon" alt="" src="public/BookingView/back.svg" />
             </div>
         </div>
+        <h3>
+            ${requestScope.ERROR}
+        </h3> 
     </body>
 </html>
