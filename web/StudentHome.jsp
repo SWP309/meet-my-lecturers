@@ -1,11 +1,10 @@
-<%-- 
-    Document   : StudentHome
-    Created on : Oct 10, 2023, 9:25:31 PM
-    Author     : Minh Khang
---%>
-
 <%@page import="sample.users.UserDTO"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@page import="java.util.List"%>
+<%@page import="sample.bookings.BookingDTO"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,40 +24,50 @@
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
             />
-         <%
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+
+
+        <%
+
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            if (us != null) {
-            } else {
-                response.sendRedirect("MainController");
-            }
         %>
         <script>
-            function submitForm() {
-                var form = document.querySelector('.frame-container form');
-                form.submit();
+            function confirmCancel(bookingID) {
+                if (confirm('Are you sure to cancel this booking')) {
+                    // S? d?ng bi?n `bookingID` ? ?‚y n?u c?n
+                    window.location.href = 'MainController?action=cancel&bookingID=' + bookingID;
+                }
             }
-            function submitFormRequest() {
-                var form = document.querySelector('.frame-parent1 form');
+            function submitForm() {
+                var form = document.querySelector('.bookingview form');
                 form.submit();
             }
             function submitFormLogout() {
-                var form = document.querySelector('.frame-div form');
+                var form = document.querySelector('.logout form');
                 form.submit();
             }
-             var userDTO = {
+            function submitFormRequest() {
+                var form = document.querySelector('.request form');
+                form.submit();
+            }
+            var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
                 userEmail: "<%= us.getUserEmail()%>"
             };
-            
             function showUserInfo() {
                 var userInfo = document.getElementById("user-info");
-                // Thay ƒë·ªïi n·ªôi dung th√¥ng tin ng∆∞·ªùi d√πng ·ªü ƒë√¢y b·∫±ng d·ªØ li·ªáu t·ª´ UserDTO
-//                document.getElementById("user-id").textContent = "User ID: " + userDTO.userID;
-//                document.getElementById("user-name").textContent = "User Name: " + userDTO.userName;
-//                document.getElementById("user-email").textContent = "User Email: " + userDTO.userEmail;
+                if (userInfo.style.display === "none" || userInfo.style.display === "") {
+                    userInfo.style.display = "block"; // Hi?n th? thÙng tin khi ???c nh?p chu?t
+                } else {
+                    userInfo.style.display = "none";
+                }
 
-                userInfo.style.display = "block"; // Hi·ªÉn th·ªã th√¥ng tin ng∆∞·ªùi d√πng
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
@@ -69,22 +78,43 @@
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
-        </script>
 
+//
+//            function hideUserInfo() {
+//                var userInfo = document.getElementById("user-info");
+//                userInfo.style.display = "none"; // ?n thÙng tin ng??i d˘ng khi r?i chu?t ra kh?i hÏnh ?nh
+//            }
+            function confirmCancel() {
+                var result = confirm("Are you sure about cancel your booking ?");
+                if (result) {
+                    // N?u ng??i d˘ng ch?n OK, chuy?n ??n trang MainController ?? x? l˝ h‡nh ??ng "cancel".
+                    // VÌ d?:
+                    window.location.href = "MainController?action=cancel&bookingID=" + document.querySelector('[name="bookingID"]').value;
+                } else {
+                    // N?u ng??i d˘ng ch?n Cancel, khÙng l‡m gÏ c?.
+//                    alert("Booking cancel canceled!"); // Hi?n th? thÙng b·o cho ng??i d˘ng
+                    // N?u ng??i d˘ng ch?n Cancel, ng?n ch?n chuy?n h??ng trang m?c ??nh sau ?Û.
+                    event.preventDefault();
+                }
+            }
+            function submitFormBack() {
+                var form = document.querySelector('.backbutton form');
+                form.submit();
+            }
+        </script>
     </head>
     <body>
-       
         <div class="student-home">
             <div class="fptu-eng-1-parent">
                 <img
                     class="fptu-eng-1-icon"
                     alt=""
-                    src="./public/StudentHome/2021fptueng-1@2x.png"
+                    src="public/BookingView/2021fptueng-1@2x.png"
                     />
 
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-container" onclick="submitForm()">
+                        <div class="frame-div bookingview" onclick="submitForm()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="ViewBooking" />
                             </form>
@@ -94,16 +124,14 @@
                             </div>
                             <div class="view-booking" >View Booking</div>
                         </div>
-                        <div class="frame-parent1" onclick="submitFormRequest()">
+                        <div class="frame-div request" onclick="submitFormRequest()">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="Request" />
                             </form>
-                            <div class="bookedslot-wrapper">
-                                <div class="request">+</div>
-                            </div>
-                            <div class="request">Request</div>
+
+                            <i class="material-icons">mail_outline</i> Request
                         </div>
-                        <div class="frame-div" onclick="submitFormLogout()">
+                        <div class="frame-div logout" onclick="submitFormLogout()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
@@ -114,70 +142,32 @@
                                 <p class="logout1">Logout</p>
                             </div>
                         </div>
-                     <div>
+                    </div>
+                    <div>
                         <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
-                             onmouseover="showUserInfo()" onmouseout="hideUserInfo()" />
+                             onclick="showUserInfo()" />
                         <div id="user-info" style="display: none;">
-                            <p id="user-id">User ID: <span></span></p>
-                            <p id="user-name">User Name: <span></span></p>
-                            <p id="user-email">User Email: <span></span></p>
+                            <p id="user-id"> </p>
+                            <p id="user-name"></p>
+                            <p id="user-email"></p>
                         </div>
                     </div>
-                    </div>
+
                 </div>
             </div>
-            <div class="searchfunction">
-                <img class="bysub-icon" alt="" src="./public/StudentHome/bysub.svg" />
 
-                <img class="bysemester-icon" alt="" src="./public/StudentHome/bysemester.svg" />
 
-                <div class="search">
-                    <div class="search-child"></div>
-                    <div class="search1">Search</div>
-                </div>
-                <img class="searchbylec-icon" alt="" src="./public/StudentHome/searchbylec.svg" />
-
-                <div class="lecture-4">
-                    <div class="lamnn15">LamNN15</div>
-                    <div class="swe391">SWE391</div>
-                    <div class="fall23">Fall23</div>
-                </div>
-            </div>
-            <div class="rectangle-group">
-                <div class="group-child"></div>
-                <div class="lecture">
-                    <div class="lecture-1">
-                        <div class="lamnn151">LamNN15</div>
-                        <div class="div1">1.</div>
-                        <div class="swp391">SWP391</div>
-                        <div class="fall231">Fall23</div>
-                    </div>
-                    <div class="lecture-2">
-                        <div class="lamnn151">LamNN15</div>
-                        <div class="div1">2.</div>
-                        <div class="swp391">SWP391</div>
-                        <div class="fall231">Fall23</div>
-                    </div>
-                    <div class="lecture-3">
-                        <div class="lamnn151">LamNN15</div>
-                        <div class="div1">3.</div>
-                        <div class="swp391">SWP391</div>
-                        <div class="fall231">Fall23</div>
-                    </div>
-                    <div class="lecture-41">
-                        <div class="lamnn151">LamNN15</div>
-                        <div class="div1">4.</div>
-                        <div class="swp391">SWP391</div>
-                        <div class="fall231">Fall23</div>
-                    </div>
-                    <div class="lecture-5">
-                        <div class="lamnn151">LamNN15</div>
-                        <div class="div1">5.</div>
-                        <div class="swp391">SWP391</div>
-                        <div class="fall231">Fall23</div>
-                    </div>
-                </div>
-            </div>
         </div>
-    </body>
+        <div class="backbutton" onclick="submitFormBack()">
+            <form action="MainController" method="POST" style="display: none;">
+                <input type="hidden" name="action" value="back" />
+            </form>
+            <div class="back" id="back-button">Back</div>
+            <img class="back-icon" alt="" src="public/BookingView/back.svg" />
+        </div>
+    </div>
+    <h3>
+        ${requestScope.ERROR}
+    </h3> 
+</body>
 </html>
