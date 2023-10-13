@@ -44,7 +44,7 @@
                 }
             }
             function submitFormLogout() {
-                var form = document.querySelector('.frame-div form')
+                var form = document.querySelector('.logout form')
                 form.submit();
             }
             function submitFormRequest() {
@@ -117,7 +117,7 @@
 
                             <i class="material-icons">mail_outline</i> Request
                         </div>
-                        <div class="frame-div" onclick="submitFormLogout()">
+                        <div class="frame-div logout" onclick="submitFormLogout()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
