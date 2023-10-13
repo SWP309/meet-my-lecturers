@@ -59,7 +59,7 @@
             function showUserInfo() {
                 var userInfo = document.getElementById("user-info");
                 if (userInfo.style.display === "none" || userInfo.style.display === "") {
-                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
                 } else {
                     userInfo.style.display = "none";
                 }
@@ -119,7 +119,7 @@
                                 <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
                             </div>
                             <div class="request">
-                                <p class="logout1">Logout</p>
+<p class="logout1">Logout</p>
                             </div>
                         </div>
                     </div>
@@ -180,7 +180,7 @@
                             </c:forEach>
 
                             </tbody>
-                        </table>
+</table>
 
                     </c:if>
                 </c:if>

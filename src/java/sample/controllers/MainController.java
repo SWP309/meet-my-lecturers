@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MainController extends HttpServlet {
 
-    private static final String LOGIN_PAGE = "login.jsp";
     private static final String LOGIN_BY_GOOGLE = "login";
     private static final String LOGIN_BY_GOOGLE_ACTION = "LoginServlet";
 
@@ -28,12 +27,20 @@ public class MainController extends HttpServlet {
 
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
-
+    private static final String BACK_TO_REQUEST = "BackToRequest";
+    
     private static final String CREATE_REQUEST = "Create request";
     private static final String REQUEST_ACTION = "CreateRequestServlet";
 
     private static final String VIEWBOOKING = "ViewBooking";
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
+    
+    private static final String VIEWTIMETABLE = "View Timetable";
+    private static final String VIEW_TIMETABLE_CONTROLLER = "ViewTimetableServlet";
+    
+    private static final String VIEW_LECTURER = "ViewAllLecturers";
+    private static final String VIEW_LECTURER_CONTROLLER = "ViewLecturerServlet";
+    
 
     private static final String CANCEL = "cancel";
     private static final String CANCEL_CONTROLLER = "CancelController";
@@ -70,6 +77,12 @@ public class MainController extends HttpServlet {
                 url = REQUEST_ACTION;
             } else if (VIEWBOOKING.equals(action)) {
                 url = VIEW_BOOKING_CONTROLLER;
+            } else if (VIEWTIMETABLE.equals(action)) {
+                url = VIEW_TIMETABLE_CONTROLLER;
+            } else if (BACK_TO_REQUEST.equals(action)) {
+                url = REQUEST_ACTION;
+            } else if (VIEW_LECTURER.equals(action)) {
+                url = VIEW_LECTURER_CONTROLLER;
             } else if (REQUEST.equals(action)) {
                 url = REQUEST_PAGE;
             } else if (LOGOUT.equals(action)) {

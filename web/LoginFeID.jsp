@@ -24,12 +24,6 @@
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
             />
-        <script>
-            function submitFormLogout() {
-                var form = document.querySelector('.frame-div form')
-                form.submit();
-            }
-        </script>
     </head>
     <body>
         <div class="login-feid">

@@ -1,3 +1,8 @@
+<%-- 
+    Document   : StudentHome
+    Created on : Oct 10, 2023, 9:25:31 PM
+    Author     : Minh Khang
+--%>
 <%@page import="sample.users.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -61,7 +66,7 @@
                 userEmail: "<%= us.getUserEmail()%>"
             };
             function showUserInfo() {
-                var userInfo = document.getElementById("user-info");
+var userInfo = document.getElementById("user-info");
                 if (userInfo.style.display === "none" || userInfo.style.display === "") {
                     userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
                 } else {
@@ -121,7 +126,7 @@
                             <div class="bookedslot-wrapper">
                                 <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
                                 <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
-                            </div>
+</div>
                             <div class="view-booking" >View Booking</div>
                         </div>
                         <div class="frame-div request" onclick="submitFormRequest()">
@@ -171,3 +176,4 @@
     </h3> 
 </body>
 </html>
+
