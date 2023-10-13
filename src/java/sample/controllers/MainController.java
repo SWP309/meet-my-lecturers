@@ -39,7 +39,7 @@ public class MainController extends HttpServlet {
     private static final String CANCEL_CONTROLLER = "CancelController";
 
     private static final String LOGOUT = "Logout";
-    private static final String LOGOUT_ACTION = "LogoutServlet";
+    private static final String LOGOUT_ACTION = "LoginFeID.jsp";
     
      private static final String BACK = "back";
 

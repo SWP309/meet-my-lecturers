@@ -48,7 +48,7 @@
                 form.submit();
             }
             function submitFormRequest() {
-                var form = document.querySelector('.frame-parent1 form');
+                var form = document.querySelector('.request form');
                 form.submit();
             }
             var userDTO = {
@@ -110,7 +110,7 @@
 
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-div" onclick="submitFormRequest()">
+                        <div class="frame-div request" onclick="submitFormRequest()">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="Request" />
                             </form>
