@@ -102,11 +102,16 @@
   justify-content: center;
   gap: 10px;
 }
+
+.error-appear-here > h2{
+    font-size: 15px
+        
+}
+
 .error-appear-here {
   position: absolute;
-  top: 372px;
+  top: 320px;
   left: 101px;
-  font-size: 36px;
   font-family: Lexend;
   color: red;
   display: inline-block;
