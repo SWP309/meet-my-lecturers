@@ -44,26 +44,26 @@
                 }
             }
             function submitFormLogout() {
-                var form = document.querySelector('.logout form')
+                var form = document.querySelector('.logout form');
                 form.submit();
             }
             function submitFormRequest() {
                 var form = document.querySelector('.request form');
                 form.submit();
             }
-            var userDTO = {
+             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
                 userEmail: "<%= us.getUserEmail()%>"
             };
             function showUserInfo() {
                 var userInfo = document.getElementById("user-info");
-                // Thay ??i n?i dung thông tin ng??i dùng ? ?ây b?ng d? li?u t? UserDTO
-//                document.getElementById("user-id").textContent = "User ID: " + userDTO.userID;
-//                document.getElementById("user-name").textContent = "User Name: " + userDTO.userName;
-//                document.getElementById("user-email").textContent = "User Email: " + userDTO.userEmail;
+                if (userInfo.style.display === "none" || userInfo.style.display === "") {
+                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                } else {
+                    userInfo.style.display = "none";
+                }
 
-                userInfo.style.display = "block"; // Hi?n th? thông tin ng??i dùng
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
@@ -73,13 +73,7 @@
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
-            }
-
-
-            function hideUserInfo() {
-                var userInfo = document.getElementById("user-info");
-                userInfo.style.display = "none"; // ?n thông tin ng??i dùng khi r?i chu?t ra kh?i hình ?nh
-            }
+            }            
             function confirmCancel() {
                 var result = confirm("Are you sure about cancel your booking ?");
                 if (result) {
@@ -94,7 +88,7 @@
                 }
             }
             function submitFormBack() {
-                var form = document.querySelector('.backbutton form')
+                var form = document.querySelector('.backbutton form');
                 form.submit();
             }
         </script>
@@ -129,15 +123,16 @@
                             </div>
                         </div>
                     </div>
-                    <div>
+                     <div>
                         <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
-                             onmouseover="showUserInfo()" onmouseout="hideUserInfo()" />
+                             onclick="showUserInfo()" />
                         <div id="user-info" style="display: none;">
-                            <p id="user-id">User ID: <span></span></p>
-                            <p id="user-name">User Name: <span></span></p>
-                            <p id="user-email">User Email: <span></span></p>
+                            <p id="user-id"> </p>
+                            <p id="user-name"></p>
+                            <p id="user-email"></p>
                         </div>
                     </div>
+
 
                 </div>
             </div>
