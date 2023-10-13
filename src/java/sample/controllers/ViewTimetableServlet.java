@@ -7,56 +7,50 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sample.requests.RequestDAO;
-import sample.requests.RequestDTO;
+import sample.slots.SlotDTO;
+import sample.subjects.SubjectDTO;
+import sample.timetables.TimetableDAO;
+import sample.timetables.TimetableDTO;
 
 /**
  *
  * @author CHIBAO
  */
-public class CreateRequestServlet extends HttpServlet {
-
-    private static final String ERROR = "request.jsp";
-    private static final String SUCCESS = "StudentHome.html";
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+public class ViewTimetableServlet extends HttpServlet { 
+    
+    public final String ERROR = "request.jsp";
+    public final String SUCCESS = "TimetableView.jsp"; 
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String lecturer = request.getParameter("txtLecturer");
-            String subjectCode = request.getParameter("txtSubjectCode");
-            String semester = request.getParameter("txtSemester");
-            String startTime = request.getParameter("txtStartTime");
-            String endTime = request.getParameter("txtEndTime");
-            String description = request.getParameter("txtDescription");
-            RequestDAO requestDAO = new RequestDAO();
-            RequestDTO requestDTO = new RequestDTO(false, subjectCode, //lam sao de ID tu dong tao va tang
-                    startTime, endTime, description, startTime, lecturer);   //phai lay dc student ID dua vao luc dang nhap
-            boolean checkCreated = requestDAO.createARequest(requestDTO);
-            if (checkCreated) {
+            String lecturerID = request.getParameter("txtLecturer");
+            String semesterID = request.getParameter("txtSemester");
+            TimetableDAO timetableDAO = new TimetableDAO();
+            timetableDAO.getListTimetables(lecturerID, semesterID);
+            List<TimetableDTO> timetables = timetableDAO.getTimetables();
+            List<SubjectDTO> subjects = timetableDAO.getSubjects();
+            List<SlotDTO> slots = timetableDAO.getSlots();
+            if (timetables != null) {
+                request.setAttribute("TB_TIMETABLES", timetables); 
+                request.setAttribute("TB_SUBJECTS", subjects);
+                request.setAttribute("TB_SLOTS", slots);
                 url = SUCCESS;
+            } else {
+                request.setAttribute("TB_MESSAGE", "No line matched!!Please try checking again LecturerID at View All Lecturer at the top!!");
             }
-        } catch (SQLException | ClassNotFoundException | ParseException ex) {
-            log("Error at CreateRequestServlet" + ex.toString());
-        } finally {
+        } catch (ClassNotFoundException | SQLException ex) {
+            log("Error at ViewTimetableServlet: " + ex.toString());
+        }  finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

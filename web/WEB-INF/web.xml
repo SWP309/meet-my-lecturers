@@ -17,6 +17,14 @@
         <servlet-class>sample.controllers.BookingController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ViewTimetableServlet</servlet-name>
+        <servlet-class>sample.controllers.ViewTimetableServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewLecturerServlet</servlet-name>
+        <servlet-class>sample.controllers.ViewLecturerServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>LoginByFeID</servlet-name>
         <servlet-class>sample.controllers.LoginByFeID</servlet-class>
     </servlet>
@@ -39,6 +47,14 @@
     <servlet-mapping>
         <servlet-name>BookingController</servlet-name>
         <url-pattern>/BookingController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewTimetableServlet</servlet-name>
+        <url-pattern>/ViewTimetableServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewLecturerServlet</servlet-name>
+        <url-pattern>/ViewLecturerServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginByFeID</servlet-name>

@@ -49,6 +49,7 @@ public class BookingDTO {
 
     public String getLectureName() {
         return lectureName;
+
     }
 
     public void setLectureName(String lectureName) {
@@ -86,7 +87,4 @@ public class BookingDTO {
     public void setBookingID(String bookingID) {
         this.bookingID = bookingID;
     }
-
-    
-
 }
