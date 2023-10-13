@@ -11,7 +11,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-        <link rel="stylesheet" href="./BookingView.css" />
+        <link rel="stylesheet" href="./CreatedView.css" />
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
@@ -44,7 +44,7 @@
                 }
             }
             function submitFormLogout() {
-                var form = document.querySelector('.logout form')
+                var form = document.querySelector('.frame-div form')
                 form.submit();
             }
             function submitFormRequest() {
@@ -117,7 +117,7 @@
 
                             <i class="material-icons">mail_outline</i> Request
                         </div>
-                        <div class="frame-div logout" onclick="submitFormLogout()">
+                        <div class="frame-div" onclick="submitFormLogout()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
@@ -143,52 +143,44 @@
             </div>
 
 
-            <div class="boxoftable">
-                <c:if test="${requestScope.LIST_BOOKING !=null}">
-                    <c:if test="${not empty requestScope.LIST_BOOKING}">
-                        <table class="table table-hover table-primary table-rounded">
-                            <thead>
-                                <tr class="table-danger">
-                                    <th>No</th>
-                                    <th>Subject Code</th>
-                                    <th>Lecturer's Name</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Cancel</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <form action="MainController" method="POST">
-                                <c:forEach var="bookings" varStatus="counter" items="${requestScope.LIST_BOOKING}">
-                                    <tr>
-                                        <td>${counter.count}</td>
-                                        <td>
-                                            <span>${bookings.subjectCode}</span>
-                                        </td>
-                                        <td>
-                                            <span>${bookings.lectureName}</span>
-                                        </td>
-                                        <td>
-                                            <span>${bookings.startTime}</span>
-                                        </td>
-                                        <td>
-                                            <span>${bookings.endTime}</span>
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="bookingID" value="${bookings.bookingID}">
-                                            <button type="submit" class="btn btn-danger center-content" onclick="confirmCancel()" > 
-                                                <i class="material-icons">cancel</i> Cancel</button>
+            <div class="table">
+        <div class="slot">
+            <div class="infor">
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+            </div>
+            <div class="editbutton">
+                <h1>adwadaw</h1>
+            </div>
+            <div class="view">
+               <h1>adwadaw</h1>
+            </div>
+        </div>
+                
+                
+            <div class="table">
+        <div class="slot">
+            <div class="infor">
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+            </div>
+            <div class="editbutton">
+                <h1>adwadaw</h1>
+            </div>
+            <div class="view">
+               <h1>adwadaw</h1>
+            </div>
+        </div>
+        <!-- Thêm các ph?n t? khác t??ng t? cho các slot khác -->
+    </div>
 
-                                        </td>
-                                    </tr>
-                                </form>
-                            </c:forEach>
-
-                            </tbody>
-                        </table>
-
-                    </c:if>
-                </c:if>
+             
             </div>
             <div class="backbutton" onclick="submitFormBack()">
                 <form action="MainController" method="POST" style="display: none;">

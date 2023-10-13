@@ -40,8 +40,11 @@ public class MainController extends HttpServlet {
 
     private static final String LOGOUT = "Logout";
     private static final String LOGOUT_ACTION = "LoginFeID.jsp";
-    
-     private static final String BACK = "back";
+
+    private static final String CREATED_PAGE = "CreatedView.jsp";
+
+
+    private static final String BACK = "back";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -75,6 +78,8 @@ public class MainController extends HttpServlet {
                 url = CANCEL_CONTROLLER;
             } else if (BACK.equals(action)) {
                 url = STUDENT_PAGE_ACTION;
+            } else if (LOGOUT.equals(action)) {
+                url = LOGIN_BY_FEID_ACTION;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
