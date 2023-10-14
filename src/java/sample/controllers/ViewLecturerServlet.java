@@ -1,62 +1,42 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sample.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sample.requests.RequestDAO;
-import sample.requests.RequestDTO;
+import sample.users.UserDAO;
+import sample.users.UserDTO;
 
-/**
- *
- * @author CHIBAO
- */
-public class CreateRequestServlet extends HttpServlet {
+public class ViewLecturerServlet extends HttpServlet {
 
-    private static final String ERROR = "request.jsp";
-    private static final String SUCCESS = "StudentHome.html";
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private final String ERROR = "request.jsp";
+    private final String SUCCESS = "ViewLecturer.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String lecturer = request.getParameter("txtLecturer");
-            String subjectCode = request.getParameter("txtSubjectCode");
-            String semester = request.getParameter("txtSemester");
-            String startTime = request.getParameter("txtStartTime");
-            String endTime = request.getParameter("txtEndTime");
-            String description = request.getParameter("txtDescription");
-            RequestDAO requestDAO = new RequestDAO();
-            RequestDTO requestDTO = new RequestDTO(false, subjectCode, //lam sao de ID tu dong tao va tang
-                    startTime, endTime, description, startTime, lecturer);   //phai lay dc student ID dua vao luc dang nhap
-            boolean checkCreated = requestDAO.createARequest(requestDTO);
-            if (checkCreated) {
-                url = SUCCESS;
+            UserDAO userDAO = new UserDAO();
+            userDAO.getListLecturers();
+            List<UserDTO> lecturers = userDAO.getLecturers();
+            for (UserDTO lecturer : lecturers) {
+                System.out.println("ko");
             }
-        } catch (SQLException | ClassNotFoundException | ParseException ex) {
-            log("Error at CreateRequestServlet" + ex.toString());
-        } finally {
+            if (lecturers != null) {
+                request.setAttribute("LIST_LECTURERS", lecturers); 
+                url = SUCCESS;
+            } else {
+                request.setAttribute("MESSAGE", "System has no Lecturer!!!");
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            log("Error at ViewLecturerServlet: " + ex.toString());
+        }  finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

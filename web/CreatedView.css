@@ -32,6 +32,16 @@ td button {
     /*        border-spacing: 0 10px;  Điều chỉnh giá trị 10px để thay đổi khoảng cách giữa các cột */
 
 }
+.table {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+}
+
+.slot {
+    border: 1px solid #ddd;
+    padding: 20px;
+}
 
 .table-rounded th, .table-rounded td {
     border-radius: 0;
@@ -151,7 +161,7 @@ td button {
     height: 26px;
 }
 .back-icon {
-position: absolute;
+    position: absolute;
     height: 94.29%;
     width: 25.99%;
     top: 8.57%;

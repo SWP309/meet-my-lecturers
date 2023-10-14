@@ -1,64 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sample.controllers;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
+import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sample.requests.RequestDAO;
-import sample.requests.RequestDTO;
+import javax.servlet.http.HttpSession;
+import sample.bookings.BookingDAO;
+import sample.bookings.BookingDTO;
+import sample.users.UserDTO;
 
-/**
- *
- * @author CHIBAO
- */
-public class CreateRequestServlet extends HttpServlet {
+@WebServlet(name = "BookingController", urlPatterns = {"/BookingController"})
+public class CreatedViewController extends HttpServlet {
 
-    private static final String ERROR = "request.jsp";
-    private static final String SUCCESS = "StudentHome.html";
+    private static final String ERROR = "BookingView.jsp";
+    private static final String SUCCESS = "BookingView.jsp";
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String lecturer = request.getParameter("txtLecturer");
-            String subjectCode = request.getParameter("txtSubjectCode");
-            String semester = request.getParameter("txtSemester");
-            String startTime = request.getParameter("txtStartTime");
-            String endTime = request.getParameter("txtEndTime");
-            String description = request.getParameter("txtDescription");
-            RequestDAO requestDAO = new RequestDAO();
-            RequestDTO requestDTO = new RequestDTO(false, subjectCode, //lam sao de ID tu dong tao va tang
-                    startTime, endTime, description, startTime, lecturer);   //phai lay dc student ID dua vao luc dang nhap
-            boolean checkCreated = requestDAO.createARequest(requestDTO);
-            if (checkCreated) {
+            HttpSession session = request.getSession();
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            String email=request.getParameter(us.getUserEmail());
+            BookingDAO dao = new BookingDAO();
+            List<BookingDTO> listBooking = dao.Getlistbooking(us.getUserEmail());
+            System.out.println(listBooking.toString());
+            if (listBooking.size() > 0) {
+                request.setAttribute("LIST_BOOKING", listBooking);
                 url = SUCCESS;
             }
-        } catch (SQLException | ClassNotFoundException | ParseException ex) {
-            log("Error at CreateRequestServlet" + ex.toString());
+        } catch (Exception e) {
+            log("Error at SearchController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-
     }
 
+  
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

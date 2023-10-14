@@ -1,8 +1,3 @@
-<%-- 
-    Document   : StudentHome
-    Created on : Oct 10, 2023, 9:25:31 PM
-    Author     : Minh Khang
---%>
 <%@page import="sample.users.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -16,7 +11,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-        <link rel="stylesheet" href="./StudentHome.css" />
+        <link rel="stylesheet" href="./CreatedView.css" />
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
@@ -48,12 +43,8 @@
                     window.location.href = 'MainController?action=cancel&bookingID=' + bookingID;
                 }
             }
-            function submitForm() {
-                var form = document.querySelector('.bookingview form');
-                form.submit();
-            }
             function submitFormLogout() {
-                var form = document.querySelector('.logout form');
+                var form = document.querySelector('.frame-div form')
                 form.submit();
             }
             function submitFormRequest() {
@@ -66,13 +57,13 @@
                 userEmail: "<%= us.getUserEmail()%>"
             };
             function showUserInfo() {
-var userInfo = document.getElementById("user-info");
-                if (userInfo.style.display === "none" || userInfo.style.display === "") {
-                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
-                } else {
-                    userInfo.style.display = "none";
-                }
+                var userInfo = document.getElementById("user-info");
+                // Thay ??i n?i dung thông tin ng??i dùng ? ?ây b?ng d? li?u t? UserDTO
+//                document.getElementById("user-id").textContent = "User ID: " + userDTO.userID;
+//                document.getElementById("user-name").textContent = "User Name: " + userDTO.userName;
+//                document.getElementById("user-email").textContent = "User Email: " + userDTO.userEmail;
 
+                userInfo.style.display = "block"; // Hi?n th? thông tin ng??i dùng
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
@@ -84,11 +75,11 @@ var userInfo = document.getElementById("user-info");
                 });
             }
 
-//
-//            function hideUserInfo() {
-//                var userInfo = document.getElementById("user-info");
-//                userInfo.style.display = "none"; // ?n thông tin ng??i dùng khi r?i chu?t ra kh?i hình ?nh
-//            }
+
+            function hideUserInfo() {
+                var userInfo = document.getElementById("user-info");
+                userInfo.style.display = "none"; // ?n thông tin ng??i dùng khi r?i chu?t ra kh?i hình ?nh
+            }
             function confirmCancel() {
                 var result = confirm("Are you sure about cancel your booking ?");
                 if (result) {
@@ -103,13 +94,13 @@ var userInfo = document.getElementById("user-info");
                 }
             }
             function submitFormBack() {
-                var form = document.querySelector('.backbutton form');
+                var form = document.querySelector('.backbutton form')
                 form.submit();
             }
         </script>
     </head>
     <body>
-        <div class="student-home">
+        <div class="student-viewbookedslot">
             <div class="fptu-eng-1-parent">
                 <img
                     class="fptu-eng-1-icon"
@@ -119,16 +110,6 @@ var userInfo = document.getElementById("user-info");
 
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-div bookingview" onclick="submitForm()">
-                            <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="ViewBooking" />
-                            </form>
-                            <div class="bookedslot-wrapper">
-                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
-                                <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
-</div>
-                            <div class="view-booking" >View Booking</div>
-                        </div>
                         <div class="frame-div request" onclick="submitFormRequest()">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="Request" />
@@ -136,7 +117,7 @@ var userInfo = document.getElementById("user-info");
 
                             <i class="material-icons">mail_outline</i> Request
                         </div>
-                        <div class="frame-div logout" onclick="submitFormLogout()">
+                        <div class="frame-div" onclick="submitFormLogout()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
@@ -150,11 +131,11 @@ var userInfo = document.getElementById("user-info");
                     </div>
                     <div>
                         <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
-                             onclick="showUserInfo()" />
+                             onmouseover="showUserInfo()" onmouseout="hideUserInfo()" />
                         <div id="user-info" style="display: none;">
-                            <p id="user-id"> </p>
-                            <p id="user-name"></p>
-                            <p id="user-email"></p>
+                            <p id="user-id">User ID: <span></span></p>
+                            <p id="user-name">User Name: <span></span></p>
+                            <p id="user-email">User Email: <span></span></p>
                         </div>
                     </div>
 
@@ -162,18 +143,55 @@ var userInfo = document.getElementById("user-info");
             </div>
 
 
+            <div class="table">
+        <div class="slot">
+            <div class="infor">
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+            </div>
+            <div class="editbutton">
+                <h1>adwadaw</h1>
+            </div>
+            <div class="view">
+               <h1>adwadaw</h1>
+            </div>
         </div>
-        <div class="backbutton" onclick="submitFormBack()">
-            <form action="MainController" method="POST" style="display: none;">
-                <input type="hidden" name="action" value="back" />
-            </form>
-            <div class="back" id="back-button">Back</div>
-            <img class="back-icon" alt="" src="public/BookingView/back.svg" />
+                
+                
+            <div class="table">
+        <div class="slot">
+            <div class="infor">
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+                <h1>adwadaw</h1>
+            </div>
+            <div class="editbutton">
+                <h1>adwadaw</h1>
+            </div>
+            <div class="view">
+               <h1>adwadaw</h1>
+            </div>
         </div>
+        <!-- Thêm các ph?n t? khác t??ng t? cho các slot khác -->
     </div>
-    <h3>
-        ${requestScope.ERROR}
-    </h3> 
-</body>
-</html>
 
+             
+            </div>
+            <div class="backbutton" onclick="submitFormBack()">
+                <form action="MainController" method="POST" style="display: none;">
+                    <input type="hidden" name="action" value="back" />
+                </form>
+                <div class="back" id="back-button">Back</div>
+                <img class="back-icon" alt="" src="public/BookingView/back.svg" />
+            </div>
+        </div>
+        <h3>
+            ${requestScope.ERROR}
+        </h3> 
+    </body>
+</html>
