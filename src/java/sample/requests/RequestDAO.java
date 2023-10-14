@@ -26,8 +26,8 @@ public class RequestDAO {
             stm.setString(2, requestDTO.getSubjectCode());
             String start = requestDTO.getStartTime();
             String end = requestDTO.getEndTime();
-            SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy HH:mm");
             Date starts = format1.parse(start);
             Date starts2 = format2.parse(end);
             stm.setDate(3, (java.sql.Date) starts);//lam sao de dong nhat kieu du lieu

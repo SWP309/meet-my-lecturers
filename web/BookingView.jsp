@@ -27,51 +27,91 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+
+
+        <%
+
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+        %>
         <script>
+            function confirmCancel(bookingID) {
+                if (confirm('Are you sure to cancel this booking')) {
+                    // S? d?ng bi?n `bookingID` ? ?ây n?u c?n
+                    window.location.href = 'MainController?action=cancel&bookingID=' + bookingID;
+                }
+            }
             function submitFormLogout() {
-                var form = document.querySelector('.frame-div form')
+                var form = document.querySelector('.logout form');
+                form.submit();
+            }
+            function submitFormRequest() {
+                var form = document.querySelector('.request form');
+                form.submit();
+            }
+             var userDTO = {
+                userID: "<%= us.getUserID()%>",
+                userName: "<%= us.getUserName()%>",
+                userEmail: "<%= us.getUserEmail()%>"
+            };
+            function showUserInfo() {
+                var userInfo = document.getElementById("user-info");
+                if (userInfo.style.display === "none" || userInfo.style.display === "") {
+userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                } else {
+                    userInfo.style.display = "none";
+                }
+
+                var userID = userDTO.userID;
+                var userName = userDTO.userName;
+                var userEmail = userDTO.userEmail;
+
+                Swal.fire({
+                    title: 'User Information',
+                    html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
+                            + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
+                });
+            }            
+            function confirmCancel() {
+                var result = confirm("Are you sure about cancel your booking ?");
+                if (result) {
+                    // N?u ng??i dùng ch?n OK, chuy?n ??n trang MainController ?? x? lý hành ??ng "cancel".
+                    // Ví d?:
+                    window.location.href = "MainController?action=cancel&bookingID=" + document.querySelector('[name="bookingID"]').value;
+                } else {
+                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
+//                    alert("Booking cancel canceled!"); // Hi?n th? thông báo cho ng??i dùng
+                    // N?u ng??i dùng ch?n Cancel, ng?n ch?n chuy?n h??ng trang m?c ??nh sau ?ó.
+                    event.preventDefault();
+                }
+            }
+            function submitFormBack() {
+                var form = document.querySelector('.backbutton form');
                 form.submit();
             }
         </script>
     </head>
     <body>
-        <%
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            if (us != null) {
-            } else {
-                response.sendRedirect("MainController");
-            }
-        %>
         <div class="student-viewbookedslot">
             <div class="fptu-eng-1-parent">
                 <img
                     class="fptu-eng-1-icon"
                     alt=""
-                    src="./public/StudentHome/2021fptueng-1@2x.png"
+                    src="public/BookingView/2021fptueng-1@2x.png"
                     />
 
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-container" onclick="submitForm()">
-                            <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="ViewBooking" />
-                            </form>
-                            <div class="bookedslot-wrapper">
-                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
-                                <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
-                            </div>
-                            <div class="view-booking" >View Booking</div>
-                        </div>
-                        <div class="frame-parent1" onclick="submitFormRequest()">
+                        <div class="frame-div request" onclick="submitFormRequest()">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="Request" />
                             </form>
-                            <div class="bookedslot-wrapper">
-                                <div class="request">+</div>
-                            </div>
-                            <div class="request">Request</div>
+
+                            <i class="material-icons">mail_outline</i> Request
                         </div>
-                        <div class="frame-div" onclick="submitFormLogout()">
+                        <div class="frame-div logout" onclick="submitFormLogout()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
@@ -79,11 +119,21 @@
                                 <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
                             </div>
                             <div class="request">
-                                <p class="logout1">Logout</p>
+<p class="logout1">Logout</p>
                             </div>
                         </div>
                     </div>
-                    <img class="frame-item" alt="" src="./public/StudentHome/user.png" />
+                     <div>
+                        <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
+                             onclick="showUserInfo()" />
+                        <div id="user-info" style="display: none;">
+                            <p id="user-id"> </p>
+                            <p id="user-name"></p>
+                            <p id="user-email"></p>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
 
@@ -91,11 +141,11 @@
             <div class="boxoftable">
                 <c:if test="${requestScope.LIST_BOOKING !=null}">
                     <c:if test="${not empty requestScope.LIST_BOOKING}">
-                        <table class="table table-hover table-primary">
+                        <table class="table table-hover table-primary table-rounded">
                             <thead>
                                 <tr class="table-danger">
                                     <th>No</th>
-                                    <th>subjectCode</th>
+                                    <th>Subject Code</th>
                                     <th>Lecturer's Name</th>
                                     <th>Start Time</th>
                                     <th>End Time</th>
@@ -103,8 +153,8 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <form action="MainController" method="POST">
                                 <c:forEach var="bookings" varStatus="counter" items="${requestScope.LIST_BOOKING}">
-                                <form action="MainController" method="POST">
                                     <tr>
                                         <td>${counter.count}</td>
                                         <td>
@@ -112,36 +162,39 @@
                                         </td>
                                         <td>
                                             <span>${bookings.lectureName}</span>
+                                        </td>
+                                        <td>
+                                            <span>${bookings.startTime}</span>
+                                        </td>
+                                        <td>
+                                            <span>${bookings.endTime}</span>
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="bookingID" value="${bookings.bookingID}">
+                                            <button type="submit" class="btn btn-danger center-content" onclick="confirmCancel()" > 
+                                                <i class="material-icons">cancel</i> Cancel</button>
 
-                                        </td>
-                                        <td>
-                                            <fmt:formatDate value="${bookings.startTime}" pattern="dd/MM/yyyy HH:mm:ss" />
-                                        </td>
-                                        <td>
-                                            <fmt:formatDate value="${bookings.endTime}" pattern="dd/MM/yyyy HH:mm:ss" />
-                                        </td>
-                                        <td>
-                                            <c:url var="deleteLink" value="MainController">
-                                                <c:param name="action" value="Delete"></c:param>
-                                                <c:param name="search" value="${param.search}"></c:param>
-                                                <c:param name="userID" value="${user.userID}"></c:param>
-                                            </c:url>
-                                            <a href="${deleteLink}">Delete</a>
                                         </td>
                                     </tr>
                                 </form>
                             </c:forEach>
 
                             </tbody>
-                        </table>
+</table>
 
                     </c:if>
                 </c:if>
             </div>
-            <div class="backbutton">
-                <div class="back">Back</div>
+            <div class="backbutton" onclick="submitFormBack()">
+                <form action="MainController" method="POST" style="display: none;">
+                    <input type="hidden" name="action" value="back" />
+                </form>
+                <div class="back" id="back-button">Back</div>
                 <img class="back-icon" alt="" src="public/BookingView/back.svg" />
             </div>
         </div>
+        <h3>
+            ${requestScope.ERROR}
+        </h3> 
     </body>
 </html>
