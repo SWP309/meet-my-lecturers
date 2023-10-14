@@ -1,0 +1,250 @@
+.surround-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 64px rgba(0, 0, 0, 0.05);
+  border: 0.5px solid #878787;
+  box-sizing: border-box;
+  width: 31.56rem;
+  height: 43.81rem;
+}
+.google-icon1 {
+  position: absolute;
+  top: 38.75rem;
+  left: 9.69rem;
+  width: 12.13rem;
+  height: 3.94rem;
+}
+.error-appear-here1,
+.or {
+  position: absolute;
+  top: 36.19rem;
+  left: 15rem;
+  display: inline-block;
+  width: 1.75rem;
+  height: 1.5rem;
+}
+.error-appear-here1 {
+  top: 32.81rem;
+  left: 6.31rem;
+  font-size: 2.25rem;
+  color: red;
+  width: 19.69rem;
+  height: 3rem;
+}
+.password-child {
+  position: absolute;
+  top: 2.69rem;
+}
+
+.password1 {
+  top: 0;
+  font-size: 2.25rem;
+  color: #000;
+  width: 10.56rem;
+  height: 2.38rem;
+  position: absolute;
+  left: 1.75rem;
+  display: inline-block;
+}
+.account-child,
+.password {
+  position: absolute;
+  width: 22.38rem;
+}
+.password {
+  top: 21.44rem;
+  left: 4.56rem;
+  height: 6.88rem;
+  color: rgba(0, 0, 0, 0.2);
+}
+.account-child {
+  top: 2.81rem;
+  left: 0;
+}
+
+.account1,
+.user-name {
+  position: absolute;
+  display: inline-block;
+}
+.account1 {
+  top: 0;
+  left: 1.19rem;
+  font-size: 2.25rem;
+  color: #000;
+  width: 10rem;
+  height: 2.44rem;
+}
+.account {
+  position: absolute;
+  top: 13rem;
+  left: 4.56rem;
+  width: 22.38rem;
+  height: 7rem;
+  color: rgba(0, 0, 0, 0.2);
+}
+.loginbutton-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 40px;
+  background-color: #fff;
+  border: 1px solid #f27125;
+  box-sizing: border-box;
+  width: 6.25rem;
+  height: 2.56rem;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+.login1 {
+  position: absolute;
+  display: inline-block;
+}
+.loginbutton {
+  position: absolute;
+  top: 29.81rem;
+  left: 4.56rem;
+  width: 6.25rem;
+  height: 2.56rem;
+  color: #f27125;
+}
+#button:hover {
+    background-color: #f27125;
+}
+.sign-in2 {
+  top: 0;
+  font-weight: 500;
+  display: inline-block;
+  width: 10.13rem;
+  height: 4.5rem;
+}
+.method,
+.sign-in2,
+.welcome1 {
+  position: absolute;
+  left: 0;
+}
+.method {
+  top: 5.31rem;
+  width: 10.13rem;
+  height: 4.5rem;
+}
+.welcome1 {
+  top: 0;
+  font-size: 1.56rem;
+  font-weight: 300;
+  display: inline-block;
+  width: 8.25rem;
+  height: 2.38rem;
+}
+.sign-in1 {
+  position: absolute;
+  top: 2.25rem;
+  left: 2.19rem;
+  width: 10.13rem;
+  height: 9.81rem;
+  font-size: 3rem;
+  font-family: Poppins;
+}
+.surround {
+  position: relative;
+  width: 31.56rem;
+  height: 43.81rem;
+}
+.formlogin1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.fptu-long-1-11 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 45.81rem;
+  height: 14.69rem;
+  object-fit: cover;
+}
+.appointment-scheduling-applica1 {
+  position: absolute;
+  top: 15.69rem;
+  left: 5.25rem;
+  display: inline-block;
+  width: 40.56rem;
+  height: 5.06rem;
+}
+.logo1 {
+  position: relative;
+  width: 45.81rem;
+  height: 20.75rem;
+  font-size: 2.25rem;
+  font-family: "Lohit Tamil";
+}
+.fpt-university3 {
+  text-decoration: underline;
+}
+.fpt-university2 {
+  color: inherit;
+}
+.powered-by-fpt-container1 {
+  position: relative;
+  font-weight: 500;
+  display: inline-block;
+  width: 37.53rem;
+  height: 1.13rem;
+  flex-shrink: 0;
+}
+.footer1,
+.login-feid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.footer1 {
+  background-color: #f8d867;
+  width: 125rem;
+  height: 5.38rem;
+  justify-content: flex-start;
+  padding: 1.69rem 35.5rem;
+  box-sizing: border-box;
+  max-width: 125rem;
+  text-align: center;
+  font-size: 1rem;
+  color: inherit;
+  font-family: Poppins;
+}
+.login-feid {
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  height: 64rem;
+  overflow: hidden;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3.81rem;
+  text-align: left;
+  font-size: 1.25rem;
+  color: #000;
+  font-family: Lexend;
+}
+
+.error-appear-here1 > h2{
+    font-size: 15px
+        
+}
+
+.error-appear-here1 {
+  position: absolute;
+  top: 530px;
+  left: 101px;
+  font-family: Lexend;
+  color: red;
+  display: inline-block;
+  width: 315px;
+  height: 48px;
+  left: 150px;
+}
