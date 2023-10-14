@@ -1,0 +1,189 @@
+.frame-child {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 252.5px);
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 64px rgba(0, 0, 0, 0.05);
+  border: 0.5px solid #878787;
+  box-sizing: border-box;
+  width: 505px;
+  height: 701px;
+}
+.sign-in,
+.welcome {
+  position: absolute;
+  top: 85px;
+  left: calc(50% - 81px);
+  font-weight: 500;
+}
+.welcome {
+  top: 0;
+  font-size: 25px;
+  font-weight: 300;
+}
+.sign-in-parent {
+  position: absolute;
+  top: 36px;
+  left: calc(50% - 217.5px);
+  width: 162px;
+  height: 157px;
+}
+.rectangle-parent {
+  flex: 1;
+  position: relative;
+  height: 701px;
+  z-index: 0;
+}
+.google-icon,
+.iconid-child {
+  position: absolute;
+  width: 194px;
+  height: 63px;
+}
+.google-icon {
+  margin: 0 !important;
+  top: 454px;
+  left: calc(50% - 209.5px);
+  z-index: 1;
+}
+.iconid-child {
+  top: 0;
+  left: calc(50% - 97px);
+  border-radius: 40px;
+  background-color: #fff;
+  border: 1px solid #e1b49a;
+  box-sizing: border-box;
+  mix-blend-mode: normal;
+}
+.feid {
+  position: absolute;
+  top: 22px;
+  left: calc(50% + 4px);
+  display: inline-block;
+  width: 48px;
+  height: 21px;
+}
+.vector-icon,
+.vector-icon1 {
+  position: absolute;
+  height: 30.16%;
+  top: 34.92%;
+  bottom: 34.92%;
+  left: calc(50% - 35px);
+  max-height: 100%;
+  width: 24px;
+}
+.vector-icon1 {
+  height: 14.98%;
+  top: 38.29%;
+  bottom: 46.73%;
+}
+.iconid {
+  position: absolute;
+  margin: 0 !important;
+  top: 454px;
+  left: calc(50% + 14.5px);
+  width: 194px;
+  height: 63px;
+  z-index: 2;
+  font-size: 20px;
+  font-family: "Lohit Tamil";
+}
+.formlogin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 505px;
+  height: 701px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.error-appear-here > h2{
+    font-size: 15px
+        
+}
+
+.error-appear-here {
+  position: absolute;
+  top: 320px;
+  left: 101px;
+  font-family: Lexend;
+  color: red;
+  display: inline-block;
+  width: 315px;
+  height: 48px;
+}
+.formlogin-parent,
+.fptu-long-1-1 {
+  position: relative;
+  width: 505px;
+  height: 701px;
+}
+.fptu-long-1-1 {
+  width: 733px;
+  height: 235px;
+  object-fit: cover;
+}
+.appointment-scheduling-applica {
+  position: relative;
+  display: inline-block;
+  width: 649px;
+  height: 81px;
+  flex-shrink: 0;
+}
+.logo {
+  width: 733px;
+  height: 332px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 36px;
+  font-family: "Lohit Tamil";
+}
+.fpt-university1 {
+  text-decoration: underline;
+}
+.fpt-university {
+  color: inherit;
+}
+.powered-by-fpt-container {
+  position: absolute;
+  top: 28px;
+  left: 529px;
+  font-weight: 500;
+  display: inline-block;
+  width: 468px;
+  height: 19px;
+}
+.footer,
+.login {
+  position: relative;
+  background-color: #f8d867;
+  width: 1440px;
+  height: 106px;
+  font-size: 16px;
+  color: inherit;
+}
+.login {
+  background-color: #fff;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 1024px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 54px;
+  text-align: left;
+  font-size: 48px;
+  color: #000;
+  font-family: Poppins;
+}
