@@ -5,8 +5,6 @@
  */
 package sample.freeslots;
 
-import java.time.LocalDateTime;
-
 /**
  *
  * @author W10(hiep-tm)
@@ -15,8 +13,8 @@ public class FreeSlotsDTO {
 
     private String freeSlotID;
     private String subjectCode;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private String startTime;
+    private String endTime;
     private String password;
     private int capacity;
     private String meetLink;
@@ -35,7 +33,7 @@ public class FreeSlotsDTO {
         this.lecturerID = "";
     }
 
-    public FreeSlotsDTO(String freeSlotID, String subjectCode, LocalDateTime startTime, LocalDateTime endTime, String password, int capacity, String meetLink, int count, String lecturerID) {
+    public FreeSlotsDTO(String freeSlotID, String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID) {
         this.freeSlotID = freeSlotID;
         this.subjectCode = subjectCode;
         this.startTime = startTime;
@@ -46,7 +44,18 @@ public class FreeSlotsDTO {
         this.count = count;
         this.lecturerID = lecturerID;
     }
+    public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID) {
+        this.subjectCode = subjectCode;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.password = password;
+        this.capacity = capacity;
+        this.meetLink = meetLink;
+        this.count = count;
+        this.lecturerID = lecturerID;
+    }
 
+    
     public String getFreeSlotID() {
         return freeSlotID;
     }
@@ -63,19 +72,19 @@ public class FreeSlotsDTO {
         this.subjectCode = subjectCode;
     }
 
-    public LocalDateTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
