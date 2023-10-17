@@ -4,18 +4,27 @@
     Author     : W10(hiep-tm)
 --%>
 
+<%@page import="sample.users.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Create Free Slot</title>
+        <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+
+            }else{
+                response.sendRedirect("MainController");
+            }
+        %>
     </head>
     <body>
         <form action="MainController" method="POST">
-            
+
             <input type="hidden" value="createFreeSlotAction" name="action"/>
-            
+
             <table>
                 <tr>
                     <td>Subject code:</td>
@@ -33,10 +42,10 @@
                     <td>Capacity:</td>
                     <td><input type="number" name="txtCapacity" placeholder="need more than 2 student" required=""></td>
                 </tr>
-<!--                <tr>
-                    <td>Repeated Times:</td>
-                    <td><input type="number" name="repeatedTimes"></td>
-                </tr>-->
+                <!--                <tr>
+                                    <td>Repeated Times:</td>
+                                    <td><input type="number" name="repeatedTimes"></td>
+                                </tr>-->
                 <tr>
                     <td>Password: (if necessary)</td>
                     <td><input type="password" name="txtPassword"></td>
