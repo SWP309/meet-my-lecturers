@@ -6,11 +6,11 @@
 package sample.freeslots;
 
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.ZoneId;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import sample.utils.DBUtils;
 
 /**
@@ -31,25 +31,25 @@ public class FreeSlotsDAO {
 //        ResultSet rs = null;
         try {
             conn = DBUtils.getConnection();
+            
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            Date startTime = simpleDateFormat.parse(freeSlotsDTO.getStartTime());
+            Date endTime = simpleDateFormat.parse(freeSlotsDTO.getEndTime());
+            
             if (conn != null) {
                 ps = conn.prepareStatement(CREATE_FREESLOT);
                 ps.setString(1, freeSlotsDTO.getSubjectCode());
-
-                // Convert the LocalDateTime object to a Date object
-                Date startTime = (Date) Date.from(freeSlotsDTO.getStartTime().atZone(ZoneId.systemDefault()).toInstant());
-                Date endTime = (Date) Date.from(freeSlotsDTO.getEndTime().atZone(ZoneId.systemDefault()).toInstant());
-
-                ps.setDate(2, startTime);
-                ps.setDate(3, endTime);
+                ps.setTimestamp(2, new Timestamp(startTime.getTime()));
+                ps.setTimestamp(3, new Timestamp(endTime.getTime()));
                 ps.setString(4, freeSlotsDTO.getPassword());
                 ps.setInt(5, freeSlotsDTO.getCapacity());
                 ps.setString(6, freeSlotsDTO.getMeetLink());
                 ps.setInt(7, freeSlotsDTO.getCount());
                 ps.setString(8, freeSlotsDTO.getLecturerID());
-                
-                result=ps.executeUpdate();
-                if (result>0) {
-                    checkCreate=true;
+
+                result = ps.executeUpdate();
+                if (result > 0) {
+                    checkCreate = true;
                 }
             }
         } catch (Exception e) {
