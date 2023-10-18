@@ -51,7 +51,7 @@
                 var form = document.querySelector('.request form');
                 form.submit();
             }
-             var userDTO = {
+            var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
                 userEmail: "<%= us.getUserEmail()%>"
@@ -59,7 +59,7 @@
             function showUserInfo() {
                 var userInfo = document.getElementById("user-info");
                 if (userInfo.style.display === "none" || userInfo.style.display === "") {
-userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
                 } else {
                     userInfo.style.display = "none";
                 }
@@ -73,7 +73,7 @@ userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
-            }            
+            }
             function confirmCancel() {
                 var result = confirm("Are you sure about cancel your booking ?");
                 if (result) {
@@ -119,11 +119,11 @@ userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
                                 <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
                             </div>
                             <div class="request">
-<p class="logout1">Logout</p>
+                                <p class="logout1">Logout</p>
                             </div>
                         </div>
                     </div>
-                     <div>
+                    <div>
                         <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                              onclick="showUserInfo()" />
                         <div id="user-info" style="display: none;">
@@ -170,21 +170,23 @@ userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
                                             <span>${bookings.endTime}</span>
                                         </td>
                                         <td>
-                                            <input type="hidden" name="bookingID" value="${bookings.bookingID}">
+<!--                                            <input type="hidden" name="bookingID" value="${bookings.bookingID}">
                                             <button type="submit" class="btn btn-danger center-content" onclick="confirmCancel()" > 
-                                                <i class="material-icons">cancel</i> Cancel</button>
-
+                                                <i class="material-icons">cancel</i> Cancel</button>-->
+                                            <a style="display: flex; text-decoration: none; justify-content: center;" 
+                                               onclick="return confirm('Are you sure to cancel this booking')" href="MainController?action=cancel&bookingID=${bookings.bookingID}">
+                                                <i class="material-icons">cancel</i>Cancel</a>
                                         </td>
                                     </tr>
                                 </form>
                             </c:forEach>
 
                             </tbody>
-</table>
 
                     </c:if>
                 </c:if>
             </div>
+                        </table>
             <div class="backbutton" onclick="submitFormBack()">
                 <form action="MainController" method="POST" style="display: none;">
                     <input type="hidden" name="action" value="back" />

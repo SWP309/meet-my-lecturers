@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page import="java.util.List"%>
-<%@page import="sample.bookings.BookingDTO"%>
+<%@page import="sample.viewCreatedSlot.ViewCreatedSlotDTO"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-        <link rel="stylesheet" href="./CreatedView.css" />
+        <link rel="stylesheet" href="./StudentSlotView.css" />
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
@@ -44,7 +44,7 @@
                 }
             }
             function submitFormLogout() {
-                var form = document.querySelector('.frame-div form')
+                var form = document.querySelector('.logout form');
                 form.submit();
             }
             function submitFormRequest() {
@@ -58,12 +58,12 @@
             };
             function showUserInfo() {
                 var userInfo = document.getElementById("user-info");
-                // Thay ??i n?i dung thông tin ng??i dùng ? ?ây b?ng d? li?u t? UserDTO
-//                document.getElementById("user-id").textContent = "User ID: " + userDTO.userID;
-//                document.getElementById("user-name").textContent = "User Name: " + userDTO.userName;
-//                document.getElementById("user-email").textContent = "User Email: " + userDTO.userEmail;
+                if (userInfo.style.display === "none" || userInfo.style.display === "") {
+                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                } else {
+                    userInfo.style.display = "none";
+                }
 
-                userInfo.style.display = "block"; // Hi?n th? thông tin ng??i dùng
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
@@ -75,17 +75,14 @@
                 });
             }
 
-
-            function hideUserInfo() {
-                var userInfo = document.getElementById("user-info");
-                userInfo.style.display = "none"; // ?n thông tin ng??i dùng khi r?i chu?t ra kh?i hình ?nh
-            }
-            function confirmCancel() {
-                var result = confirm("Are you sure about cancel your booking ?");
+            function confirmDelete() {
+                var result = confirm("Are you sure about delete this Free Slot ?");
+                console.log(result);
                 if (result) {
                     // N?u ng??i dùng ch?n OK, chuy?n ??n trang MainController ?? x? lý hành ??ng "cancel".
                     // Ví d?:
-                    window.location.href = "MainController?action=cancel&bookingID=" + document.querySelector('[name="bookingID"]').value;
+                    window.location.href = "MainController?action=delete&freeSlotID=2";
+//                   window.location.href = "MainController?action=delete&freeSlotID=" + document.querySelector('[name="freeSlotID"]').value;
                 } else {
                     // N?u ng??i dùng ch?n Cancel, không làm gì c?.
 //                    alert("Booking cancel canceled!"); // Hi?n th? thông báo cho ng??i dùng
@@ -97,6 +94,7 @@
                 var form = document.querySelector('.backbutton form')
                 form.submit();
             }
+           
         </script>
     </head>
     <body>
@@ -117,7 +115,7 @@
 
                             <i class="material-icons">mail_outline</i> Request
                         </div>
-                        <div class="frame-div" onclick="submitFormLogout()">
+                        <div class="frame-div logout" onclick="submitFormLogout()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
@@ -131,56 +129,59 @@
                     </div>
                     <div>
                         <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
-                             onmouseover="showUserInfo()" onmouseout="hideUserInfo()" />
+                             onclick="showUserInfo()" />
                         <div id="user-info" style="display: none;">
-                            <p id="user-id">User ID: <span></span></p>
-                            <p id="user-name">User Name: <span></span></p>
-                            <p id="user-email">User Email: <span></span></p>
+                            <p id="user-id"> </p>
+                            <p id="user-name"></p>
+                            <p id="user-email"></p>
                         </div>
                     </div>
+
 
                 </div>
             </div>
 
 
-            <div class="table">
-        <div class="slot">
-            <div class="infor">
-                <h1>adwadaw</h1>
-                <h1>adwadaw</h1>
-                <h1>adwadaw</h1>
-                <h1>adwadaw</h1>
-                <h1>adwadaw</h1>
-            </div>
-            <div class="editbutton">
-                <h1>adwadaw</h1>
-            </div>
-            <div class="view">
-               <h1>adwadaw</h1>
-            </div>
-        </div>
-                
-                
-            <div class="table">
-        <div class="slot">
-            <div class="infor">
-                <h1>adwadaw</h1>
-                <h1>adwadaw</h1>
-                <h1>adwadaw</h1>
-                <h1>adwadaw</h1>
-                <h1>adwadaw</h1>
-            </div>
-            <div class="editbutton">
-                <h1>adwadaw</h1>
-            </div>
-            <div class="view">
-               <h1>adwadaw</h1>
-            </div>
-        </div>
-        <!-- Thêm các ph?n t? khác t??ng t? cho các slot khác -->
-    </div>
+            <div class="boxoftable">
+                <c:if test="${requestScope.LIST_STUDENT !=null}">
+                    <c:if test="${not empty requestScope.LIST_STUDENT}">
+                        <table class="table table-hover table-primary table-rounded">
+                            <thead>
+                                <tr class="table-danger">
+                                    <th>No</th>
+                                    <th>Subject Code</th>
+                                    <th>Student's Name</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <form action="MainController" method="POST">
+                                <c:forEach var="liststudent" varStatus="counter" items="${requestScope.LIST_STUDENT}">
+                                    <tr>
+                                        <td>${counter.count}</td>
+                                        <td>
+                                            <span>${liststudent.subjectCode}</span>
+                                        </td>
+                                        <td>
+                                            <span>${liststudent.studentName}</span>
+                                        </td>
+                                        <td>
+                                            <span>${liststudent.startTime}</span>
+                                        </td>
+                                        <td>
+                                            <span>${liststudent.endTime}</span>
+                                        </td>
+                                        
+                                    </tr>
+                                </form>
+                            </c:forEach>
 
-             
+                            </tbody>
+                        </table>
+                    </c:if>
+                </c:if>
+
             </div>
             <div class="backbutton" onclick="submitFormBack()">
                 <form action="MainController" method="POST" style="display: none;">
@@ -191,7 +192,18 @@
             </div>
         </div>
         <h3>
-            ${requestScope.ERROR}
+            <span class="error-message">
+                ${requestScope.ERROR}
+            </span>
         </h3> 
+            <script>
+                 // L?y thông tin l?i t? bi?n requestScope.ERROR
+            var errorMessage = "${requestScope.ERROR}";
+
+            // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+            if (errorMessage.trim() !== "") {
+                alert(errorMessage);
+            }
+            </script>
     </body>
 </html>

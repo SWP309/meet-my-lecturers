@@ -28,19 +28,18 @@ public class MainController extends HttpServlet {
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
     private static final String BACK_TO_REQUEST = "BackToRequest";
-    
+
     private static final String CREATE_REQUEST = "Create request";
     private static final String REQUEST_ACTION = "CreateRequestServlet";
 
     private static final String VIEWBOOKING = "ViewBooking";
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
-    
+
     private static final String VIEWTIMETABLE = "View Timetable";
     private static final String VIEW_TIMETABLE_CONTROLLER = "ViewTimetableServlet";
-    
+
     private static final String VIEW_LECTURER = "ViewAllLecturers";
     private static final String VIEW_LECTURER_CONTROLLER = "ViewLecturerServlet";
-    
 
     private static final String CANCEL = "cancel";
     private static final String CANCEL_CONTROLLER = "CancelController";
@@ -48,8 +47,20 @@ public class MainController extends HttpServlet {
     private static final String LOGOUT = "Logout";
     private static final String LOGOUT_ACTION = "LoginFeID.jsp";
 
-    private static final String CREATED_PAGE = "CreatedView.jsp";
+    private static final String CREATED_PAGE = "CreatedSlotView.jsp";
+    private static final String CREATED_CONTROLLER = "CreatedSlotController";
 
+    private static final String CANCEL_FREE_SLOT = "hideFS";
+    private static final String CANCEL_CREATED_CONTROLLER = "CancelSlotController";
+
+    private static final String DELETE_FREE_SLOT = "deleteFS";
+    private static final String DELETE_CREATED_CONTROLLER = "DeleteFSlotController";
+
+    private static final String VIEW_FREE_SLOT = "viewFS";
+    private static final String VIEW_CREATED_CONTROLLER = "ViewStudentSlotController";
+    
+    private static final String UPDATE_FREE_SLOT = "updateFS";
+    private static final String UPDATE_CREATED_CONTROLLER = "UpdateFSlotController";
 
     private static final String BACK = "back";
 
@@ -57,8 +68,10 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = LOGIN_BY_FEID_ACTION;
+
         try {
             String action = request.getParameter("action");
+            System.out.println(action);
             if (action == null || action.isEmpty()) {
                 url = LOGIN_BY_FEID_ACTION;
             } else if (action.equals(LOGIN_BY_GOOGLE)) {
@@ -70,7 +83,7 @@ public class MainController extends HttpServlet {
             } else if (action.equals(STUDENT_PAGE)) {
                 url = STUDENT_PAGE_ACTION;
             } else if (action.equals(LECTURER_PAGE)) {
-                url = LECTURER_PAGE_ACTION;
+                url = CREATED_CONTROLLER;
             } else if (action.equals(ADMIN_PAGE)) {
                 url = ADMIN_PAGE_ACTION;
             } else if (CREATE_REQUEST.equals(action)) {
@@ -93,6 +106,14 @@ public class MainController extends HttpServlet {
                 url = STUDENT_PAGE_ACTION;
             } else if (LOGOUT.equals(action)) {
                 url = LOGIN_BY_FEID_ACTION;
+            } else if (CANCEL_FREE_SLOT.equals(action)) {
+                url = CANCEL_CREATED_CONTROLLER;
+            } else if (DELETE_FREE_SLOT.equals(action)) {
+                url = DELETE_CREATED_CONTROLLER;
+            } else if (VIEW_FREE_SLOT.equals(action)) {
+                url = VIEW_CREATED_CONTROLLER;
+            } else if (UPDATE_FREE_SLOT.equals(action)) {
+                url = UPDATE_CREATED_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
