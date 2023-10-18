@@ -5,15 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dcb1a5a3-6c43-42e0-8ee0-4fd18a6660e0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/ant.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/meet-my-lecturers.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/sample/controllers/CreatedSlotController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/sample/viewCreatedSlot/ViewCreatedSlotDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/java/sample/viewCreatedSlot/ViewCreatedSlotDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/project.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/sample/controllers/LoginByFeID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/sample/controllers/LoginByFeID.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/sample/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/sample/controllers/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/sample/controllers/ViewLecturerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/sample/controllers/ViewLecturerServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/BookingView.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/BookingView.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/BookingView.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/BookingView.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/CreatedView.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/CreatedSlotView.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/CreatedView.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/CreatedSlotView.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/LoginFeID.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/LoginFeID.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/StudentHome.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/StudentHome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/StudentHome.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/StudentHome.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/TimetableView.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/TimetableView.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/request.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/request.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,9 +46,9 @@
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2WdoS6GJfiE1ha68UzvfLP6gSYn" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -53,15 +63,16 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "ramu-branch",
-    "last_opened_file_path": "C:/Users/PC/Documents/NetBeansProjects/test/meet-my-lecturers",
+    "git-widget-placeholder": "mymain",
+    "last_opened_file_path": "C:/Users/PC/Documents/NetBeansProjects/SWP303/meet-my-lecturers/src/java/sample/controllers",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Problems",
+    "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -154,6 +165,7 @@
       <option name="presentableId" value="Default" />
       <updated>1697071814303</updated>
       <workItem from="1697071815294" duration="683000" />
+      <workItem from="1697509723788" duration="840000" />
     </task>
     <servers />
   </component>
