@@ -28,14 +28,20 @@ public class MainController extends HttpServlet {
     private static final String VIEW_LECTURER = "ViewAllLecturers";
     private static final String VIEW_LECTURER_CONTROLLER = "ViewLecturerServlet";
     
+    private static final String SEARCH_USERS = "SearchUsers";
+    private static final String SEARCH_USERS_CONTROLLER = "SearchUserServlet";
+    
+    private static final String UPDATE_USERS = "UpdateUsers";
+    private static final String UPDATE_USERS_CONTROLLER = "UpdateUserServlet";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = LOGIN_STUDENT_PAGE;
+        String url = "ViewUsers.jsp";
         try {
             String action = request.getParameter("action");
             if(action == null){
-                url = LOGIN_STUDENT_PAGE;
+                url = "ViewUsers.jsp";
             } else if (REQUEST.equals(action)) {
                 url = REQUEST_PAGE;
             } else if (CREATE_REQUEST.equals(action)) {
@@ -48,6 +54,10 @@ public class MainController extends HttpServlet {
                 url = REQUEST_ACTION;
             } else if (VIEW_LECTURER.equals(action)) {
                 url = VIEW_LECTURER_CONTROLLER;
+            } else if (SEARCH_USERS.equals(action)) {
+                url = SEARCH_USERS_CONTROLLER;
+            } else if (UPDATE_USERS.equals(action)) {
+                url = UPDATE_USERS_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
