@@ -24,6 +24,14 @@
         <servlet-name>ViewLecturerServlet</servlet-name>
         <servlet-class>sample.controllers.ViewLecturerServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchUserServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchUserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateUserServlet</servlet-name>
+        <servlet-class>sample.controllers.UpdateUserServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -47,6 +55,14 @@
     <servlet-mapping>
         <servlet-name>ViewLecturerServlet</servlet-name>
         <url-pattern>/ViewLecturerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchUserServlet</servlet-name>
+        <url-pattern>/SearchUserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateUserServlet</servlet-name>
+        <url-pattern>/UpdateUserServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
