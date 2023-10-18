@@ -1,46 +1,45 @@
-
 package sample.controllers;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
-
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import sample.users.UserDAO;
+import javax.servlet.http.HttpSession;
 import sample.users.UserDTO;
+import sample.viewCreatedSlot.ViewCreatedSlotDAO;
+import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
-public class ViewLecturerServlet extends HttpServlet {
+@WebServlet(name = "CreatedSlotController", urlPatterns = {"/CreatedSlotController"})
+public class CreatedSlotController extends HttpServlet {
 
-    private final String ERROR = "request.jsp";
-    private final String SUCCESS = "ViewLecturer.jsp";
+    private static final String ERROR = "CreatedSlotView.jsp";
+    private static final String SUCCESS = "CreatedSlotView.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            UserDAO userDAO = new UserDAO();
-            userDAO.getListLecturers();
-            List<UserDTO> lecturers = userDAO.getLecturers();
-            for (UserDTO lecturer : lecturers) {
-                System.out.println("ko");
-            }
-            if (lecturers != null) {
-                request.setAttribute("LIST_LECTURERS", lecturers); 
+            HttpSession session = request.getSession();
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            String email=request.getParameter(us.getUserEmail());
+            ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
+            List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlot(us.getUserEmail());
+            if (listCreatedSlot.size() > 0) {
+                request.setAttribute("LIST_CREATED_SLOT", listCreatedSlot);
                 url = SUCCESS;
-            } else {
-                request.setAttribute("MESSAGE", "System has no Lecturer!!!");
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-            log("Error at ViewLecturerServlet: " + ex.toString());
-        }  finally {
+        } catch (Exception e) {
+            log("Error at SearchController: " + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
+  
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

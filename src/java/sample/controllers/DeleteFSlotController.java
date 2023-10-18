@@ -1,6 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sample.controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,39 +14,53 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import sample.bookings.BookingDAO;
-import sample.bookings.BookingDTO;
 import sample.users.UserDTO;
+import sample.viewCreatedSlot.ViewCreatedSlotDAO;
+import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
-@WebServlet(name = "BookingController", urlPatterns = {"/BookingController"})
-public class CreatedViewController extends HttpServlet {
+/**
+ *
+ * @author PC
+ */
+@WebServlet(name = "DeleteFSlotController", urlPatterns = {"/DeleteFSlotController"})
+public class DeleteFSlotController extends HttpServlet {
 
-    private static final String ERROR = "BookingView.jsp";
-    private static final String SUCCESS = "BookingView.jsp";
+    private static final String ERROR = "CreatedSlotView.jsp";
+    private static final String SUCCESS = "CreatedSlotView.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
         String url = ERROR;
         try {
             HttpSession session = request.getSession();
+            String freeSlotID = request.getParameter("freeSlotID"); 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            String email=request.getParameter(us.getUserEmail());
-            BookingDAO dao = new BookingDAO();
-            List<BookingDTO> listBooking = dao.Getlistbooking(us.getUserEmail());
-            System.out.println(listBooking.toString());
-            if (listBooking.size() > 0) {
-                request.setAttribute("LIST_BOOKING", listBooking);
-                url = SUCCESS;
+            System.out.println(freeSlotID);
+            if (freeSlotID != null) {
+                ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
+                boolean checkDelete = dao.Delete(freeSlotID);
+                System.out.println(checkDelete);
+                if (checkDelete) {
+                   List<ViewCreatedSlotDTO> listbooking = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                    request.setAttribute("LIST_CREATED_SLOT", listbooking);
+                    url = SUCCESS;
+                    if (listbooking == null || listbooking.isEmpty()) {
+                        request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
+                    }
+                }
+            } else {
+                request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
             }
         } catch (Exception e) {
-            log("Error at SearchController: " + e.toString());
+            log("Error at UpdateController: " + e.toString());
+            request.setAttribute("ERROR", "An error occurred.");
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
-
-  
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

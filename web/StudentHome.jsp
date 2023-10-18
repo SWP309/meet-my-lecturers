@@ -35,7 +35,11 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
-
+        <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-prototype.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet" type="text/css">
 
         <%
 
@@ -66,7 +70,7 @@
                 userEmail: "<%= us.getUserEmail()%>"
             };
             function showUserInfo() {
-var userInfo = document.getElementById("user-info");
+                var userInfo = document.getElementById("user-info");
                 if (userInfo.style.display === "none" || userInfo.style.display === "") {
                     userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
                 } else {
@@ -106,6 +110,7 @@ var userInfo = document.getElementById("user-info");
                 var form = document.querySelector('.backbutton form');
                 form.submit();
             }
+
         </script>
     </head>
     <body>
@@ -126,7 +131,7 @@ var userInfo = document.getElementById("user-info");
                             <div class="bookedslot-wrapper">
                                 <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
                                 <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
-</div>
+                            </div>
                             <div class="view-booking" >View Booking</div>
                         </div>
                         <div class="frame-div request" onclick="submitFormRequest()">
@@ -149,7 +154,7 @@ var userInfo = document.getElementById("user-info");
                         </div>
                     </div>
                     <div>
-                        <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
+                        <img class="frame-item" alt="" src="./public/StudentHome/group-33.svg" 
                              onclick="showUserInfo()" />
                         <div id="user-info" style="display: none;">
                             <p id="user-id"> </p>
@@ -161,19 +166,61 @@ var userInfo = document.getElementById("user-info");
                 </div>
             </div>
 
+            <div class="backbutton" onclick="submitFormBack()">
+                <form action="MainController" method="POST" style="display: none;">
+                    <input type="hidden" name="action" value="back" />
+                </form>
+                <div class="back" id="back-button">Back</div>
+                <img class="back-icon" alt="" src="public/BookingView/back.svg" />
+            </div>
+            <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize">
+                <ul class="orbit-container" tabindex="0" style="height: 530.4px;">
+                    <button class="orbit-previous" tabindex="0"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
+                    <button class="orbit-next" tabindex="0"><span class="show-for-sr">Next Slide</span>&#9654;</button>
+                    <li class="orbit-slide" data-slide="0" style="display: none; position: relative; top: 0px;">
+                        <img class="orbit-image" src="./public/StudentHome/anh1.jpg"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
+                    <figcaption class="orbit-caption">FPT University</figcaption>
+                    </li>
+                    <li class="orbit-slide" data-slide="1" style="position: relative; top: 0px; display: none;">
+                        <img class="orbit-image" src="./public/StudentHome/anh3.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
+                    <figcaption class="orbit-caption">Ceremony</figcaption>
+                    </li>
+                    <li class="orbit-slide" data-slide="2" style="position: relative; top: 0px; display: none;">
+                        <img class="orbit-image" src="./public/StudentHome/anh4.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
+                    <figcaption class="orbit-caption">Orientation Week</figcaption>
+                    </li>
+                    <li class="orbit-slide" data-slide="3" style="position: relative; top: 0px; display: block;" aria-live="polite">
+                        <img class="orbit-image" src="./public/StudentHome/anh5.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
+                    <figcaption class="orbit-caption">F-Camp</figcaption>
+                    </li>
+                    <li class="orbit-slide is-active" data-slide="4" style="position: relative; top: 0px; display: block;" aria-live="polite">
+                        <img class="orbit-image" src="./public/StudentHome/anh6.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
+                    <figcaption class="orbit-caption">Training at the military</figcaption>
+                    </li>
+                </ul>
+                <nav class="orbit-bullets">
+                    <button class="" data-slide="0"><span class="show-for-sr">First slide details.</span></button>
+                    <button data-slide="1" class=""><span class="show-for-sr">Second slide details.</span></button>
+                    <button data-slide="2" class=""><span class="show-for-sr">Third slide details.</span></button>
+                    <button data-slide="3" class=""><span class="show-for-sr">Third slide details.</span></button>
+                    <button data-slide="4" class="is-active"><span class="show-for-sr">Fourth slide details.</span><span class="show-for-sr">Current Slide</span></button>
+                </nav>
+            </div>
+
 
         </div>
-        <div class="backbutton" onclick="submitFormBack()">
-            <form action="MainController" method="POST" style="display: none;">
-                <input type="hidden" name="action" value="back" />
-            </form>
-            <div class="back" id="back-button">Back</div>
-            <img class="back-icon" alt="" src="public/BookingView/back.svg" />
-        </div>
+
     </div>
     <h3>
         ${requestScope.ERROR}
     </h3> 
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
+    <script>
+                $(document).foundation();
+    </script>
 </body>
 </html>
 

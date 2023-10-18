@@ -7,66 +7,60 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
+import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import sample.users.UserDAO;
+import sample.bookings.BookingDAO;
+import sample.bookings.BookingDTO;
 import sample.users.UserDTO;
+import sample.viewCreatedSlot.ViewCreatedSlotDAO;
+import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
 /**
  *
- * @author Minh Khang
+ * @author PC
  */
-public class LoginByFeID extends HttpServlet {
+@WebServlet(name = "CancelSlotController", urlPatterns = {"/CancelSlotController"})
+public class CancelSlotController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private static final String ERROR = "CreatedSlotView.jsp";
+    private static final String SUCCESS = "CreatedSlotView.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String email = request.getParameter("txtemail");
-            String password = request.getParameter("txtpassword");
-            UserDTO us = UserDAO.getUser(email);
-            boolean flag = false;
-            
-            if (us != null) {
-                if (us.getPassword().equals(password)) {
-                    flag = true;
-                    HttpSession session = request.getSession();
-                    session.setAttribute("loginedUser", us);
-                    if (us.getRoleID().equals("3")) {
-                        response.sendRedirect("MainController?action=StudentPage");
-                    } else if((us.getRoleID().equals("2"))) {
-                        response.sendRedirect("MainController?action=LecturerPage");
-                    } else if((us.getRoleID().equals("1"))) {
-                        response.sendRedirect("MainController?action=AdminPage");
+
+        String url = ERROR;
+        try {
+            HttpSession session = request.getSession();
+            String freeSlotID = request.getParameter("freeSlotID"); // Lấy bookingID từ yêu cầu
+//            BookingDTO listslot = (BookingDTO) request.getAttribute("LIST_BOOKING");
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            System.out.println(freeSlotID);
+            if (freeSlotID != null) {
+                ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
+                boolean CheckHide = dao.Hide(freeSlotID);
+                System.out.println(CheckHide);
+                if (CheckHide) {
+                   List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                    request.setAttribute("LIST_CREATED_SLOT", listCreatedSlot);
+                    url = SUCCESS;
+                    if (listCreatedSlot == null || listCreatedSlot.isEmpty()) {
+                        request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
                     }
-                } else {
-                    flag = false;                   
                 }
             } else {
-                flag = false;                
+                request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
             }
-            if(!flag){
-                String msg = "Invalid userid or password";
-                request.setAttribute("Error", msg);
-                request.getRequestDispatcher("MainController?action=").forward(request, response);
-            }
-        } catch(Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            log("Error at UpdateController: " + e.toString());
+            request.setAttribute("ERROR", "An error occurred.");
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

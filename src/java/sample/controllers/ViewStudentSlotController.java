@@ -1,42 +1,49 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sample.controllers;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import sample.users.UserDAO;
+import javax.servlet.http.HttpSession;
 import sample.users.UserDTO;
+import sample.viewCreatedSlot.StudentViewSlotDTO;
+import sample.viewCreatedSlot.ViewCreatedSlotDAO;
+import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
-public class ViewLecturerServlet extends HttpServlet {
+/**
+ *
+ * @author PC
+ */
+public class ViewStudentSlotController extends HttpServlet {
 
-    private final String ERROR = "request.jsp";
-    private final String SUCCESS = "ViewLecturer.jsp";
+    private static final String ERROR = "StudentSlotView.jsp";
+    private static final String SUCCESS = "StudentSlotView.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            UserDAO userDAO = new UserDAO();
-            userDAO.getListLecturers();
-            List<UserDTO> lecturers = userDAO.getLecturers();
-            for (UserDTO lecturer : lecturers) {
-                System.out.println("ko");
-            }
-            if (lecturers != null) {
-                request.setAttribute("LIST_LECTURERS", lecturers); 
+            HttpSession session = request.getSession();
+            String freeSlotID = request.getParameter("freeSlotID");
+            ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
+            System.out.println(freeSlotID);
+            List<StudentViewSlotDTO> liststudent = dao.GetListStudent(freeSlotID);
+            System.out.println(liststudent.toString());
+            if (liststudent.size() > 0) {
+                request.setAttribute("LIST_STUDENT", liststudent);
                 url = SUCCESS;
-            } else {
-                request.setAttribute("MESSAGE", "System has no Lecturer!!!");
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-            log("Error at ViewLecturerServlet: " + ex.toString());
-        }  finally {
+        } catch (Exception e) {
+            log("Error at SearchController: " + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
