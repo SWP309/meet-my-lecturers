@@ -1,6 +1,8 @@
 package sample.requests;
 
-public class RequestDTO {
+import java.io.Serializable;
+
+public class RequestDTO implements Serializable{
     private String requestID;
     private boolean status;
     private String subjectCode;

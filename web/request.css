@@ -123,6 +123,7 @@
   background-color: #4caf50;
   width: 282px;
   height: 77px;
+  cursor: pointer;
 }
 .send-request {
   position: absolute;
@@ -131,6 +132,7 @@
   display: inline-block;
   width: 250px;
   height: 49px;
+  cursor: pointer;
 }
 .back,
 .sendrequestbutton {

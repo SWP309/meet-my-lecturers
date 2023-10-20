@@ -14,7 +14,7 @@ public class MainController extends HttpServlet {
     private static final String REQUEST = "Request";
     private static final String BACK_TO_REQUEST = "BackToRequest";
     
-    private static final String CREATE_REQUEST = "Create request";
+    private static final String CREATE_REQUEST = "CreateRequest";
     private static final String REQUEST_ACTION = "CreateRequestServlet";
 
     private static final String LOGIN_STUDENT_PAGE = "StudentHome.html";
