@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sample.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,23 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import sample.requests.RequestDAO;
 import sample.requests.RequestDTO;
 
-/**
- *
- * @author CHIBAO
- */
 public class CreateRequestServlet extends HttpServlet {
 
     private static final String ERROR = "request.jsp";
-    private static final String SUCCESS = "login.html";
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private static final String SUCCESS = "StudentHome.html";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -41,14 +23,20 @@ public class CreateRequestServlet extends HttpServlet {
         try{
             String lecturer = request.getParameter("txtLecturer");
             String subjectCode = request.getParameter("txtSubjectCode");
-            String semester = request.getParameter("txtSemester");
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
             String description = request.getParameter("txtDescription");
+            System.out.println(lecturer);
+            System.out.println(subjectCode);
+            System.out.println(startTime);
+            System.out.println(endTime);
+            System.out.println(description);
             RequestDAO requestDAO = new RequestDAO();
-            RequestDTO requestDTO = new RequestDTO(false, subjectCode,   //lam sao de ID tu dong tao va tang
-                    startTime, endTime, description, startTime, lecturer);   //phai lay dc student ID dua vao luc dang nhap
+            RequestDTO requestDTO = new RequestDTO(false, subjectCode,   
+                    startTime, endTime, description, "SE173289", lecturer); 
+            System.out.println(requestDTO.getStudentID() + requestDTO.getSubjectCode());
             boolean checkCreated = requestDAO.createARequest(requestDTO);
+            System.out.println("Check: " + checkCreated);
             if (checkCreated) {
                 url = SUCCESS;
             }

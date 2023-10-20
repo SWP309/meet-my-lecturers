@@ -21,10 +21,29 @@ public class SearchUserServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
+            String userID = request.getParameter("txtSearchUserID").trim();
             String name = request.getParameter("txtName").trim();
             String roleID = request.getParameter("txtRoleID").trim();
             UserDAO userDAO = new UserDAO();
-            if (name.isEmpty() && !roleID.isEmpty()) {
+            if(!userID.isEmpty() && name.isEmpty() && roleID.isEmpty()) {
+                userDAO.getUsersByUserID(userID);
+                List<UserDTO> usersByUserID = userDAO.getUsersByUserID();
+                List<RoleDTO> rolesByUserID = userDAO.getRolesByUserID();
+                if (usersByUserID != null) {
+                    request.setAttribute("USERS_BY_USERID", usersByUserID);
+                    request.setAttribute("ROLES_BY_USERID", rolesByUserID);
+                    url = SUCCESS;
+                }
+            } else if (!userID.isEmpty() && !name.isEmpty() && !roleID.isEmpty()) {
+                userDAO.getUsersByUserIDAndNameAndRoleID(userID, name, roleID);
+                List<UserDTO> usersByRoleAndUserIDAndName = userDAO.getUsersByUserIDAndNameAndRoleID();
+                List<RoleDTO> rolesByRoleAndUserIDAndName = userDAO.getRolesByUserIDAndNameAndRoleID();
+                if (usersByRoleAndUserIDAndName != null) {
+                    request.setAttribute("USERS_BY_ALL", usersByRoleAndUserIDAndName);
+                    request.setAttribute("ROLES_BY_ALL", rolesByRoleAndUserIDAndName);
+                    url = SUCCESS;
+                }
+            } else if (userID.isEmpty() && name.isEmpty() && !roleID.isEmpty()) {
                 userDAO.getUsersByRoleID(roleID);
                 List<UserDTO> usersByRole = userDAO.getUsersByRoleID();
                 List<RoleDTO> rolesByID = userDAO.getRolesByRoleID();
@@ -33,7 +52,7 @@ public class SearchUserServlet extends HttpServlet {
                     request.setAttribute("ROLES_BY_ID", rolesByID);
                     url = SUCCESS;
                 }
-            } else if (!name.isEmpty() && roleID.isEmpty()) {
+            } else if (userID.isEmpty() && !name.isEmpty() && roleID.isEmpty()) {
                 userDAO.getUsersByName(name);
                 List<UserDTO> usersByName = userDAO.getUsersByName();
                 List<RoleDTO> rolesByName = userDAO.getRolesByName();
@@ -42,7 +61,7 @@ public class SearchUserServlet extends HttpServlet {
                     request.setAttribute("ROLES_BY_NAME", rolesByName);
                     url = SUCCESS;
                 }
-            } else if (!name.isEmpty() && !roleID.isEmpty()) {
+            } else if (userID.isEmpty() && !name.isEmpty() && !roleID.isEmpty()) {
                 userDAO.getUsersByNameAndRoleID(name, roleID);
                 List<UserDTO> usersByNameAndRole = userDAO.getUsersByNameAndRoleID();
                 List<RoleDTO> rolesByNameAndRole = userDAO.getRolesByNameAndRoleID();
@@ -51,7 +70,7 @@ public class SearchUserServlet extends HttpServlet {
                     request.setAttribute("ROLES_BY_NAME_AND_ID", rolesByNameAndRole);
                     url = SUCCESS;
                 }
-            } else {
+            } else if (userID.isEmpty() && name.isEmpty() && roleID.isEmpty()){
                 userDAO.getUsersFunc();
                 List<UserDTO> users = userDAO.getUsers();
                 List<RoleDTO> roles = userDAO.getRoles();

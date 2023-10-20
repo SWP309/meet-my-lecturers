@@ -20,6 +20,11 @@ public class UserDAO implements Serializable{
             "JOIN Roles r ON u.roleID = r.roleID \n" +
             "WHERE u.roleID = ?";
     
+    private final String SEARCH_USERS_BY_USERID = "SELECT r.roleID, r.roleName, u.userID, u.userName, u.userEmail, u.password, u.userStatus\n" +
+"            FROM Users u\n" +
+"            JOIN Roles r ON u.roleID = r.roleID \n" +
+"            WHERE u.userID = ?";
+    
     private final String SEARCH_USERS_BY_NAME = "SELECT u.roleID, r.roleName, u.userID, u.userName, u.userEmail, u.password, u.userStatus\n" +
             "FROM Users u\n" +
             "JOIN Roles r ON u.roleID = r.roleID \n" +
@@ -29,6 +34,11 @@ public class UserDAO implements Serializable{
             "FROM Users u\n" +
             "JOIN Roles r ON u.roleID = r.roleID \n" +
             "WHERE u.userName like ? AND u.roleID = ?";
+    
+    private final String SEARCH_USERS_BY_ROLEID_AND_NAME_AND_USERID = "SELECT u.roleID, r.roleName, u.userID, u.userName, u.userEmail, u.password, u.userStatus\n" +
+            "FROM Users u\n" +
+            "JOIN Roles r on u.roleID = r.roleID \n" +
+            "WHERE u.userName like ? AND u.roleID = ? AND u.userID = ?";
     
     private final String SEARCH_USERS = "SELECT u.roleID, r.roleName, u.userID, u.userName, u.userEmail, u.password, u.userStatus\n" +
             "FROM Users u\n" +
@@ -203,7 +213,7 @@ public class UserDAO implements Serializable{
             con = DBUtils.getConnection();
             stm = con.prepareStatement(SEARCH_USERS_BY_ROLEID_AND_NAME);
             stm.setNString(1, "%" + name + "%");
-            stm.setString(2, roleID);
+            stm.setNString(2, roleID);
             rs = stm.executeQuery();
             while(rs.next()){
                 String roleName = rs.getNString("roleName");
@@ -315,6 +325,107 @@ public class UserDAO implements Serializable{
         return checkUpdate;
     }
 
+    private List<UserDTO> usersByUserID;
+
+    public List<UserDTO> getUsersByUserID() {
+        return usersByUserID;
+    }
     
+    private List<RoleDTO> rolesByUserID;
+
+    public List<RoleDTO> getRolesByUserID() {
+        return rolesByUserID;
+    }
+    public void getUsersByUserID(String userID) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_USERS_BY_USERID);
+            stm.setNString(1, userID);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String roleID = rs.getNString("roleID");
+                String roleName = rs.getNString("roleName");
+                String userName = rs.getNString("userName");
+                String userEmail = rs.getString("userEmail");
+                String password = rs.getNString("password");
+                boolean userStatus = rs.getBoolean("userStatus");
+                UserDTO userDTO = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
+                RoleDTO roleDTO = new RoleDTO(roleID, roleName);
+                if(this.usersByUserID == null){
+                    this.usersByUserID = new ArrayList<>();
+                }
+                this.usersByUserID.add(userDTO);
+                if(this.rolesByUserID == null){
+                    this.rolesByUserID = new ArrayList<>();
+                }
+                this.rolesByUserID.add(roleDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<UserDTO> usersByUserIDAndNameAndRoleID;
+
+    public List<UserDTO> getUsersByUserIDAndNameAndRoleID() {
+        return usersByUserIDAndNameAndRoleID;
+    }
+    
+    private List<RoleDTO> rolesByUserIDAndNameAndRoleID;
+
+    public List<RoleDTO> getRolesByUserIDAndNameAndRoleID() {
+        return rolesByUserID;
+    }
+    public void getUsersByUserIDAndNameAndRoleID(String userID, String name, String roleID) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_USERS_BY_ROLEID_AND_NAME_AND_USERID);
+            stm.setNString(1, "%" + name + "%");
+            stm.setNString(2, roleID);
+            stm.setNString(3, userID);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String roleName = rs.getNString("roleName");
+                String userName = rs.getNString("userName");
+                String userEmail = rs.getString("userEmail");
+                String password = rs.getNString("password");
+                boolean userStatus = rs.getBoolean("userStatus");
+                UserDTO userDTO = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
+                RoleDTO roleDTO = new RoleDTO(roleID, roleName);
+                if(this.usersByUserIDAndNameAndRoleID == null){
+                    this.usersByUserIDAndNameAndRoleID = new ArrayList<>();
+                }
+                this.usersByUserIDAndNameAndRoleID.add(userDTO);
+                if(this.rolesByUserIDAndNameAndRoleID == null){
+                    this.rolesByUserIDAndNameAndRoleID = new ArrayList<>();
+                }
+                this.rolesByUserIDAndNameAndRoleID.add(roleDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
     
 }
