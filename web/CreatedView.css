@@ -85,7 +85,7 @@ td button {
     gap: 20px;
 }
 .fptu-eng-1-parent {
-    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0.125);
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     box-sizing: border-box;
@@ -98,7 +98,7 @@ td button {
     padding: 35px 40px;
     font-size: 17px;
     color: #fff;
-    /* ... (các quy tắc CSS khác) */
+    box-shadow: -20px 1px 20px 8px #343a40;
     overflow: hidden;
 }
 

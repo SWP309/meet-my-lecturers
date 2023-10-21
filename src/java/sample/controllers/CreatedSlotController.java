@@ -28,6 +28,7 @@ public class CreatedSlotController extends HttpServlet {
             String email=request.getParameter(us.getUserEmail());
             ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
             List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlot(us.getUserEmail());
+             System.out.println(us.getUserEmail());
             if (listCreatedSlot.size() > 0) {
                 request.setAttribute("LIST_CREATED_SLOT", listCreatedSlot);
                 url = SUCCESS;

@@ -71,6 +71,10 @@
                 var form = document.querySelector('.request form');
                 form.submit();
             }
+            function submitFormHideView() {
+                var form = document.querySelector('.hideView form');
+                form.submit();
+            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -116,17 +120,30 @@
             }
 
         </script>
-        <script>
-            const dialog = document.getElementById("myDialog");
-
-            function showDialog() {
-                dialog.show();
+        <style>
+            td {
+                position: relative;
             }
 
-            function closeDialog() {
-                dialog.close();
+            input[type="text"] {
+                width: 100%;
+                box-sizing: border-box;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                font-size: 14px;
+                text-align: center;
+                background-color: #cfe2ff;
+                border: none; /* Lo?i b? vi?n */
             }
-        </script>
+            button[type="submit"]{
+                border: none; /* Lo?i b? vi?n */
+                background-color: #cfe2ff;
+                color: #007bff;
+            }
+        </style>
     </head>
     <body>
         <div class="student-viewbookedslot">
@@ -157,6 +174,14 @@
                                 <p class="logout1">Logout</p>
                             </div>
                         </div>
+                          <div class="frame-div hideView" onclick="submitFormHideView()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="HideView" />
+                            </form>
+                            <div>
+                                <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
+                            </div>
+                        </div>
                         <div>
                             <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                                  onclick="showUserInfo()" />
@@ -169,6 +194,15 @@
                     </div>
                 </div>
             </div>
+
+            <div class="backbutton" onclick="submitFormBack()">
+                <form action="MainController" method="POST" style="display: none;">
+                    <input type="hidden" name="action" value="back" />
+                </form>
+                <div class="back" id="back-button">Back</div>
+                <img class="back-icon" alt="" src="public/BookingView/back.svg" />
+            </div>
+
             <div class="table-container">
                 <c:if test="${requestScope.LIST_CREATED_SLOT !=null}">
                     <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">
@@ -180,7 +214,7 @@
                                     <th>Lecturer's Name</th>
                                     <th>Start Time</th>
                                     <th>End Time</th>
-                                    <th>Cancel</th>
+                                    <th>Hide</th>
                                     <th>Delete</th>
                                     <th>View</th>
                                     <th>Update</th>
@@ -192,16 +226,20 @@
                                     <tr>
                                         <td>${counter.count}</td>
                                         <td>
-                                            <input type="text" name="subjectCode" value="${listCreatedSlot.subjectCode}" required=""/>
+                                            <input type="text" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}" required=""/>
+                                        </td>
+                                        <c:if test="${counter.count == 1}">
+                                            <td class="merged-row" style="text-align: center;
+                                                vertical-align: middle !important;
+                                                height: 100px!important;" rowspan="${requestScope.LIST_CREATED_SLOT.size()}">
+                                                <span>${listCreatedSlot.lectureName}</span>
+                                            </td>
+                                        </c:if>
+                                        <td>
+                                            <input type="text" name="startTime" value="${listCreatedSlot.startTime}" required=""/>
                                         </td>
                                         <td>
-                                            <input type="text" name="lectureName" value="${listCreatedSlot.lectureName}" readonly=""/>
-                                        </td>
-                                        <td>
-                                             <input type="text" name="startTime" value="${listCreatedSlot.startTime}" required=""/>
-                                        </td>
-                                        <td>
-                                             <input type="text" name="endTime" value="${listCreatedSlot.endTime}" required=""/>
+                                            <input type="text" name="endTime" value="${listCreatedSlot.endTime}" required=""/>
                                         </td>
                                         <td>
                                             <a style="display: flex; text-decoration: none; justify-content: center;" onclick="return confirm('Are you sure to hide this Free Slot')"
@@ -222,9 +260,20 @@
 
                                         </td>
                                         <td>
-                                            <a style="display: flex; text-decoration: none; justify-content: center;"
-                                               href="MainController?action=updateFS&freeSlotID=${listCreatedSlot.freeSlotID}&subjectCode=${listCreatedSlot.subjectCode}&startTime=${listCreatedSlot.startTime}&endTime=${listCreatedSlot.endTime}">
-                                                <i class="material-icons">update</i>Update</a>
+                                            <!--                                                                                        <a style="display: flex; text-decoration: none; justify-content: center;"
+                                                                                                                                       href="MainController?action=updateFS&freeSlotID=${listCreatedSlot.freeSlotID}&subjectCode=${listCreatedSlot.subjectCode}&startTime=${listCreatedSlot.startTime}&endTime=${listCreatedSlot.endTime}">
+                                                                                                                                        <i class="material-icons">update</i>Update</a>-->
+                                            <form action="MainController" method="GET">
+                                                <input type="hidden" name="action" value="updateFS">
+                                                <input type="hidden" name="freeSlotID" value="${listCreatedSlot.freeSlotID}">
+                                                <input type="hidden" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}" required/>
+                                                <input type="hidden" name="startTime" value="${listCreatedSlot.startTime}">
+                                                <input type="hidden" name="endTime" value="${listCreatedSlot.endTime}">
+                                                <button type="submit" style="display: flex; text-decoration: none; justify-content: center;">
+                                                    <i class="material-icons">update</i>Update
+                                                </button>
+                                            </form>
+
                                         </td>
 
 
@@ -236,30 +285,22 @@
                         </table>
                     </c:if>
                 </c:if>
-
             </div>
-            <div class="backbutton" onclick="submitFormBack()">
-                <form action="MainController" method="POST" style="display: none;">
-                    <input type="hidden" name="action" value="back" />
-                </form>
-                <div class="back" id="back-button">Back</div>
-                <img class="back-icon" alt="" src="public/BookingView/back.svg" />
-            </div>
-        </div>
-        <h3>
-            <span class="error-message">
-                ${requestScope.ERROR}
-            </span>
-        </h3> 
+           
+            <h3>
+                <span class="error-message">
+                    ${requestScope.ERROR}
+                </span>
+            </h3> 
 
-        <script>
-            // L?y thông tin l?i t? bi?n requestScope.ERROR
-            var errorMessage = "${requestScope.ERROR}";
+            <script>
+                // L?y thông tin l?i t? bi?n requestScope.ERROR
+                var errorMessage = "${requestScope.ERROR}";
 
-            // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
-            if (errorMessage.trim() !== "") {
-                alert(errorMessage);
-            }
-        </script>
+                // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+                if (errorMessage.trim() !== "") {
+                    alert(errorMessage);
+                }
+            </script>
     </body>
 </html>

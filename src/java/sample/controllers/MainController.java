@@ -20,7 +20,9 @@ public class MainController extends HttpServlet {
     private static final String STUDENT_PAGE_ACTION = "StudentHome.jsp";
 
     private static final String LECTURER_PAGE = "LecturerPage";
-    private static final String LECTURER_PAGE_ACTION = "LecturerPage.jsp";
+    private static final String CREATE_FREE_SLOT_SERVLET = "newfreeslot";// lay theo ten of urlPatterns trong createfreeslotservlet
+    private static final String CREATE_FREE_SLOT_ACTION = "createFreeSlotAction";
+    private static final String CREATE_FREE_SLOT_PAGE = "create-freeSlot.jsp";
 
     private static final String ADMIN_PAGE = "AdminPage.jsp";
     private static final String ADMIN_PAGE_ACTION = "AdminPage.jsp";
@@ -49,16 +51,22 @@ public class MainController extends HttpServlet {
 
     private static final String CREATED_PAGE = "CreatedSlotView.jsp";
     private static final String CREATED_CONTROLLER = "CreatedSlotController";
+    
+    private static final String CREATED_PAGE_HIDE = "HideView";
+    private static final String CREATED_CONTROLLER_VIEW_SUB = "CreatedSlotViewSubController";
 
-    private static final String CANCEL_FREE_SLOT = "hideFS";
-    private static final String CANCEL_CREATED_CONTROLLER = "CancelSlotController";
+    private static final String HIDE_FREE_SLOT = "hideFS";
+    private static final String HIDE_CREATED_CONTROLLER = "CancelSlotController";
+    
+    private static final String UNHIDE_FREE_SLOT = "UnhideFS";
+    private static final String UNHIDE_CREATED_CONTROLLER = "UnhideFSlotController";
 
     private static final String DELETE_FREE_SLOT = "deleteFS";
     private static final String DELETE_CREATED_CONTROLLER = "DeleteFSlotController";
 
     private static final String VIEW_FREE_SLOT = "viewFS";
     private static final String VIEW_CREATED_CONTROLLER = "ViewStudentSlotController";
-    
+
     private static final String UPDATE_FREE_SLOT = "updateFS";
     private static final String UPDATE_CREATED_CONTROLLER = "UpdateFSlotController";
 
@@ -86,6 +94,8 @@ public class MainController extends HttpServlet {
                 url = CREATED_CONTROLLER;
             } else if (action.equals(ADMIN_PAGE)) {
                 url = ADMIN_PAGE_ACTION;
+            } else if (action.equals(CREATE_FREE_SLOT_ACTION)) {
+                url = CREATE_FREE_SLOT_SERVLET;
             } else if (CREATE_REQUEST.equals(action)) {
                 url = REQUEST_ACTION;
             } else if (VIEWBOOKING.equals(action)) {
@@ -106,14 +116,18 @@ public class MainController extends HttpServlet {
                 url = STUDENT_PAGE_ACTION;
             } else if (LOGOUT.equals(action)) {
                 url = LOGIN_BY_FEID_ACTION;
-            } else if (CANCEL_FREE_SLOT.equals(action)) {
-                url = CANCEL_CREATED_CONTROLLER;
+            } else if (HIDE_FREE_SLOT.equals(action)) {
+                url = HIDE_CREATED_CONTROLLER;
             } else if (DELETE_FREE_SLOT.equals(action)) {
                 url = DELETE_CREATED_CONTROLLER;
             } else if (VIEW_FREE_SLOT.equals(action)) {
                 url = VIEW_CREATED_CONTROLLER;
             } else if (UPDATE_FREE_SLOT.equals(action)) {
                 url = UPDATE_CREATED_CONTROLLER;
+            } else if (CREATED_PAGE_HIDE.equals(action)) {
+                url = CREATED_CONTROLLER_VIEW_SUB;
+            } else if (UNHIDE_FREE_SLOT.equals(action)) {
+                url = UNHIDE_CREATED_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());

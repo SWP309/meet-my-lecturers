@@ -174,11 +174,11 @@
                 <img class="back-icon" alt="" src="public/BookingView/back.svg" />
             </div>
             <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize">
-                <ul class="orbit-container" tabindex="0" style="height: 530.4px;">
+                <ul class="orbit-container" tabindex="0" style="height: 613.389px;">
                     <button class="orbit-previous" tabindex="0"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
                     <button class="orbit-next" tabindex="0"><span class="show-for-sr">Next Slide</span>&#9654;</button>
                     <li class="orbit-slide" data-slide="0" style="display: none; position: relative; top: 0px;">
-                        <img class="orbit-image" src="./public/StudentHome/anh1.jpg"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
+                        <img class="orbit-image" src="./public/StudentHome/anh1.jpg"  style="width: 2000px; height: 600px; object-fit:contain;" alt="Space">
                     <figcaption class="orbit-caption">FPT University</figcaption>
                     </li>
                     <li class="orbit-slide" data-slide="1" style="position: relative; top: 0px; display: none;">
