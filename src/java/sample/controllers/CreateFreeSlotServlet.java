@@ -1,22 +1,32 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sample.controllers;
 
 import java.io.IOException;
-import java.util.List;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.transform.Source;
+import sample.freeslots.FreeSlotsDAO;
+import sample.freeslots.FreeSlotsDTO;
 import sample.users.UserDTO;
-import sample.viewCreatedSlot.ViewCreatedSlotDAO;
-import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
-@WebServlet(name = "CreatedSlotController", urlPatterns = {"/CreatedSlotController"})
-public class CreatedSlotController extends HttpServlet {
+/**
+ *
+ * @author W10(hiep-tm)
+ */
+@WebServlet(name = "CreateFreeSlotServlet", urlPatterns = {"/newfreeslot"})
+public class CreateFreeSlotServlet extends HttpServlet {
 
-    private static final String ERROR = "CreatedSlotView.jsp";
-    private static final String SUCCESS = "CreatedSlotView.jsp";
+    private static final String ERROR = "create-freeSlot.jsp";
+    private static final String SUCCESS = "CreatedSlotController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -25,22 +35,31 @@ public class CreatedSlotController extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            String email=request.getParameter(us.getUserEmail());
-            ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
-            List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlot(us.getUserEmail());
-             System.out.println(us.getUserEmail());
-            if (listCreatedSlot.size() > 0) {
-                request.setAttribute("LIST_CREATED_SLOT", listCreatedSlot);
+            String subjectCode = request.getParameter("txtSubjectCode");
+            String startTime = request.getParameter("txtStartTime");
+            String endTime = request.getParameter("txtEndTime");
+            String password = request.getParameter("txtPassword").trim();
+            if (password.isEmpty()){
+                  password = null; // Chuyển chuỗi trống thành giá trị null
+            }
+            int capacity = Integer.parseInt(request.getParameter("txtCapacity"));
+            String meetLink = request.getParameter("txtMeetLink");
+            int count = Integer.parseInt(request.getParameter("txtCount"));
+            String lecturerID = request.getParameter("txtLecturerID");
+            boolean status = true;
+            FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
+            FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status);
+            boolean checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
+            if (checkCreated) {
                 url = SUCCESS;
             }
-        } catch (Exception e) {
-            log("Error at SearchController: " + e.toString());
+        } catch (SQLException ex) {
+            log("Error at CreateFreeSlotServlet" + ex.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
-  
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -12,11 +12,11 @@ import sample.users.UserDTO;
 import sample.viewCreatedSlot.ViewCreatedSlotDAO;
 import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
-@WebServlet(name = "CreatedSlotController", urlPatterns = {"/CreatedSlotController"})
-public class CreatedSlotController extends HttpServlet {
+@WebServlet(name = "CreatedSlotViewSubController", urlPatterns = {"/CreatedSlotViewSubController"})
+public class CreatedSlotViewSubController extends HttpServlet {
 
-    private static final String ERROR = "CreatedSlotView.jsp";
-    private static final String SUCCESS = "CreatedSlotView.jsp";
+    private static final String ERROR = "CreateSlotViewSub.jsp";
+    private static final String SUCCESS = "CreateSlotViewSub.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,10 +27,9 @@ public class CreatedSlotController extends HttpServlet {
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String email=request.getParameter(us.getUserEmail());
             ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
-            List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlot(us.getUserEmail());
-             System.out.println(us.getUserEmail());
-            if (listCreatedSlot.size() > 0) {
-                request.setAttribute("LIST_CREATED_SLOT", listCreatedSlot);
+            List<ViewCreatedSlotDTO> listCreatedSlotSub = dao.GetlistCreatedSlotSub(us.getUserEmail());
+            if (listCreatedSlotSub.size() > 0) {
+                request.setAttribute("LIST_CREATED_SLOT_SUB", listCreatedSlotSub);
                 url = SUCCESS;
             }
         } catch (Exception e) {

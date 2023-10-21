@@ -33,6 +33,22 @@
         <servlet-class>sample.controllers.DeleteFSlotController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CreateFreeSlotServlet</servlet-name>
+        <servlet-class>sample.controllers.CreateFreeSlotServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UnhideFSlotController</servlet-name>
+        <servlet-class>sample.controllers.UnhideFSlotController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreatedSlotViewSubController</servlet-name>
+        <servlet-class>sample.controllers.CreatedSlotViewSubController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateFreeSlotServlet</servlet-name>
+        <url-pattern>/newfreeslot</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>ViewStudentSlotController</servlet-name>
         <servlet-class>sample.controllers.ViewStudentSlotController</servlet-class>
     </servlet>
@@ -103,6 +119,14 @@
     <servlet-mapping>
         <servlet-name>UpdateFSlotController</servlet-name>
         <url-pattern>/UpdateFSlotController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UnhideFSlotController</servlet-name>
+        <url-pattern>/UnhideFSlotController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreatedSlotViewSubController</servlet-name>
+        <url-pattern>/CreatedSlotViewSubController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

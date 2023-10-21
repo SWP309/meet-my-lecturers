@@ -11,7 +11,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-        <link rel="stylesheet" href="./CreatedSlotView.css" />
+        <link rel="stylesheet" href="./CreateSlotViewSub.css" />
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
@@ -69,10 +69,6 @@
             }
             function submitFormRequest() {
                 var form = document.querySelector('.request form');
-                form.submit();
-            }
-            function submitFormHideView() {
-                var form = document.querySelector('.hideView form');
                 form.submit();
             }
             var userDTO = {
@@ -174,14 +170,6 @@
                                 <p class="logout1">Logout</p>
                             </div>
                         </div>
-                          <div class="frame-div hideView" onclick="submitFormHideView()">
-                            <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="HideView" />
-                            </form>
-                            <div>
-                                <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
-                            </div>
-                        </div>
                         <div>
                             <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                                  onclick="showUserInfo()" />
@@ -204,8 +192,8 @@
             </div>
 
             <div class="table-container">
-                <c:if test="${requestScope.LIST_CREATED_SLOT !=null}">
-                    <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">
+                <c:if test="${requestScope.LIST_CREATED_SLOT_SUB !=null}">
+                    <c:if test="${not empty requestScope.LIST_CREATED_SLOT_SUB}">
                         <table class="table table-hover table-primary table-rounded">
                             <thead>
                                 <tr class="table-danger">
@@ -214,68 +202,36 @@
                                     <th>Lecturer's Name</th>
                                     <th>Start Time</th>
                                     <th>End Time</th>
-                                    <th>Hide</th>
-                                    <th>Delete</th>
-                                    <th>View</th>
-                                    <th>Update</th>
+                                    <th>Unhide</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <form action="MainController" method="POST">
-                                <c:forEach var="listCreatedSlot" varStatus="counter" items="${requestScope.LIST_CREATED_SLOT}">
+                                <c:forEach var="listCreatedSlotSub" varStatus="counter" items="${requestScope.LIST_CREATED_SLOT_SUB}">
                                     <tr>
                                         <td>${counter.count}</td>
                                         <td>
-                                            <input type="text" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}" required=""/>
+                                            <input type="text" name="subjectCode" value="${listCreatedSlotSub.subjectCode.trim()}" required=""/>
                                         </td>
                                         <c:if test="${counter.count == 1}">
                                             <td class="merged-row" style="text-align: center;
                                                 vertical-align: middle !important;
                                                 height: 100px!important;" rowspan="${requestScope.LIST_CREATED_SLOT.size()}">
-                                                <span>${listCreatedSlot.lectureName}</span>
+                                                <span>${listCreatedSlotSub.lectureName}</span>
                                             </td>
                                         </c:if>
                                         <td>
-                                            <input type="text" name="startTime" value="${listCreatedSlot.startTime}" required=""/>
+                                            <input type="text" name="startTime" value="${listCreatedSlotSub.startTime}" required=""/>
                                         </td>
                                         <td>
-                                            <input type="text" name="endTime" value="${listCreatedSlot.endTime}" required=""/>
+                                            <input type="text" name="endTime" value="${listCreatedSlotSub.endTime}" required=""/>
                                         </td>
                                         <td>
-                                            <a style="display: flex; text-decoration: none; justify-content: center;" onclick="return confirm('Are you sure to hide this Free Slot')"
-                                               href="MainController?action=hideFS&freeSlotID=${listCreatedSlot.freeSlotID}">
-                                                <i class="material-icons">cancel</i>Hide</a>
+                                            <a  class="centered-link" onclick="return confirm('Are you sure to Unhide this Free Slot')"
+                                               href="MainController?action=UnhideFS&freeSlotID=${listCreatedSlotSub.freeSlotID}">
+                                                <i class="material-icons">cancel</i>Unhide</a>
 
                                         </td>
-                                        <td>
-                                            <a style="display: flex; text-decoration: none; justify-content: center;" onclick="return confirm('Are you sure to delete this Free Slot')"
-                                               href="MainController?action=deleteFS&freeSlotID=${listCreatedSlot.freeSlotID}">
-                                                <i class="material-icons">delete</i>Delete</a>
-
-                                        </td>
-                                        <td>
-                                            <a style="display: flex; text-decoration: none; justify-content: center;"
-                                               href="MainController?action=viewFS&freeSlotID=${listCreatedSlot.freeSlotID}">
-                                                <i class="fas fa-search"></i>View</a>
-
-                                        </td>
-                                        <td>
-                                            <!--                                                                                        <a style="display: flex; text-decoration: none; justify-content: center;"
-                                                                                                                                       href="MainController?action=updateFS&freeSlotID=${listCreatedSlot.freeSlotID}&subjectCode=${listCreatedSlot.subjectCode}&startTime=${listCreatedSlot.startTime}&endTime=${listCreatedSlot.endTime}">
-                                                                                                                                        <i class="material-icons">update</i>Update</a>-->
-                                            <form action="MainController" method="GET">
-                                                <input type="hidden" name="action" value="updateFS">
-                                                <input type="hidden" name="freeSlotID" value="${listCreatedSlot.freeSlotID}">
-                                                <input type="hidden" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}" required/>
-                                                <input type="hidden" name="startTime" value="${listCreatedSlot.startTime}">
-                                                <input type="hidden" name="endTime" value="${listCreatedSlot.endTime}">
-                                                <button type="submit" style="display: flex; text-decoration: none; justify-content: center;">
-                                                    <i class="material-icons">update</i>Update
-                                                </button>
-                                            </form>
-
-                                        </td>
-
 
                                     </tr>
                                 </form>
@@ -286,7 +242,7 @@
                     </c:if>
                 </c:if>
             </div>
-           
+
             <h3>
                 <span class="error-message">
                     ${requestScope.ERROR}
