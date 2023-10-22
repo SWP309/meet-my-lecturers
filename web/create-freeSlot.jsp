@@ -13,9 +13,9 @@
         <title>Create Free Slot</title>
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            if (us != null) {
+            if (us != null && us.getRoleID().equals("2")) {
 
-            }else{
+            } else {
                 response.sendRedirect("MainController");
             }
         %>
@@ -28,7 +28,7 @@
             <table>
                 <tr>
                     <td>Subject code:</td>
-                    <td><input type="text" name="txtSubjectCode" placeholder="ex:SWP391...etc" required="" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT)\d{3}$"></td>
+                    <td><input type="text" name="txtSubjectCode" placeholder="ex:SWP391...etc" required="" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT)[0-9]{3}$"></td>
                 </tr>
                 <tr>
                     <td>Start time:</td>
