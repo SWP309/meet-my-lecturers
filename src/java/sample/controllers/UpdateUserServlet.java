@@ -3,46 +3,44 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import sample.requests.RequestDAO;
-import sample.requests.RequestDTO;
+import sample.users.UserDAO;
 import sample.users.UserDTO;
 
-public class CreateRequestServlet extends HttpServlet {
-
-    private static final String ERROR = "request.jsp";
-    private static final String SUCCESS = "StudentHome.jsp";
-
+public class UpdateUserServlet extends HttpServlet {
+    
+    private final String SUCCESS = "SearchUserServlet";
+    private final String ERROR = "SearchUserServlet";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        try{
-            HttpSession session = request.getSession();
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            String lecturer = request.getParameter("txtLecturer");
-            String subjectCode = request.getParameter("txtSubjectCode");
-            String startTime = request.getParameter("txtStartTime");
-            String endTime = request.getParameter("txtEndTime");
-            String description = request.getParameter("txtDescription");
-            String semesterID = request.getParameter("txtSemester");
-            RequestDAO requestDAO = new RequestDAO();
-            RequestDTO requestDTO = new RequestDTO(semesterID, true, subjectCode, startTime, endTime, description, us.getUserID(), lecturer, semesterID);
-            boolean checkCreated = requestDAO.createARequest(requestDTO);
-            if (checkCreated) {
+        try {
+            String userName = request.getParameter("txtUserName");
+            String userEmail = request.getParameter("txtEmail");
+            String password = request.getParameter("txtPassword");
+            String userStatus = request.getParameter("txtStatus");
+            boolean check = Boolean.parseBoolean(userStatus);
+            String userID = request.getParameter("txtUserID");
+//            String searchUserID = request.getParameter("txtSearchUserID");
+//            String name = request.getParameter("txtName");
+//            String roleID = request.getParameter("txtRoleID");
+            UserDAO userDAO = new UserDAO();
+            UserDTO userDTO = new UserDTO(userID, userName, userEmail, check, "", password);
+            boolean checkUpdate;
+                checkUpdate = userDAO.updateAUser(userDTO);
+            if(checkUpdate) {
                 url = SUCCESS;
             }
-        } catch (SQLException | ClassNotFoundException | ParseException ex) {
-            log("Error at CreateRequestServlet" + ex.toString());
-        }  finally {
+        } catch (ClassNotFoundException | SQLException ex) {
+                log("Error at UpdateUserServlet: " + ex.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

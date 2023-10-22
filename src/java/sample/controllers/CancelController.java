@@ -34,7 +34,7 @@ public class CancelController extends HttpServlet {
                 boolean checkUpdate = dao.Cancel(bookingID);
                 System.out.println(checkUpdate);
                 if (checkUpdate) {
-                    List<BookingDTO> updatedBookings = dao.Getlistbooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                    List<BookingDTO> updatedBookings = dao.getListBooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
                     request.setAttribute("LIST_BOOKING", updatedBookings);
                     url = SUCCESS;
                     if (updatedBookings == null || updatedBookings.isEmpty()) {

@@ -1,40 +1,42 @@
 package sample.requests;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import sample.utils.DBUtils;
 
-public class RequestDAO {
+public class RequestDAO implements Serializable{
 
-    private final String CREATE_USER = "INSERT  INTO Requests(status, subjectCode, "
-            + "startTime, endTime, description, studentID, lecturerID) "
-            + "values(?, ?, ?, ?, ?, ?, ?)";
+    private final String CREATE_REQUEST = "INSERT INTO Requests "
+            + "(status, subjectCode, startTime, endTime, description, studentID, lecturerID, semesterID) "
+            + "values(?, ?, ?, ?, ?, ?, ?, ?)";
     
-    public boolean createARequest(RequestDTO requestDTO) throws SQLException, ClassNotFoundException, ParseException {
+    public boolean createARequest(RequestDTO requestDTO) throws SQLException, ClassNotFoundException, ParseException{
         boolean checkCreate = false;
         Connection con = null;
         PreparedStatement stm = null;
         int result;
         try {
             con = DBUtils.getConnection();
-            stm = con.prepareStatement(CREATE_USER);
-            stm.setBoolean(1, false);
+            stm = con.prepareStatement(CREATE_REQUEST);
+            stm.setBoolean(1, requestDTO.isStatus());
             stm.setString(2, requestDTO.getSubjectCode());
             String start = requestDTO.getStartTime();
             String end = requestDTO.getEndTime();
-            SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-            SimpleDateFormat format2 = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-            Date starts = format1.parse(start);
-            Date starts2 = format2.parse(end);
-            stm.setDate(3, (java.sql.Date) starts);//lam sao de dong nhat kieu du lieu
-            stm.setDate(4, (java.sql.Date) starts2);
-            stm.setString(5, requestDTO.getDescription());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            Date starts = format.parse(start);
+            Date ends = format.parse(end);
+            stm.setTimestamp(3, new Timestamp(starts.getTime()));
+            stm.setTimestamp(4, new Timestamp(ends.getTime()));
+            stm.setNString(5, requestDTO.getDescription());
             stm.setString(6, requestDTO.getStudentID());
             stm.setString(7, requestDTO.getLecturerID());
+            stm.setString(8, requestDTO.getSemesterID());
             result = stm.executeUpdate();
             if(result > 0){
                 checkCreate = true;

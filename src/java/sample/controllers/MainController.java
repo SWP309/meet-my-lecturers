@@ -31,7 +31,7 @@ public class MainController extends HttpServlet {
     private static final String REQUEST = "Request";
     private static final String BACK_TO_REQUEST = "BackToRequest";
 
-    private static final String CREATE_REQUEST = "Create request";
+    private static final String CREATE_REQUEST = "CreateRequest";
     private static final String REQUEST_ACTION = "CreateRequestServlet";
 
     private static final String VIEWBOOKING = "ViewBooking";
@@ -43,6 +43,13 @@ public class MainController extends HttpServlet {
     private static final String VIEW_LECTURER = "ViewAllLecturers";
     private static final String VIEW_LECTURER_CONTROLLER = "ViewLecturerServlet";
 
+        
+    private static final String SEARCH_USERS = "SearchUsers";
+    private static final String SEARCH_USERS_CONTROLLER = "SearchUserServlet";
+    
+    private static final String UPDATE_USERS = "UpdateUsers";
+    private static final String UPDATE_USERS_CONTROLLER = "UpdateUserServlet";
+    
     private static final String CANCEL = "cancel";
     private static final String CANCEL_CONTROLLER = "CancelController";
 
@@ -79,7 +86,6 @@ public class MainController extends HttpServlet {
 
         try {
             String action = request.getParameter("action");
-            System.out.println(action);
             if (action == null || action.isEmpty()) {
                 url = LOGIN_BY_FEID_ACTION;
             } else if (action.equals(LOGIN_BY_GOOGLE)) {
@@ -128,6 +134,10 @@ public class MainController extends HttpServlet {
                 url = CREATED_CONTROLLER_VIEW_SUB;
             } else if (UNHIDE_FREE_SLOT.equals(action)) {
                 url = UNHIDE_CREATED_CONTROLLER;
+            } else if (SEARCH_USERS.equals(action)) {
+                url = SEARCH_USERS_CONTROLLER;
+            } else if (UPDATE_USERS.equals(action)) {
+                url = UPDATE_USERS_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
