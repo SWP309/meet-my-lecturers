@@ -28,7 +28,7 @@
             <table>
                 <tr>
                     <td>Subject code:</td>
-                    <td><input type="text" name="txtSubjectCode" placeholder="ex:SWP391...etc" required=""></td>
+                    <td><input type="text" name="txtSubjectCode" placeholder="ex:SWP391...etc" required="" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT)\d{3}$"></td>
                 </tr>
                 <tr>
                     <td>Start time:</td>
