@@ -39,7 +39,7 @@ public class BookingDAO {
         return dateFormat.format(sqlTime);
     }
 
-    public List<BookingDTO> Getlistbooking(String userEmail) throws SQLException {
+    public List<BookingDTO> getListBooking(String userEmail) throws SQLException {
         List<BookingDTO> listBooking = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;

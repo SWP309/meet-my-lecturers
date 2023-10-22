@@ -1,6 +1,8 @@
 package sample.requests;
 
-public class RequestDTO {
+import java.io.Serializable;
+
+public class RequestDTO implements Serializable{
     private String requestID;
     private boolean status;
     private String subjectCode;
@@ -9,6 +11,15 @@ public class RequestDTO {
     private String description;
     private String studentID;
     private String lecturerID;
+    private String semesterID;
+
+    public String getSemesterID() {
+        return semesterID;
+    }
+
+    public void setSemesterID(String semesterID) {
+        this.semesterID = semesterID;
+    }
 
     public RequestDTO() {
         this.requestID = "";
@@ -19,9 +30,11 @@ public class RequestDTO {
         this.description = "";
         this.studentID = "";
         this.lecturerID = "";
+        this.semesterID = "";
     }
 
-    public RequestDTO(boolean status, String subjectCode, String startTime, String endTime, String description, String studentID, String lecturerID) {
+    public RequestDTO(String requestID, boolean status, String subjectCode, String startTime, String endTime, String description, String studentID, String lecturerID, String semesterID) {
+        this.requestID = requestID;
         this.status = status;
         this.subjectCode = subjectCode;
         this.startTime = startTime;
@@ -29,7 +42,9 @@ public class RequestDTO {
         this.description = description;
         this.studentID = studentID;
         this.lecturerID = lecturerID;
+        this.semesterID = semesterID;
     }
+
 
     /**
      * @return the requestID
