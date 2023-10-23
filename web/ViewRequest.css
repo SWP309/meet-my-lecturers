@@ -75,6 +75,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 20px;
+  cursor: pointer;
 }
 .fptu-eng-1-parent {
   position: absolute;
@@ -260,6 +261,7 @@ input.in_search_userID {
   height: 35px;
   font-size: 30px;
   color: #000;
+  cursor: pointer;
 }
 .admin-viewusersedited {
   position: relative;

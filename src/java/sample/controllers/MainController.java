@@ -67,7 +67,7 @@ public class MainController extends HttpServlet {
 
     private static final String CREATED_PAGE = "CreatedSlotView.jsp";
     private static final String CREATED_CONTROLLER = "CreatedSlotController";
-    private static final String BACK_TO_LECTURER_HOME = "backToLecturerHome";
+    private static final String BACK_TO_LECTURER_HOME = "BackToLecturerHome";
     
     private static final String CREATED_PAGE_HIDE = "HideView";
     private static final String CREATED_CONTROLLER_VIEW_SUB = "CreatedSlotViewSubController";
@@ -152,7 +152,11 @@ public class MainController extends HttpServlet {
             } else if (VIEW_REQUEST.equals(action)) {
                 url = VIEW_REQUEST_CONTROLLER;
             } else if (BACK_TO_LECTURER_HOME.equals(action)) {
-                url = CREATED_PAGE;
+                url = CREATED_CONTROLLER;
+            } else if (DELETE_REQUEST.equals(action)) {
+                url = DELETE_REQUEST_CONTROLLER;
+            } else if (ACCEPT_REQUEST.equals(action)) {
+                url = ACCEPT_REQUEST_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
