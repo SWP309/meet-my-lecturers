@@ -29,6 +29,9 @@ public class RequestDAO implements Serializable{
     private final String ACCEPT_REQUEST = "UPDATE Requests\n" +
             "SET status = ?\n" +
             "WHERE requestID = ?";
+
+    private final String DELETE_REQUEST = "DELETE FROM Requests\n" +
+"            WHERE requestID = ?";
     
     public boolean createARequest(RequestDTO requestDTO) throws SQLException, ClassNotFoundException, ParseException{
         boolean checkCreate = false;
@@ -150,4 +153,27 @@ public class RequestDAO implements Serializable{
         return checkUpdate;
     }
 
+    public boolean deleteARequest(String roleID) throws ClassNotFoundException, SQLException {
+        boolean checkDelete = false;
+        Connection con = null;
+        PreparedStatement stm = null;
+        int result;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(DELETE_REQUEST);
+            stm.setString(1, roleID);
+            result = stm.executeUpdate();
+            if(result > 0){
+                checkDelete = true;
+            }
+        } finally {
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return checkDelete;
+    }
 }
