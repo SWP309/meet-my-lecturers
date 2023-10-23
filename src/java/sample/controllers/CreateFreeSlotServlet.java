@@ -37,6 +37,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            System.out.println(us);
             String subjectCode = request.getParameter("txtSubjectCode");
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
@@ -55,7 +56,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
             
             String meetLink = request.getParameter("txtMeetLink");
             int count = Integer.parseInt(request.getParameter("txtCount"));
-            String lecturerID = request.getParameter("txtLecturerID");
+            String lecturerID = us.getUserID();
             boolean status = true;
 
             if (flag) {
