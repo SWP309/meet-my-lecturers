@@ -26,9 +26,9 @@ public class UpdateUserServlet extends HttpServlet {
             String userStatus = request.getParameter("txtStatus");
             boolean check = Boolean.parseBoolean(userStatus);
             String userID = request.getParameter("txtUserID");
-//            String searchUserID = request.getParameter("txtSearchUserID");
-//            String name = request.getParameter("txtName");
-//            String roleID = request.getParameter("txtRoleID");
+            String searchUserID = request.getParameter("txtSearchUserID");
+            String name = request.getParameter("txtName");
+            String roleID = request.getParameter("txtRoleID");
             UserDAO userDAO = new UserDAO();
             UserDTO userDTO = new UserDTO(userID, userName, userEmail, check, "", password);
             boolean checkUpdate;

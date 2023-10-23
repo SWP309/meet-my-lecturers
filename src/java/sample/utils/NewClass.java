@@ -12,5 +12,5 @@ package sample.utils;
 public class NewClass {
     //
     //
-    //
+    
 }

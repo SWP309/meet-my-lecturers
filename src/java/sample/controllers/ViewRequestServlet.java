@@ -1,45 +1,53 @@
+
 package sample.controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import sample.bookings.BookingDAO;
-import sample.bookings.BookingDTO;
+import sample.requests.RequestDAO;
+import sample.requests.RequestDTO;
 import sample.users.UserDTO;
 
-@WebServlet(name = "BookingController", urlPatterns = {"/BookingController"})
-public class BookingController extends HttpServlet {
-
-    private static final String ERROR = "BookingView.jsp";
-    private static final String SUCCESS = "BookingView.jsp";
-
+public class ViewRequestServlet extends HttpServlet {
+    private final String SUCCESS = "ViewRequest.jsp";
+    private final String ERROR = "CreatedSlotView.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
             HttpSession session = request.getSession();
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            String email=request.getParameter(us.getUserEmail());
-            BookingDAO dao = new BookingDAO();
-            List<BookingDTO> listBooking = dao.getListBooking(us.getUserEmail());
-            if (listBooking.size() > 0) {
-                request.setAttribute("LIST_BOOKING", listBooking);
-                url = SUCCESS;
+            UserDTO userDTO = (UserDTO) session.getAttribute("loginedUser");
+            System.out.println("LecturerID: " + userDTO.getUserID());
+            RequestDAO requestDAO = new RequestDAO();
+            requestDAO.getRequest(userDTO.getUserID());
+            List<RequestDTO> requests = requestDAO.getListRequests();
+            for (RequestDTO request1 : requests) {
+                System.out.println(request1.getStudentID() + request1.getDescription());
             }
-        } catch (Exception e) {
-            log("Error at BookingController: " + e.toString());
+            List<UserDTO> users = requestDAO.getListUsers();
+            if (requests != null) {
+                    request.setAttribute("LIST_REQUESTS", requests);
+                    request.setAttribute("LIST_REQUESTS_USERS", users);
+                    url = SUCCESS;
+            } else {
+                request.setAttribute("VIEW_REQUEST_MESSAGE", "No request!!!");
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            log("Error at ViewRequestServlet: " + ex.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
-  
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

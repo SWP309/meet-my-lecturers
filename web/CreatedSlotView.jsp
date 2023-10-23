@@ -67,7 +67,7 @@
                 var form = document.querySelector('.logout form');
                 form.submit();
             }
-            function submitFormRequest() {
+            function submitFormViewRequest() {
                 var form = document.querySelector('.request form');
                 form.submit();
             }
@@ -156,12 +156,12 @@
 
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-div request" onclick="submitFormRequest()">
+                        <div class="frame-div request" onclick="submitFormViewRequest()">
                             <form action="MainController" method="POST">
-                                <input type="hidden" name="action" value="Request" />
+                                <input type="hidden" name="action" value="ViewRequest" />
                             </form>
 
-                            <i class="material-icons">mail_outline</i> Request
+                            <i class="material-icons">mail_outline</i>View Request(10)
                         </div>
                         <div class="frame-div logout" onclick="submitFormLogout()">
                             <form action="MainController" method="POST" style="display: none;">
