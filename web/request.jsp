@@ -41,13 +41,13 @@
                         <div class="semester">
                             <div class="semester-child"></div>
                             <div class="semester1">
-                                SemesterID(ex:FA23):<input type="text" name="txtSemester" value="${param.txtSemester}" />
+                                SemesterID(ex:FA23):<input class="in-semeter" type="text" name="txtSemester" value="${param.txtSemester}" />
                             </div>
                         </div>
                         <div class="lectucrer">
                             <div class="lectucrer-child"></</div>
                             <div class="lecturer">
-                                LecturerID:<input type="text" name="txtLecturer" value="${param.txtLecturer}" />
+                                LecturerID:<input class="in-lecturer" type="text" name="txtLecturer" value="${param.txtLecturer}" />
                                 <input type="submit" name="action" value="View Timetable" />    
                             </div>
                             </div>
@@ -56,26 +56,26 @@
         <div class="subject-code">
             <div class="lectucrer-child"></div>
             <div class="subject-code1">
-                Subject code:<input type="text" name="txtSubjectCode" value="" required=""/>
+                Subject code:<input class="in-subject" type="text" name="txtSubjectCode" value="" required=""/>
             </div>
         </div>
 
         <div class="start-time">
             <div class="semester-child"></div>
             <div class="start-time1">
-                Start time:<input type="datetime-local" name="txtStartTime" value="" required=""/>
+                Start time:<input class="in-starttime" type="datetime-local" name="txtStartTime" value="" required=""/>
             </div>
         </div>
         <div class="end-time">
             <div class="semester-child"></div>
             <div class="end-time1"> 
-                End time:<input type="datetime-local" name="txtEndTime" value="" required=""/>
+                End time:<input class="in-endtime" type="datetime-local" name="txtEndTime" value="" required=""/>
             </div>
         </div>
         <div class="description">
             <div class="description-child"></div>
             <div class="description1">
-                Description:<input type="text" name="txtDescription" value="" required=""/>
+                Description:<input class="in-description" type="text" name="txtDescription" value="" required=""/>
             </div>
         </div>
 

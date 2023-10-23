@@ -3,11 +3,16 @@ package sample.requests;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import sample.users.UserDTO;
 import sample.utils.DBUtils;
 
 public class RequestDAO implements Serializable{
@@ -15,6 +20,11 @@ public class RequestDAO implements Serializable{
     private final String CREATE_REQUEST = "INSERT INTO Requests "
             + "(status, subjectCode, startTime, endTime, description, studentID, lecturerID, semesterID) "
             + "values(?, ?, ?, ?, ?, ?, ?, ?)";
+
+    private final String SEARCH_REQUESTS = "SELECT r.requestID, u.userID, u.userName, r.subjectCode, r.startTime, r.endTime, r.description \n" +
+            "FROM Requests r\n" +
+            "JOIN Users u on r.studentID = u.userID\n" +
+            "WHERE r.lecturerID = ? and r.status = ?";
     
     public boolean createARequest(RequestDTO requestDTO) throws SQLException, ClassNotFoundException, ParseException{
         boolean checkCreate = false;
@@ -50,6 +60,65 @@ public class RequestDAO implements Serializable{
             }
         }
         return checkCreate;
+    }
+
+    private List<RequestDTO> listRequests;
+
+    public List<RequestDTO> getListRequests() {
+        return listRequests;
+    }
+    
+    private List<UserDTO> listUsers;
+
+    public List<UserDTO> getListUsers() {
+        return listUsers;
+    }
+    
+    
+    public void getRequest(String userID) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_REQUESTS);
+            stm.setString(1, userID);
+            stm.setBoolean(2, false);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String requestID = rs.getString("requestID");
+                String studentID = rs.getString("userID");
+                String userName = rs.getNString("userName");
+                String subjectCode = rs.getString("subjectCode");
+                Date startTime = rs.getTimestamp("startTime");
+                Date endTime = rs.getTimestamp("endTime");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                String starts = dateFormat.format(startTime);
+                String ends = dateFormat.format(endTime);
+                String description = rs.getNString("description");
+                RequestDTO requestDTO = new RequestDTO(requestID, false, subjectCode
+                        , starts, ends, description, studentID, userID, "");
+                UserDTO userDTO = new UserDTO(studentID, userName, "", true, "", "");
+                if(this.listRequests == null){
+                    this.listRequests = new ArrayList<>();
+                }
+                this.listRequests.add(requestDTO);
+                if(this.listUsers == null){
+                    this.listUsers = new ArrayList<>();
+                }
+                this.listUsers.add(userDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
     }
 
 }

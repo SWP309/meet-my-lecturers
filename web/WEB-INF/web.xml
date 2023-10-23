@@ -44,6 +44,10 @@
         <servlet-name>CreatedSlotViewSubController</servlet-name>
         <servlet-class>sample.controllers.CreatedSlotViewSubController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewRequestServlet</servlet-name>
+        <servlet-class>sample.controllers.ViewRequestServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -143,6 +147,10 @@
     <servlet-mapping>
         <servlet-name>UpdateUserServlet</servlet-name>
         <url-pattern>/UpdateUserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewRequestServlet</servlet-name>
+        <url-pattern>/ViewRequestServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
