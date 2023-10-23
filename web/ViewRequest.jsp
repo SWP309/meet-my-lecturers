@@ -6,7 +6,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-        <link rel="stylesheet" href="./ViewUsers.css" />
+        <link rel="stylesheet" href="./ViewRequest.css" />
+        <script>
+            function submitFormLogout() {
+                var form = document.querySelector('.logout form');
+                form.submit();
+            }
+            function submitFormBackToLecturerHome() {
+                var form = document.querySelector('.backbutton form');
+                form.submit();
+            }
+        </script>
     </head>
     <body>
         <div class="admin-viewusersedited">
@@ -18,7 +28,10 @@
                         src="./public/UsersView/2021fptueng-11@2x.png"
                         />
 
-                    <div class="frame-parent">
+                    <div class="frame-parent logout" onclick="submitFormLogout()">
+                        <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="Logout" />
+                        </form>
                         <div class="frame-group">
                             <div class="frame-div">
                                 <div class="logout-wrapper">
@@ -97,7 +110,10 @@
                 </div>
             </div>
 
-            <div class="backbutton">
+            <div class="backbutton" onclick="submitFormBackToLecturerHome()">
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="BackToLecturerHome">
+                </form>
                 <div class="back">Back</div>
                 <img class="back-icon" alt="" src="./public/UsersView/back.svg" />
             </div>

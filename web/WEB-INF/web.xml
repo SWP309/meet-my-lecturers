@@ -48,6 +48,14 @@
         <servlet-name>ViewRequestServlet</servlet-name>
         <servlet-class>sample.controllers.ViewRequestServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteRequestServlet</servlet-name>
+        <servlet-class>sample.controllers.DeleteRequestServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AcceptRequestServlet</servlet-name>
+        <servlet-class>sample.controllers.AcceptRequestServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -151,6 +159,14 @@
     <servlet-mapping>
         <servlet-name>ViewRequestServlet</servlet-name>
         <url-pattern>/ViewRequestServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteRequestServlet</servlet-name>
+        <url-pattern>/DeleteRequestServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AcceptRequestServlet</servlet-name>
+        <url-pattern>/AcceptRequestServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

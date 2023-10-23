@@ -25,6 +25,10 @@ public class RequestDAO implements Serializable{
             "FROM Requests r\n" +
             "JOIN Users u on r.studentID = u.userID\n" +
             "WHERE r.lecturerID = ? and r.status = ?";
+
+    private final String ACCEPT_REQUEST = "UPDATE Requests\n" +
+            "SET status = ?\n" +
+            "WHERE requestID = ?";
     
     public boolean createARequest(RequestDTO requestDTO) throws SQLException, ClassNotFoundException, ParseException{
         boolean checkCreate = false;
@@ -119,6 +123,31 @@ public class RequestDAO implements Serializable{
                 con.close();
             }
         }
+    }
+
+    public boolean acceptARequest(String roleID) throws ClassNotFoundException, SQLException {
+        boolean checkUpdate = false;
+        Connection con = null;
+        PreparedStatement stm = null;
+        int result;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(ACCEPT_REQUEST);
+            stm.setBoolean(1, true);
+            stm.setString(2, roleID);
+            result = stm.executeUpdate();
+            if(result > 0){
+                checkUpdate = true;
+            }
+        } finally {
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+        return checkUpdate;
     }
 
 }
