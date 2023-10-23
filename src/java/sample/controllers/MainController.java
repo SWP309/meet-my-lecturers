@@ -31,8 +31,17 @@ public class MainController extends HttpServlet {
     private static final String REQUEST = "Request";
     private static final String BACK_TO_REQUEST = "BackToRequest";
 
+    private static final String VIEW_REQUEST_CONTROLLER = "ViewRequestServlet";
+    private static final String VIEW_REQUEST = "ViewRequest";
+    
     private static final String CREATE_REQUEST = "CreateRequest";
     private static final String REQUEST_ACTION = "CreateRequestServlet";
+    
+    private static final String DELETE_REQUEST = "DeleteRequest";
+    private static final String DELETE_REQUEST_CONTROLLER = "DeleteRequestServlet";
+    
+    private static final String ACCEPT_REQUEST = "AcceptRequest";
+    private static final String ACCEPT_REQUEST_CONTROLLER = "AcceptRequestServlet";
 
     private static final String VIEWBOOKING = "ViewBooking";
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
@@ -58,6 +67,7 @@ public class MainController extends HttpServlet {
 
     private static final String CREATED_PAGE = "CreatedSlotView.jsp";
     private static final String CREATED_CONTROLLER = "CreatedSlotController";
+    private static final String BACK_TO_LECTURER_HOME = "backToLecturerHome";
     
     private static final String CREATED_PAGE_HIDE = "HideView";
     private static final String CREATED_CONTROLLER_VIEW_SUB = "CreatedSlotViewSubController";
@@ -86,6 +96,7 @@ public class MainController extends HttpServlet {
 
         try {
             String action = request.getParameter("action");
+            System.out.println(action);
             if (action == null || action.isEmpty()) {
                 url = LOGIN_BY_FEID_ACTION;
             } else if (action.equals(LOGIN_BY_GOOGLE)) {
@@ -138,6 +149,10 @@ public class MainController extends HttpServlet {
                 url = SEARCH_USERS_CONTROLLER;
             } else if (UPDATE_USERS.equals(action)) {
                 url = UPDATE_USERS_CONTROLLER;
+            } else if (VIEW_REQUEST.equals(action)) {
+                url = VIEW_REQUEST_CONTROLLER;
+            } else if (BACK_TO_LECTURER_HOME.equals(action)) {
+                url = CREATED_PAGE;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
