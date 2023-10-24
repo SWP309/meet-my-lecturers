@@ -36,31 +36,39 @@ public class CreateFreeSlotServlet extends HttpServlet {
         boolean flag = true;
         try {
             HttpSession session = request.getSession();
+            FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
+
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            System.out.println(us);
             String subjectCode = request.getParameter("txtSubjectCode");
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
-            
+
             String password = request.getParameter("txtPassword").trim();
             if (password.isEmpty()) {
                 password = null; // Chuyển chuỗi trống thành giá trị null
             }
-            
+
             int capacity = Integer.parseInt(request.getParameter("txtCapacity"));
             if (capacity <= 0) {
                 flag = false;
                 out.println("<p style=\"color: red\">The number of student can join this slot must be greater than 0.</p>");
                 out.close();
             }
-            
+
             String meetLink = request.getParameter("txtMeetLink");
+            boolean exists = freeSlotsDAO.checkDuplicateGGMeet(meetLink);
+            System.out.println(exists);
+            if (exists) {
+                flag = false;
+                out.println("<p style=\"color: red\">The gg meet link is duplicated.</p>");
+                out.close();
+            }
+
             int count = Integer.parseInt(request.getParameter("txtCount"));
             String lecturerID = us.getUserID();
             boolean status = true;
 
             if (flag) {
-                FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
                 FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status);
                 boolean checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
                 if (checkCreated) {
