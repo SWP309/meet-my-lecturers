@@ -8,6 +8,11 @@ package sample.controllers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import sample.freeslots.FreeSlotsDAO;
 import sample.freeslots.FreeSlotsDTO;
 import sample.users.UserDTO;
+import sample.utils.DBUtils;
 
 /**
  *
@@ -64,19 +70,46 @@ public class CreateFreeSlotServlet extends HttpServlet {
                 out.close();
             }
 
+            String option = request.getParameter("txtOption");
+
             int count = Integer.parseInt(request.getParameter("txtCount"));
             String lecturerID = us.getUserID();
             boolean status = true;
 
             if (flag) {
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status);
-                boolean checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
+                boolean checkCreated = false;
+                for (int i = 1; i <= count + 1; i++) {
+                    FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count + 1, lecturerID, status);
+                    checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                    Date sTime = simpleDateFormat.parse(freeSlotsDTO.getStartTime());
+                    Date eTime = simpleDateFormat.parse(freeSlotsDTO.getEndTime());
+                    if (option.equals("DA")) {
+                        Date sNextDay = DBUtils.getNextDate(sTime);
+                        startTime = simpleDateFormat.format(sNextDay);
+                        freeSlotsDTO.setStartTime(startTime);
+                        Date eNextDay = DBUtils.getNextDate(eTime);
+                        endTime = simpleDateFormat.format(eNextDay);
+                        freeSlotsDTO.setEndTime(endTime);
+                    }
+                    if (option.equals("DW")) {
+                        Date sNextWeek = DBUtils.getNextWeek(sTime);
+                        startTime = simpleDateFormat.format(sNextWeek);
+                        freeSlotsDTO.setStartTime(startTime);
+                        Date eNextWeek = DBUtils.getNextWeek(eTime);
+                        endTime = simpleDateFormat.format(eNextWeek);
+                        freeSlotsDTO.setEndTime(endTime);
+                    }
+                }
                 if (checkCreated) {
                     url = SUCCESS;
                 }
             }
         } catch (SQLException ex) {
             log("Error at CreateFreeSlotServlet" + ex.toString());
+        } catch (ParseException ex) {
+            Logger.getLogger(CreateFreeSlotServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
