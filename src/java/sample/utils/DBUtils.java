@@ -42,6 +42,19 @@ public class DBUtils {
         }
         return nextDate;
     }
+    public static Date getNextWeek(Date curDate) {
+        Date nextDate = null;
+        try {
+            Calendar today = Calendar.getInstance();
+            today.setTime(curDate);
+            today.add(Calendar.DAY_OF_YEAR, 7);
+            nextDate = today.getTime();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return nextDate;
+        }
+        return nextDate;
+    }
     
     public static void main(String[] args) throws ClassNotFoundException, SQLException, ParseException {
 //        DBUtils.getConnection();
