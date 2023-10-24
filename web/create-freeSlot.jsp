@@ -78,14 +78,14 @@
                                 <div class="d-flex justify-content-between"><strong>Meet Link:</strong> <input type="text" class="form-control"  name="txtMeetLink" placeholder="ex:meet.google.com/...etc" required="" pattern="^https://meet.google.com/[a-z]{3}-[a-z]{4}-[a-z]{3}$"></div>
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <label for="role" class="col-form-label"><strong>Set by:</strong></label>
+                                        <label for="role" class="col-form-label"><strong><b style="color: red">SET BY:</b></strong></label>
                                         <select class="form-control" name="txtOption">
                                             <option value="DA">Day after you created</option>
                                             <option value="DW">Day after week you created</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="role" class="col-form-label"><strong>Repeated Times:</strong></label>
+                                        <label for="role" class="col-form-label"><strong><b style="color: red">REPEATED TIMES:</b></strong></label>
                                         <input type="number" class="form-control" name="txtCount" required="">
                                     </div>
                                 </div>
