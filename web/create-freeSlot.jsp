@@ -46,7 +46,7 @@
                     </tr>
                     <tr>
                         <td>Meet link:</td>
-                        <td><input type="text" name="txtMeetLink" placeholder="ex:meet.google.com/...etc" required="" pattern="^https://meet.google.com/[a-z]{3}-[a-z]{4}-[a-z]{3}"></td>
+                        <td><input type="text" name="txtMeetLink" placeholder="ex:meet.google.com/...etc" required="" pattern="^https://meet.google.com/[a-z]{3}-[a-z]{4}-[a-z]{3}$"></td>
                     </tr>
                     <tr>
                         <td>Count:</td>
