@@ -12,12 +12,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.dashboard.UserMaxSlotDTO;
+import sample.dashboard.UserMaxRequestDTO;
+import sample.users.UserDAO;
+import sample.users.UserDTO;
 
 /**
  *
  * @author Minh Khang
  */
-public class LogoutServlet extends HttpServlet {
+public class DashBoardServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,10 +36,29 @@ public class LogoutServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            HttpSession session=request.getSession();
-            session.invalidate();
-            System.out.println("Da xoa session");
-            response.sendRedirect("MainController");
+            String semester = request.getParameter("txtsemester");
+            if (semester != null) {
+                UserMaxSlotDTO stmb = UserDAO.getStudentMaxBook(semester);
+                UserMaxRequestDTO stmr = UserDAO.getStudentMaxRequest(semester);
+                UserMaxSlotDTO ltmb = UserDAO.getLecturerMaxSlot(semester);
+                UserMaxRequestDTO lmr = UserDAO.getLecturerMaxRequest(semester);
+                boolean flag = false;
+                request.setAttribute("UserMaxSlot", stmb);
+                request.setAttribute("UserMaxRequest", stmr);
+                request.setAttribute("LecturerMaxSlot", ltmb);
+                request.setAttribute("LecturerMaxRequest", lmr);
+                System.out.println(semester);
+                if(semester.equals("")){
+                    request.setAttribute("MSG", "Null semester");
+                }
+                request.getRequestDispatcher("AdminPage.jsp").forward(request, response);
+            } else {
+                System.out.println("Semester == null");
+                request.setAttribute("MSG", "Null semester");
+                request.getRequestDispatcher("AdminPage.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
