@@ -42,8 +42,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet" type="text/css">
 
         <%
-
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
         %>
         <script>
             function confirmCancel(bookingID) {
@@ -166,17 +166,10 @@
                 </div>
             </div>
 
-            <div class="backbutton" onclick="submitFormBack()">
-                <form action="MainController" method="POST" style="display: none;">
-                    <input type="hidden" name="action" value="back" />
-                </form>
-                <div class="back" id="back-button">Back</div>
-                <img class="back-icon" alt="" src="public/BookingView/back.svg" />
-            </div>
-            <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize">
+          <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize" style="margin-top: 20px;">
                 <ul class="orbit-container" tabindex="0" style="height: 613.389px;">
-                    <button class="orbit-previous" tabindex="0"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
-                    <button class="orbit-next" tabindex="0"><span class="show-for-sr">Next Slide</span>&#9654;</button>
+                    <button class="orbit-previous" tabindex="0" style="color: gray;"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
+                    <button class="orbit-next" tabindex="0" style="color: gray;"><span class="show-for-sr">Next Slide</span>&#9654;</button>
                     <li class="orbit-slide" data-slide="0" style="display: none; position: relative; top: 0px;">
                         <img class="orbit-image" src="./public/StudentHome/anh1.jpg"  style="width: 2000px; height: 600px; object-fit:contain;" alt="Space">
                     <figcaption class="orbit-caption">FPT University</figcaption>
@@ -221,6 +214,9 @@
     <script>
                 $(document).foundation();
     </script>
+    <%} else {
+            response.sendRedirect("MainController");
+        }%>
 </body>
 </html>
 
