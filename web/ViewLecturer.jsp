@@ -16,6 +16,7 @@
         <%
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
         %>
         <script>
             function submitFormBack() {
@@ -134,5 +135,10 @@
                 </div>
             </div>
         </div>
+        <%
+        } else {
+                response.sendRedirect("MainController");
+            }
+        %>
     </body>
 </html>

@@ -24,8 +24,18 @@ public class MainController extends HttpServlet {
     private static final String CREATE_FREE_SLOT_ACTION = "createFreeSlotAction";
     private static final String CREATE_FREE_SLOT_PAGE = "create-freeSlot.jsp";
 
-    private static final String ADMIN_PAGE = "AdminPage.jsp";
+    private static final String ADMIN_PAGE = "AdminPage";
     private static final String ADMIN_PAGE_ACTION = "AdminPage.jsp";
+//    private static final String ADMIN_PAGE_CONTROLLER = "ViewSemesterServlet";
+    private static final String ADMIN_PAGE_CONTROLLER = "DashBoardServlet";
+//    private static final String ADMIN_PAGE_CONTROLLER_ACTION = "DashBoard";
+    private static final String ADMIN_FIND_STUDENTMAXBOOKING = "Find";//booking most slot
+    private static final String ADMIN_FIND_STUDENTMAXREQUEST = "FindSMR";//send most request
+    private static final String ADMIN_FIND_LECTURERMAXBOOKING = "FindCMS";//create most slot
+    private static final String ADMIN_FIND_LECTURERMAXREQUEST = "FindRMR";//recieve most request
+    
+//    private static final String ADMIN_PAGE_CONTROLLER_ACTION = "DashBoard";
+    
 
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
@@ -63,7 +73,7 @@ public class MainController extends HttpServlet {
     private static final String CANCEL_CONTROLLER = "CancelController";
 
     private static final String LOGOUT = "Logout";
-    private static final String LOGOUT_ACTION = "LoginFeID.jsp";
+    private static final String LOGOUT_ACTION = "LogoutServlet";
 
     private static final String CREATED_PAGE = "CreatedSlotView.jsp";
     private static final String CREATED_CONTROLLER = "CreatedSlotController";
@@ -109,7 +119,15 @@ public class MainController extends HttpServlet {
                 url = STUDENT_PAGE_ACTION;
             } else if (action.equals(LECTURER_PAGE)) {
                 url = CREATED_CONTROLLER;
-            } else if (action.equals(ADMIN_PAGE)) {
+            } else if (action.equals(ADMIN_FIND_STUDENTMAXBOOKING)) {
+                url = ADMIN_PAGE_CONTROLLER;
+            } else if (action.equals(ADMIN_FIND_STUDENTMAXREQUEST)) {
+                url = ADMIN_PAGE_CONTROLLER;
+            } else if (action.equals(ADMIN_FIND_LECTURERMAXBOOKING)) {
+                url = ADMIN_PAGE_CONTROLLER;
+            } else if (action.equals(ADMIN_FIND_LECTURERMAXREQUEST)) {
+                url = ADMIN_PAGE_CONTROLLER;
+            }  else if (action.equals(ADMIN_PAGE)) {
                 url = ADMIN_PAGE_ACTION;
             } else if (action.equals(CREATE_FREE_SLOT_ACTION)) {
                 url = CREATE_FREE_SLOT_SERVLET;
