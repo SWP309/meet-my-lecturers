@@ -46,7 +46,7 @@ public class MainController extends HttpServlet {
     private static final String VIEWBOOKING = "ViewBooking";
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
 
-    private static final String VIEWTIMETABLE = "View Timetable";
+    private static final String VIEWTIMETABLE = "ViewTimetable";
     private static final String VIEW_TIMETABLE_CONTROLLER = "ViewTimetableServlet";
 
     private static final String VIEW_LECTURER = "ViewAllLecturers";
