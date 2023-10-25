@@ -8,6 +8,7 @@ package sample.freeslots;
 import java.sql.Connection;
 import java.util.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,8 @@ public class FreeSlotsDAO {
     private final static String CREATE_FREESLOT = "INSERT INTO "
             + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status) "
             + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private final static String CHECK_DUPLICATE_GGMEETLINK = "SELECT freeSlotID "
+            + "FROM FreeSlots WHERE meetLink=?";
 
     public boolean createFreeSlot(FreeSlotsDTO freeSlotsDTO) throws SQLException {
         boolean checkCreate = false;
@@ -31,11 +34,11 @@ public class FreeSlotsDAO {
 //        ResultSet rs = null;
         try {
             conn = DBUtils.getConnection();
-            
+
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
             Date startTime = simpleDateFormat.parse(freeSlotsDTO.getStartTime());
             Date endTime = simpleDateFormat.parse(freeSlotsDTO.getEndTime());
-            
+
             if (conn != null) {
                 ps = conn.prepareStatement(CREATE_FREESLOT);
                 ps.setString(1, freeSlotsDTO.getSubjectCode());
@@ -67,5 +70,36 @@ public class FreeSlotsDAO {
             }
         }
         return checkCreate;
+    }
+
+    public boolean checkDuplicateGGMeet(String meetLink) throws SQLException {
+        boolean exists = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ps = conn.prepareStatement(CHECK_DUPLICATE_GGMEETLINK);
+                ps.setString(1, meetLink);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    exists = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return exists;
     }
 }
