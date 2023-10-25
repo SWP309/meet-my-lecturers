@@ -44,6 +44,14 @@
         <servlet-name>CreatedSlotViewSubController</servlet-name>
         <servlet-class>sample.controllers.CreatedSlotViewSubController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewSemesterServlet</servlet-name>
+        <servlet-class>sample.controllers.ViewSemesterServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DashBoardServlet</servlet-name>
+        <servlet-class>sample.controllers.DashBoardServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -127,6 +135,14 @@
     <servlet-mapping>
         <servlet-name>CreatedSlotViewSubController</servlet-name>
         <url-pattern>/CreatedSlotViewSubController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewSemesterServlet</servlet-name>
+        <url-pattern>/ViewSemesterServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashBoardServlet</servlet-name>
+        <url-pattern>/DashBoardServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

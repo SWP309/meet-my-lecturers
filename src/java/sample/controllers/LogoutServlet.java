@@ -34,6 +34,7 @@ public class LogoutServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             HttpSession session=request.getSession();
             session.invalidate();
+            System.out.println("Da xoa session");
             response.sendRedirect("MainController");
         }
     }
