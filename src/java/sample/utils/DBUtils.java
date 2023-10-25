@@ -20,7 +20,7 @@ import java.util.Date;
 public class DBUtils {
 
     private static final String USERNAME = "sa";
-    private static final String PASSWORD = "1234";    
+    private static final String PASSWORD = "12345";    
     public static Connection getConnection() 
             throws ClassNotFoundException, SQLException{
         Connection con = null;

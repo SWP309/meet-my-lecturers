@@ -12,6 +12,41 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Create Free Slot</title>
+        <link rel="stylesheet" href="./createfreeSlot.css" />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
+            />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Lohit Tamil:wght@400&display=swap"
+            />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
+            />
+        <!-- CSS c?a Bootstrap 5 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <!-- Icon -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+        <!-- CSS c?a SweetAlert -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- JavaScript c?a Bootstrap 4 -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+        <!-- JavaScript c?a Bootstrap 5 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+        <!-- JavaScript c?a SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
         <!-- Thêm liên kết đến Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <!-- Include Font Awesome CSS -->
@@ -63,6 +98,49 @@
         </style>
     </head>
     <body>
+        <div class="fptu-eng-1-parent">
+            <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="returnHomePageLecturer" />
+                </form>
+                <img
+                    class="fptu-eng-1-icon"
+                    alt=""
+                    src="public/BookingView/2021fptueng-1@2x.png"
+                    />
+            </div>
+            <div class="frame-parent">
+                <div class="frame-group">
+                    <div class="frame-div request" style="width: 64%;" onclick="submitFormViewRequest()">
+                        <form action="MainController" method="POST">
+                            <input type="hidden" name="action" value="ViewRequest" />
+                        </form>
+
+                        <i class="material-icons">mail_outline</i>View Request
+                    </div>
+                    <div class="frame-div logout" onclick="submitFormLogout()">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="Logout" />
+                        </form>
+                        <div class="logout-wrapper">
+                            <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                        </div>
+                        <div class="request">
+                            <p class="logout1">Logout</p>
+                        </div>
+                    </div>
+                    <div>
+                        <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
+                             onclick="showUserInfo()" />
+                        <div id="user-info" style="display: none;">
+                            <p id="user-id"> </p>
+                            <p id="user-name"></p>
+                            <p id="user-email"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <c:if test="${sessionScope.loginedUser != null && sessionScope.loginedUser.roleID == '2'}">
             <div class="container mt-5">
                 <div class="d-flex justify-content-center">
@@ -70,7 +148,7 @@
 
                         <div class="card-body">
                             <form action="MainController" method="POST">
-                                <div class="d-flex justify-content-between"><strong>Subject code:</strong> <input type="text" class="form-control" name="txtSubjectCode" placeholder="ex:SWP391...etc" required="" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT)[0-9]{3}$"></div>
+                                <div class="d-flex justify-content-between"><strong>Subject code:</strong> <input type="text" class="form-control" name="txtSubjectCode" placeholder="ex:SWP391...etc" required="" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"></div>
                                 <div class="d-flex justify-content-between"><strong>Start time:</strong> <input type="datetime-local" class="form-control"  name="txtStartTime" required=""></div>
                                 <div class="d-flex justify-content-between"><strong>End time:</strong> <input type="datetime-local" class="form-control" name="txtEndTime" required=""></div>
                                 <div class="d-flex justify-content-between"><strong>Capacity:</strong> <input type="number" class="form-control" name="txtCapacity" placeholder="need more than 2 student" required=""></div>

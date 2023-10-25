@@ -40,7 +40,7 @@ td button {
     cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
     border-radius: 12px;
     background-color: #f27125;
-    width: 137px;
+    width: 156px;
     height: 43px;
     align-items: flex-start;
     padding: 10px 9px;
@@ -154,9 +154,9 @@ td button {
 }
 .back-icon {
     position: absolute;
-    height: 94.29%;
-    width: 25.99%;
-    top: 8.57%;
+    height: 85.29%;
+    width: 40.99%;
+    top: 22.57%;
     right: 74.81%;
     bottom: -2.86%;
     left: -0.8%;
@@ -171,6 +171,8 @@ td button {
     height: 35px;
     font-size: 30px;
     color: #000;
+    bottom: 260px;
+    left: -43%;
 }
 .student-viewbookedslot {
     position: relative;
