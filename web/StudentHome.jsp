@@ -42,8 +42,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet" type="text/css">
 
         <%
-
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
         %>
         <script>
             function confirmCancel(bookingID) {
@@ -221,6 +221,9 @@
     <script>
                 $(document).foundation();
     </script>
+    <%} else {
+            response.sendRedirect("MainController");
+        }%>
 </body>
 </html>
 

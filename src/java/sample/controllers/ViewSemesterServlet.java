@@ -7,17 +7,20 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import sample.semester.SemesterDAO;
+import sample.semester.SemesterDTO;
 
 /**
  *
  * @author Minh Khang
  */
-public class LogoutServlet extends HttpServlet {
+public class ViewSemesterServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -28,14 +31,25 @@ public class LogoutServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private static final String ERROR = "AdminHome.jsp";
+    private static final String SUCCESS = "AdminHome.jsp";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            HttpSession session=request.getSession();
-            session.invalidate();
-            System.out.println("Da xoa session");
-            response.sendRedirect("MainController");
+        String url = ERROR;
+        try {
+            SemesterDAO dao = new SemesterDAO();
+            List<SemesterDTO> listSemester = SemesterDAO.getAllSemesterID();
+            if(listSemester.size() > 0){
+                request.setAttribute("listSemester", listSemester);
+                url = SUCCESS;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

@@ -55,6 +55,7 @@
         <%
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
         %>
         <script>
             function confirmCancel(bookingID) {
@@ -302,5 +303,10 @@
                     alert(errorMessage);
                 }
             </script>
+            <%
+            } else {
+                response.sendRedirect("MainController");
+            }
+            %>
     </body>
 </html>
