@@ -71,6 +71,13 @@
                 var form = document.querySelector('.request form');
                 form.submit();
             }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function goBack() {
+                window.history.back();
+            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -144,11 +151,16 @@
     <body>
         <div class="student-viewbookedslot">
             <div class="fptu-eng-1-parent">
-                <img
-                    class="fptu-eng-1-icon"
-                    alt=""
-                    src="public/BookingView/2021fptueng-1@2x.png"
-                    />
+                <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="returnHomePageLecturer" />
+                    </form>
+                    <img
+                        class="fptu-eng-1-icon"
+                        alt=""
+                        src="public/BookingView/2021fptueng-1@2x.png"
+                        />
+                </div>
 
                 <div class="frame-parent">
                     <div class="frame-group">
@@ -183,64 +195,40 @@
                 </div>
             </div>
 
-            <div class="backbutton" onclick="submitFormBack()">
-                <form action="MainController" method="POST" style="display: none;">
-                    <input type="hidden" name="action" value="back" />
-                </form>
-                <div class="back" id="back-button">Back</div>
-                <img class="back-icon" alt="" src="public/BookingView/back.svg" />
+            <div class="backbutton"  onclick="goBack()">
+                <div class="back">Back</div>
+                <img class="back-icon" alt="" src="./public/request/back.svg" />
             </div>
 
-            <div class="table-container">
-                <c:if test="${requestScope.LIST_CREATED_SLOT_SUB !=null}">
-                    <c:if test="${not empty requestScope.LIST_CREATED_SLOT_SUB}">
-                        <table class="table table-hover table-primary table-rounded">
-                            <thead>
-                                <tr class="table-danger">
-                                    <th>No</th>
-                                    <th>Subject Code</th>
-                                    <th>Lecturer's Name</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Unhide</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <form action="MainController" method="POST">
-                                <c:forEach var="listCreatedSlotSub" varStatus="counter" items="${requestScope.LIST_CREATED_SLOT_SUB}">
-                                    <tr>
-                                        <td>${counter.count}</td>
-                                        <td>
-                                            <input type="text" name="subjectCode" value="${listCreatedSlotSub.subjectCode.trim()}" required=""/>
-                                        </td>
-                                        <c:if test="${counter.count == 1}">
-                                            <td class="merged-row" style="text-align: center;
-                                                vertical-align: middle !important;
-                                                height: 100px!important;" rowspan="${requestScope.LIST_CREATED_SLOT.size()}">
-                                                <span>${listCreatedSlotSub.lectureName}</span>
-                                            </td>
-                                        </c:if>
-                                        <td>
-                                            <input type="text" name="startTime" value="${listCreatedSlotSub.startTime}" required=""/>
-                                        </td>
-                                        <td>
-                                            <input type="text" name="endTime" value="${listCreatedSlotSub.endTime}" required=""/>
-                                        </td>
-                                        <td>
-                                            <a  class="centered-link" onclick="return confirm('Are you sure to Unhide this Free Slot')"
-                                               href="MainController?action=UnhideFS&freeSlotID=${listCreatedSlotSub.freeSlotID}">
-                                                <i class="material-icons">cancel</i>Unhide</a>
 
-                                        </td>
-
-                                    </tr>
-                                </form>
+            <div class="container mt-5" style="    margin-top: -33% !important;">
+                <div class="row justify-content-center mt-5">
+                    <c:if test="${requestScope.LIST_CREATED_SLOT_SUB !=null}">
+                        <c:if test="${not empty requestScope.LIST_CREATED_SLOT_SUB}">
+                            <c:forEach var="listCreatedSlotSub" varStatus="counter" items="${requestScope.LIST_CREATED_SLOT_SUB}">
+                                <div class="col-md-4">
+                                    <div class="card" style="width: 340px; height: 192px; border-radius: 5%;">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject Code:</b></strong> <span class="ml-auto">${listCreatedSlotSub.subjectCode.trim()}</span></div>
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's Name:</b></strong> <span class="ml-auto">${listCreatedSlotSub.lectureName}</span></div>
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${listCreatedSlotSub.startTime}</span></div>
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${listCreatedSlotSub.endTime}</span></div>
+                                            <div class="d-flex justify-content-between btn-book">
+                                                <!--                                             Added d-flex justify-content-between to create a flex container -->
+                                                <div>
+                                                    <a  class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to Unhide this Free Slot')"
+                                                        href="MainController?action=UnhideFS&freeSlotID=${listCreatedSlotSub.freeSlotID}">
+                                                        <i class="material-icons">cancel</i>Unhide</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </c:forEach>
+                        </c:if>
+                    </c:if>          
 
-                            </tbody>
-                        </table>
-                    </c:if>
-                </c:if>
+                </div>
             </div>
 
             <h3>

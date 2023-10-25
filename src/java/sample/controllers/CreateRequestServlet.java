@@ -28,13 +28,14 @@ public class CreateRequestServlet extends HttpServlet {
             String lecturer = request.getParameter("txtLecturer");
             String subjectCode = request.getParameter("txtSubjectCode");
             String startTime = request.getParameter("txtStartTime");
-            System.out.println(startTime);
             String endTime = request.getParameter("txtEndTime");
             String description = request.getParameter("txtDescription");
             String semesterID = request.getParameter("txtSemester");
+            System.out.println(semesterID);
             RequestDAO requestDAO = new RequestDAO();
             RequestDTO requestDTO = new RequestDTO(semesterID, true, subjectCode, startTime, endTime, description, us.getUserID(), lecturer, semesterID);
             boolean checkCreated = requestDAO.createARequest(requestDTO);
+            System.out.println(checkCreated);
             if (checkCreated) {
                 url = SUCCESS;
             }
