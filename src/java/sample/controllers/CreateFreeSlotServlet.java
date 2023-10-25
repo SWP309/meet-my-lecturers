@@ -6,7 +6,6 @@
 package sample.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,41 +30,36 @@ public class CreateFreeSlotServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         String url = ERROR;
-        boolean flag = true;
+
         try {
-            HttpSession session = request.getSession();
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            System.out.println(us);
+            System.out.println(url);
             String subjectCode = request.getParameter("txtSubjectCode");
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
-            
-            String password = request.getParameter("txtPassword").trim();
-            if (password.isEmpty()) {
+            String password = request.getParameter("txtPassword");
+            System.out.println(subjectCode);
+            if (password == null) {
+                System.out.println("hello ");
                 password = null; // Chuyển chuỗi trống thành giá trị null
             }
-            
-            int capacity = Integer.parseInt(request.getParameter("txtCapacity"));
-            if (capacity <= 0) {
-                flag = false;
-                out.println("<p style=\"color: red\">The number of student can join this slot must be greater than 0.</p>");
-                out.close();
-            }
-            
+            System.out.println("hello pass");
+            System.out.println(request.getParameter("txtCapacity"));
+            int capacity = Integer.parseInt(request.getParameter("txtCapacity"));;
             String meetLink = request.getParameter("txtMeetLink");
+            System.out.println("hello count");
             int count = Integer.parseInt(request.getParameter("txtCount"));
-            String lecturerID = us.getUserID();
+            if (count == 0) {
+                count = 1; // Chuyển chuỗi trống thành giá trị null
+            }
+            String lecturerID = request.getParameter("txtLecturerID");
             boolean status = true;
-
-            if (flag) {
-                FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status);
-                boolean checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
-                if (checkCreated) {
-                    url = SUCCESS;
-                }
+            FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
+            FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status);
+            boolean checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
+            System.out.println(checkCreated);
+            if (checkCreated) {
+                url = SUCCESS;
             }
         } catch (SQLException ex) {
             log("Error at CreateFreeSlotServlet" + ex.toString());

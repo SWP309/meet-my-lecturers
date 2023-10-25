@@ -51,6 +51,10 @@
                 var form = document.querySelector('.request form');
                 form.submit();
             }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -96,11 +100,16 @@
     <body>
         <div class="student-viewbookedslot">
             <div class="fptu-eng-1-parent">
-                <img
-                    class="fptu-eng-1-icon"
-                    alt=""
-                    src="public/BookingView/2021fptueng-1@2x.png"
-                    />
+                <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="returnHomePage" />
+                    </form>
+                    <img
+                        class="fptu-eng-1-icon"
+                        alt=""
+                        src="public/BookingView/2021fptueng-1@2x.png"
+                        />
+                </div>
 
                 <div class="frame-parent">
                     <div class="frame-group">
@@ -136,67 +145,53 @@
 
                 </div>
             </div>
+            <!--            <div class="backbutton" onclick="submitFormBack()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="back" />
+                            </form>
+                            <div class="back" id="back-button">Back</div>
+                            <img class="back-icon" alt="" src="public/BookingView/back.svg" />
+                        </div>-->
+
+            <div class="btn-group ml-5 mt-3">
+                <a href="https://www.example.com" class="btn btn-primary btn-sm fixed-bottom fixed-right mb-4 mr-4">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
 
 
-            <div class="boxoftable">
-                <c:if test="${requestScope.LIST_BOOKING !=null}">
-                    <c:if test="${not empty requestScope.LIST_BOOKING}">
-                        <table class="table table-hover table-primary table-rounded">
-                            <thead>
-                                <tr class="table-danger">
-                                    <th>No</th>
-                                    <th>Subject Code</th>
-                                    <th>Lecturer's Name</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Cancel</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <form action="MainController" method="POST">
-                                <c:forEach var="bookings" varStatus="counter" items="${requestScope.LIST_BOOKING}">
-                                    <tr>
-                                        <td>${counter.count}</td>
-                                        <td>
-                                            <span>${bookings.subjectCode}</span>
-                                        </td>
-                                        <td>
-                                            <span>${bookings.lectureName}</span>
-                                        </td>
-                                        <td>
-                                            <span>${bookings.startTime}</span>
-                                        </td>
-                                        <td>
-                                            <span>${bookings.endTime}</span>
-                                        </td>
-                                        <td>
-<!--                                            <input type="hidden" name="bookingID" value="${bookings.bookingID}">
-                                            <button type="submit" class="btn btn-danger center-content" onclick="confirmCancel()" > 
-                                                <i class="material-icons">cancel</i> Cancel</button>-->
-                                            <a style="display: flex; text-decoration: none; justify-content: center;" 
-                                               onclick="return confirm('Are you sure to cancel this booking')" href="MainController?action=cancel&bookingID=${bookings.bookingID}">
-                                                <i class="material-icons">cancel</i>Cancel</a>
-                                        </td>
-                                    </tr>
-                                </form>
+            <div class="container mt-5" style="    margin-top: -33% !important;">
+                <div class="row justify-content-center mt-5">
+                    <c:if test="${requestScope.LIST_BOOKING !=null}">
+                        <c:if test="${not empty requestScope.LIST_BOOKING}">
+                            <c:forEach var="bookings" varStatus="counter" items="${requestScope.LIST_BOOKING}">
+                                <div class="col-md-4">
+                                    <div class="card" style="width: 340px; height: 192px; border-radius: 5%;">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject Code:</b></strong> <span class="ml-auto">${bookings.subjectCode.trim()}</span></div>
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's Name:</b></strong> <span class="ml-auto">${bookings.lectureName}</span></div>
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${bookings.startTime}</span></div>
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${bookings.endTime}</span></div>
+                                            <div class="d-flex justify-content-between btn-book">
+                                                <!--                                             Added d-flex justify-content-between to create a flex container -->
+                                                <div>
+                                                    <a class="d-flex justify-content-between" style="text-decoration: none;" 
+                                                       onclick="return confirm('Are you sure to cancel this booking')" href="MainController?action=cancel&bookingID=${bookings.bookingID}">
+                                                        <i class="material-icons">cancel</i>Cancel</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </c:forEach>
+                        </c:if>
+                    </c:if>          
 
-                            </tbody>
+                </div>
+            </div>
 
-                    </c:if>
-                </c:if>
-            </div>
-                        </table>
-            <div class="backbutton" onclick="submitFormBack()">
-                <form action="MainController" method="POST" style="display: none;">
-                    <input type="hidden" name="action" value="back" />
-                </form>
-                <div class="back" id="back-button">Back</div>
-                <img class="back-icon" alt="" src="public/BookingView/back.svg" />
-            </div>
-        </div>
-        <h3>
-            ${requestScope.ERROR}
-        </h3> 
+            <h3>
+                ${requestScope.ERROR}
+            </h3> 
     </body>
 </html>

@@ -25,7 +25,6 @@ public class CreatedSlotController extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            String email=request.getParameter(us.getUserEmail());
             ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
             List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlot(us.getUserEmail());
              System.out.println(us.getUserEmail());
