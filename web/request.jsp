@@ -45,7 +45,7 @@
         <!-- JavaScript c?a SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
 
-        <!-- ThÃªm liÃªn k?t ??n Bootstrap CSS -->
+        <!-- Thêm liên k?t ??n Bootstrap CSS -->
         <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -122,7 +122,7 @@
             function showUserInfo() {
                 var userInfo = document.getElementById("user-info");
                 if (userInfo.style.display === "none" || userInfo.style.display === "") {
-                    userInfo.style.display = "block"; // Hi?n th? thÃ´ng tin khi ???c nh?p chu?t
+                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
                 } else {
                     userInfo.style.display = "none";
                 }
@@ -202,37 +202,42 @@
                 <div class="back">Back</div>
                 <img class="back-icon" alt="" src="./public/request/back.svg" />
             </div>
-            <div class="container mt-5 create-request" style="margin-top: 12% !important;">
+            <div class="container mt-5 create-request" style="margin-top: 8% !important;">
                 <form action="MainController" method="POST">
-                    <input type="hidden" name="action" value="CreateRequest">
-
+                    
+                    
                     <div class="form-group row">
                         <label for="txtSemester" class="col-md-2 col-form-label"><strong>Semester:</strong></label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" id="txtSemester" name="txtSemester" value="${param.txtSemester}" placeholder="(ex:FA23)"
+                            <input type="text" class="form-control" id="txtSemester" name="txtSemester" value="${param.txtSemester}" placeholder="(ex:FA23)" required=""
                                    pattern="^(SP|SU|FA|)[0-9]{2}$">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="txtLecturer" class="col-md-2 col-form-label"><strong>Lecturer:</strong></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control"  id="txtLecturer"  name="txtLecturer" value="${param.txtLecturer}" placeholder="GVxxxx"
+                            <input type="text" class="form-control"  id="txtLecturer"  name="txtLecturer" value="${param.txtLecturer}" placeholder="GVxxxx" required=""
                                    pattern="^GV[0-9]{4}$">
                         </div>
 
-                        <a class="btn btn-primary col-sm-2" href="ViewTimetableServlet?txtLecturer=${param.txtLecturer}&txtSemester=${param.txtSemester}">View Timetable</a>
+                        <!--<a class="btn btn-primary col-sm-2" href="ViewTimetableServlet?txtLecturer={param.txtLecturer}&txtSemester={param.txtSemester}">View Timetable</a>-->
+<!--                        <input type="hidden" name="txtSemester" value="{param.txtSemester}">
+                        <input type="hidden" name="txtLecturer" value="{param.txtLecturer}">-->
+                            <button class="btn btn-primary col-sm-2" type="submit" name="action" value="ViewTimetable">View Timetable</button>
+                        
                     </div>
+
                     <div class="form-group row">
                         <label for="txtSubjectCode" class="col-md-2 col-form-label"><strong>Subject code:</strong></label>
                         <div class="col-md-10">
-                            <input class="form-control" type="text" id="txtSubjectCode" name="txtSubjectCode" value="" required="" placeholder="(ex:SWP391)"
+                            <input class="form-control" type="text" id="txtSubjectCode" name="txtSubjectCode" value="${param.txtSubjectCode}" placeholder="(ex:SWP391)"
                                    pattern="^[A-Z]{3}[0-9]{3}$"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="txtStartTime" class="col-md-2 col-form-label"><strong>Start time:</strong></label>
                         <div class="col-md-10">
-                            <input type="datetime-local" class="form-control" id="txtStartTime" name="txtStartTime" value="" required="">
+                            <input type="datetime-local" class="form-control" id="txtStartTime" name="txtStartTime" value="${param.txtStartTime}">
                         </div>
                         <c:if test="${not empty requestScope.REQUEST_ERROR.currentDateError}">
                             <h6> ${requestScope.REQUEST_ERROR.currentDateError}</h6>
@@ -241,7 +246,7 @@
                     <div class="form-group row">
                         <label for="txtEndTime" class="col-md-2 col-form-label"><strong>End time:</strong></label>
                         <div class="col-md-10">
-                            <input type="datetime-local" class="form-control" id="txtEndTime" name="txtEndTime" value="" required="">
+                            <input type="datetime-local" class="form-control" id="txtEndTime" name="txtEndTime" value="${param.txtEndTime}">
                         </div>
                         <c:if test="${not empty requestScope.REQUEST_ERROR.endTimeError}">
                             <h6> ${requestScope.REQUEST_ERROR.endTimeError}</h6>
@@ -253,7 +258,7 @@
                     <div class="form-group row">
                         <label for="txtDescription" class="col-md-2 col-form-label"><strong>Description:</strong></label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" id="txtDescription" name="txtDescription" value="" required="">
+                            <input type="text" class="form-control" id="txtDescription" name="txtDescription" value="${param.txtDescription}">
                         </div>
                         <c:if test="${not empty requestScope.REQUEST_ERROR.duplicateRequestError}">
                             <h6> ${requestScope.REQUEST_ERROR.duplicateRequestError}</h6>
@@ -267,17 +272,16 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-10 offset-md-2">
-                            <div class="btn btn-success btn-lg rounded-pill" onclick="submitFormSendRequest()">Send Request</div>
+                            <!--<div  onclick="submitFormSendRequest()">Send Request</div>-->
+                            <button class="btn btn-success btn-lg rounded-pill" type="submit" name="action" value="CreateRequest">Send Request</button>
                         </div>
                     </div>
                 </form>
             </div>       
 
-
-
         </div>
 
-        <!-- ThÃªm liÃªn k?t ??n Bootstrap JS vÃ  jQuery -->
+        <!-- Thêm liên k?t ??n Bootstrap JS và jQuery -->
         <script
             src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-KyZXEAg3QhqLMpG8r+J9pAEz6/LnYV5TOqDGIbpbzFq8qz5S7fF46kSEBzav6U7xj"
