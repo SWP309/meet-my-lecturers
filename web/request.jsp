@@ -45,9 +45,21 @@
         <!-- JavaScript c?a SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
 
-
-
+        <!-- ThÃªm liÃªn k?t ??n Bootstrap CSS -->
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            >
+        <!-- Include Font Awesome CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
         <style>
+            h6 {
+                border: none;
+                margin-top: 4px;
+                margin-bottom: 0px;
+                padding: 2px;
+                color: red;
+            }           
             .cus {
                 background-color: #f27125;
                 margin: 0 0.5rem;
@@ -98,14 +110,10 @@
                 var form = document.querySelector('.returnHome form');
                 form.submit();
             }
-
-            function goBack() {
-                window.history.back();
-            }
-            function functionFormTimeTableView() {
-                var form = document.querySelector('.request form');
-                form.submit();
-            }
+//             function functionFormTimeTableView() {
+//                 var form = document.querySelector('.request form');
+//                 form.submit();
+//             }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -114,7 +122,7 @@
             function showUserInfo() {
                 var userInfo = document.getElementById("user-info");
                 if (userInfo.style.display === "none" || userInfo.style.display === "") {
-                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                    userInfo.style.display = "block"; // Hi?n th? thÃ´ng tin khi ???c nh?p chu?t
                 } else {
                     userInfo.style.display = "none";
                 }
@@ -201,20 +209,24 @@
                     <div class="form-group row">
                         <label for="txtSemester" class="col-md-2 col-form-label"><strong>Semester:</strong></label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" id="txtSemester" name="txtSemester" value="${param.txtSemester}" placeholder="(ex:FA23)" required="">
+                            <input type="text" class="form-control" id="txtSemester" name="txtSemester" value="${param.txtSemester}" placeholder="(ex:FA23)"
+                                   pattern="^(SP|SU|FA|)[0-9]{2}$">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="txtLecturer" class="col-md-2 col-form-label"><strong>Lecturer:</strong></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control"  id="txtLecturer"  name="txtLecturer" value="${param.txtLecturer}" placeholder="GVxxxx" required="">
+                            <input type="text" class="form-control"  id="txtLecturer"  name="txtLecturer" value="${param.txtLecturer}" placeholder="GVxxxx"
+                                   pattern="^GV[0-9]{4}$">
                         </div>
-                        <a class="btn btn-primary col-sm-2" onclick="functionFormTimeTableView" href="MainController?action=ViewTimetable&txtSemester=${param.txtSemester}&txtLecturer=${param.txtLecturer}">View Timetable</a>                   
+
+                        <a class="btn btn-primary col-sm-2" href="ViewTimetableServlet?txtLecturer=${param.txtLecturer}&txtSemester=${param.txtSemester}">View Timetable</a>
                     </div>
                     <div class="form-group row">
                         <label for="txtSubjectCode" class="col-md-2 col-form-label"><strong>Subject code:</strong></label>
                         <div class="col-md-10">
-                            <input class="form-control" type="text" id="txtSubjectCode" name="txtSubjectCode" value="" required=""/>
+                            <input class="form-control" type="text" id="txtSubjectCode" name="txtSubjectCode" value="" required="" placeholder="(ex:SWP391)"
+                                   pattern="^[A-Z]{3}[0-9]{3}$"/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -222,22 +234,40 @@
                         <div class="col-md-10">
                             <input type="datetime-local" class="form-control" id="txtStartTime" name="txtStartTime" value="" required="">
                         </div>
+                        <c:if test="${not empty requestScope.REQUEST_ERROR.currentDateError}">
+                            <h6> ${requestScope.REQUEST_ERROR.currentDateError}</h6>
+                        </c:if>
                     </div>
                     <div class="form-group row">
                         <label for="txtEndTime" class="col-md-2 col-form-label"><strong>End time:</strong></label>
                         <div class="col-md-10">
                             <input type="datetime-local" class="form-control" id="txtEndTime" name="txtEndTime" value="" required="">
                         </div>
+                        <c:if test="${not empty requestScope.REQUEST_ERROR.endTimeError}">
+                            <h6> ${requestScope.REQUEST_ERROR.endTimeError}</h6>
+                        </c:if>
+                        <c:if test="${not empty requestScope.REQUEST_ERROR.durationError}">
+                            <h6> ${requestScope.REQUEST_ERROR.durationError}</h6>
+                        </c:if>
                     </div>
                     <div class="form-group row">
                         <label for="txtDescription" class="col-md-2 col-form-label"><strong>Description:</strong></label>
                         <div class="col-md-10">
                             <input type="text" class="form-control" id="txtDescription" name="txtDescription" value="" required="">
                         </div>
+                        <c:if test="${not empty requestScope.REQUEST_ERROR.duplicateRequestError}">
+                            <h6> ${requestScope.REQUEST_ERROR.duplicateRequestError}</h6>
+                        </c:if>
+                        <c:if test="${not empty requestScope.REQUEST_ERROR.duplicateFreeSlotError}">
+                            <h6> ${requestScope.REQUEST_ERROR.duplicateFreeSlotError}</h6>
+                        </c:if>
+                        <c:if test="${not empty requestScope.REQUEST_ERROR.duplicateTimetableError}">
+                            <h6> ${requestScope.REQUEST_ERROR.duplicateTimetableError}</h6>
+                        </c:if>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-10 offset-md-2">
-                            <div class="btn btn-success btn-lg rounded-pill"  onclick="submitFormSendRequest()">Send Request</div>
+                            <div class="btn btn-success btn-lg rounded-pill" onclick="submitFormSendRequest()">Send Request</div>
                         </div>
                     </div>
                 </form>
@@ -247,7 +277,7 @@
 
         </div>
 
-        <!-- Thêm liên k?t ??n Bootstrap JS và jQuery -->
+        <!-- ThÃªm liÃªn k?t ??n Bootstrap JS vÃ  jQuery -->
         <script
             src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-KyZXEAg3QhqLMpG8r+J9pAEz6/LnYV5TOqDGIbpbzFq8qz5S7fF46kSEBzav6U7xj"
@@ -258,7 +288,6 @@
             integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI"
             crossorigin="anonymous"
         ></script>
-
         <% }%>
     </body>
 </html>
