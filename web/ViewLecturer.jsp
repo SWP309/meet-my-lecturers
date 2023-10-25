@@ -16,6 +16,7 @@
         <%
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
         %>
         <script>
             function submitFormBack() {
@@ -26,7 +27,10 @@
                 var form = document.querySelector('.logout form');
                 form.submit();
             }
-              var userDTO = {
+            function goBack() {
+                window.history.back();
+            }
+            var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
                 userEmail: "<%= us.getUserEmail()%>"
@@ -87,18 +91,9 @@
                 </c:if>
 
             </div>
-            <div class="backbutton" onclick="submitFormBack()">
-                <form action="MainController" method="POST" style="display: none;">
-                    <input type="hidden" name="action" value="BackToRequest" />
-                </form>
-                <div class="back">
-                    <div class="back1">Back</div>
-                    <img class="vector-icon" alt="" src="./public/TimetableView/vector.svg" />
-
-                    <img class="vector-icon1" alt="" src="./public/TimetableView/vector1.svg" />
-
-                    <img class="vector-icon2" alt="" src="./public/TimetableView/vector2.svg" />
-                </div>
+            <div class="backbutton"  onclick="goBack()">
+                <div class="back"><p class="backWord" style="margin-left: 45px;">Back</p></div>
+                <img class="back-icon" alt="" src="./public/request/back.svg" />
             </div>
             <div class="header1">
                 <img
@@ -123,7 +118,7 @@
                         </div>
                     </div>
                     <div>
-                        <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
+                        <img class="frame-item" alt="" src="./public/StudentHome/group-33.svg" 
                              onclick="showUserInfo()" />
                         <div id="user-info" style="display: none;">
                             <p id="user-id"> </p>
@@ -134,5 +129,10 @@
                 </div>
             </div>
         </div>
+        <%
+            } else {
+                response.sendRedirect("MainController");
+            }
+        %>
     </body>
 </html>
