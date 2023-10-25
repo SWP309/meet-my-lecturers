@@ -42,19 +42,16 @@ public class UpdateFSlotController extends HttpServlet {
             String startTime = request.getParameter("startTime");
             String endTime = request.getParameter("endTime");
             String freeSlotID = request.getParameter("freeSlotID");
-            System.out.println(startTime);
             System.out.println(subjectCode);
-
             ViewCreatedSlotDTO dto = new ViewCreatedSlotDTO();
             dto.setStartTime(startTime);
             dto.setEndTime(endTime);
             dto.setSubjectCode(subjectCode);
             dto.setFreeSlotID(freeSlotID);
-            System.out.println(freeSlotID);
             if (freeSlotID != null) {
+                boolean checkUpdate = dao.update(dto);
                 List<ViewCreatedSlotDTO> listbooking = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
                 request.setAttribute("LIST_CREATED_SLOT", listbooking);
-                boolean checkUpdate = dao.update(dto);
                 System.out.println("freeslot id khac null");
                 if (checkUpdate) {
                     System.out.println(checkUpdate);

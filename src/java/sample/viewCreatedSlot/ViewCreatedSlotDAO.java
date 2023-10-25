@@ -277,7 +277,7 @@ public class ViewCreatedSlotDAO {
                 ptm = conn.prepareStatement(UPDATE_CREATED_SLOT);
                 ptm.setTimestamp(1, new Timestamp(startTime.getTime()));
                 ptm.setTimestamp(2, new Timestamp(endTime.getTime()));
-                ptm.setString(3, listCreatedSlot.getSubjectCode()); // Sử dụng SubjectCode thay vì UserID
+                ptm.setString(3, listCreatedSlot.getSubjectCode()); 
                 ptm.setString(4, listCreatedSlot.getFreeSlotID());
                 checkUpdate = ptm.executeUpdate() > 0;
                 System.out.println(checkUpdate);

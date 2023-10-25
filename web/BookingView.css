@@ -154,9 +154,9 @@ td button {
 }
 .back-icon {
     position: absolute;
-    height: 94.29%;
-    width: 25.99%;
-    top: 8.57%;
+    height: 85.29%;
+    width: 40.99%;
+    top: 22.57%;
     right: 74.81%;
     bottom: -2.86%;
     left: -0.8%;
@@ -171,6 +171,8 @@ td button {
     height: 35px;
     font-size: 30px;
     color: #000;
+    bottom: 260px;
+    left: -43%;
 }
 .student-viewbookedslot {
     position: relative;
