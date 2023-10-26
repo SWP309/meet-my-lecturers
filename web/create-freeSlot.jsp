@@ -96,6 +96,12 @@
                 }
             }
         </style>
+        <script>
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+        </script>
     </head>
     <body>
         <div class="fptu-eng-1-parent">

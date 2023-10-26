@@ -275,11 +275,11 @@
         </div>
         <div class="admin-viewusersedited">
             <div class="searchfunction">
-<!--                <div class="search" style="cursor: pointer ">
-                    <div class="search-child" onclick="submitSearchForm()">
-                        <div class="search1">Search</div>
-                    </div>
-                </div>-->
+                <!--                <div class="search" style="cursor: pointer ">
+                                    <div class="search-child" onclick="submitSearchForm()">
+                                        <div class="search1">Search</div>
+                                    </div>
+                                </div>-->
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="SearchFSlot"/>
 
@@ -302,75 +302,78 @@
 
                             <div class="username"><input class="in_name" type="text" name="txtUserID" value="${param.txtUserID}" placeholder="Input lecturer's ID"/></div>
                         </div>
+                        <div class="bysemester" style="margin-left: 33%;">
+                            <img
+                                class="bysemester-child"
+                                alt=""
+                                src="./public/UsersView/rectangle-13.svg"
+                                />
+
+                            <div class="username"><input class="in_name" type="text" name="txtUserID" value="${param.txtUserID}" placeholder="Input lecturer's ID"/></div>
+                        </div>
+                        <div class="bysemester " style="margin-left: 66%;">
+                            <img
+                                class="bysemester-child"
+                                alt=""
+                                src="./public/UsersView/rectangle-13.svg"
+                                />
+
+                            <div class="username"><input class="in_name" type="text" name="txtUserID" value="${param.txtUserID}" placeholder="Input lecturer's ID"/></div>
+                        </div>
+                      
                     </div>
                 </form>
             </div>
-            <div class="view-user-table">
-                <c:if test="${not empty param.txtSubjectCode and empty param.txtUserID and not empty requestScope.FREESLOT_BY_SUBJECT}">
-                    <div>
-                        <table border="1" class="table table-hover table-primary table-rounded">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Subject Code</th>
-                                    <th>LecturerID</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Booking</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${requestScope.FREESLOT_BY_SUBJECT}" 
-                                           var="freeslot" varStatus="status">
-                                    <tr>
-                                <form action="MainController" method="POST">
-                                    <td>${status.count}</td>
-                                    <td>
-                                        ${freeslot.subjectCode}
-                                    </td>
-                                    <td>
-                                        ${freeslot.lecturerID}
-                                    </td>
-                                    <td>
-                                        ${freeslot.startTime}
-                                    </td>
-                                    <td>
-                                        ${freeslot.endTime}
-                                    </td>
-                                    <td>
-                                        <input type="hidden" name="txtUserID" 
-                                               value="${freeSlot.endTime}" readonly="">
-                                        <button type="submit" name="action"
-                                                value="BookFreeSlot">Book</button>
-                                    </td>
-                                </form>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
-                    </div>
 
-                </c:if>
-                <c:if test="${empty requestScope.FREESLOT_BY_SUBJECT }">
-                    <h3 style="color: red">${requestScope.SEARCH_FREESLOT_MESSAGE}</h3>
-                </c:if>  
-            </div>            
-        </div>
-        <!-- Thêm liên k?t ??n Bootstrap JS và jQuery -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
 
-        <script>
+            <div class="container mt-5" style="    margin-top: 14% !important;">
+                <div class="row justify-content-center mt-5">
+                    <c:if test="${not empty param.txtSubjectCode and empty param.txtUserID and not empty requestScope.FREESLOT_BY_SUBJECT}">
+                        <c:forEach items="${requestScope.FREESLOT_BY_SUBJECT}" 
+                                   var="freeslot" varStatus="status">
+                            <div class="col-md-4">
+                                <div class="card" style="width: 357px; height: 211px; border-radius: 5%;">
+                                    <div class="card-body">
+                                        <form action="MainController" method="POST">
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject Code:</b></strong> <span class="ml-auto"> ${freeslot.subjectCode}</span></div>
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's ID:</b></strong> <span class="ml-auto">${freeslot.lecturerID}</span></div>
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${freeslot.startTime}</span></div>
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <input type="hidden" name="txtUserID" 
+                                                           value="${freeSlot.endTime}" readonly="">
+                                                    <button type="submit" name="action"
+                                                            value="BookFreeSlot">Book</button>
+                                                </div>
+
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:if>
+                    <c:if test="${empty requestScope.FREESLOT_BY_SUBJECT }">
+                        <h3 style="color: red">${requestScope.SEARCH_FREESLOT_MESSAGE}</h3>
+                    </c:if>  
+                </div>
+
+            </div>
+            <!-- Thêm liên k?t ??n Bootstrap JS và jQuery -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI" crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+            <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
+
+            <script>
                                     $(document).foundation();
-        </script>
-        <%} else {
-                response.sendRedirect("MainController");
-            }%>
+            </script>
+            <%} else {
+                    response.sendRedirect("MainController");
+                }%>
     </body>
 </html>
 
