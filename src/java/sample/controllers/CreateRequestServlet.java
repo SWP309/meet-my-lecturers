@@ -33,7 +33,7 @@ public class CreateRequestServlet extends HttpServlet {
             String semesterID = request.getParameter("txtSemester");
             System.out.println(semesterID);
             RequestDAO requestDAO = new RequestDAO();
-            RequestDTO requestDTO = new RequestDTO(semesterID, true, subjectCode, startTime, endTime, description, us.getUserID(), lecturer, semesterID);
+            RequestDTO requestDTO = new RequestDTO(semesterID, false, subjectCode, startTime, endTime, description, us.getUserID(), lecturer, semesterID);
             boolean checkCreated = requestDAO.createARequest(requestDTO);
             System.out.println(checkCreated);
             if (checkCreated) {

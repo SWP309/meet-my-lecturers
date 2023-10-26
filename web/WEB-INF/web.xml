@@ -45,7 +45,6 @@
         <servlet-class>sample.controllers.CreatedSlotViewSubController</servlet-class>
     </servlet>
     <servlet>
-
         <servlet-name>ViewRequestServlet</servlet-name>
         <servlet-class>sample.controllers.ViewRequestServlet</servlet-class>
     </servlet>
@@ -56,14 +55,18 @@
     <servlet>
         <servlet-name>AcceptRequestServlet</servlet-name>
         <servlet-class>sample.controllers.AcceptRequestServlet</servlet-class>
-
-        <servlet-name>ViewSemesterServlet</servlet-name>
-        <servlet-class>sample.controllers.ViewSemesterServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DashBoardServlet</servlet-name>
         <servlet-class>sample.controllers.DashBoardServlet</servlet-class>
-
+    </servlet>
+    <servlet>
+        <servlet-name>SearchFreeSlot</servlet-name>
+        <servlet-class>sample.controllers.SearchFreeSlot</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchFreeSlotServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchFreeSlotServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
@@ -158,7 +161,6 @@
         <url-pattern>/CreatedSlotViewSubController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-
         <servlet-name>SearchUserServlet</servlet-name>
         <url-pattern>/SearchUserServlet</url-pattern>
     </servlet-mapping>
@@ -177,14 +179,18 @@
     <servlet-mapping>
         <servlet-name>AcceptRequestServlet</servlet-name>
         <url-pattern>/AcceptRequestServlet</url-pattern>
-
-        <servlet-name>ViewSemesterServlet</servlet-name>
-        <url-pattern>/ViewSemesterServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DashBoardServlet</servlet-name>
         <url-pattern>/DashBoardServlet</url-pattern>
-
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchFreeSlot</servlet-name>
+        <url-pattern>/SearchFreeSlot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchFreeSlotServlet</servlet-name>
+        <url-pattern>/SearchFreeSlotServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
