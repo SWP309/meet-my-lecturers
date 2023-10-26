@@ -11,7 +11,7 @@ public class MainController extends HttpServlet {
     private static final String HOME_ACTION_LECTURER = "returnHomePageLecturer";
     private static final String HOME_PAGE_LECTURER = "CreatedSlotController";
     private static final String HOME_ACTION_STUDENT = "returnHomePageStudent";
-    private static final String HOME_PAGE_STUDENT = "StudentHome.jsp";
+    private static final String HOME_PAGE_STUDENT = "StudentHome_1.jsp";
     private static final String HOME_ACTION_ADMIN = "returnHomePageAdmin";
     private static final String HOME_PAGE_ADMIN = "CreatedSlotController";
 
