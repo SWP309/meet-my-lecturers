@@ -24,7 +24,7 @@ public class MainController extends HttpServlet {
     private static final String LOGIN_BY_FEID_ACTION_CHECK = "loginFeIDAction";
 
     private static final String STUDENT_PAGE = "StudentPage";
-    private static final String STUDENT_PAGE_ACTION = "StudentHome.jsp";
+    private static final String STUDENT_PAGE_ACTION = "StudentHome_1.jsp";
 
     private static final String LECTURER_PAGE = "LecturerPage";
     private static final String CREATE_FREE_SLOT_ACTION = "createFreeSlotAction";
@@ -87,6 +87,8 @@ public class MainController extends HttpServlet {
     private static final String CREATED_PAGE_HIDE = "HideView";
     private static final String CREATED_CONTROLLER_VIEW_SUB = "CreatedSlotViewSubController";
 
+    private static final String VIEW_USERS = "ViewUsers";
+    private static final String VIEW_USERS_PAGE = "ViewUsers.jsp";
     private static final String SEARCH_USERS = "SearchUsers";
     private static final String SEARCH_USERS_CONTROLLER = "SearchUserServlet";
 
@@ -98,6 +100,9 @@ public class MainController extends HttpServlet {
 
     private static final String ACCEPT_REQUEST = "AcceptRequest";
     private static final String ACCEPT_REQUEST_CONTROLLER = "AcceptRequestServlet";
+    
+    private static final String SEARCH_FREE_SLOT_ACTION = "SearchFSlot";
+    private static final String SEARCH_FREE_SLOT_SERVLET = "SearchFreeSlotServlet";
 
     private static final String BACK = "back";
 
@@ -177,6 +182,18 @@ public class MainController extends HttpServlet {
                 url = ADMIN_PAGE_CONTROLLER;
             } else if (action.equals(ADMIN_PAGE)) {
                 url = ADMIN_PAGE_ACTION;
+            } else if (ACCEPT_REQUEST.equals(action)) {
+                url = ACCEPT_REQUEST_CONTROLLER;
+            } else if (DELETE_REQUEST.equals(action)) {
+                url = DELETE_REQUEST_CONTROLLER;
+            } else if (SEARCH_FREE_SLOT_ACTION.equals(action)) {
+                url = SEARCH_FREE_SLOT_SERVLET;
+            } else if (VIEW_USERS.equals(action)) {
+                url = VIEW_USERS_PAGE;
+            } else if (SEARCH_USERS.equals(action)) {
+                url = SEARCH_USERS_CONTROLLER;
+            } else if (UPDATE_USERS.equals(action)) {
+                url = UPDATE_USERS_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());

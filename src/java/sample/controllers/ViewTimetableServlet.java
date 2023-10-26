@@ -34,6 +34,7 @@ public class ViewTimetableServlet extends HttpServlet {
         try {
             String lecturerID = request.getParameter("txtLecturer");
             String semesterID = request.getParameter("txtSemester");
+            System.out.println(semesterID);
             TimetableDAO timetableDAO = new TimetableDAO();
             timetableDAO.getListTimetables(lecturerID, semesterID);
             List<TimetableDTO> timetables = timetableDAO.getTimetables();
