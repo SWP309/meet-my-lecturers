@@ -45,8 +45,9 @@
         <!-- JavaScript c?a SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
         <script>
-              function goBack() {
-                window.history.back();
+            function submitFormBack() {
+                var form = document.querySelector('.backbutton form');
+                form.submit();
             }
         </script>
     </head>
@@ -128,7 +129,12 @@
                 </c:if>
 
             </div>
-            <div class="backbutton"  onclick="goBack()">
+            <div class="backbutton"  onclick="submitFormBack()">
+                <form action="MainController" method="POST" style="display: none;">
+                    <input type="hidden" name="txtLecturer" value="${requestScope.TB_TIMETABLES.get(0).lecturerID}" />
+                    <input type="hidden" name="txtSemester" value="${requestScope.TB_TIMETABLES.get(0).semesterID}" />
+                    <input type="hidden" name="action" value="BackToRequest" />
+                </form>
                 <div class="back">Back</div>
                 <img class="back-icon" alt="" src="./public/request/back.svg" />
             </div>
