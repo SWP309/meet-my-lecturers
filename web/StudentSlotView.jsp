@@ -35,6 +35,8 @@
         <%
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+
+            if (us != null) {
         %>
         <script>
             function confirmCancel(bookingID) {
@@ -94,7 +96,7 @@
                 var form = document.querySelector('.backbutton form')
                 form.submit();
             }
-           
+
         </script>
     </head>
     <body>
@@ -172,7 +174,7 @@
                                         <td>
                                             <span>${liststudent.endTime}</span>
                                         </td>
-                                        
+
                                     </tr>
                                 </form>
                             </c:forEach>
@@ -196,14 +198,19 @@
                 ${requestScope.ERROR}
             </span>
         </h3> 
-            <script>
-                 // L?y thông tin l?i t? bi?n requestScope.ERROR
+        <script>
+            // L?y thông tin l?i t? bi?n requestScope.ERROR
             var errorMessage = "${requestScope.ERROR}";
 
             // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
             if (errorMessage.trim() !== "") {
                 alert(errorMessage);
             }
-            </script>
+        </script>
+        <%
+            } else {
+                response.sendRedirect("MainController");
+            }
+        %>
     </body>
 </html>

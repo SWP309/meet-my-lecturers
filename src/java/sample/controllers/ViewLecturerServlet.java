@@ -25,9 +25,6 @@ public class ViewLecturerServlet extends HttpServlet {
             UserDAO userDAO = new UserDAO();
             userDAO.getListLecturers();
             List<UserDTO> lecturers = userDAO.getLecturers();
-            for (UserDTO lecturer : lecturers) {
-                System.out.println("ko");
-            }
             if (lecturers != null) {
                 request.setAttribute("LIST_LECTURERS", lecturers); 
                 url = SUCCESS;

@@ -27,14 +27,13 @@ public class BookingController extends HttpServlet {
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String email=request.getParameter(us.getUserEmail());
             BookingDAO dao = new BookingDAO();
-            List<BookingDTO> listBooking = dao.Getlistbooking(us.getUserEmail());
-            System.out.println(listBooking.toString());
+            List<BookingDTO> listBooking = dao.getListBooking(us.getUserEmail());
             if (listBooking.size() > 0) {
                 request.setAttribute("LIST_BOOKING", listBooking);
                 url = SUCCESS;
             }
         } catch (Exception e) {
-            log("Error at SearchController: " + e.toString());
+            log("Error at BookingController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

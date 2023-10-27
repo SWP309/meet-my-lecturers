@@ -708,20 +708,21 @@
   gap: 20px;
 }
 .fptu-eng-1-parent {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #fff;
-  border-top: 1px solid #000;
-  border-bottom: 1px solid #000;
-  box-sizing: border-box;
-  width: 1440px;
-  height: 68px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 40px;
+    background-color: rgba(0, 0, 0, 0.125);
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 68px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 35px 40px;
+    font-size: 17px;
+    color: #fff;
+    box-shadow: -20px 1px 20px 8px #343a40;
+    overflow: hidden;
 }
 .student-search {
   position: relative;

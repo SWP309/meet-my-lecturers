@@ -33,6 +33,50 @@
         <servlet-class>sample.controllers.DeleteFSlotController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CreateFreeSlotServlet</servlet-name>
+        <servlet-class>sample.controllers.CreateFreeSlotServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UnhideFSlotController</servlet-name>
+        <servlet-class>sample.controllers.UnhideFSlotController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreatedSlotViewSubController</servlet-name>
+        <servlet-class>sample.controllers.CreatedSlotViewSubController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewRequestServlet</servlet-name>
+        <servlet-class>sample.controllers.ViewRequestServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteRequestServlet</servlet-name>
+        <servlet-class>sample.controllers.DeleteRequestServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AcceptRequestServlet</servlet-name>
+        <servlet-class>sample.controllers.AcceptRequestServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DashBoardServlet</servlet-name>
+        <servlet-class>sample.controllers.DashBoardServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchFreeSlot</servlet-name>
+        <servlet-class>sample.controllers.SearchFreeSlot</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchFreeSlotServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchFreeSlotServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckAttendanceBookingView</servlet-name>
+        <servlet-class>sample.controllers.CheckAttendanceBookingView</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateFreeSlotServlet</servlet-name>
+        <url-pattern>/newfreeslot</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>ViewStudentSlotController</servlet-name>
         <servlet-class>sample.controllers.ViewStudentSlotController</servlet-class>
     </servlet>
@@ -55,6 +99,14 @@
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>sample.controllers.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchUserServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchUserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateUserServlet</servlet-name>
+        <servlet-class>sample.controllers.UpdateUserServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
@@ -103,6 +155,50 @@
     <servlet-mapping>
         <servlet-name>UpdateFSlotController</servlet-name>
         <url-pattern>/UpdateFSlotController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UnhideFSlotController</servlet-name>
+        <url-pattern>/UnhideFSlotController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreatedSlotViewSubController</servlet-name>
+        <url-pattern>/CreatedSlotViewSubController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchUserServlet</servlet-name>
+        <url-pattern>/SearchUserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateUserServlet</servlet-name>
+        <url-pattern>/UpdateUserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewRequestServlet</servlet-name>
+        <url-pattern>/ViewRequestServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteRequestServlet</servlet-name>
+        <url-pattern>/DeleteRequestServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AcceptRequestServlet</servlet-name>
+        <url-pattern>/AcceptRequestServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashBoardServlet</servlet-name>
+        <url-pattern>/DashBoardServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchFreeSlot</servlet-name>
+        <url-pattern>/SearchFreeSlot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchFreeSlotServlet</servlet-name>
+        <url-pattern>/SearchFreeSlotServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckAttendanceBookingView</servlet-name>
+        <url-pattern>/CheckAttendanceBookingView</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
