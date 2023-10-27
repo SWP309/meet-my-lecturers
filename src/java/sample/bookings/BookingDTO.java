@@ -20,6 +20,7 @@ public class BookingDTO {
     private String endTime;
     private String userName;
     private String bookingID;
+    private String meetLink;
 
     public BookingDTO() {
         this.subjectCode = "";
@@ -28,15 +29,17 @@ public class BookingDTO {
         this.endTime = null;
         this.userName = "";
         this.bookingID = "";
+        this.meetLink = "";
     }
 
-    public BookingDTO(String subjectCode, String lectureName, String startTime, String endTime, String userName, String bookingID) {
+    public BookingDTO(String subjectCode, String lectureName, String startTime, String endTime, String userName, String bookingID, String meetLink) {
         this.subjectCode = subjectCode;
         this.lectureName = lectureName;
         this.startTime = startTime;
         this.endTime = endTime;
         this.userName = userName;
         this.bookingID = bookingID;
+        this.meetLink = meetLink;
     }
 
     public String getSubjectCode() {
@@ -49,7 +52,6 @@ public class BookingDTO {
 
     public String getLectureName() {
         return lectureName;
-
     }
 
     public void setLectureName(String lectureName) {
@@ -87,4 +89,13 @@ public class BookingDTO {
     public void setBookingID(String bookingID) {
         this.bookingID = bookingID;
     }
+
+    public String getMeetLink() {
+        return meetLink;
+    }
+
+    public void setMeetLink(String meetLink) {
+        this.meetLink = meetLink;
+    }
+
 }

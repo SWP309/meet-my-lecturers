@@ -8,6 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MainController extends HttpServlet {
 
+    private static final String HOME_ACTION_LECTURER = "returnHomePageLecturer";
+    private static final String HOME_PAGE_LECTURER = "CreatedSlotController";
+    private static final String HOME_ACTION_STUDENT = "returnHomePageStudent";
+    private static final String HOME_PAGE_STUDENT = "StudentHome_1.jsp";
+    private static final String HOME_ACTION_ADMIN = "returnHomePageAdmin";
+    private static final String HOME_PAGE_ADMIN = "CreatedSlotController";
+
     private static final String LOGIN_BY_GOOGLE = "login";
     private static final String LOGIN_BY_GOOGLE_ACTION = "LoginServlet";
 
@@ -17,25 +24,53 @@ public class MainController extends HttpServlet {
     private static final String LOGIN_BY_FEID_ACTION_CHECK = "loginFeIDAction";
 
     private static final String STUDENT_PAGE = "StudentPage";
-    private static final String STUDENT_PAGE_ACTION = "StudentHome.jsp";
+    private static final String STUDENT_PAGE_ACTION = "StudentHome_1.jsp";
 
     private static final String LECTURER_PAGE = "LecturerPage";
-    private static final String LECTURER_PAGE_ACTION = "LecturerPage.jsp";
+    private static final String CREATE_FREE_SLOT_ACTION = "createFreeSlotAction";
+    private static final String CREATE_FREE_SLOT_PAGE = "create-freeSlot.jsp";
+    private static final String CREATE_FREE_SLOT = "CreateFS";
+    private static final String CREATE_FREE_SLOT_SERVLET = "newfreeslot";
 
-    private static final String ADMIN_PAGE = "AdminPage.jsp";
+    private static final String HIDE_FREE_SLOT = "hideFS";
+    private static final String HIDE_CREATED_CONTROLLER = "CancelSlotController";
+
+    private static final String UNHIDE_FREE_SLOT = "UnhideFS";
+    private static final String UNHIDE_CREATED_CONTROLLER = "UnhideFSlotController";
+
+    private static final String DELETE_FREE_SLOT = "deleteFS";
+    private static final String DELETE_CREATED_CONTROLLER = "DeleteFSlotController";
+
+    private static final String VIEW_FREE_SLOT = "viewFS";
+    private static final String VIEW_CREATED_CONTROLLER = "ViewStudentSlotController";
+
+    private static final String UPDATE_FREE_SLOT = "updateFS";
+    private static final String UPDATE_CREATED_CONTROLLER = "UpdateFSlotController";
+
+    private static final String VIEW_REQUEST_LECTURER_ACTION = "ViewRequest";
+    private static final String REQUEST_VIEW_CONTROLLER = "ViewRequestServlet";
+
+    private static final String ADMIN_PAGE = "AdminPage";
     private static final String ADMIN_PAGE_ACTION = "AdminPage.jsp";
+//    private static final String ADMIN_PAGE_CONTROLLER = "ViewSemesterServlet";
+    private static final String ADMIN_PAGE_CONTROLLER = "DashBoardServlet";
+//    private static final String ADMIN_PAGE_CONTROLLER_ACTION = "DashBoard";
+    private static final String ADMIN_FIND_STUDENTMAXBOOKING = "Find";//booking most slot
+    private static final String ADMIN_FIND_STUDENTMAXREQUEST = "FindSMR";//send most request
+    private static final String ADMIN_FIND_LECTURERMAXBOOKING = "FindCMS";//create most slot
+    private static final String ADMIN_FIND_LECTURERMAXREQUEST = "FindRMR";//recieve most request
 
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
     private static final String BACK_TO_REQUEST = "BackToRequest";
 
-    private static final String CREATE_REQUEST = "Create request";
+    private static final String CREATE_REQUEST = "CreateRequest";
     private static final String REQUEST_ACTION = "CreateRequestServlet";
 
     private static final String VIEWBOOKING = "ViewBooking";
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
 
-    private static final String VIEWTIMETABLE = "View Timetable";
+    private static final String VIEWTIMETABLE = "ViewTimetable";
     private static final String VIEW_TIMETABLE_CONTROLLER = "ViewTimetableServlet";
 
     private static final String VIEW_LECTURER = "ViewAllLecturers";
@@ -47,20 +82,30 @@ public class MainController extends HttpServlet {
     private static final String LOGOUT = "Logout";
     private static final String LOGOUT_ACTION = "LoginFeID.jsp";
 
-    private static final String CREATED_PAGE = "CreatedSlotView.jsp";
-    private static final String CREATED_CONTROLLER = "CreatedSlotController";
+    private static final String CREATED_VIEW_CONTROLLER = "CreatedSlotController";
 
-    private static final String CANCEL_FREE_SLOT = "hideFS";
-    private static final String CANCEL_CREATED_CONTROLLER = "CancelSlotController";
+    private static final String CREATED_PAGE_HIDE = "HideView";
+    private static final String CREATED_CONTROLLER_VIEW_SUB = "CreatedSlotViewSubController";
 
-    private static final String DELETE_FREE_SLOT = "deleteFS";
-    private static final String DELETE_CREATED_CONTROLLER = "DeleteFSlotController";
+    private static final String VIEW_USERS = "ViewUsers";
+    private static final String VIEW_USERS_PAGE = "ViewUsers.jsp";
+    private static final String SEARCH_USERS = "SearchUsers";
+    private static final String SEARCH_USERS_CONTROLLER = "SearchUserServlet";
 
-    private static final String VIEW_FREE_SLOT = "viewFS";
-    private static final String VIEW_CREATED_CONTROLLER = "ViewStudentSlotController";
-    
-    private static final String UPDATE_FREE_SLOT = "updateFS";
-    private static final String UPDATE_CREATED_CONTROLLER = "UpdateFSlotController";
+    private static final String UPDATE_USERS = "UpdateUsers";
+    private static final String UPDATE_USERS_CONTROLLER = "UpdateUserServlet";
+
+    private static final String DELETE_REQUEST = "DeleteRequest";
+    private static final String DELETE_REQUEST_CONTROLLER = "DeleteRequestServlet";
+
+    private static final String ACCEPT_REQUEST = "AcceptRequest";
+    private static final String ACCEPT_REQUEST_CONTROLLER = "AcceptRequestServlet";
+
+    private static final String SEARCH_FREE_SLOT_ACTION = "SearchFSlot";
+    private static final String SEARCH_FREE_SLOT_SERVLET = "SearchFreeSlotServlet";
+
+    private static final String CHECK_ATTENDANCE_ACTION = "AttendanceLink";
+    private static final String CHECK_ATTENDANCE_SERVLET = "CheckAttendanceBookingView";
 
     private static final String BACK = "back";
 
@@ -83,7 +128,7 @@ public class MainController extends HttpServlet {
             } else if (action.equals(STUDENT_PAGE)) {
                 url = STUDENT_PAGE_ACTION;
             } else if (action.equals(LECTURER_PAGE)) {
-                url = CREATED_CONTROLLER;
+                url = CREATED_VIEW_CONTROLLER;
             } else if (action.equals(ADMIN_PAGE)) {
                 url = ADMIN_PAGE_ACTION;
             } else if (CREATE_REQUEST.equals(action)) {
@@ -106,14 +151,54 @@ public class MainController extends HttpServlet {
                 url = STUDENT_PAGE_ACTION;
             } else if (LOGOUT.equals(action)) {
                 url = LOGIN_BY_FEID_ACTION;
-            } else if (CANCEL_FREE_SLOT.equals(action)) {
-                url = CANCEL_CREATED_CONTROLLER;
+            } else if (HIDE_FREE_SLOT.equals(action)) {
+                url = HIDE_CREATED_CONTROLLER;
             } else if (DELETE_FREE_SLOT.equals(action)) {
                 url = DELETE_CREATED_CONTROLLER;
             } else if (VIEW_FREE_SLOT.equals(action)) {
                 url = VIEW_CREATED_CONTROLLER;
             } else if (UPDATE_FREE_SLOT.equals(action)) {
                 url = UPDATE_CREATED_CONTROLLER;
+            } else if (CREATED_PAGE_HIDE.equals(action)) {
+                url = CREATED_CONTROLLER_VIEW_SUB;
+            } else if (UNHIDE_FREE_SLOT.equals(action)) {
+                url = UNHIDE_CREATED_CONTROLLER;
+            } else if (CREATE_FREE_SLOT_ACTION.equals(action)) {
+                url = CREATE_FREE_SLOT_SERVLET;
+            } else if (CREATE_FREE_SLOT.equals(action)) {
+                url = CREATE_FREE_SLOT_PAGE;
+            } else if (VIEW_REQUEST_LECTURER_ACTION.equals(action)) {
+                url = REQUEST_VIEW_CONTROLLER;
+            } else if (HOME_ACTION_LECTURER.equals(action)) {
+                url = HOME_PAGE_LECTURER;
+            } else if (HOME_ACTION_STUDENT.equals(action)) {
+                url = HOME_PAGE_STUDENT;
+            } else if (action.equals(ADMIN_PAGE)) {
+                url = CREATED_VIEW_CONTROLLER;
+            } else if (action.equals(ADMIN_FIND_STUDENTMAXBOOKING)) {
+                url = ADMIN_PAGE_CONTROLLER;
+            } else if (action.equals(ADMIN_FIND_STUDENTMAXREQUEST)) {
+                url = ADMIN_PAGE_CONTROLLER;
+            } else if (action.equals(ADMIN_FIND_LECTURERMAXBOOKING)) {
+                url = ADMIN_PAGE_CONTROLLER;
+            } else if (action.equals(ADMIN_FIND_LECTURERMAXREQUEST)) {
+                url = ADMIN_PAGE_CONTROLLER;
+            } else if (action.equals(ADMIN_PAGE)) {
+                url = ADMIN_PAGE_ACTION;
+            } else if (ACCEPT_REQUEST.equals(action)) {
+                url = ACCEPT_REQUEST_CONTROLLER;
+            } else if (DELETE_REQUEST.equals(action)) {
+                url = DELETE_REQUEST_CONTROLLER;
+            } else if (SEARCH_FREE_SLOT_ACTION.equals(action)) {
+                url = SEARCH_FREE_SLOT_SERVLET;
+            } else if (VIEW_USERS.equals(action)) {
+                url = VIEW_USERS_PAGE;
+            } else if (SEARCH_USERS.equals(action)) {
+                url = SEARCH_USERS_CONTROLLER;
+            } else if (UPDATE_USERS.equals(action)) {
+                url = UPDATE_USERS_CONTROLLER;
+            } else if (CHECK_ATTENDANCE_ACTION.equals(action)) {
+                url = CHECK_ATTENDANCE_SERVLET;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());

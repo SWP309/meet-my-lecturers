@@ -33,12 +33,6 @@ td button {
 
 }
 
-.bookingview{
-    width: 50% !important;
-    font-size: 16px;
-    margin-left: -3%;
-
-}
 .table-rounded th, .table-rounded td {
     border-radius: 0;
 }
@@ -46,7 +40,7 @@ td button {
     cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
     border-radius: 12px;
     background-color: #f27125;
-    width: 137px;
+    width: 156px;
     height: 43px;
     align-items: flex-start;
     padding: 10px 9px;
@@ -66,8 +60,9 @@ td button {
     margin-left: 20%;
 }
 .frame-item {
+    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
     position: relative;
-    width: 100px;
+    width: 45px;
     height: 42px;
 }
 .frame-parent {
@@ -79,10 +74,10 @@ td button {
     align-items: flex-start;
     justify-content: flex-start;
     gap: 20px;
-    margin-left: 2%;
+    margin-left: -1%;
 }
 .fptu-eng-1-parent {
-    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0.125);
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     box-sizing: border-box;
@@ -95,7 +90,7 @@ td button {
     padding: 35px 40px;
     font-size: 17px;
     color: #fff;
-    /* ... (các quy tắc CSS khác) */
+    box-shadow: -20px 1px 20px 8px #343a40;
     overflow: hidden;
 }
 
@@ -159,9 +154,9 @@ td button {
 }
 .back-icon {
     position: absolute;
-    height: 94.29%;
-    width: 25.99%;
-    top: 8.57%;
+    height: 85.29%;
+    width: 40.99%;
+    top: 22.57%;
     right: 74.81%;
     bottom: -2.86%;
     left: -0.8%;
@@ -176,6 +171,8 @@ td button {
     height: 35px;
     font-size: 30px;
     color: #000;
+    bottom: 260px;
+    left: -43%;
 }
 .student-viewbookedslot {
     position: relative;

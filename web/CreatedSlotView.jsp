@@ -55,6 +55,8 @@
         <%
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+
         %>
         <script>
             function confirmCancel(bookingID) {
@@ -67,9 +69,24 @@
                 var form = document.querySelector('.logout form');
                 form.submit();
             }
-            function submitFormRequest() {
+            function submitFormCreate() {
+                var form = document.querySelector('.CreateFSlot form');
+                form.submit();
+            }
+            function submitFormViewRequest() {
                 var form = document.querySelector('.request form');
                 form.submit();
+            }
+            function submitFormHideView() {
+                var form = document.querySelector('.hideView form');
+                form.submit();
+            }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function goBack() {
+                window.history.back();
             }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
@@ -110,41 +127,64 @@
                     event.preventDefault();
                 }
             }
-            function submitFormBack() {
-                var form = document.querySelector('.backbutton form')
-                form.submit();
-            }
 
         </script>
-        <script>
-            const dialog = document.getElementById("myDialog");
-
-            function showDialog() {
-                dialog.show();
+        <style>
+            td {
+                position: relative;
             }
 
-            function closeDialog() {
-                dialog.close();
+            input[type="text"] {
+                /*                width: 100%;
+                                box-sizing: border-box;
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                bottom: 0;
+                                right: 0;*/
+                /*                font-size: 14px;*/
+                width: 198px;
+                text-align: center;
+                border: none; /* Lo?i b? vi?n */
             }
-        </script>
+            button[type="submit"]{
+                border: none; /* Lo?i b? vi?n */
+                background-color: white;
+                color: #007bff;
+            }
+        </style>
+
+
     </head>
     <body>
         <div class="student-viewbookedslot">
             <div class="fptu-eng-1-parent">
-                <img
-                    class="fptu-eng-1-icon"
-                    alt=""
-                    src="public/BookingView/2021fptueng-1@2x.png"
-                    />
+                <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="returnHomePageLecturer" />
+                    </form>
+                    <img
+                        class="fptu-eng-1-icon"
+                        alt=""
+                        src="public/BookingView/2021fptueng-1@2x.png"
+                        />
+                </div>
 
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-div request" onclick="submitFormRequest()">
+                        <div class="frame-Create CreateFSlot" onclick="submitFormCreate()">
                             <form action="MainController" method="POST">
-                                <input type="hidden" name="action" value="Request" />
+                                <input type="hidden" name="action" value="CreateFS" />
                             </form>
 
-                            <i class="material-icons">mail_outline</i> Request
+                            <i class="material-icons">create</i> Create Free Slot
+                        </div>
+                        <div class="frame-div request" style="width: 25%;" onclick="submitFormViewRequest()">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="ViewRequest" />
+                            </form>
+
+                            <i class="material-icons">mail_outline</i>View Request
                         </div>
                         <div class="frame-div logout" onclick="submitFormLogout()">
                             <form action="MainController" method="POST" style="display: none;">
@@ -155,6 +195,14 @@
                             </div>
                             <div class="request">
                                 <p class="logout1">Logout</p>
+                            </div>
+                        </div>
+                        <div class="frame-div hideView" onclick="submitFormHideView()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="HideView" />
+                            </form>
+                            <div>
+                                <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
                             </div>
                         </div>
                         <div>
@@ -169,97 +217,86 @@
                     </div>
                 </div>
             </div>
-            <div class="table-container">
-                <c:if test="${requestScope.LIST_CREATED_SLOT !=null}">
-                    <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">
-                        <table class="table table-hover table-primary table-rounded">
-                            <thead>
-                                <tr class="table-danger">
-                                    <th>No</th>
-                                    <th>Subject Code</th>
-                                    <th>Lecturer's Name</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Cancel</th>
-                                    <th>Delete</th>
-                                    <th>View</th>
-                                    <th>Update</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <form action="MainController" method="POST">
-                                <c:forEach var="listCreatedSlot" varStatus="counter" items="${requestScope.LIST_CREATED_SLOT}">
-                                    <tr>
-                                        <td>${counter.count}</td>
-                                        <td>
-                                            <input type="text" name="subjectCode" value="${listCreatedSlot.subjectCode}" required=""/>
-                                        </td>
-                                        <td>
-                                            <input type="text" name="lectureName" value="${listCreatedSlot.lectureName}" readonly=""/>
-                                        </td>
-                                        <td>
-                                             <input type="text" name="startTime" value="${listCreatedSlot.startTime}" required=""/>
-                                        </td>
-                                        <td>
-                                             <input type="text" name="endTime" value="${listCreatedSlot.endTime}" required=""/>
-                                        </td>
-                                        <td>
-                                            <a style="display: flex; text-decoration: none; justify-content: center;" onclick="return confirm('Are you sure to hide this Free Slot')"
-                                               href="MainController?action=hideFS&freeSlotID=${listCreatedSlot.freeSlotID}">
-                                                <i class="material-icons">cancel</i>Hide</a>
+            <div class="backbutton"  onclick="goBack()">
+                <div class="back"><p>Back</p></div>
+                <img class="back-icon" alt="" src="./public/request/back.svg" />
+            </div>
 
-                                        </td>
-                                        <td>
-                                            <a style="display: flex; text-decoration: none; justify-content: center;" onclick="return confirm('Are you sure to delete this Free Slot')"
-                                               href="MainController?action=deleteFS&freeSlotID=${listCreatedSlot.freeSlotID}">
-                                                <i class="material-icons">delete</i>Delete</a>
+            <div class="container mt-5" style="    margin-top: -33% !important;">
+                <div class="row justify-content-center mt-5">
+                    <c:if test="${requestScope.LIST_CREATED_SLOT !=null}">
+                        <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">
+                            <c:forEach var="listCreatedSlot" varStatus="counter" items="${requestScope.LIST_CREATED_SLOT}">
+                                <div class="col-md-4">
+                                    <div class="card" style="width: 357px; height: 211px; border-radius: 5%;">
+                                        <div class="card-body">
+                                            <form action="MainController" method="POST">
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
+                                                    <input type="text" class="ml-auto" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}"/>
+                                                </div>
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
+                                                    <span class="ml-auto">${listCreatedSlot.lectureName}</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
+                                                    <input type="text" class="ml-auto" name="startTime" value="${listCreatedSlot.startTime}"/>
+                                                </div>
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                    <input type="text" class="ml-auto" name="endTime" value="${listCreatedSlot.endTime}"/>
+                                                </div>
+                                                <div class="d-flex justify-content-between btn-book">
 
-                                        </td>
-                                        <td>
-                                            <a style="display: flex; text-decoration: none; justify-content: center;"
-                                               href="MainController?action=viewFS&freeSlotID=${listCreatedSlot.freeSlotID}">
-                                                <i class="fas fa-search"></i>View</a>
+                                                    <div>
+                                                        <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to hide this Free Slot')" href="MainController?action=hideFS&freeSlotID=${listCreatedSlot.freeSlotID}">
+                                                            <i class="material-icons">cancel</i>Hide
+                                                        </a>
+                                                        <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to delete this Free Slot')" href="MainController?action=deleteFS&freeSlotID=${listCreatedSlot.freeSlotID}">
+                                                            <i class="material-icons">delete</i>Delete
+                                                        </a>
+                                                    </div>
+                                                    <div>
 
-                                        </td>
-                                        <td>
-                                            <a style="display: flex; text-decoration: none; justify-content: center;"
-                                               href="MainController?action=updateFS&freeSlotID=${listCreatedSlot.freeSlotID}&subjectCode=${listCreatedSlot.subjectCode}&startTime=${listCreatedSlot.startTime}&endTime=${listCreatedSlot.endTime}">
-                                                <i class="material-icons">update</i>Update</a>
-                                        </td>
-
-
-                                    </tr>
-                                </form>
+                                                        <a class="d-flex justify-content-between" style="text-decoration: none; gap: 2px; width: 11px; margin-left: 10px;" href="MainController?action=viewFS&freeSlotID=${listCreatedSlot.freeSlotID}">
+                                                            <i class="fas fa-search"></i>View
+                                                        </a>
+                                                        <form action="MainController" method="GET">
+                                                            <input type="hidden" name="action" value="updateFS">
+                                                            <input type="hidden" name="freeSlotID" value="${listCreatedSlot.freeSlotID}">
+                                                            <input type="hidden" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}" required/>
+                                                            <input type="hidden" name="startTime" value="${listCreatedSlot.startTime}">
+                                                            <input type="hidden" name="endTime" value="${listCreatedSlot.endTime}">
+                                                            <button type="submit" style="display: flex; text-decoration: none; justify-content: center;">
+                                                                <i class="material-icons">update</i>Update
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </c:forEach>
+                        </c:if>
+                    </c:if>          
 
-                            </tbody>
-                        </table>
-                    </c:if>
-                </c:if>
+                </div>
 
-            </div>
-            <div class="backbutton" onclick="submitFormBack()">
-                <form action="MainController" method="POST" style="display: none;">
-                    <input type="hidden" name="action" value="back" />
-                </form>
-                <div class="back" id="back-button">Back</div>
-                <img class="back-icon" alt="" src="public/BookingView/back.svg" />
-            </div>
-        </div>
-        <h3>
-            <span class="error-message">
-                ${requestScope.ERROR}
-            </span>
-        </h3> 
 
-        <script>
-            // L?y thông tin l?i t? bi?n requestScope.ERROR
-            var errorMessage = "${requestScope.ERROR}";
 
-            // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
-            if (errorMessage.trim() !== "") {
-                alert(errorMessage);
-            }
-        </script>
-    </body>
-</html>
+
+                <h3>
+                    <span class="error-message">
+                        ${requestScope.ERROR}
+                    </span>
+                </h3> 
+
+                <script>
+                    // L?y thông tin l?i t? bi?n requestScope.ERROR
+                    var errorMessage = "${requestScope.ERROR}";
+
+                    // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+                    if (errorMessage.trim() !== "") {
+                        alert(errorMessage);
+                    }
+                </script>
+                <% }%>
+                </body>
+                </html>

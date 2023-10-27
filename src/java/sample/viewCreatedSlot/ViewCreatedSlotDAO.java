@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import sample.utils.DBUtils;
 
@@ -27,6 +28,10 @@ public class ViewCreatedSlotDAO {
             + "           FROM FreeSlots fs\n"
             + "          JOIN Users u1 ON fs.lecturerID = u1.userID\n"
             + "           WHERE fs.status='1' AND u1.userEmail = ?";
+        private static String CREATED_SLOT_VIEW_SUB= "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID\n"
+            + "           FROM FreeSlots fs\n"
+            + "          JOIN Users u1 ON fs.lecturerID = u1.userID\n"
+            + "           WHERE fs.status='0' AND u1.userEmail = ?";
 
     private static String STUDENT_VIEW_SLOT = "	SELECT DISTINCT fs.subjectCode,u.userName AS studentName, fs.startTime, fs.endTime, fs.freeSlotID\n"
             + "           FROM Bookings b\n"
@@ -35,6 +40,7 @@ public class ViewCreatedSlotDAO {
             + "           JOIN Users u1 ON fs.lecturerID = u1.userID\n"
             + "            WHERE fs.status='1' and fs.freeSlotID = ?";
     private static String HIDE_CREATED_SLOT = "UPDATE FreeSlots SET status = 0 WHERE freeSlotID = ?";
+    private static String UNHIDE_CREATED_SLOT = "UPDATE FreeSlots SET status = 1 WHERE freeSlotID = ?";
 
     private static String DELETE_CREATED_SLOT
             = "DELETE FROM [dbo].[Bookings] WHERE freeSlotID = ?;\n"
@@ -49,7 +55,7 @@ public class ViewCreatedSlotDAO {
 
     private static String convertDateToString(Timestamp sqlTime) {
         // Sử dụng SimpleDateFormat để định dạng ngày giờ
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         // Sử dụng phương thức format để chuyển đổi Time thành String
         return dateFormat.format(sqlTime);
@@ -69,7 +75,7 @@ public class ViewCreatedSlotDAO {
     }
 
     public List<ViewCreatedSlotDTO> GetlistCreatedSlot(String userEmail) throws SQLException {
-        List<ViewCreatedSlotDTO> listCreatedSlot = new ArrayList<>();
+        List<ViewCreatedSlotDTO> listCreatedSlotSub = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -77,6 +83,43 @@ public class ViewCreatedSlotDAO {
             conn = DBUtils.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(CREATED_SLOT_VIEW);
+                ptm.setString(1, userEmail);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String subjectCode = rs.getString("subjectCode");
+                    String lectureName = rs.getString("lectureName");
+                    Timestamp startTime = rs.getTimestamp("startTime");
+                    String startTimeStr = convertDateToString(startTime);
+                    Timestamp endTime = rs.getTimestamp("endTime");
+                    String endTimeStr = convertDateToString(endTime);
+                    String freeSlotID = rs.getString("freeSlotID");
+                    listCreatedSlotSub.add(new ViewCreatedSlotDTO(subjectCode, lectureName, startTimeStr, endTimeStr, freeSlotID));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listCreatedSlotSub;
+    }
+     public List<ViewCreatedSlotDTO> GetlistCreatedSlotSub(String userEmail) throws SQLException {
+        List<ViewCreatedSlotDTO> listCreatedSlot = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(CREATED_SLOT_VIEW_SUB);
                 ptm.setString(1, userEmail);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
@@ -168,6 +211,30 @@ public class ViewCreatedSlotDAO {
         }
         return CheckHide;
     }
+     public boolean UnHide(String freeSlotID) throws SQLException {
+        boolean CheckUnhide = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(UNHIDE_CREATED_SLOT);
+                ptm.setString(1, freeSlotID);
+                CheckUnhide = ptm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return CheckUnhide;
+    }
 
     public boolean Delete(String freeSlotID) throws SQLException {
         boolean checkDelete = false;
@@ -201,13 +268,16 @@ public class ViewCreatedSlotDAO {
         PreparedStatement ptm = null;
 
         try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Date startTime = simpleDateFormat.parse(listCreatedSlot.getStartTime());
+            Date endTime = simpleDateFormat.parse(listCreatedSlot.getEndTime());
             conn = DBUtils.getConnection();
             if (conn != null) {
                 System.out.println("chay vao dc ham if");
                 ptm = conn.prepareStatement(UPDATE_CREATED_SLOT);
-                ptm.setTimestamp(1, convertStringToTimestamp(listCreatedSlot.getStartTime())); // Chuyển đổi startTime thành Timestamp
-                ptm.setTimestamp(2, convertStringToTimestamp(listCreatedSlot.getEndTime())); // Chuyển đổi endTime thành Timestamp
-                ptm.setString(3, listCreatedSlot.getSubjectCode()); // Sử dụng SubjectCode thay vì UserID
+                ptm.setTimestamp(1, new Timestamp(startTime.getTime()));
+                ptm.setTimestamp(2, new Timestamp(endTime.getTime()));
+                ptm.setString(3, listCreatedSlot.getSubjectCode()); 
                 ptm.setString(4, listCreatedSlot.getFreeSlotID());
                 checkUpdate = ptm.executeUpdate() > 0;
                 System.out.println(checkUpdate);

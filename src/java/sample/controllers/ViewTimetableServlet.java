@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sound.midi.SoundbankResource;
 import sample.slots.SlotDTO;
 import sample.subjects.SubjectDTO;
 import sample.timetables.TimetableDAO;
@@ -33,12 +34,15 @@ public class ViewTimetableServlet extends HttpServlet {
         try {
             String lecturerID = request.getParameter("txtLecturer");
             String semesterID = request.getParameter("txtSemester");
+            System.out.println(semesterID);
             TimetableDAO timetableDAO = new TimetableDAO();
             timetableDAO.getListTimetables(lecturerID, semesterID);
             List<TimetableDTO> timetables = timetableDAO.getTimetables();
             List<SubjectDTO> subjects = timetableDAO.getSubjects();
             List<SlotDTO> slots = timetableDAO.getSlots();
+            System.out.println(semesterID);
             if (timetables != null) {
+                System.out.println(timetables.toString());
                 request.setAttribute("TB_TIMETABLES", timetables); 
                 request.setAttribute("TB_SUBJECTS", subjects);
                 request.setAttribute("TB_SLOTS", slots);

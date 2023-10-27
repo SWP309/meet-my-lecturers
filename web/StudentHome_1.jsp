@@ -16,34 +16,59 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-        <link rel="stylesheet" href="./StudentHome.css" />
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
-            />
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Lohit Tamil:wght@400&display=swap"
-            />
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
-            />
+        <link rel="stylesheet" href="./StudentHome_1.css" />
+        <!-- Google Fonts - Poppins -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap">
+
+        <!-- Google Fonts - Lohit Tamil -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lohit Tamil:wght@400&display=swap">
+
+        <!-- Google Fonts - Lexend -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+        <!-- Font Awesome CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+        <!-- Bootstrap 5 CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+        <!-- Bootstrap 5 JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+        <!-- Font Awesome 6 Beta 3 CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+        <!-- Material Icons CSS -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+        <!-- SweetAlert2 CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+
+        <!-- SweetAlert2 JS -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+
+        <!-- Foundation Min CSS -->
         <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+
+        <!-- Foundation CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
+
+        <!-- Motion UI CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.css">
+
+        <!-- Foundation Prototype CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-prototype.min.css">
+
+        <!-- Foundicons CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet" type="text/css">
 
-        <%
 
+        <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
         %>
         <script>
             function confirmCancel(bookingID) {
@@ -62,6 +87,10 @@
             }
             function submitFormRequest() {
                 var form = document.querySelector('.request form');
+                form.submit();
+            }
+            function submitSearchForm() {
+                var form = document.querySelector('.searchfunction form');
                 form.submit();
             }
             var userDTO = {
@@ -112,6 +141,48 @@
             }
 
         </script>
+        <style>
+            .card-body > div {
+                margin-bottom: 0.2rem;
+            }
+
+            .card-body > .btn-book {
+                margin-top: 1rem;
+            }
+
+            .form-group {
+                margin: 0.4rem;
+                border-radius: 35px;
+            }
+
+            .form-control {
+                border-radius: 35px;
+            }
+
+            .cus {
+                background-color: #f27125;
+                margin: 0 0.5rem;
+                border-radius: 5px;
+                color: #fff!important;
+            }
+
+            .text-black {
+                color: #333!important;
+                font-size: 18px;
+            }
+
+            .navbar {
+                padding: 2rem;
+                border-bottom: 1px solid black;
+            }
+
+            @media screen and (max-width: 980px) {
+                .cus {
+                    background: none!important;
+                    color: #333!important;
+                }
+            }
+        </style>
     </head>
     <body>
         <div class="student-home">
@@ -166,19 +237,12 @@
                 </div>
             </div>
 
-            <div class="backbutton" onclick="submitFormBack()">
-                <form action="MainController" method="POST" style="display: none;">
-                    <input type="hidden" name="action" value="back" />
-                </form>
-                <div class="back" id="back-button">Back</div>
-                <img class="back-icon" alt="" src="public/BookingView/back.svg" />
-            </div>
-            <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize">
-                <ul class="orbit-container" tabindex="0" style="height: 530.4px;">
-                    <button class="orbit-previous" tabindex="0"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
-                    <button class="orbit-next" tabindex="0"><span class="show-for-sr">Next Slide</span>&#9654;</button>
+            <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize" style="margin-top: 100px;">
+                <ul class="orbit-container" tabindex="0" style="height: 613.389px;">
+                    <button class="orbit-previous" tabindex="0" style="color: gray;"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
+                    <button class="orbit-next" tabindex="0" style="color: gray;"><span class="show-for-sr">Next Slide</span>&#9654;</button>
                     <li class="orbit-slide" data-slide="0" style="display: none; position: relative; top: 0px;">
-                        <img class="orbit-image" src="./public/StudentHome/anh1.jpg"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
+                        <img class="orbit-image" src="./public/StudentHome/anh1.jpg"  style="width: 2000px; height: 600px; object-fit:contain;" alt="Space">
                     <figcaption class="orbit-caption">FPT University</figcaption>
                     </li>
                     <li class="orbit-slide" data-slide="1" style="position: relative; top: 0px; display: none;">
@@ -209,18 +273,107 @@
 
 
         </div>
+        <div class="admin-viewusersedited">
+            <div class="searchfunction">
+                <!--                <div class="search" style="cursor: pointer ">
+                                    <div class="search-child" onclick="submitSearchForm()">
+                                        <div class="search1">Search</div>
+                                    </div>
+                                </div>-->
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="SearchFSlot"/>
 
-    </div>
-    <h3>
-        ${requestScope.ERROR}
-    </h3> 
+                    <div class="lecture-4">
+                        <div class="searchbylec-parent">
+                            <img
+                                class="searchbylec-parent"
+                                alt=""
+                                src="./public/UsersView/searchbylec.svg"
+                                onclick="submitSearchForm()"
+                                />
+                            <div class="userid"><input class="in_search_userID" type="text" name="txtSubjectCode" value="${param.txtSubjectCode}" placeholder="Subject Code"/></div>
+                        </div>
+                        <div class="bysemester">
+                            <img
+                                class="bysemester-child"
+                                alt=""
+                                src="./public/UsersView/rectangle-13.svg"
+                                />
 
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
-    <script>
-                $(document).foundation();
-    </script>
-</body>
+                            <div class="username"><input class="in_name" type="text" name="txtUserID" value="${param.txtUserID}" placeholder="Input lecturer's ID"/></div>
+                        </div>
+                        <div class="bysemester" style="margin-left: 33%;">
+                            <img
+                                class="bysemester-child"
+                                alt=""
+                                src="./public/UsersView/rectangle-13.svg"
+                                />
+
+                            <div class="username"><input class="in_name" type="text" name="txtUserID" value="${param.txtUserID}" placeholder="Input lecturer's ID"/></div>
+                        </div>
+                        <div class="bysemester " style="margin-left: 66%;">
+                            <img
+                                class="bysemester-child"
+                                alt=""
+                                src="./public/UsersView/rectangle-13.svg"
+                                />
+
+                            <div class="username"><input class="in_name" type="text" name="txtUserID" value="${param.txtUserID}" placeholder="Input lecturer's ID"/></div>
+                        </div>
+                      
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="container mt-5" style="    margin-top: 14% !important;">
+                <div class="row justify-content-center mt-5">
+                    <c:if test="${not empty param.txtSubjectCode and empty param.txtUserID and not empty requestScope.FREESLOT_BY_SUBJECT}">
+                        <c:forEach items="${requestScope.FREESLOT_BY_SUBJECT}" 
+                                   var="freeslot" varStatus="status">
+                            <div class="col-md-4">
+                                <div class="card" style="width: 357px; height: 211px; border-radius: 5%;">
+                                    <div class="card-body">
+                                        <form action="MainController" method="POST">
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject Code:</b></strong> <span class="ml-auto"> ${freeslot.subjectCode}</span></div>
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's ID:</b></strong> <span class="ml-auto">${freeslot.lecturerID}</span></div>
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${freeslot.startTime}</span></div>
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <input type="hidden" name="txtUserID" 
+                                                           value="${freeSlot.endTime}" readonly="">
+                                                    <button type="submit" name="action"
+                                                            value="BookFreeSlot">Book</button>
+                                                </div>
+
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:if>
+                    <c:if test="${empty requestScope.FREESLOT_BY_SUBJECT }">
+                        <h3 style="color: red">${requestScope.SEARCH_FREESLOT_MESSAGE}</h3>
+                    </c:if>  
+                </div>
+
+            </div>
+            <!-- Thêm liên k?t ??n Bootstrap JS và jQuery -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI" crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+            <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
+
+            <script>
+                                    $(document).foundation();
+            </script>
+            <%} else {
+                    response.sendRedirect("MainController");
+                }%>
+    </body>
 </html>
 
