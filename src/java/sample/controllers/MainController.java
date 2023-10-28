@@ -101,11 +101,14 @@ public class MainController extends HttpServlet {
     private static final String ACCEPT_REQUEST = "AcceptRequest";
     private static final String ACCEPT_REQUEST_CONTROLLER = "AcceptRequestServlet";
 
-    private static final String SEARCH_FREE_SLOT_ACTION = "SearchFSlot";
-    private static final String SEARCH_FREE_SLOT_SERVLET = "SearchFreeSlotServlet";
+    private static final String SEARCH_BOOKED_SLOT_ACTION = "SearchFSlot";
+    private static final String SEARCH_BOOKED_SLOT_SERVLET = "SearchBookedServlet";
 
     private static final String CHECK_ATTENDANCE_ACTION = "AttendanceLink";
     private static final String CHECK_ATTENDANCE_SERVLET = "CheckAttendanceBookingView";
+
+    private static final String SEARCH_FREE_SLOT_ACTION = "searchCSlot";
+    private static final String SEARCH_FREE_SLOT_SERVLET = "SearchCreateSlotServlet";
 
     private static final String BACK = "back";
 
@@ -191,6 +194,8 @@ public class MainController extends HttpServlet {
                 url = DELETE_REQUEST_CONTROLLER;
             } else if (SEARCH_FREE_SLOT_ACTION.equals(action)) {
                 url = SEARCH_FREE_SLOT_SERVLET;
+            } else if (SEARCH_BOOKED_SLOT_ACTION.equals(action)) {
+                url = SEARCH_BOOKED_SLOT_SERVLET;
             } else if (VIEW_USERS.equals(action)) {
                 url = VIEW_USERS_PAGE;
             } else if (SEARCH_USERS.equals(action)) {
