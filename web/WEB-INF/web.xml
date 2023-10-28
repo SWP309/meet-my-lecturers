@@ -65,8 +65,8 @@
         <servlet-class>sample.controllers.SearchFreeSlot</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SearchBookedServlet</servlet-name>
-        <servlet-class>sample.controllers.SearchBookedServlet</servlet-class>
+        <servlet-name>SearchFreeSlotServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchFreeSlotServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CheckAttendanceBookingView</servlet-name>
@@ -197,8 +197,8 @@
         <url-pattern>/SearchFreeSlot</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SearchBookedServlet</servlet-name>
-        <url-pattern>/SearchBookedServlet</url-pattern>
+        <servlet-name>SearchFreeSlotServlet</servlet-name>
+        <url-pattern>/SearchFreeSlotServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CheckAttendanceBookingView</servlet-name>
