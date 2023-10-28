@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package sample.freeslots;
 
-/**
- *
- * @author W10(hiep-tm)
- */
 public class FreeSlotsDTO {
 
     private String freeSlotID;
@@ -21,6 +13,10 @@ public class FreeSlotsDTO {
     private int count;
     private String lecturerID;
     private boolean status;
+    private String semesterID;
+    //bien ngoai lai, t chi them vao cho de trong viec hien thi ten giang vien
+    //bien nay khong co trong bang, nen la mn cu dat la String = null nha.
+    private String lecturerName;
 
     public FreeSlotsDTO() {
         this.freeSlotID = "";
@@ -35,6 +31,29 @@ public class FreeSlotsDTO {
         this.status = true;
     }
 
+    public String getLecturerName() {
+        return lecturerName;
+    }
+
+    public void setLecturerName(String lecturerName) {
+        this.lecturerName = lecturerName;
+    }
+
+    public FreeSlotsDTO(String freeSlotID, String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, boolean status, String semesterID, String lecturerName) {
+        this.freeSlotID = freeSlotID;
+        this.subjectCode = subjectCode;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.password = password;
+        this.capacity = capacity;
+        this.meetLink = meetLink;
+        this.count = count;
+        this.lecturerID = lecturerID;
+        this.status = status;
+        this.semesterID = semesterID;
+        this.lecturerName = lecturerName;
+    }
+    
     public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, boolean  status) {
         this.subjectCode = subjectCode;
         this.startTime = startTime;
@@ -121,11 +140,32 @@ public class FreeSlotsDTO {
         this.lecturerID = lecturerID;
     }
     public boolean getStatus() {
-        return status;
+        return isStatus();
     }
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    /**
+     * @return the status
+     */
+    public boolean isStatus() {
+        return status;
+    }
+
+    /**
+     * @return the semesterID
+     */
+    public String getSemesterID() {
+        return semesterID;
+    }
+
+    /**
+     * @param semesterID the semesterID to set
+     */
+    public void setSemesterID(String semesterID) {
+        this.semesterID = semesterID;
     }
 
 }
