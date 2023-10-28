@@ -45,6 +45,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
             FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            String semesterID=request.getParameter("txtSemesterID");
             String subjectCode = request.getParameter("txtSubjectCode");
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
@@ -79,7 +80,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
             if (flag) {
                 boolean checkCreated = false;
                 for (int i = 1; i <= count + 1; i++) {
-                    FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count + 1, lecturerID, status);
+                    FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count + 1, lecturerID, status,semesterID);
                     checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");

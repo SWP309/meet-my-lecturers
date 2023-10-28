@@ -1,4 +1,3 @@
-
 package sample.freeslots;
 
 public class FreeSlotsDTO {
@@ -53,8 +52,8 @@ public class FreeSlotsDTO {
         this.semesterID = semesterID;
         this.lecturerName = lecturerName;
     }
-    
-    public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, boolean  status) {
+
+    public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, boolean status, String semesterID) {
         this.subjectCode = subjectCode;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -64,9 +63,8 @@ public class FreeSlotsDTO {
         this.count = count;
         this.lecturerID = lecturerID;
         this.status = status;
+        this.semesterID = semesterID;
     }
-
-  
 
     public String getFreeSlotID() {
         return freeSlotID;
@@ -139,6 +137,7 @@ public class FreeSlotsDTO {
     public void setLecturerID(String lecturerID) {
         this.lecturerID = lecturerID;
     }
+
     public boolean getStatus() {
         return isStatus();
     }
