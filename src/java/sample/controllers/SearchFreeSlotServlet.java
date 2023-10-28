@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import sample.freeslots.FreeSlotsDAO;
 import sample.freeslots.FreeSlotsDTO;
 
-public class SearchBookedServlet extends HttpServlet {
+public class SearchFreeSlotServlet extends HttpServlet {
     private final String SUCCESS = "StudentHome_1.jsp";
     private final String ERROR = "StudentHome_1.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
