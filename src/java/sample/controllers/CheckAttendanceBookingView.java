@@ -22,8 +22,8 @@ import sample.users.UserDTO;
  */
 public class CheckAttendanceBookingView extends HttpServlet {
 
-    private static final String ERROR = "BookingView.jsp";
-    private static final String SUCCESS = "BookingView.jsp";
+    private static final String ERROR = "BookingController";
+    private static final String SUCCESS = "BookingController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,9 +34,9 @@ public class CheckAttendanceBookingView extends HttpServlet {
             String bookingID = request.getParameter("bookingID"); // Lấy bookingID từ yêu cầu
 //            BookingDTO listBooking = (BookingDTO) request.getAttribute("LIST_BOOKING");
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            System.out.println(bookingID);
             if (bookingID != null) {
                 BookingDAO dao = new BookingDAO();
+                System.out.println(bookingID);
                 boolean checkUpdate = dao.checkAttendance(bookingID);
                 System.out.println(checkUpdate);
                 if (checkUpdate) {

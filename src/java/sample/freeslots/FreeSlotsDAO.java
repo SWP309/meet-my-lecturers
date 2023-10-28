@@ -31,9 +31,59 @@ public class FreeSlotsDAO {
             + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final static String CHECK_DUPLICATE_GGMEETLINK = "SELECT freeSlotID "
             + "FROM FreeSlots WHERE meetLink=?";
-    private final static String SEARCH_FREESLOT_BY_SUBJECTCODE = "SELECT fs.lecturerID, fs.startTime, fs.endTime\n" +
+    private final static String SEARCH_FREESLOT_BY_SUBJECTCODE = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
             "FROM FreeSlots fs\n" +
-            "WHERE fs.subjectCode = ?";
+            "JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+            "WHERE fs.subjectCode = ? AND fs.status = 1";
+    private final static String SEARCH_FREESLOT_BY_LECTURERID = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+            "FROM FreeSlots fs\n" +
+            "JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+            "WHERE fs.lecturerID = ? AND fs.status = 1";
+    private final static String SEARCH_FREESLOT_BY_LECNAME = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+            "FROM FreeSlots fs\n" +
+            "JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+            "WHERE lec.userName LIKE ? AND fs.status = 1";
+    private final static String SEARCH_FREESLOT_BY_SEMESTERID = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+            "FROM FreeSlots fs\n" +
+            "JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+            "WHERE fs.semesterID = ? AND fs.status = 1";
+    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_LECID = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+            "FROM FreeSlots fs\n" +
+            "JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+            "WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND fs.status = 1";
+    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_LECNAME = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+            "FROM FreeSlots fs\n" +
+            "JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+            "WHERE fs.subjectCode = ? AND lec.userName LIKE ? AND fs.status = 1";
+    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+            "FROM FreeSlots fs\n" +
+            "JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+            "WHERE fs.subjectCode = ? AND fs.semesterID = ? AND fs.status = 1";
+    private final static String SEARCH_FREESLOT_BY_LECID_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+            "FROM FreeSlots fs\n" +
+            "JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+            "WHERE fs.lecturerID = ? AND fs.semesterID = ? AND fs.status = 1";
+    private final static String SEARCH_FREESLOT_BY_LECNAME_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+            "FROM FreeSlots fs\n" +
+            "JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+            "WHERE lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1";
+    private final static String SEARCH_FREESLOT_BY_SUBCODE_AND_LECID_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+            "FROM FreeSlots fs\n" +
+            "JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+            "WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND fs.semesterID = ? AND fs.status = 1";
+    private final static String SEARCH_FREESLOT_BY_SUBCODE_AND_LECNAME_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+            "FROM FreeSlots fs\n" +
+            "JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+            "WHERE fs.subjectCode = ? AND lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1";
+    private final static String SEARCH_FREESLOT_BY_ALL = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+            "FROM FreeSlots fs\n" +
+            "JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+            "WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1";
+    private final static String SEARCH_FREESLOT = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+            "FROM FreeSlots fs\n" +
+            "JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+            "WHERE fs.status = 1";
+
     
 
     public boolean createFreeSlot(FreeSlotsDTO freeSlotsDTO) throws SQLException {
@@ -342,16 +392,546 @@ public class FreeSlotsDAO {
             stm.setString(1, subjectCode);
             rs = stm.executeQuery();
             while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID");
                 String lecturerID = rs.getString("lecturerID");
+                String lecname = rs.getNString("userName");
                 Timestamp startTime = rs.getTimestamp("startTime");
                 String starts = convertDateToString(startTime);
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, starts, ends, "", 0, "", 0, lecturerID, true);
+                int capacity = rs.getInt("capacity");
+                String semester = rs.getString("semesterID");
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
                 if(this.freeSlotBySubjectCode == null){
                     this.freeSlotBySubjectCode = new ArrayList<>();
                 }
                 this.freeSlotBySubjectCode.add(freeSlotsDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<FreeSlotsDTO> freeSlotByLecturerID;
+
+    public List<FreeSlotsDTO> getFreeSlotByLecturerID() {
+        return freeSlotByLecturerID;
+    }
+    public void getFreeSlotByLecturerID(String lecturerID) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_FREESLOT_BY_LECTURERID);
+            stm.setString(1, lecturerID);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID");
+                String lecname = rs.getNString("userName");                
+                String subjectCode = rs.getString("subjectCode");
+                Timestamp startTime = rs.getTimestamp("startTime");
+                String starts = convertDateToString(startTime);
+                Timestamp endTime = rs.getTimestamp("endTime");
+                String ends = convertDateToString(endTime);
+                int capacity = rs.getInt("capacity");
+                String semester = rs.getString("semesterID");
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                if(this.freeSlotByLecturerID == null){
+                    this.freeSlotByLecturerID = new ArrayList<>();
+                }
+                this.freeSlotByLecturerID.add(freeSlotsDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<FreeSlotsDTO> freeSlotByLecName;
+
+    public List<FreeSlotsDTO> getFreeSlotByLecName() {
+        return freeSlotByLecName;
+    }
+    public void getFreeSlotByLecName(String name) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_FREESLOT_BY_LECNAME);
+            stm.setNString(1, "%" + name + "%");
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID");
+                String lecturerID = rs.getString("lecturerID");
+                String lecname = rs.getString("userName");
+                String subjectCode = rs.getString("subjectCode");
+                Timestamp startTime = rs.getTimestamp("startTime");
+                String starts = convertDateToString(startTime);
+                Timestamp endTime = rs.getTimestamp("endTime");
+                String ends = convertDateToString(endTime);
+                int capacity = rs.getInt("capacity");
+                String semester = rs.getString("semesterID");
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                if(this.freeSlotByLecName == null){
+                    this.freeSlotByLecName = new ArrayList<>();
+                }
+                this.freeSlotByLecName.add(freeSlotsDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<FreeSlotsDTO> freeSlotBySemesterID;
+
+    public List<FreeSlotsDTO> getFreeSlotBySemesterID() {
+        return freeSlotBySemesterID;
+    }
+    public void getFreeSlotBySemesterID(String semester) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_FREESLOT_BY_SEMESTERID);
+            stm.setString(1, semester);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID");
+                String lecturerID = rs.getString("lecturerID");
+                String lecname = rs.getNString("userName");                
+                String subjectCode = rs.getString("subjectCode");
+                Timestamp startTime = rs.getTimestamp("startTime");
+                String starts = convertDateToString(startTime);
+                Timestamp endTime = rs.getTimestamp("endTime");
+                String ends = convertDateToString(endTime);
+                int capacity = rs.getInt("capacity");
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                if(this.freeSlotBySemesterID == null){
+                    this.freeSlotBySemesterID = new ArrayList<>();
+                }
+                this.freeSlotBySemesterID.add(freeSlotsDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<FreeSlotsDTO> freeSlotBySubjectAndLecID;
+
+    public List<FreeSlotsDTO> getFreeSlotBySubjectAndLecID() {
+        return freeSlotBySubjectAndLecID;
+    }
+    public void getFreeSlotBySubjectAndLecID(String subjectCode, String lecturerID) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_FREESLOT_BY_SUBJECT_AND_LECID);
+            stm.setString(1, subjectCode);
+            stm.setString(2, lecturerID);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID");
+                String lecname = rs.getNString("userName");    
+                Timestamp startTime = rs.getTimestamp("startTime");
+                String starts = convertDateToString(startTime);
+                Timestamp endTime = rs.getTimestamp("endTime");
+                String ends = convertDateToString(endTime);
+                int capacity = rs.getInt("capacity");
+                String semester = rs.getString("semesterID");
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                if(this.freeSlotBySubjectAndLecID == null){
+                    this.freeSlotBySubjectAndLecID = new ArrayList<>();
+                }
+                this.freeSlotBySubjectAndLecID.add(freeSlotsDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<FreeSlotsDTO> freeSlotBySubjectAndLecName;
+
+    public List<FreeSlotsDTO> getFreeSlotBySubjectAndLecName() {
+        return freeSlotBySubjectAndLecName;
+    }
+    public void getFreeSlotBySubjectAndLecName(String subjectCode, String name) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_FREESLOT_BY_SUBJECT_AND_LECNAME);
+            stm.setString(1, subjectCode);
+            stm.setString(2, "%" + name + "%");
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID");
+                String lecturerID = rs.getString("lecturerID");    
+                String lecname = rs.getNString("userName");    
+                Timestamp startTime = rs.getTimestamp("startTime");
+                String starts = convertDateToString(startTime);
+                Timestamp endTime = rs.getTimestamp("endTime");
+                String ends = convertDateToString(endTime);
+                int capacity = rs.getInt("capacity");
+                String semester = rs.getString("semesterID");
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                if(this.freeSlotBySubjectAndLecName == null){
+                    this.freeSlotBySubjectAndLecName = new ArrayList<>();
+                }
+                this.freeSlotBySubjectAndLecName.add(freeSlotsDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<FreeSlotsDTO> freeSlotBySubjectAndSemester;
+
+    public List<FreeSlotsDTO> getFreeSlotBySubjectAndSemester() {
+        return freeSlotBySubjectAndSemester;
+    }
+    public void getFreeSlotBySubjectAndSemester(String subjectCode, String semester) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_FREESLOT_BY_SUBJECT_AND_SEMESTER);
+            stm.setString(1, subjectCode);
+            stm.setString(2, semester);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID");
+                String lecturerID = rs.getString("lecturerID");    
+                String lecname = rs.getNString("userName");    
+                Timestamp startTime = rs.getTimestamp("startTime");
+                String starts = convertDateToString(startTime);
+                Timestamp endTime = rs.getTimestamp("endTime");
+                String ends = convertDateToString(endTime);
+                int capacity = rs.getInt("capacity");
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                if(this.freeSlotBySubjectAndSemester == null){
+                    this.freeSlotBySubjectAndSemester = new ArrayList<>();
+                }
+                this.freeSlotBySubjectAndSemester.add(freeSlotsDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<FreeSlotsDTO> freeSlotByLecIDAndSemester;
+
+    public List<FreeSlotsDTO> getFreeSlotByLecIDAndSemester() {
+        return freeSlotByLecIDAndSemester;
+    }
+    public void getFreeSlotByLecIDAndSemester(String lecturerID, String semester) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_FREESLOT_BY_LECID_AND_SEMESTER);
+            stm.setString(1, lecturerID);
+            stm.setString(2, semester);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID");    
+                String lecname = rs.getNString("userName");    
+                String subjectCode = rs.getString("subjectCode");
+                Timestamp startTime = rs.getTimestamp("startTime");
+                String starts = convertDateToString(startTime);
+                Timestamp endTime = rs.getTimestamp("endTime");
+                String ends = convertDateToString(endTime);
+                int capacity = rs.getInt("capacity");
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                if(this.freeSlotByLecIDAndSemester == null){
+                    this.freeSlotByLecIDAndSemester = new ArrayList<>();
+                }
+                this.freeSlotByLecIDAndSemester.add(freeSlotsDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<FreeSlotsDTO> freeSlotByLecNameAndSemester;
+
+    public List<FreeSlotsDTO> getFreeSlotByLecNameAndSemester() {
+        return freeSlotByLecNameAndSemester;
+    }
+    public void getFreeSlotByLecNameAndSemester(String name, String semester) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_FREESLOT_BY_LECNAME_AND_SEMESTER);
+            stm.setNString(1, "%" + name + "%");
+            stm.setString(2, semester);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID"); 
+                String lecturerID = rs.getString("lecturerID");    
+                String lecname = rs.getNString("userName");    
+                String subjectCode = rs.getString("subjectCode");
+                Timestamp startTime = rs.getTimestamp("startTime");
+                String starts = convertDateToString(startTime);
+                Timestamp endTime = rs.getTimestamp("endTime");
+                String ends = convertDateToString(endTime);
+                int capacity = rs.getInt("capacity");
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                if(this.freeSlotByLecNameAndSemester == null){
+                    this.freeSlotByLecNameAndSemester = new ArrayList<>();
+                }
+                this.freeSlotByLecNameAndSemester.add(freeSlotsDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<FreeSlotsDTO> freeSlotBySubCodeAndLecIDAndSemester;
+
+    public List<FreeSlotsDTO> getFreeSlotBySubCodeAndLecIDAndSemester() {
+        return freeSlotBySubCodeAndLecIDAndSemester;
+    }
+    public void getFreeSlotBySubCodeAndLecIDAndSemester(String subjectCode, String lecturerID, String semester) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_FREESLOT_BY_SUBCODE_AND_LECID_AND_SEMESTER);
+            stm.setString(1, subjectCode);
+            stm.setString(2, lecturerID);
+            stm.setString(3, semester);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID"); 
+//                String lecturerID = rs.getString("lecturerID");    
+                String lecname = rs.getNString("userName");    
+//                String subjectCode = rs.getString("subjectCode");
+                Timestamp startTime = rs.getTimestamp("startTime");
+                String starts = convertDateToString(startTime);
+                Timestamp endTime = rs.getTimestamp("endTime");
+                String ends = convertDateToString(endTime);
+                int capacity = rs.getInt("capacity");
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                if(this.freeSlotBySubCodeAndLecIDAndSemester == null){
+                    this.freeSlotBySubCodeAndLecIDAndSemester = new ArrayList<>();
+                }
+                this.freeSlotBySubCodeAndLecIDAndSemester.add(freeSlotsDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<FreeSlotsDTO> freeSlotBySubCodeAndLecNameAndSemester;
+
+    public List<FreeSlotsDTO> getFreeSlotBySubCodeAndLecNameAndSemester() {
+        return freeSlotBySubCodeAndLecNameAndSemester;
+    }
+    public void getFreeSlotBySubCodeAndLecNameAndSemester(String subjectCode, String name, String semester) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_FREESLOT_BY_SUBCODE_AND_LECNAME_AND_SEMESTER);
+            stm.setString(1, subjectCode);
+            stm.setNString(2, "%" + name + "%");
+            stm.setString(3, semester);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID"); 
+                String lecturerID = rs.getString("lecturerID");    
+                String lecname = rs.getNString("userName");    
+//                String subjectCode = rs.getString("subjectCode");
+                Timestamp startTime = rs.getTimestamp("startTime");
+                String starts = convertDateToString(startTime);
+                Timestamp endTime = rs.getTimestamp("endTime");
+                String ends = convertDateToString(endTime);
+                int capacity = rs.getInt("capacity");
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                if(this.freeSlotBySubCodeAndLecNameAndSemester == null){
+                    this.freeSlotBySubCodeAndLecNameAndSemester = new ArrayList<>();
+                }
+                this.freeSlotBySubCodeAndLecNameAndSemester.add(freeSlotsDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<FreeSlotsDTO> freeSlotByAll;
+
+    public List<FreeSlotsDTO> getFreeSlotByAll() {
+        return freeSlotByAll;
+    }
+    public void getFreeSlotByAll(String subjectCode, String lecturerID, String name, String semester) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_FREESLOT_BY_ALL);
+            stm.setString(1, subjectCode);
+            stm.setString(2, lecturerID);
+            stm.setNString(3, "%" + name + "%");
+            stm.setString(4, semester);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID"); 
+//                String lecturerID = rs.getString("lecturerID");    
+                String lecname = rs.getNString("userName");    
+//                String subjectCode = rs.getString("subjectCode");
+                Timestamp startTime = rs.getTimestamp("startTime");
+                String starts = convertDateToString(startTime);
+                Timestamp endTime = rs.getTimestamp("endTime");
+                String ends = convertDateToString(endTime);
+                int capacity = rs.getInt("capacity");
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                if(this.freeSlotByAll == null){
+                    this.freeSlotByAll = new ArrayList<>();
+                }
+                this.freeSlotByAll.add(freeSlotsDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<FreeSlotsDTO> freeSlotList;
+
+    public List<FreeSlotsDTO> getFreeSlotList() {
+        return freeSlotList;
+    }
+    public void getFreeSlot() throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_FREESLOT);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID"); 
+                String lecturerID = rs.getString("lecturerID");    
+                String lecname = rs.getNString("userName");    
+                String subjectCode = rs.getString("subjectCode");
+                Timestamp startTime = rs.getTimestamp("startTime");
+                String starts = convertDateToString(startTime);
+                Timestamp endTime = rs.getTimestamp("endTime");
+                String ends = convertDateToString(endTime);
+                int capacity = rs.getInt("capacity");
+                String semester = rs.getString("semesterID");
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                if(this.freeSlotList == null){
+                    this.freeSlotList = new ArrayList<>();
+                }
+                this.freeSlotList.add(freeSlotsDTO);
             }
         } finally {
             if(rs != null){

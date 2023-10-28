@@ -58,6 +58,14 @@ public class SearchCreateSlotServlet extends HttpServlet {
                     url = SUCCESS;
                 }
 
+            } else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty()) {
+                List<ViewCreatedSlotDTO> searchByNull = searchFSlot.GetlistCreatedSlot(userEmail);
+                if (searchByNull != null) {
+                    request.setAttribute("SEARCH_CREATED_SLOT_BY_NULL", searchByNull);
+                    System.out.println(subjectCode);
+                    url = SUCCESS;
+                }
+
             } else {
                 request.setAttribute("SEARCH_FREESLOT_MESSAGE", "The system has no freeslot that meet your requirement!!!");
             }

@@ -101,14 +101,17 @@ public class MainController extends HttpServlet {
     private static final String ACCEPT_REQUEST = "AcceptRequest";
     private static final String ACCEPT_REQUEST_CONTROLLER = "AcceptRequestServlet";
 
-    private static final String SEARCH_BOOKED_SLOT_ACTION = "SearchFSlot";
-    private static final String SEARCH_BOOKED_SLOT_SERVLET = "SearchFreeSlotServlet";
+    private static final String CHECK_ATTENDANCE_ACTION_STUDENT = "AttendanceLink";
+    private static final String CHECK_ATTENDANCE_SERVLET_STUDENT = "CheckAttendanceBookingView";
+    
+    private static final String CHECK_ATTENDANCE_ACTION_LECTURER = "AttendanceLinkLecturer";
+    private static final String CHECK_ATTENDANCE_SERVLET_LECTURER = "CheckAttendanceCreateSlot";
 
-    private static final String CHECK_ATTENDANCE_ACTION = "AttendanceLink";
-    private static final String CHECK_ATTENDANCE_SERVLET = "CheckAttendanceBookingView";
+    private static final String SEARCH_CREATE_SLOT_ACTION = "searchCSlot";
+    private static final String SEARCH_CREATE_SLOT_SERVLET = "SearchCreateSlotServlet";
 
-    private static final String SEARCH_FREE_SLOT_ACTION = "searchCSlot";
-    private static final String SEARCH_FREE_SLOT_SERVLET = "SearchCreateSlotServlet";
+    private static final String SEARCH_FREE_SLOT_ACTION = "SearchFSlot";
+    private static final String SEARCH_FREE_SLOT_SERVLET = "SearchFreeSlotServlet";
 
     private static final String BACK = "back";
 
@@ -192,19 +195,22 @@ public class MainController extends HttpServlet {
                 url = ACCEPT_REQUEST_CONTROLLER;
             } else if (DELETE_REQUEST.equals(action)) {
                 url = DELETE_REQUEST_CONTROLLER;
+            } else if (SEARCH_CREATE_SLOT_ACTION.equals(action)) {
+                url = SEARCH_CREATE_SLOT_SERVLET;
             } else if (SEARCH_FREE_SLOT_ACTION.equals(action)) {
                 url = SEARCH_FREE_SLOT_SERVLET;
-            } else if (SEARCH_BOOKED_SLOT_ACTION.equals(action)) {
-                url = SEARCH_BOOKED_SLOT_SERVLET;
             } else if (VIEW_USERS.equals(action)) {
                 url = VIEW_USERS_PAGE;
             } else if (SEARCH_USERS.equals(action)) {
                 url = SEARCH_USERS_CONTROLLER;
             } else if (UPDATE_USERS.equals(action)) {
                 url = UPDATE_USERS_CONTROLLER;
-            } else if (CHECK_ATTENDANCE_ACTION.equals(action)) {
-                url = CHECK_ATTENDANCE_SERVLET;
+            } else if (CHECK_ATTENDANCE_ACTION_STUDENT.equals(action)) {
+                url = CHECK_ATTENDANCE_SERVLET_STUDENT;
+            } else if (CHECK_ATTENDANCE_ACTION_LECTURER.equals(action)) {
+                url = CHECK_ATTENDANCE_SERVLET_LECTURER;
             }
+
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
         } finally {
