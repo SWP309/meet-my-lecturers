@@ -80,7 +80,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
             if (flag) {
                 boolean checkCreated = false;
                 for (int i = 1; i <= count + 1; i++) {
-                    FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count + 1, lecturerID, status,semesterID);
+                    FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status,semesterID);
                     checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
