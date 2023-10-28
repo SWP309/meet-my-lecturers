@@ -65,12 +65,16 @@
         <servlet-class>sample.controllers.SearchFreeSlot</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SearchFreeSlotServlet</servlet-name>
-        <servlet-class>sample.controllers.SearchFreeSlotServlet</servlet-class>
+        <servlet-name>SearchBookedServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchBookedServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CheckAttendanceBookingView</servlet-name>
         <servlet-class>sample.controllers.CheckAttendanceBookingView</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchCreateSlotServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchCreateSlotServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
@@ -193,12 +197,16 @@
         <url-pattern>/SearchFreeSlot</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SearchFreeSlotServlet</servlet-name>
-        <url-pattern>/SearchFreeSlotServlet</url-pattern>
+        <servlet-name>SearchBookedServlet</servlet-name>
+        <url-pattern>/SearchBookedServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CheckAttendanceBookingView</servlet-name>
         <url-pattern>/CheckAttendanceBookingView</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchCreateSlotServlet</servlet-name>
+        <url-pattern>/SearchCreateSlotServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
