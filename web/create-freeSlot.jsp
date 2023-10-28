@@ -60,7 +60,13 @@
                 flex-direction: column;
                 justify-content: space-around;
             }
-
+            h6 {
+                border: none;
+                margin-top: 4px;
+                margin-bottom: 0px;
+                padding: 2px;
+                color: red;
+            }
             .d-flex > input {
                 width: 60%;
             }
@@ -161,10 +167,25 @@
                                 <div class="d-flex justify-content-between"><strong>Semester ID:</strong> <input type="text" class="form-control" name="txtSemesterID" placeholder="ex:FA23...etc" required="" pattern="^(SP|SU|FA)[0-9]{2}$"></div>
                                 <div class="d-flex justify-content-between"><strong>Subject code:</strong> <input type="text" class="form-control" name="txtSubjectCode" placeholder="ex:SWP391...etc" required="" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"></div>
                                 <div class="d-flex justify-content-between"><strong>Start time:</strong> <input type="datetime-local" class="form-control"  name="txtStartTime" required=""></div>
+                                <c:if test="${not empty requestScope.FREESLOT_ERROR.pastTimeError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.pastTimeError}</h6>
+                                </c:if>
                                 <div class="d-flex justify-content-between"><strong>End time:</strong> <input type="datetime-local" class="form-control" name="txtEndTime" required=""></div>
-                                <div class="d-flex justify-content-between"><strong>Capacity:</strong> <input type="number" class="form-control" name="txtCapacity" placeholder="need more than 2 student" required=""></div>
+                                <c:if test="${not empty requestScope.FREESLOT_ERROR.endTimeError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.endTimeError}</h6>
+                                </c:if>
+                                <c:if test="${not empty requestScope.FREESLOT_ERROR.durationError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.durationError}</h6>
+                                </c:if>
+                                <div class="d-flex justify-content-between"><strong>Capacity:</strong> <input type="number" class="form-control" name="txtCapacity" placeholder="need at least 2 student" required=""></div>
+                                <c:if test="${not empty requestScope.FREESLOT_ERROR.capacityError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.capacityError}</h6>
+                                </c:if>
                                 <div class="d-flex justify-content-between"><strong>Password(optional):</strong> <input type="password" class="form-control" name="txtPassword"></div>
                                 <div class="d-flex justify-content-between"><strong>Meet Link:</strong> <input type="text" class="form-control"  name="txtMeetLink" placeholder="ex:meet.google.com/...etc" required="" pattern="^https://meet.google.com/[a-z]{3}-[a-z]{4}-[a-z]{3}$"></div>
+                                <c:if test="${not empty requestScope.FREESLOT_ERROR.meetLinkError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.meetLinkError}</h6>
+                                </c:if>
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <label for="role" class="col-form-label"><strong><b style="color: red">SET BY:</b></strong></label>
