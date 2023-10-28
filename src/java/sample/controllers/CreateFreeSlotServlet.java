@@ -8,8 +8,10 @@ package sample.controllers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.freeslots.FreeSlotError;
 import sample.freeslots.FreeSlotsDAO;
 import sample.freeslots.FreeSlotsDTO;
 import sample.users.UserDTO;
@@ -37,38 +40,75 @@ public class CreateFreeSlotServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         String url = ERROR;
         boolean flag = true;
+        boolean checkCreated = false;
         try {
             HttpSession session = request.getSession();
             FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
+            FreeSlotError freeSlotError = new FreeSlotError();
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            String semesterID=request.getParameter("txtSemesterID");
+            String semesterID = request.getParameter("txtSemesterID");
             String subjectCode = request.getParameter("txtSubjectCode");
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
-
+            //****Check input time with current time
+            //tranfer String to Date
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            Date starts = format.parse(startTime);
+            Date ends = format.parse(endTime);
+            //get current date
+            Date currentTime = new Date();
+            // Calculate current time plus 10 minutes
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(currentTime);
+            calendar.add(Calendar.MINUTE, 10);
+            Date timeInFuture = calendar.getTime();
+            //compare input time to current time
+            if (starts.before(timeInFuture) || ends.before(timeInFuture)) {
+                flag = false;
+                freeSlotError.setPastTimeError("- The start and end times must be in the future"
+                        + " and at least 10 minutes greater than the current time!!!");
+            }
+            //****check end time greater than start time
+            if (ends.before(starts) || ends.equals(starts)) {
+                flag = false;
+                freeSlotError.setEndTimeError("- The end times must be greater than start times!!!");
+            }
+            //****check duration from start time to end time
+            // Calculate duration between startTime and endTime
+            long timeDifference = ends.getTime() - starts.getTime();
+            int minutesDifference = (int) (timeDifference / (1000 * 60));
+            if (minutesDifference > 90 || minutesDifference < 15) {
+                flag = false;
+                freeSlotError.setDurationError("- Duration of a slot must be from 15 to 90 minutes!!!");
+            }
+            //****check not allowed create slot <= 5AM or >= 11PM
+            calendar.setTime(starts);
+            calendar.setTime(ends);
+            int startHour = calendar.get(Calendar.HOUR_OF_DAY);
+            int endHour = calendar.get(Calendar.HOUR_OF_DAY);
+            if (startHour <= 5 || startHour >= 23 || endHour <= 5 || endHour >= 23) {
+                flag = false;
+                freeSlotError.setDurationError("- Not allowed create slot <= 5AM or >= 11PM!!!");
+            }
             String password = request.getParameter("txtPassword").trim();
             if (password.isEmpty()) {
                 password = null; // Chuyển chuỗi trống thành giá trị null
             }
 
             int capacity = Integer.parseInt(request.getParameter("txtCapacity"));
-            if (capacity <= 0) {
+            if (capacity < 2 || capacity > 100) {
                 flag = false;
-                out.println("<p style=\"color: red\">The number of student can join this slot must be greater than 0.</p>");
-                out.close();
+                freeSlotError.setCapacityError("The number of student can join this slot must be between 2-100");
             }
 
             String meetLink = request.getParameter("txtMeetLink");
             boolean exists = freeSlotsDAO.checkDuplicateGGMeet(meetLink);
-            System.out.println(exists);
             if (exists) {
                 flag = false;
-                out.println("<p style=\"color: red\">The gg meet link is duplicated.</p>");
-                out.close();
+                freeSlotError.setMeetLinkError("The gg meet link is duplicated.");
             }
 
             String option = request.getParameter("txtOption");
@@ -77,10 +117,11 @@ public class CreateFreeSlotServlet extends HttpServlet {
             String lecturerID = us.getUserID();
             boolean status = true;
 
+            request.setAttribute("FREESLOT_ERROR", freeSlotError);
             if (flag) {
-                boolean checkCreated = false;
+
                 for (int i = 1; i <= count + 1; i++) {
-                    FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status,semesterID);
+                    FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status, semesterID);
                     checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
