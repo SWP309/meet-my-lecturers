@@ -5,7 +5,7 @@
 package sample.controllers;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,57 +20,38 @@ import sample.viewCreatedSlot.ViewCreatedSlotDTO;
  *
  * @author PC
  */
-public class SearchCreateSlotServlet extends HttpServlet {
+public class CheckAttendanceCreateSlot extends HttpServlet {
 
-    private final String SUCCESS = "CreatedSlotView.jsp";
-    private final String ERROR = "CreatedSlotView.jsp";
-
+    private static final String ERROR = "CreatedSlotController";
+    private static final String SUCCESS = "CreatedSlotController";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
+       String url = ERROR;
         try {
             HttpSession session = request.getSession();
+            String freeSlotID = request.getParameter("freeSlotID"); 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            String subjectCode = request.getParameter("txtSubjectCode");
-            String startTime = request.getParameter("txtStartTime");
-            String endTime = request.getParameter("txtEndTime");
-            String userEmail = us.getUserEmail();
-            ViewCreatedSlotDAO searchFSlot = new ViewCreatedSlotDAO();
-            if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchByStEt = searchFSlot.searchFSlotViewByStEt(startTime, endTime, userEmail);
-                if (searchByStEt != null) {
-                    request.setAttribute("SEARCH_FREE_SLOT_BY_ST_ET", searchByStEt);
+            if (freeSlotID != null) {
+                ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
+                System.out.println(freeSlotID);
+                boolean checkUpdate = dao.checkAttendance(freeSlotID);
+                System.out.println(checkUpdate);
+                if (checkUpdate) {
+                    List<ViewCreatedSlotDTO> checkAttendance = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                    request.setAttribute("LIST_CHECK_ATTENDACE_LECTURER", checkAttendance);
                     url = SUCCESS;
+                    if (checkAttendance == null || checkAttendance.isEmpty()) {
+                        request.setAttribute("ERROR", "Check Attendance false");
+                    }
                 }
-            } else if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchByAll = searchFSlot.searchFSlotViewByAll(subjectCode, startTime, endTime, userEmail);
-                if (searchByAll != null) {
-                    request.setAttribute("SEARCH_FREE_SLOT_BY_ALL", searchByAll);
-                    url = SUCCESS;
-                }
-
-            } else if (startTime.isEmpty() && endTime.isEmpty() && !subjectCode.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchBySubjectCode = searchFSlot.searchFSlotViewBySubjectCode(subjectCode, userEmail);
-                if (searchBySubjectCode != null) {
-                    request.setAttribute("SEARCH_FREE_SLOT_BY_SUBJECT", searchBySubjectCode);
-                    System.out.println(subjectCode);
-                    url = SUCCESS;
-                }
-
-            } else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchByNull = searchFSlot.GetlistCreatedSlot(userEmail);
-                if (searchByNull != null) {
-                    request.setAttribute("SEARCH_CREATED_SLOT_BY_NULL", searchByNull);
-                    System.out.println(subjectCode);
-                    url = SUCCESS;
-                }
-
             } else {
-                request.setAttribute("SEARCH_FREESLOT_MESSAGE", "The system has no freeslot that meet your requirement!!!");
+                request.setAttribute("ERROR", "List of create slot is null. Do not have any things to show");
             }
-        } catch (SQLException ex) {
-            log("Error at SearchFSlotServlet: " + ex.toString());
+        } catch (Exception e) {
+            log("Error at CheckAttendanceCreateSlot: " + e.toString());
+            request.setAttribute("ERROR", "An error occurred.");
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

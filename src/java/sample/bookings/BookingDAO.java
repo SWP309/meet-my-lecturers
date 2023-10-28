@@ -105,7 +105,7 @@ public class BookingDAO {
         return checkCancel;
     } 
      public boolean checkAttendance(String bookingID) throws SQLException {
-        boolean checkCancel = false;
+        boolean checkAttendanceBK = false;
         Connection conn = null;
         PreparedStatement ptm = null;
 
@@ -114,7 +114,7 @@ public class BookingDAO {
             if (conn != null) {
                 ptm = conn.prepareStatement(CHECK_ATTENDANCE_BOOKING);
                 ptm.setString(1, bookingID);
-                checkCancel = ptm.executeUpdate() > 0 ? true : false;
+                checkAttendanceBK = ptm.executeUpdate() > 0 ? true : false;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,6 +126,6 @@ public class BookingDAO {
                 conn.close();
             }
         }
-        return checkCancel;
+        return checkAttendanceBK;
     }
 }
