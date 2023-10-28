@@ -16,6 +16,10 @@
                 var form = document.querySelector('.searchfunction form');
                 form.submit();
             }
+            function submitFormLogout() {
+                var form = document.querySelector('.logout form');
+                form.submit();
+            }
         </script>
     </head>
     <body>
@@ -36,12 +40,15 @@
                                 </div>
                                 <div class="div add-new-user">Add new User</div>
                             </div>
-                            <div class="frame-div">
+                            <div class="frame-div logout" onclick="submitFormLogout()">
+                                <form action="MainController" method="POST" style="display: none;">
+                                    <input type="hidden" name="action" value="Logout" />
+                                </form>
                                 <div class="logout-wrapper">
-                                    <img class="logout-icon1" alt="" src="./public/UsersView/logout1.svg" />
+                                    <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
                                 </div>
-                                <div class="div">
-                                    <p class="logout2">Logout</p>
+                                <div class="request">
+                                    <p class="logout1" style=" margin-top: 2px">Logout</p>
                                 </div>
                             </div>
                         </div>

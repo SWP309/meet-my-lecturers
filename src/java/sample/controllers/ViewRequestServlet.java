@@ -30,6 +30,7 @@ public class ViewRequestServlet extends HttpServlet {
             RequestDAO requestDAO = new RequestDAO();
             requestDAO.getRequest(userDTO.getUserID());
             List<RequestDTO> requests = requestDAO.getListRequests();
+            System.out.println(requests);
             for (RequestDTO request1 : requests) {
                 System.out.println(request1.getStudentID() + request1.getDescription());
             }

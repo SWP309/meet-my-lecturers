@@ -1,3 +1,4 @@
+<%@page import="sample.users.UserDTO"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,129 +18,280 @@
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
             />
+        <!-- CSS c?a Bootstrap 5 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+        <!-- CSS c?a Bootstrap 4 -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Icon -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+        <!-- CSS c?a SweetAlert -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- JavaScript c?a Bootstrap 4 -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+        <!-- JavaScript c?a Bootstrap 5 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+        <!-- JavaScript c?a SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+
+        <!-- Thêm liên k?t ??n Bootstrap CSS -->
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            >
+        <!-- Include Font Awesome CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+        <style>
+            h6 {
+                border: none;
+                margin-top: 4px;
+                margin-bottom: 0px;
+                padding: 2px;
+                color: red;
+            }           
+            .cus {
+                background-color: #f27125;
+                margin: 0 0.5rem;
+                border-radius: 5px;
+                color: #fff!important;
+            }
+
+            .text-black {
+                color: #333!important;
+                font-size: 18px;
+            }
+
+            .navbar {
+                padding: 2rem;
+                border-bottom: 1px solid black;
+            }
+
+            @media screen and (max-width: 980px) {
+                .cus {
+                    background: none!important;
+                    color: #333!important;
+                }
+            }
+        </style>
+        <%
+
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+        %>
         <script>
             function submitFormViewLecturer() {
-                var form = document.querySelector('.frame-container form');
+                var form = document.querySelector('.viewLecturer form');
+                form.submit();
+            }
+            function submitForm() {
+                var form = document.querySelector('.bookingview form');
+                form.submit();
+            }
+            function submitFormLogout() {
+                var form = document.querySelector('.logout form');
                 form.submit();
             }
             function submitFormSendRequest() {
                 var form = document.querySelector('.create-request form');
                 form.submit();
             }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+//             function functionFormTimeTableView() {
+//                 var form = document.querySelector('.request form');
+//                 form.submit();
+//             }
+            var userDTO = {
+                userID: "<%= us.getUserID()%>",
+                userName: "<%= us.getUserName()%>",
+                userEmail: "<%= us.getUserEmail()%>"
+            };
+            function showUserInfo() {
+                var userInfo = document.getElementById("user-info");
+                if (userInfo.style.display === "none" || userInfo.style.display === "") {
+                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                } else {
+                    userInfo.style.display = "none";
+                }
+
+                var userID = userDTO.userID;
+                var userName = userDTO.userName;
+                var userEmail = userDTO.userEmail;
+
+                Swal.fire({
+                    title: 'User Information',
+                    html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
+                            + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
+                });
+            }
         </script>
+
     </head>
     <body>
-        <div class="create-request">
+        <div class="student-home">
+            <div class="fptu-eng-1-parent">
+                <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
                     <form action="MainController" method="POST">
-            <input type="hidden" name="action" value="CreateRequest">
-
-            <div class="student-request">
-
-
-                <div class="infor">
-                    <form action="MainController" method="POST">
-                        <div class="semester">
-                            <div class="semester-child"></div>
-                            <div class="semester1">
-                                SemesterID(ex:FA23):<input class="in-semeter" type="text" name="txtSemester" value="${param.txtSemester}" />
-                            </div>
-                        </div>
-                        <div class="lectucrer">
-                            <div class="lectucrer-child"></</div>
-                            <div class="lecturer">
-                                LecturerID:<input class="in-lecturer" type="text" name="txtLecturer" value="${param.txtLecturer}" />
-                                <input type="submit" name="action" value="View Timetable" />    
-                            </div>
-                            </div>
-                        </div>
+                        <input type="hidden" name="action" value="returnHomePageStudent" />
                     </form>
-        <div class="subject-code">
-            <div class="lectucrer-child"></div>
-            <div class="subject-code1">
-                Subject code:<input class="in-subject" type="text" name="txtSubjectCode" value="" required=""/>
-            </div>
-        </div>
-
-        <div class="start-time">
-            <div class="semester-child"></div>
-            <div class="start-time1">
-                Start time:<input class="in-starttime" type="datetime-local" name="txtStartTime" value="" required=""/>
-            </div>
-        </div>
-        <div class="end-time">
-            <div class="semester-child"></div>
-            <div class="end-time1"> 
-                End time:<input class="in-endtime" type="datetime-local" name="txtEndTime" value="" required=""/>
-            </div>
-        </div>
-        <div class="description">
-            <div class="description-child"></div>
-            <div class="description1">
-                Description:<input class="in-description" type="text" name="txtDescription" value="" required=""/>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="sendrequestbutton" onclick="submitFormSendRequest()">
-        <div class="sendrequestbutton-child"></div>
-        <div class="send-request">
-            Send request
-        </div>
-    </div>
-</form>
-        </div>
-
-
-
-
-<div class="backbutton">
-    <div class="back">Back</div>
-    <img class="back-icon" alt="" src="./public/request/back.svg" />
-</div>
-<div class="header">
-    <img
-        class="fptu-eng-1-icon"
-        alt=""
-        src="./public/request/2021fptueng-1@2x.png"
-        />
-
-    <div class="frame-parent">
-        <div class="frame-group">
-            <div class="frame-container" onclick="submitFormViewLecturer()">
-                <form action="MainController" method="POST">
-                    <input type="hidden" name="action" value="ViewAllLecturers" />
-                </form>
-                <div class="bookedslot-wrapper">
                     <img
-                        class="bookedslot-icon"
+                        class="fptu-eng-1-icon"
                         alt=""
-                        src="./public/request/bookedslot.svg"
+                        src="public/BookingView/2021fptueng-1@2x.png"
                         />
                 </div>
-                <div class="view-all-lecturers">View All Lecturers</div>
-            </div>
-            <div class="frame-div">
-                <div class="bookedslot-wrapper">
-                    <div class="div">+</div>
+
+                <div class="frame-parent">
+                    <div class="frame-group">
+                        <div class="frame-div bookingview" style=" cursor: pointer" onclick="submitForm()" id="booking-view-div">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="ViewBooking" />
+                            </form>
+                            <div class="bookedslot-wrapper">
+                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
+                                <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                            </div>
+                            <div class="view-booking" >View Booking</div>
+                        </div>
+                        <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()" style=" width: 34%;">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="ViewAllLecturers" />
+                            </form>
+
+                            <i class="fas fa-search"></i> <p style="font-size: 16px">View Lecturer</p>
+                        </div>
+
+                        <div class="frame-div logout" onclick="submitFormLogout()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="Logout" />
+                            </form>
+                            <div class="logout-wrapper">
+                                <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                            </div>
+                            <div class="request">
+                                <p class="logout1">Logout</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <img class="frame-item" alt="" src="./public/StudentHome/group-33.svg" 
+                             onclick="showUserInfo()" />
+                        <div id="user-info" style="display: none;">
+                            <p id="user-id"> </p>
+                            <p id="user-name"></p>
+                            <p id="user-email"></p>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="div">Request</div>
             </div>
-            <div class="frame-parent1">
-                <div class="logout-wrapper">
-                    <img class="logout-icon" alt="" src="./public/request/logout.svg" />
-                </div>
-                <div class="div">
-                    <p class="logout1">Logout</p>
-                </div>
+            <div class="backbutton"  onclick="goBack()">
+                <div class="back">Back</div>
+                <img class="back-icon" alt="" src="./public/request/back.svg" />
             </div>
+            <div class="container mt-5 create-request" style="margin-top: 8% !important;">
+                <form action="MainController" method="POST">
+                    
+                    
+                    <div class="form-group row">
+                        <label for="txtSemester" class="col-md-2 col-form-label"><strong>Semester:</strong></label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="txtSemester" name="txtSemester" value="${param.txtSemester}" placeholder="(ex:FA23)" required=""
+                                   pattern="^(SP|SU|FA|)[0-9]{2}$">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtLecturer" class="col-md-2 col-form-label"><strong>Lecturer:</strong></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control"  id="txtLecturer"  name="txtLecturer" value="${param.txtLecturer}" placeholder="GVxxxx" required=""
+                                   pattern="^GV[0-9]{4}$">
+                        </div>
+
+                        <!--<a class="btn btn-primary col-sm-2" href="ViewTimetableServlet?txtLecturer={param.txtLecturer}&txtSemester={param.txtSemester}">View Timetable</a>-->
+<!--                        <input type="hidden" name="txtSemester" value="{param.txtSemester}">
+                        <input type="hidden" name="txtLecturer" value="{param.txtLecturer}">-->
+                            <button class="btn btn-primary col-sm-2" type="submit" name="action" value="ViewTimetable">View Timetable</button>
+                        
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="txtSubjectCode" class="col-md-2 col-form-label"><strong>Subject code:</strong></label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" id="txtSubjectCode" name="txtSubjectCode" value="${param.txtSubjectCode}" placeholder="(ex:SWP391)"
+                                   pattern="^[A-Z]{3}[0-9]{3}$"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtStartTime" class="col-md-2 col-form-label"><strong>Start time:</strong></label>
+                        <div class="col-md-10">
+                            <input type="datetime-local" class="form-control" id="txtStartTime" name="txtStartTime" value="${param.txtStartTime}">
+                        </div>
+                        <c:if test="${not empty requestScope.REQUEST_ERROR.currentDateError}">
+                            <h6> ${requestScope.REQUEST_ERROR.currentDateError}</h6>
+                        </c:if>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtEndTime" class="col-md-2 col-form-label"><strong>End time:</strong></label>
+                        <div class="col-md-10">
+                            <input type="datetime-local" class="form-control" id="txtEndTime" name="txtEndTime" value="${param.txtEndTime}">
+                        </div>
+                        <c:if test="${not empty requestScope.REQUEST_ERROR.endTimeError}">
+                            <h6> ${requestScope.REQUEST_ERROR.endTimeError}</h6>
+                        </c:if>
+                        <c:if test="${not empty requestScope.REQUEST_ERROR.durationError}">
+                            <h6> ${requestScope.REQUEST_ERROR.durationError}</h6>
+                        </c:if>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtDescription" class="col-md-2 col-form-label"><strong>Description:</strong></label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="txtDescription" name="txtDescription" value="${param.txtDescription}">
+                        </div>
+                        <c:if test="${not empty requestScope.REQUEST_ERROR.duplicateRequestError}">
+                            <h6> ${requestScope.REQUEST_ERROR.duplicateRequestError}</h6>
+                        </c:if>
+                        <c:if test="${not empty requestScope.REQUEST_ERROR.duplicateFreeSlotError}">
+                            <h6> ${requestScope.REQUEST_ERROR.duplicateFreeSlotError}</h6>
+                        </c:if>
+                        <c:if test="${not empty requestScope.REQUEST_ERROR.duplicateTimetableError}">
+                            <h6> ${requestScope.REQUEST_ERROR.duplicateTimetableError}</h6>
+                        </c:if>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-10 offset-md-2">
+                            <!--<div  onclick="submitFormSendRequest()">Send Request</div>-->
+                            <button class="btn btn-success btn-lg rounded-pill" type="submit" name="action" value="CreateRequest">Send Request</button>
+                        </div>
+                    </div>
+                </form>
+            </div>       
+
         </div>
-        <img class="frame-item" alt="" src="./public/request/group-33.svg" />
-    </div>
-</div>
 
-</div>
-
-
-</body>
+        <!-- Thêm liên k?t ??n Bootstrap JS và jQuery -->
+        <script
+            src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-KyZXEAg3QhqLMpG8r+J9pAEz6/LnYV5TOqDGIbpbzFq8qz5S7fF46kSEBzav6U7xj"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI"
+            crossorigin="anonymous"
+        ></script>
+        <% }%>
+    </body>
 </html>

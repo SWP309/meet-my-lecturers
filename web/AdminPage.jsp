@@ -147,7 +147,20 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>-->
-
+<script>
+    function submitFormHomePage() {
+        var form = document.querySelector('.returnHome form');
+        form.submit();
+    }
+    function submitFormViewUsers() {
+        var form = document.querySelector('.ViewUsers form');
+        form.submit();
+    }
+    function submitFormLogout() {
+        var form = document.querySelector('.logout form');
+        form.submit();
+    }
+</script>
 
 <html lang="en">
     <head>
@@ -161,30 +174,35 @@
     </head>
     <body>
         <div class="fptu-eng-1-parent">
-            <img
-                class="fptu-eng-1-icon"
-                alt=""
-                src="public/BookingView/2021fptueng-1@2x.png"
-                />
+            <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="returnHomePageAdmin" />
+                </form>
+                <img
+                    class="fptu-eng-1-icon"
+                    alt=""
+                    src="public/BookingView/2021fptueng-1@2x.png"
+                    />
+            </div>
 
             <div class="frame-parent">
                 <div class="frame-group">
-                    <div class="frame-div bookingview" onclick="submitForm()">
+                    <div class="frame-div ViewUsers" onclick="submitFormViewUsers()">
                         <form action="MainController" method="POST" style="display: none;">
-                            <input type="hidden" name="action" value="ViewBooking" />
+                            <input type="hidden" name="action" value="ViewUsers" />
                         </form>
                         <div class="bookedslot-wrapper">
                             <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
                             <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
                         </div>
-                        <div class="view-booking" >View Booking</div>
+                        <div class="view-booking" >Search Users</div>
                     </div>
                     <div class="frame-div request" onclick="submitFormRequest()">
                         <form action="MainController" method="POST">
                             <input type="hidden" name="action" value="Request" />
                         </form>
-
-                        <i class="material-icons">mail_outline</i> Request
+                        Import Schedule
+                        
                     </div>
                     <div class="frame-div logout" onclick="submitFormLogout()">
                         <form action="MainController" method="POST" style="display: none;">
@@ -210,14 +228,15 @@
 
             </div>
         </div>
+
         <div class="container mt-4">
             <h1 class="text-center">Dashboard</h1>
             <form action="MainController" method="POST">
-            <div class="d-flex justify-content-between mt-2">
-                <input type="hidden" value="Find" name="action"/>
-                <input type="text" name="txtsemester" class="form-control mx-auto" placeholder="E.g FA23">
-                <button type="submit" value="Find" class="btn btn-primary float-right">Find</button>
-            </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <input type="hidden" value="Find" name="action"/>
+                    <input type="text" name="txtsemester" class="form-control mx-auto" placeholder="E.g FA23">
+                    <button type="submit" value="Find" class="btn btn-primary float-right">Find</button>
+                </div>
             </form>
             <p class="text-danger text-center mt-2">${requestScope.MSG}</p>
             <div class="row mt-4">
