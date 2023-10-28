@@ -101,6 +101,10 @@
                 var form = document.querySelector('.returnHome form');
                 form.submit();
             }
+            function submitFormLogout() {
+                var form = document.querySelector('.logout form');
+                form.submit();
+            }
         </script>
     </head>
     <body>
@@ -154,6 +158,7 @@
 
                         <div class="card-body">
                             <form action="MainController" method="POST">
+                                <div class="d-flex justify-content-between"><strong>Semester ID:</strong> <input type="text" class="form-control" name="txtSemesterID" placeholder="ex:FA23...etc" required="" pattern="^(SP|SU|FA)[0-9]{2}$"></div>
                                 <div class="d-flex justify-content-between"><strong>Subject code:</strong> <input type="text" class="form-control" name="txtSubjectCode" placeholder="ex:SWP391...etc" required="" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"></div>
                                 <div class="d-flex justify-content-between"><strong>Start time:</strong> <input type="datetime-local" class="form-control"  name="txtStartTime" required=""></div>
                                 <div class="d-flex justify-content-between"><strong>End time:</strong> <input type="datetime-local" class="form-control" name="txtEndTime" required=""></div>
