@@ -102,7 +102,7 @@ public class MainController extends HttpServlet {
     private static final String ACCEPT_REQUEST_CONTROLLER = "AcceptRequestServlet";
 
     private static final String SEARCH_BOOKED_SLOT_ACTION = "SearchFSlot";
-    private static final String SEARCH_BOOKED_SLOT_SERVLET = "SearchBookedServlet";
+    private static final String SEARCH_BOOKED_SLOT_SERVLET = "SearchFreeSlotServlet";
 
     private static final String CHECK_ATTENDANCE_ACTION = "AttendanceLink";
     private static final String CHECK_ATTENDANCE_SERVLET = "CheckAttendanceBookingView";
