@@ -185,12 +185,13 @@
                         <div>
                             <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                                  onclick="showUserInfo()" />
-                            <div id="user-info" style="display: none;">
+                            <div id="user-info" style="display: none; position: absolute;">
                                 <p id="user-id"> </p>
                                 <p id="user-name"></p>
                                 <p id="user-email"></p>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
