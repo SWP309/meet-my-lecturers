@@ -187,6 +187,20 @@
                 padding: 10px;
                 font-size: 16px;
             }
+            .button-style {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-decoration: none;
+                background-color: white;
+                border: none;
+                cursor: pointer;
+            }
+
+            .button-style:hover {
+                background-color: #007bff;
+                color: blue;
+            }
         </style>
     </head>
     <body>
@@ -325,20 +339,24 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
                                         <div class="d-flex justify-content-between">
-                                            <div>
-                                                <input type="hidden" name="txtFSlotID" 
-                                                       value="${freeSlot.freeSlotID}" readonly="">
-                                                <input type="hidden" name="txtStartTime" 
-                                                       value="${freeSlot.startTime}" readonly="">
-                                                <input type="hidden" name="txtEndTime" 
-                                                       value="${freeSlot.endTime}" readonly="">
-                                                <input type="hidden" name="intCapacity" 
-                                                       value="${freeSlot.capacity}" readonly="">
-                                                <input type="hidden" name="txtSubjectCode" 
-                                                       value="${param.txtSubjectCode}" readonly="">
-                                                <button type="submit" name="action"
-                                                        value="BookFreeSlot">Book</button>
+                                            <div class="form group">
+                                                <div class="form-control">
+                                                    <input type="hidden" name="txtFSlotID" 
+                                                           value="${freeSlot.freeSlotID}" readonly="">
+                                                    <input type="hidden" name="txtStartTime" 
+                                                           value="${freeSlot.startTime}" readonly="">
+                                                    <input type="hidden" name="txtEndTime" 
+                                                           value="${freeSlot.endTime}" readonly="">
+                                                    <input type="hidden" name="intCapacity" 
+                                                           value="${freeSlot.capacity}" readonly="">
+                                                    <input type="hidden" name="txtSubjectCode" 
+                                                           value="${param.txtSubjectCode}" readonly="">
+                                                    <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                        book
+                                                    </button>
+                                                </div>
                                             </div>
+
                                         </div>
                                     </form>    
                                 </div>
@@ -360,19 +378,22 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
                                         <div class="d-flex justify-content-between">
-                                            <div>
-                                                <input type="hidden" name="txtFSlotID" 
-                                                       value="${freeslot.freeSlotID}" readonly="">
-                                                <input type="hidden" name="txtStartTime" 
-                                                       value="${freeSlot.startTime}" readonly="">
-                                                <input type="hidden" name="txtEndTime" 
-                                                       value="${freeSlot.endTime}" readonly="">
-                                                <input type="hidden" name="intCapacity" 
-                                                       value="${freeSlot.capacity}" readonly="">
-                                                <input type="hidden" name="txtUserID" 
-                                                       value="${param.txtUserID}" readonly="">
-                                                <button type="submit" name="action"
-                                                        value="BookFreeSlot">Book</button>
+                                            <div class="form-group">
+                                                <div class="form-control">
+                                                    <input type="hidden" name="txtFSlotID" 
+                                                           value="${freeslot.freeSlotID}" readonly="">
+                                                    <input type="hidden" name="txtStartTime" 
+                                                           value="${freeSlot.startTime}" readonly="">
+                                                    <input type="hidden" name="txtEndTime" 
+                                                           value="${freeSlot.endTime}" readonly="">
+                                                    <input type="hidden" name="intCapacity" 
+                                                           value="${freeSlot.capacity}" readonly="">
+                                                    <input type="hidden" name="txtUserID" 
+                                                           value="${param.txtUserID}" readonly="">
+                                                    <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                        book
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -395,19 +416,22 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
                                         <div class="d-flex justify-content-between">
-                                            <div>
-                                                <input type="hidden" name="txtFSlotID" 
-                                                       value="${freeSlot.freeSlotID}" readonly="">
-                                                <input type="hidden" name="txtStartTime" 
-                                                       value="${freeSlot.startTime}" readonly="">
-                                                <input type="hidden" name="txtEndTime" 
-                                                       value="${freeSlot.endTime}" readonly="">
-                                                <input type="hidden" name="intCapacity" 
-                                                       value="${freeSlot.capacity}" readonly="">
-                                                <input type="hidden" name="txtUserName" 
-                                                       value="${param.txtUserName}" readonly="">
-                                                <button type="submit" name="action"
-                                                        value="BookFreeSlot">Book</button>
+                                            <div class="form-group">
+                                                <div class="form-control">
+                                                    <input type="hidden" name="txtFSlotID" 
+                                                           value="${freeSlot.freeSlotID}" readonly="">
+                                                    <input type="hidden" name="txtStartTime" 
+                                                           value="${freeSlot.startTime}" readonly="">
+                                                    <input type="hidden" name="txtEndTime" 
+                                                           value="${freeSlot.endTime}" readonly="">
+                                                    <input type="hidden" name="intCapacity" 
+                                                           value="${freeSlot.capacity}" readonly="">
+                                                    <input type="hidden" name="txtUserName" 
+                                                           value="${param.txtUserName}" readonly="">
+                                                    <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                        book
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -430,19 +454,22 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
                                         <div class="d-flex justify-content-between">
-                                            <div>
-                                                <input type="hidden" name="txtFSlotID" 
-                                                       value="${freeSlot.freeSlotID}" readonly="">
-                                                <input type="hidden" name="txtStartTime" 
-                                                       value="${freeSlot.startTime}" readonly="">
-                                                <input type="hidden" name="txtEndTime" 
-                                                       value="${freeSlot.endTime}" readonly="">
-                                                <input type="hidden" name="intCapacity" 
-                                                       value="${freeSlot.capacity}" readonly="">
-                                                <input type="hidden" name="txtSemesterID" 
-                                                       value="${param.txtSemesterID}" readonly="">
-                                                <button type="submit" name="action"
-                                                        value="BookFreeSlot">Book</button>
+                                            <div class="form-group">
+                                                <div class="form-control">
+                                                    <input type="hidden" name="txtFSlotID" 
+                                                           value="${freeSlot.freeSlotID}" readonly="">
+                                                    <input type="hidden" name="txtStartTime" 
+                                                           value="${freeSlot.startTime}" readonly="">
+                                                    <input type="hidden" name="txtEndTime" 
+                                                           value="${freeSlot.endTime}" readonly="">
+                                                    <input type="hidden" name="intCapacity" 
+                                                           value="${freeSlot.capacity}" readonly="">
+                                                    <input type="hidden" name="txtSemesterID" 
+                                                           value="${param.txtSemesterID}" readonly="">
+                                                    <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                        book
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -465,21 +492,24 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
                                         <div class="d-flex justify-content-between">
-                                            <div>
-                                                <input type="hidden" name="txtFSlotID" 
-                                                       value="${freeSlot.freeSlotID}" readonly="">
-                                                <input type="hidden" name="txtStartTime" 
-                                                       value="${freeSlot.startTime}" readonly="">
-                                                <input type="hidden" name="txtEndTime" 
-                                                       value="${freeSlot.endTime}" readonly="">
-                                                <input type="hidden" name="intCapacity" 
-                                                       value="${freeSlot.capacity}" readonly="">
-                                                <input type="hidden" name="txtSubjectCode" 
-                                                       value="${param.txtSubjectCode}" readonly="">
-                                                <input type="hidden" name="txtUserID" 
-                                                       value="${param.txtUserID}" readonly="">
-                                                <button type="submit" name="action"
-                                                        value="BookFreeSlot">Book</button>
+                                            <div class="form-group">
+                                                <div class="form-control">
+                                                    <input type="hidden" name="txtFSlotID" 
+                                                           value="${freeSlot.freeSlotID}" readonly="">
+                                                    <input type="hidden" name="txtStartTime" 
+                                                           value="${freeSlot.startTime}" readonly="">
+                                                    <input type="hidden" name="txtEndTime" 
+                                                           value="${freeSlot.endTime}" readonly="">
+                                                    <input type="hidden" name="intCapacity" 
+                                                           value="${freeSlot.capacity}" readonly="">
+                                                    <input type="hidden" name="txtSubjectCode" 
+                                                           value="${param.txtSubjectCode}" readonly="">
+                                                    <input type="hidden" name="txtUserID" 
+                                                           value="${param.txtUserID}" readonly="">
+                                                    <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                        book
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -502,21 +532,24 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
                                         <div class="d-flex justify-content-between">
-                                            <div>
-                                                <input type="hidden" name="txtFSlotID" 
-                                                       value="${freeSlot.freeSlotID}" readonly="">
-                                                <input type="hidden" name="txtStartTime" 
-                                                       value="${freeSlot.startTime}" readonly="">
-                                                <input type="hidden" name="txtEndTime" 
-                                                       value="${freeSlot.endTime}" readonly="">
-                                                <input type="hidden" name="intCapacity" 
-                                                       value="${freeSlot.capacity}" readonly="">
-                                                <input type="hidden" name="txtSubjectCode" 
-                                                       value="${param.txtSubjectCode}" readonly="">
-                                                <input type="hidden" name="txtUserName" 
-                                                       value="${param.txtUserName}" readonly="">
-                                                <button type="submit" name="action"
-                                                        value="BookFreeSlot">Book</button>
+                                            <div class="form-group">
+                                                <div class="form-control">
+                                                    <input type="hidden" name="txtFSlotID" 
+                                                           value="${freeSlot.freeSlotID}" readonly="">
+                                                    <input type="hidden" name="txtStartTime" 
+                                                           value="${freeSlot.startTime}" readonly="">
+                                                    <input type="hidden" name="txtEndTime" 
+                                                           value="${freeSlot.endTime}" readonly="">
+                                                    <input type="hidden" name="intCapacity" 
+                                                           value="${freeSlot.capacity}" readonly="">
+                                                    <input type="hidden" name="txtSubjectCode" 
+                                                           value="${param.txtSubjectCode}" readonly="">
+                                                    <input type="hidden" name="txtUserName" 
+                                                           value="${param.txtUserName}" readonly="">
+                                                    <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                        book
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -539,21 +572,24 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
                                         <div class="d-flex justify-content-between">
-                                            <div>
-                                                <input type="hidden" name="txtFSlotID" 
-                                                       value="${freeSlot.freeSlotID}" readonly="">
-                                                <input type="hidden" name="txtStartTime" 
-                                                       value="${freeSlot.startTime}" readonly="">
-                                                <input type="hidden" name="txtEndTime" 
-                                                       value="${freeSlot.endTime}" readonly="">
-                                                <input type="hidden" name="intCapacity" 
-                                                       value="${freeSlot.capacity}" readonly="">
-                                                <input type="hidden" name="txtSubjectCode" 
-                                                       value="${param.txtSubjectCode}" readonly="">
-                                                <input type="hidden" name="txtSemesterID" 
-                                                       value="${param.txtSemesterID}" readonly="">
-                                                <button type="submit" name="action"
-                                                        value="BookFreeSlot">Book</button>
+                                            <div class="form-group">
+                                                <div class="form-control">
+                                                    <input type="hidden" name="txtFSlotID" 
+                                                           value="${freeSlot.freeSlotID}" readonly="">
+                                                    <input type="hidden" name="txtStartTime" 
+                                                           value="${freeSlot.startTime}" readonly="">
+                                                    <input type="hidden" name="txtEndTime" 
+                                                           value="${freeSlot.endTime}" readonly="">
+                                                    <input type="hidden" name="intCapacity" 
+                                                           value="${freeSlot.capacity}" readonly="">
+                                                    <input type="hidden" name="txtSubjectCode" 
+                                                           value="${param.txtSubjectCode}" readonly="">
+                                                    <input type="hidden" name="txtSemesterID" 
+                                                           value="${param.txtSemesterID}" readonly="">
+                                                    <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                        book
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -576,21 +612,24 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
                                         <div class="d-flex justify-content-between">
-                                            <div>
-                                                <input type="hidden" name="txtFSlotID" 
-                                                       value="${freeSlot.freeSlotID}" readonly="">
-                                                <input type="hidden" name="txtStartTime" 
-                                                       value="${freeSlot.startTime}" readonly="">
-                                                <input type="hidden" name="txtEndTime" 
-                                                       value="${freeSlot.endTime}" readonly="">
-                                                <input type="hidden" name="intCapacity" 
-                                                       value="${freeSlot.capacity}" readonly="">
-                                                <input type="hidden" name="txtUserID" 
-                                                       value="${param.txtUserID}" readonly="">
-                                                <input type="hidden" name="txtSemesterID" 
-                                                       value="${param.txtSemesterID}" readonly="">
-                                                <button type="submit" name="action"
-                                                        value="BookFreeSlot">Book</button>
+                                            <div class="form-group">
+                                                <div class="form-control">
+                                                    <input type="hidden" name="txtFSlotID" 
+                                                           value="${freeSlot.freeSlotID}" readonly="">
+                                                    <input type="hidden" name="txtStartTime" 
+                                                           value="${freeSlot.startTime}" readonly="">
+                                                    <input type="hidden" name="txtEndTime" 
+                                                           value="${freeSlot.endTime}" readonly="">
+                                                    <input type="hidden" name="intCapacity" 
+                                                           value="${freeSlot.capacity}" readonly="">
+                                                    <input type="hidden" name="txtUserID" 
+                                                           value="${param.txtUserID}" readonly="">
+                                                    <input type="hidden" name="txtSemesterID" 
+                                                           value="${param.txtSemesterID}" readonly="">
+                                                    <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                        book
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -613,21 +652,24 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
                                         <div class="d-flex justify-content-between">
-                                            <div>
-                                                <input type="hidden" name="txtFSlotID" 
-                                                       value="${freeSlot.freeSlotID}" readonly="">
-                                                <input type="hidden" name="txtStartTime" 
-                                                       value="${freeSlot.startTime}" readonly="">
-                                                <input type="hidden" name="txtEndTime" 
-                                                       value="${freeSlot.endTime}" readonly="">
-                                                <input type="hidden" name="intCapacity" 
-                                                       value="${freeSlot.capacity}" readonly="">
-                                                <input type="hidden" name="txtUserName" 
-                                                       value="${param.txtUserName}" readonly="">
-                                                <input type="hidden" name="txtSemesterID" 
-                                                       value="${param.txtSemesterID}" readonly="">
-                                                <button type="submit" name="action"
-                                                        value="BookFreeSlot">Book</button>
+                                            <div class="form-group">
+                                                <div class="form-control">
+                                                    <input type="hidden" name="txtFSlotID" 
+                                                           value="${freeSlot.freeSlotID}" readonly="">
+                                                    <input type="hidden" name="txtStartTime" 
+                                                           value="${freeSlot.startTime}" readonly="">
+                                                    <input type="hidden" name="txtEndTime" 
+                                                           value="${freeSlot.endTime}" readonly="">
+                                                    <input type="hidden" name="intCapacity" 
+                                                           value="${freeSlot.capacity}" readonly="">
+                                                    <input type="hidden" name="txtUserName" 
+                                                           value="${param.txtUserName}" readonly="">
+                                                    <input type="hidden" name="txtSemesterID" 
+                                                           value="${param.txtSemesterID}" readonly="">
+                                                    <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                        book
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -650,23 +692,26 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
                                         <div class="d-flex justify-content-between">
-                                            <div>
-                                                <input type="hidden" name="txtFSlotID" 
-                                                       value="${freeSlot.freeSlotID}" readonly="">
-                                                <input type="hidden" name="txtStartTime" 
-                                                       value="${freeSlot.startTime}" readonly="">
-                                                <input type="hidden" name="txtEndTime" 
-                                                       value="${freeSlot.endTime}" readonly="">
-                                                <input type="hidden" name="intCapacity" 
-                                                       value="${freeSlot.capacity}" readonly="">
-                                                <input type="hidden" name="txtSubjectCode" 
-                                                       value="${param.txtSubjectCode}" readonly="">
-                                                <input type="hidden" name="txtUserID" 
-                                                       value="${param.txtUserID}" readonly="">
-                                                <input type="hidden" name="txtSemesterID" 
-                                                       value="${param.txtSemesterID}" readonly="">
-                                                <button type="submit" name="action"
-                                                        value="BookFreeSlot">Book</button>
+                                            <div class="form-group">
+                                                <div class="form-control">
+                                                    <input type="hidden" name="txtFSlotID" 
+                                                           value="${freeSlot.freeSlotID}" readonly="">
+                                                    <input type="hidden" name="txtStartTime" 
+                                                           value="${freeSlot.startTime}" readonly="">
+                                                    <input type="hidden" name="txtEndTime" 
+                                                           value="${freeSlot.endTime}" readonly="">
+                                                    <input type="hidden" name="intCapacity" 
+                                                           value="${freeSlot.capacity}" readonly="">
+                                                    <input type="hidden" name="txtSubjectCode" 
+                                                           value="${param.txtSubjectCode}" readonly="">
+                                                    <input type="hidden" name="txtUserID" 
+                                                           value="${param.txtUserID}" readonly="">
+                                                    <input type="hidden" name="txtSemesterID" 
+                                                           value="${param.txtSemesterID}" readonly="">
+                                                    <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                        book
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -689,24 +734,28 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
                                         <div class="d-flex justify-content-between">
-                                            <div>
-                                                <input type="hidden" name="txtFSlotID" 
-                                                       value="${freeSlot.freeSlotID}" readonly="">
-                                                <input type="hidden" name="txtStartTime" 
-                                                       value="${freeSlot.startTime}" readonly="">
-                                                <input type="hidden" name="txtEndTime" 
-                                                       value="${freeSlot.endTime}" readonly="">
-                                                <input type="hidden" name="intCapacity" 
-                                                       value="${freeSlot.capacity}" readonly="">
-                                                <input type="hidden" name="txtSubjectCode" 
-                                                       value="${param.txtSubjectCode}" readonly="">
-                                                <input type="hidden" name="txtUserName" 
-                                                       value="${param.txtUserName}" readonly="">
-                                                <input type="hidden" name="txtSemesterID" 
-                                                       value="${param.txtSemesterID}" readonly="">
-                                                <button type="submit" name="action"
-                                                        value="BookFreeSlot">Book</button>
+                                            <div class="form-group">
+                                                <div class="form-control">
+                                                    <input type="hidden" name="txtFSlotID" 
+                                                           value="${freeSlot.freeSlotID}" readonly="">
+                                                    <input type="hidden" name="txtStartTime" 
+                                                           value="${freeSlot.startTime}" readonly="">
+                                                    <input type="hidden" name="txtEndTime" 
+                                                           value="${freeSlot.endTime}" readonly="">
+                                                    <input type="hidden" name="intCapacity" 
+                                                           value="${freeSlot.capacity}" readonly="">
+                                                    <input type="hidden" name="txtSubjectCode" 
+                                                           value="${param.txtSubjectCode}" readonly="">
+                                                    <input type="hidden" name="txtUserName" 
+                                                           value="${param.txtUserName}" readonly="">
+                                                    <input type="hidden" name="txtSemesterID" 
+                                                           value="${param.txtSemesterID}" readonly="">
+                                                    <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                        book
+                                                    </button>
+                                                </div>
                                             </div>
+
                                         </div>
                                     </form>
                                 </div>
@@ -745,8 +794,9 @@
                                                        value="${param.txtUserName}" readonly="">
                                                 <input type="hidden" name="txtSemesterID" 
                                                        value="${param.txtSemesterID}" readonly="">
-                                                <button type="submit" name="action"
-                                                        value="BookFreeSlot">Book</button>
+                                                <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                    book
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
@@ -769,31 +819,22 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
                                         <div class="d-flex justify-content-between">
-                                            <!--                                            <div>
-                                                                                            <input type="hidden" name="txtFSlotID" 
-                                                                                                   value="${freeSlot.freeSlotID}" readonly="">
-                                                                                            <input type="hidden" name="txtStartTime" 
-                                                                                                   value="${freeSlot.startTime}" readonly="">
-                                                                                            <input type="hidden" name="txtEndTime" 
-                                                                                                   value="${freeSlot.endTime}" readonly="">
-                                                                                            <input type="hidden" name="intCapacity" 
-                                                                                                   value="${freeSlot.capacity}" readonly="">
-                                                                                            <button type="submit" name="action"
-                                                                                                    value="BookFreeSlot">Book</button>
-                                                                                        </div>-->
-                                            <div>
-                                                <form action="MainController" method="GET">
-                                                    <input type="hidden" name="action" value="BookFreeSlot">
-                                                    <input type="hidden" name="txtFSlotID"  value="${freeslot.freeSlotID}" readonly="">
-                                                    <input type="hidden" name="txtStartTime"  value="${freeslot.startTime}" readonly="">
-                                                    <input type="hidden" name="txtEndTime"   value="${freeSlot.endTime}" readonly="">
-                                                    <input type="hidden" name="intCapacity"   value="${freeSlot.capacity}" readonly="">
-                                                    <input type="hidden" name="txtUserID"  value="${param.txtUserID}" readonly="">
-                                                    <button type="submit" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
-                                                        book
-                                                    </button>
-                                                </form>
+                                            <div class="form-group" style="background-color: red;">
+                                                <div class="form-control">
+                                                    <form action="MainController" method="GET">
+                                                        <input type="hidden" name="action" value="BookFreeSlot">
+                                                        <input type="hidden" name="txtFSlotID"  value="${freeslot.freeSlotID}" readonly="">
+                                                        <input type="hidden" name="txtStartTime"  value="${freeslot.startTime}" readonly="">
+                                                        <input type="hidden" name="txtEndTime"   value="${freeSlot.endTime}" readonly="">
+                                                        <input type="hidden" name="intCapacity"   value="${freeSlot.capacity}" readonly="">
+                                                        <input type="hidden" name="txtUserID"  value="${param.txtUserID}" readonly="">
+                                                        <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                            book
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
+
                                         </div>
                                     </form>
                                 </div>
