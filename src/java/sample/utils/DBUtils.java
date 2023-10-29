@@ -29,39 +29,4 @@ public class DBUtils {
         con = DriverManager.getConnection(url, USERNAME, PASSWORD);
         return con;
     }
-    public static Date getNextDate(Date curDate) {
-        Date nextDate = null;
-        try {
-            Calendar today = Calendar.getInstance();
-            today.setTime(curDate);
-            today.add(Calendar.DAY_OF_YEAR, 1);
-            nextDate = today.getTime();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return nextDate;
-        }
-        return nextDate;
-    }
-    public static Date getNextWeek(Date curDate) {
-        Date nextDate = null;
-        try {
-            Calendar today = Calendar.getInstance();
-            today.setTime(curDate);
-            today.add(Calendar.DAY_OF_YEAR, 7);
-            nextDate = today.getTime();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return nextDate;
-        }
-        return nextDate;
-    }
-    
-    public static void main(String[] args) throws ClassNotFoundException, SQLException, ParseException {
-//        DBUtils.getConnection();
-//        System.out.println(DBUtils.getConnection());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-            Date startTime = simpleDateFormat.parse("2023-10-25T03:00");
-        Date nextDate = DBUtils.getNextDate(startTime);
-            
-    }
 }

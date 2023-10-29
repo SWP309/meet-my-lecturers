@@ -81,23 +81,22 @@ public class CreateFreeSlotServlet extends HttpServlet {
                 for (int i = 1; i <= count + 1; i++) {
                     FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count + 1, lecturerID, status);
                     checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
-
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                     Date sTime = simpleDateFormat.parse(freeSlotsDTO.getStartTime());
                     Date eTime = simpleDateFormat.parse(freeSlotsDTO.getEndTime());
                     if (option.equals("DA")) {
-                        Date sNextDay = DBUtils.getNextDate(sTime);
+                        Date sNextDay = services.Service.getNextDate(sTime);
                         startTime = simpleDateFormat.format(sNextDay);
                         freeSlotsDTO.setStartTime(startTime);
-                        Date eNextDay = DBUtils.getNextDate(eTime);
+                        Date eNextDay = services.Service.getNextDate(eTime);
                         endTime = simpleDateFormat.format(eNextDay);
                         freeSlotsDTO.setEndTime(endTime);
                     }
                     if (option.equals("DW")) {
-                        Date sNextWeek = DBUtils.getNextWeek(sTime);
+                        Date sNextWeek = services.Service.getNextWeek(sTime);
                         startTime = simpleDateFormat.format(sNextWeek);
                         freeSlotsDTO.setStartTime(startTime);
-                        Date eNextWeek = DBUtils.getNextWeek(eTime);
+                        Date eNextWeek = services.Service.getNextWeek(eTime);
                         endTime = simpleDateFormat.format(eNextWeek);
                         freeSlotsDTO.setEndTime(endTime);
                     }

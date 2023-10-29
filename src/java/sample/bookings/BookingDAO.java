@@ -1,4 +1,4 @@
-      /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -22,14 +22,15 @@ import sample.utils.DBUtils;
  */
 public class BookingDAO {
 
-    private static String BOOKING_VIEW = "SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime,u.userName, b.bookingID\n"
-            + "FROM Bookings b\n"
-            + "JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
-            + "JOIN Users u ON b.studentID = u.userID\n"
-            + "JOIN Users u1 ON fs.lecturerID = u1.userID\n"
-            + "WHERE b.status='1' and u.userEmail = ?";
-    
-     private static String CANCEL_BOOKING = "UPDATE Bookings SET status = 0 WHERE bookingID = ?";
+    private static String BOOKING_VIEW = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime,u.userName, b.bookingID,fs.meetLink\n"
+            + "          FROM Bookings b\n"
+            + "           JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
+            + "            JOIN Users u ON b.studentID = u.userID\n"
+            + "            JOIN Users u1 ON fs.lecturerID = u1.userID\n"
+            + "            WHERE b.status='1' and u.userEmail = ?";
+
+    private static String CANCEL_BOOKING = "UPDATE Bookings SET status = 0 WHERE bookingID = ?";
+    private static String CHECK_ATTENDANCE_BOOKING = "UPDATE Bookings SET status = 2 WHERE bookingID = ?";
 
     private static String convertDateToString(Timestamp sqlTime) {
         // Sử dụng SimpleDateFormat để định dạng ngày giờ
@@ -59,7 +60,8 @@ public class BookingDAO {
                     String endTimeStr = convertDateToString(endTime);
                     String userName = rs.getString("userName");
                     String bookingID = rs.getString("bookingID");
-                    listBooking.add(new BookingDTO(subjectCode, lectureName, startTimeStr, endTimeStr, userName, bookingID));
+                    String meetLink = rs.getString("meetLink");
+                    listBooking.add(new BookingDTO(subjectCode, lectureName, startTimeStr, endTimeStr, userName, bookingID, meetLink));
                 }
             }
         } catch (Exception e) {
@@ -77,8 +79,8 @@ public class BookingDAO {
         }
         return listBooking;
     }
-    
-     public boolean Cancel(String bookingID) throws SQLException {
+
+    public boolean Cancel(String bookingID) throws SQLException {
         boolean checkCancel = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -101,5 +103,29 @@ public class BookingDAO {
             }
         }
         return checkCancel;
+    } 
+     public boolean checkAttendance(String bookingID) throws SQLException {
+        boolean checkAttendanceBK = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(CHECK_ATTENDANCE_BOOKING);
+                ptm.setString(1, bookingID);
+                checkAttendanceBK = ptm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return checkAttendanceBK;
     }
 }
