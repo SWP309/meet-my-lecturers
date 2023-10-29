@@ -10,11 +10,13 @@ package sample.freeslots;
  * @author W10
  */
 public class FreeSlotError {
+
     private String pastTimeError;
     private String endTimeError;
     private String durationError;
     private String capacityError;
     private String meetLinkError;
+    private String repeatedTimeError;
 
     public FreeSlotError() {
         this.pastTimeError = "";
@@ -22,14 +24,16 @@ public class FreeSlotError {
         this.durationError = "";
         this.capacityError = "";
         this.meetLinkError = "";
+        this.repeatedTimeError = "";
     }
 
-    public FreeSlotError(String pastTimeError, String endTimeError, String durationError, String capacityError, String meetLinkError) {
+    public FreeSlotError(String pastTimeError, String endTimeError, String durationError, String capacityError, String meetLinkError, String repeatedTimeError) {
         this.pastTimeError = pastTimeError;
         this.endTimeError = endTimeError;
         this.durationError = durationError;
         this.capacityError = capacityError;
         this.meetLinkError = meetLinkError;
+        this.repeatedTimeError = repeatedTimeError;
     }
 
     public String getPastTimeError() {
@@ -71,5 +75,13 @@ public class FreeSlotError {
     public void setMeetLinkError(String meetLinkError) {
         this.meetLinkError = meetLinkError;
     }
-    
+
+    public String getRepeatedTimeError() {
+        return repeatedTimeError;
+    }
+
+    public void setRepeatedTimeError(String repeatedTimeError) {
+        this.repeatedTimeError = repeatedTimeError;
+    }
+
 }
