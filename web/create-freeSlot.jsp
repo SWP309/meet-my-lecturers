@@ -186,6 +186,15 @@
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.meetLinkError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.meetLinkError}</h6>
                                 </c:if>
+                                <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="^(SE|IA|SS|MC)[0-9]{6};(SE|IA|SS|MC)[0-9]{6}$"></div>
+                                <div class="d-flex justify-content-between"><strong>STATUS(public/private):</strong>
+                                    <div class="d-flex">
+                                        <select class="form-control" name="txtStatusOption">
+                                            <option value="PUB">Public</option>
+                                            <option value="PRV">Private (check Hide list)</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <label for="role" class="col-form-label"><strong><b style="color: red">SET BY:</b></strong></label>
@@ -196,7 +205,10 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="role" class="col-form-label"><strong><b style="color: red">REPEATED TIMES:</b></strong></label>
-                                        <input type="number" class="form-control" name="txtCount" required="">
+                                        <input type="number" class="form-control" name="txtCount" required="" value="${param.txtCount}">
+                                        <c:if test="${not empty requestScope.FREESLOT_ERROR.repeatedTimeError}">
+                                            <h6> ${requestScope.FREESLOT_ERROR.repeatedTimeError}</h6>
+                                        </c:if>
                                     </div>
                                 </div>
 
@@ -210,6 +222,8 @@
                                 <input type="hidden" value="${param.txtEndTime}">
                                 <input type="hidden" value="${param.txtCapacity}">
                                 <input type="hidden" value="${param.txtPassword}">
+                                <input type="hidden" value="${param.txtMeetLink}">
+                                <input type="hidden" value="${param.txtCount}">
                             </form>
                         </div>
                     </div>

@@ -111,11 +111,15 @@ public class CreateFreeSlotServlet extends HttpServlet {
                 freeSlotError.setMeetLinkError("The gg meet link is duplicated.");
             }
 
-            String option = request.getParameter("txtOption");
+            String setByOption = request.getParameter("txtOption");
 
             int count = Integer.parseInt(request.getParameter("txtCount"));
+            if (count<0) {
+                flag=false;
+                freeSlotError.setRepeatedTimeError("The repeated time must be greater OR equal 0");
+            }
             String lecturerID = us.getUserID();
-            boolean status = true;
+            boolean status = Boolean.parseBoolean(request.getParameter("txtStatusOption"));
 
             request.setAttribute("FREESLOT_ERROR", freeSlotError);
             if (flag) {
@@ -127,7 +131,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                     Date sTime = simpleDateFormat.parse(freeSlotsDTO.getStartTime());
                     Date eTime = simpleDateFormat.parse(freeSlotsDTO.getEndTime());
-                    if (option.equals("DA")) {
+                    if (setByOption.equals("DA")) {
                         Date sNextDay = DBUtils.getNextDate(sTime);
                         startTime = simpleDateFormat.format(sNextDay);
                         freeSlotsDTO.setStartTime(startTime);
@@ -135,7 +139,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
                         endTime = simpleDateFormat.format(eNextDay);
                         freeSlotsDTO.setEndTime(endTime);
                     }
-                    if (option.equals("DW")) {
+                    if (setByOption.equals("DW")) {
                         Date sNextWeek = DBUtils.getNextWeek(sTime);
                         startTime = simpleDateFormat.format(sNextWeek);
                         freeSlotsDTO.setStartTime(startTime);

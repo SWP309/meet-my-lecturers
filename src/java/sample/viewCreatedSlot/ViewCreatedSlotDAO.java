@@ -28,7 +28,7 @@ public class ViewCreatedSlotDAO {
             + "           FROM FreeSlots fs\n"
             + "          JOIN Users u1 ON fs.lecturerID = u1.userID\n"
             + "           WHERE fs.status='1' AND u1.userEmail = ?";
-    private static String CREATED_SLOT_VIEW_SUB = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID ,,fs.semesterID,fs.meetLink\n"
+    private static String CREATED_SLOT_VIEW_SUB = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID ,fs.semesterID,fs.meetLink\n"
             + "           FROM FreeSlots fs\n"
             + "          JOIN Users u1 ON fs.lecturerID = u1.userID\n"
             + "           WHERE fs.status='0' AND u1.userEmail = ?";
