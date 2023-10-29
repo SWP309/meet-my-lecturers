@@ -217,7 +217,7 @@
 
                             <i class="material-icons">mail_outline</i> Request
                         </div>
-                        <div class="frame-div logout" onclick="submitFormLogout()">
+                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: 26%;">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
@@ -232,7 +232,7 @@
                     <div>
                         <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                              onclick="showUserInfo()" />
-                        <div id="user-info" style="display: none;">
+                        <div id="user-info" style="display: none; position: absolute">
                             <p id="user-id"> </p>
                             <p id="user-name"></p>
                             <p id="user-email"></p>
@@ -242,7 +242,7 @@
                 </div>
             </div>
 
-            <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize" style="margin-top: 100px;">
+            <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize" style="margin-top: 54px;">
                 <ul class="orbit-container" tabindex="0" style="height: 613.389px;">
                     <button class="orbit-previous" tabindex="0" style="color: gray;"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
                     <button class="orbit-next" tabindex="0" style="color: gray;"><span class="show-for-sr">Next Slide</span>&#9654;</button>
@@ -362,7 +362,7 @@
                                         <div class="d-flex justify-content-between">
                                             <div>
                                                 <input type="hidden" name="txtFSlotID" 
-                                                       value="${freeSlot.freeSlotID}" readonly="">
+                                                       value="${freeslot.freeSlotID}" readonly="">
                                                 <input type="hidden" name="txtStartTime" 
                                                        value="${freeSlot.startTime}" readonly="">
                                                 <input type="hidden" name="txtEndTime" 
@@ -769,17 +769,30 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
                                         <div class="d-flex justify-content-between">
+                                            <!--                                            <div>
+                                                                                            <input type="hidden" name="txtFSlotID" 
+                                                                                                   value="${freeSlot.freeSlotID}" readonly="">
+                                                                                            <input type="hidden" name="txtStartTime" 
+                                                                                                   value="${freeSlot.startTime}" readonly="">
+                                                                                            <input type="hidden" name="txtEndTime" 
+                                                                                                   value="${freeSlot.endTime}" readonly="">
+                                                                                            <input type="hidden" name="intCapacity" 
+                                                                                                   value="${freeSlot.capacity}" readonly="">
+                                                                                            <button type="submit" name="action"
+                                                                                                    value="BookFreeSlot">Book</button>
+                                                                                        </div>-->
                                             <div>
-                                                <input type="hidden" name="txtFSlotID" 
-                                                       value="${freeSlot.freeSlotID}" readonly="">
-                                                <input type="hidden" name="txtStartTime" 
-                                                       value="${freeSlot.startTime}" readonly="">
-                                                <input type="hidden" name="txtEndTime" 
-                                                       value="${freeSlot.endTime}" readonly="">
-                                                <input type="hidden" name="intCapacity" 
-                                                       value="${freeSlot.capacity}" readonly="">
-                                                <button type="submit" name="action"
-                                                        value="BookFreeSlot">Book</button>
+                                                <form action="MainController" method="GET">
+                                                    <input type="hidden" name="action" value="BookFreeSlot">
+                                                    <input type="hidden" name="txtFSlotID"  value="${freeslot.freeSlotID}" readonly="">
+                                                    <input type="hidden" name="txtStartTime"  value="${freeslot.startTime}" readonly="">
+                                                    <input type="hidden" name="txtEndTime"   value="${freeSlot.endTime}" readonly="">
+                                                    <input type="hidden" name="intCapacity"   value="${freeSlot.capacity}" readonly="">
+                                                    <input type="hidden" name="txtUserID"  value="${param.txtUserID}" readonly="">
+                                                    <button type="submit" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                        book
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
                                     </form>

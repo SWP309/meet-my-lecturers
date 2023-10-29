@@ -28,7 +28,7 @@ public class ViewCreatedSlotDAO {
             + "           FROM FreeSlots fs\n"
             + "          JOIN Users u1 ON fs.lecturerID = u1.userID\n"
             + "           WHERE fs.status='1' AND u1.userEmail = ?";
-    private static String CREATED_SLOT_VIEW_SUB = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID ,,fs.semesterID,fs.meetLink\n"
+    private static String CREATED_SLOT_VIEW_SUB = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID ,fs.semesterID,fs.meetLink\n"
             + "           FROM FreeSlots fs\n"
             + "          JOIN Users u1 ON fs.lecturerID = u1.userID\n"
             + "           WHERE fs.status='0' AND u1.userEmail = ?";
@@ -71,7 +71,7 @@ public class ViewCreatedSlotDAO {
 
     private static String convertDateToString(Timestamp sqlTime) {
         // Sử dụng SimpleDateFormat để định dạng ngày giờ
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         // Sử dụng phương thức format để chuyển đổi Time thành String
         return dateFormat.format(sqlTime);
@@ -447,7 +447,7 @@ public class ViewCreatedSlotDAO {
         PreparedStatement ptm = null;
 
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Date startTime = simpleDateFormat.parse(listCreatedSlot.getStartTime());
             Date endTime = simpleDateFormat.parse(listCreatedSlot.getEndTime());
             conn = DBUtils.getConnection();

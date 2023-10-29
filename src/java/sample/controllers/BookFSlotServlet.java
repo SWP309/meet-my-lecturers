@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package sample.controllers;
 
@@ -13,18 +12,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.bookings.BookingDAO;
+import sample.bookings.BookingDTO;
 import sample.users.UserDTO;
-import sample.viewCreatedSlot.ViewCreatedSlotDAO;
-import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
 /**
  *
  * @author PC
  */
-public class UpdateFSlotController extends HttpServlet {
+public class BookFSlotServlet extends HttpServlet {
 
-    private static final String ERROR = "CreatedSlotView.jsp";
-    private static final String SUCCESS = "CreatedSlotView.jsp";
+    private static final String ERROR = "StudentHome_1.jsp";
+    private static final String SUCCESS = "StudentHome_1.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,24 +33,20 @@ public class UpdateFSlotController extends HttpServlet {
         response.setHeader("Expires", "0"); // Proxies.
 
         String url = ERROR;
+
         try {
             HttpSession session = request.getSession();
-            ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
+            BookingDAO dao = new BookingDAO();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            String subjectCode = request.getParameter("subjectCode");
-            String startTime = request.getParameter("startTime");
-            String endTime = request.getParameter("endTime");
-            String freeSlotID = request.getParameter("freeSlotID");
-            String semesterID = request.getParameter("semesterID");
-            ViewCreatedSlotDTO dto = new ViewCreatedSlotDTO();
-            dto.setStartTime(startTime);
-            dto.setEndTime(endTime);
-            dto.setSubjectCode(subjectCode);
-            dto.setFreeSlotID(freeSlotID);
-            dto.setSemesterID(semesterID);
+            String studentID = us.getUserID();
+            String freeSlotID = request.getParameter("txtFSlotID");
+            
+            BookingDTO dto = new BookingDTO();
+           dto.setStudentID(studentID);
+           dto.setFreeSlotID(freeSlotID);
             if (freeSlotID != null) {
-                boolean checkUpdate = dao.update(dto);
-                List<ViewCreatedSlotDTO> listbooking = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                boolean checkUpdate = dao.BookFSlot(dto);
+                List<BookingDTO> listbooking = dao.getListBooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
                 request.setAttribute("LIST_CREATED_SLOT", listbooking);
                 if (checkUpdate) {
                     System.out.println(checkUpdate);
@@ -60,9 +55,9 @@ public class UpdateFSlotController extends HttpServlet {
 //                        System.out.println("list booking is null");
                         request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
                     }
-                } else { 
-                     request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
-                    
+                } else {
+                    request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
+
                 }
             }
         } catch (Exception e) {
@@ -71,8 +66,8 @@ public class UpdateFSlotController extends HttpServlet {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
