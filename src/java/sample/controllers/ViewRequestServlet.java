@@ -26,14 +26,9 @@ public class ViewRequestServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             UserDTO userDTO = (UserDTO) session.getAttribute("loginedUser");
-            System.out.println("LecturerID: " + userDTO.getUserID());
             RequestDAO requestDAO = new RequestDAO();
             requestDAO.getRequest(userDTO.getUserID());
             List<RequestDTO> requests = requestDAO.getListRequests();
-            System.out.println(requests);
-            for (RequestDTO request1 : requests) {
-                System.out.println(request1.getStudentID() + request1.getDescription());
-            }
             List<UserDTO> users = requestDAO.getListUsers();
             if (requests != null) {
                     request.setAttribute("LIST_REQUESTS", requests);

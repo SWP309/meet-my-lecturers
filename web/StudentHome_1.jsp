@@ -9,8 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <link rel="stylesheet" href="./StudentHome_1.css" />
         <!-- Google Fonts - Poppins -->
@@ -799,7 +798,13 @@
                             </div>
                         </c:forEach>
                     </c:if>
-                    <c:if test="${empty requestScope.FREESLOT_BY_SUBJECT }">
+                    <c:if test="${empty requestScope.FREESLOT_BY_SUBJECT and empty requestScope.FREESLOT_BY_LECTURERID
+                          and empty requestScope.FREESLOT_BY_LECNAME and empty requestScope.FREESLOT_BY_SEMESTERID
+                          and empty requestScope.FREESLOT_BY_SUBJECT_AND_LECID and empty requestScope.FREESLOT_BY_SUBJECT_AND_LECNAME
+                          and empty requestScope.FREESLOT_BY_SUBJECT_AND_SEMESTER and empty requestScope.FREESLOT_BY_LECID_AND_SEMESTER
+                          and empty requestScope.FREESLOT_BY_LECNAME_AND_SEMESTER and empty requestScope.FREESLOT_BY_SUBCODE_AND_LECID_AND_SEMESTER
+                          and empty requestScope.FREESLOT_BY_SUBCODE_AND_LECNAME_AND_SEMESTER and empty requestScope.FREESLOT_BY_ALL
+                          and empty requestScope.FREESLOT}">
                         <h3 style="color: red">${requestScope.SEARCH_FREESLOT_MESSAGE}</h3>
                     </c:if>  
                 </div>

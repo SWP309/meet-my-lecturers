@@ -21,7 +21,7 @@ import sample.users.UserDTO;
 public class CreateRequestServlet extends HttpServlet {
 
     private static final String ERROR = "request.jsp";
-    private static final String SUCCESS = "StudentHome.jsp";
+    private static final String SUCCESS = "StudentHome_1.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -38,7 +38,7 @@ public class CreateRequestServlet extends HttpServlet {
             String semesterID = request.getParameter("txtSemester");
             System.out.println(semesterID);
             RequestDAO requestDAO = new RequestDAO();
-            RequestDTO requestDTO = new RequestDTO(semesterID, false, subjectCode, startTime, endTime, description, us.getUserID(), lecturer, semesterID);
+            RequestDTO requestDTO = new RequestDTO(semesterID, 2, subjectCode, startTime, endTime, description, us.getUserID(), lecturer, semesterID);
             RequestError requestError = new RequestError();
             boolean checkValidate = true;
             //****Check input time with current time

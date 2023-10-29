@@ -63,9 +63,14 @@ public class MainController extends HttpServlet {
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
     private static final String BACK_TO_REQUEST = "BackToRequest";
+    private static final String REQUEST_STATUS = "ViewRequestStatus";
+    private static final String REQUEST_STATUS_PAGE = "ViewRequestStatus.jsp";
 
     private static final String CREATE_REQUEST = "CreateRequest";
     private static final String REQUEST_ACTION = "CreateRequestServlet";
+
+    private static final String SEARCH_REQUEST_STATUS = "SearchRequestStatus";
+    private static final String SEARCH_REQUEST_STATUS_ACTION = "SearchRequestStatusServlet";
 
     private static final String VIEWBOOKING = "ViewBooking";
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
@@ -194,6 +199,10 @@ public class MainController extends HttpServlet {
                 url = SEARCH_USERS_CONTROLLER;
             } else if (UPDATE_USERS.equals(action)) {
                 url = UPDATE_USERS_CONTROLLER;
+            } else if (REQUEST_STATUS.equals(action)) {
+                url = REQUEST_STATUS_PAGE;
+            } else if (SEARCH_REQUEST_STATUS.equals(action)) {
+                url = SEARCH_REQUEST_STATUS_ACTION;
             }
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());

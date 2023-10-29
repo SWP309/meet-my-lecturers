@@ -68,6 +68,10 @@
         <servlet-name>SearchFreeSlotServlet</servlet-name>
         <servlet-class>sample.controllers.SearchFreeSlotServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchRequestStatusServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchRequestStatusServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -191,6 +195,10 @@
     <servlet-mapping>
         <servlet-name>SearchFreeSlotServlet</servlet-name>
         <url-pattern>/SearchFreeSlotServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchRequestStatusServlet</servlet-name>
+        <url-pattern>/SearchRequestStatusServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
