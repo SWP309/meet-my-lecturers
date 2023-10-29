@@ -1,12 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-import DAO.UserDAO;
-import static DAO.UserDAO.ImportExcel;
-import basicobject.User;
+package sample.importexcel;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,8 +60,8 @@ public class ImportStudent extends HttpServlet {
                         int passWord = (int) row.getCell(6).getNumericCellValue();
                         String password = String.valueOf(passWord);
 
-                        User users = new User(userID, userName, userEmail, userStatus, roleID, password);
-                        UserDAO.ImportExcel(users);
+//                        User users = new User(userID, userName, userEmail, userStatus, roleID, password);
+//                        UserDAO.ImportExcel(users);
                     }
                     wb.close();
                     request.setAttribute("EXCSERVLET", "Import Successfully");
@@ -92,8 +84,8 @@ public class ImportStudent extends HttpServlet {
                         int passWord = (int) row.getCell(6).getNumericCellValue();
                         String password = String.valueOf(passWord);
 
-                        User users = new User(userID, userName, userEmail, userStatus, roleID, password);
-                        UserDAO.ImportExcel(users);
+//                        User users = new User(userID, userName, userEmail, userStatus, roleID, password);
+//                        UserDAO.ImportExcel(users);
                     }
                     wb.close();
                     request.setAttribute("EXCSERVLET", "Import Successfully");
