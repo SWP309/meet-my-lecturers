@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<%-- 
-    Document   : StudentHome
-    Created on : Oct 10, 2023, 9:25:31 PM
-    Author     : Minh Khang
---%>
-=======
 
->>>>>>> be48373e46c1385258968b247744d10ca1c114d9
 <%@page import="sample.users.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -76,7 +68,7 @@
         <script>
             function confirmCancel(bookingID) {
                 if (confirm('Are you sure to cancel this booking')) {
-                    // S? d?ng bi?n `bookingID` ? ?ây n?u c?n
+                    // S? d?ng bi?n `bookingID` ? ??y n?u c?n
                     window.location.href = 'MainController?action=cancel&bookingID=' + bookingID;
                 }
             }
@@ -104,7 +96,7 @@
             function showUserInfo() {
                 var userInfo = document.getElementById("user-info");
                 if (userInfo.style.display === "none" || userInfo.style.display === "") {
-                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                    userInfo.style.display = "block"; // Hi?n th? th?ng tin khi ???c nh?p chu?t
                 } else {
                     userInfo.style.display = "none";
                 }
@@ -123,18 +115,18 @@
 //
 //            function hideUserInfo() {
 //                var userInfo = document.getElementById("user-info");
-//                userInfo.style.display = "none"; // ?n thông tin ng??i dùng khi r?i chu?t ra kh?i hình ?nh
+//                userInfo.style.display = "none"; // ?n th?ng tin ng??i d?ng khi r?i chu?t ra kh?i h?nh ?nh
 //            }
             function confirmCancel() {
                 var result = confirm("Are you sure about cancel your booking ?");
                 if (result) {
-                    // N?u ng??i dùng ch?n OK, chuy?n ??n trang MainController ?? x? lý hành ??ng "cancel".
-                    // Ví d?:
+                    // N?u ng??i d?ng ch?n OK, chuy?n ??n trang MainController ?? x? l? h?nh ??ng "cancel".
+                    // V? d?:
                     window.location.href = "MainController?action=cancel&bookingID=" + document.querySelector('[name="bookingID"]').value;
                 } else {
-                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
-//                    alert("Booking cancel canceled!"); // Hi?n th? thông báo cho ng??i dùng
-                    // N?u ng??i dùng ch?n Cancel, ng?n ch?n chuy?n h??ng trang m?c ??nh sau ?ó.
+                    // N?u ng??i d?ng ch?n Cancel, kh?ng l?m g? c?.
+//                    alert("Booking cancel canceled!"); // Hi?n th? th?ng b?o cho ng??i d?ng
+                    // N?u ng??i d?ng ch?n Cancel, ng?n ch?n chuy?n h??ng trang m?c ??nh sau ??.
                     event.preventDefault();
                 }
             }
@@ -188,6 +180,9 @@
         </style>
     </head>
     <body>
+        <c:if test="${sessionScope.loginedUser == null || sessionScope.loginedUser.roleID != 3}">
+            <c:redirect url="LoginFeID.jsp"></c:redirect>
+        </c:if>
         <div class="student-home">
             <div class="fptu-eng-1-parent">
                 <img
@@ -817,7 +812,7 @@
                 </div>
 
             </div>
-            <!-- Thêm liên k?t ??n Bootstrap JS và jQuery -->
+            <!-- Th?m li?n k?t ??n Bootstrap JS v? jQuery -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI" crossorigin="anonymous"></script>
             <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
@@ -834,4 +829,3 @@
                 }%>
     </body>
 </html>
-
