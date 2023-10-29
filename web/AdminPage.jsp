@@ -202,7 +202,7 @@
                             <input type="hidden" name="action" value="Request" />
                         </form>
                         Import Schedule
-                        
+
                     </div>
                     <div class="frame-div logout" onclick="submitFormLogout()">
                         <form action="MainController" method="POST" style="display: none;">
@@ -217,14 +217,15 @@
                     </div>
                 </div>
                 <div>
-                    <img class="frame-item" alt="" src="./public/StudentHome/group-33.svg" 
+                    <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                          onclick="showUserInfo()" />
-                    <div id="user-info" style="display: none;">
+                    <div id="user-info" style="display: none; position: absolute;">
                         <p id="user-id"> </p>
                         <p id="user-name"></p>
                         <p id="user-email"></p>
                     </div>
                 </div>
+
 
             </div>
         </div>
