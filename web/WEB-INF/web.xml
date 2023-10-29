@@ -112,6 +112,14 @@
         <servlet-name>CheckAttendanceCreateSlot</servlet-name>
         <servlet-class>sample.controllers.CheckAttendanceCreateSlot</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BookFSlotServlet</servlet-name>
+        <servlet-class>sample.controllers.BookFSlotServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchBookedServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchBookedServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -223,6 +231,14 @@
     <servlet-mapping>
         <servlet-name>CheckAttendanceCreateSlot</servlet-name>
         <url-pattern>/CheckAttendanceCreateSlot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookFSlotServlet</servlet-name>
+        <url-pattern>/BookFSlotServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchBookedServlet</servlet-name>
+        <url-pattern>/SearchBookedServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

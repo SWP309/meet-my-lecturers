@@ -21,6 +21,8 @@ public class BookingDTO {
     private String userName;
     private String bookingID;
     private String meetLink;
+    private String freeSlotID;
+    private String studentID;
 
     public BookingDTO() {
         this.subjectCode = "";
@@ -30,6 +32,7 @@ public class BookingDTO {
         this.userName = "";
         this.bookingID = "";
         this.meetLink = "";
+        this.freeSlotID = "";
     }
 
     public BookingDTO(String subjectCode, String lectureName, String startTime, String endTime, String userName, String bookingID, String meetLink) {
@@ -97,5 +100,23 @@ public class BookingDTO {
     public void setMeetLink(String meetLink) {
         this.meetLink = meetLink;
     }
+
+    public String getFreeSlotID() {
+        return freeSlotID;
+    }
+
+    public void setFreeSlotID(String freeSlotID) {
+        this.freeSlotID = freeSlotID;
+    }
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
+    }
+
+   
 
 }

@@ -96,9 +96,44 @@
                 }
             }
         </style>
+        <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+        %>
         <script>
             function submitFormHomePage() {
                 var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            var userDTO = {
+                userID: "<%= us.getUserID()%>",
+                userName: "<%= us.getUserName()%>",
+                userEmail: "<%= us.getUserEmail()%>"
+            };
+            function showUserInfo() {
+                var userInfo = document.getElementById("user-info");
+                if (userInfo.style.display === "none" || userInfo.style.display === "") {
+                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                } else {
+                    userInfo.style.display = "none";
+                }
+
+                var userID = userDTO.userID;
+                var userName = userDTO.userName;
+                var userEmail = userDTO.userEmail;
+
+                Swal.fire({
+                    title: 'User Information',
+                    html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
+                            + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
+                });
+            }
+            function submitFormLogout() {
+                var form = document.querySelector('.logout form');
+                form.submit();
+            }
+            function submitFormViewRequest() {
+                var form = document.querySelector('.request form');
                 form.submit();
             }
         </script>
@@ -138,7 +173,7 @@
                     <div>
                         <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                              onclick="showUserInfo()" />
-                        <div id="user-info" style="display: none;">
+                        <div id="user-info" style="display: none; position: absolute">
                             <p id="user-id"> </p>
                             <p id="user-name"></p>
                             <p id="user-email"></p>
@@ -187,5 +222,6 @@
         <c:if test="${sessionScope.loginedUser == null || sessionScope.loginedUser.roleID != '2' }">
             <c:redirect url="LoginFeID.jsp"> </c:redirect>
         </c:if>
+        <% }%>
     </body>
 </html>

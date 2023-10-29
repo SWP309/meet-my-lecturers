@@ -146,7 +146,7 @@
                     event.preventDefault();
                 }
             }
-             function confirmCheckAttendanceLinkByStEt(event, freeSlotID) {
+            function confirmCheckAttendanceLinkByStEt(event, freeSlotID) {
                 var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
                 if (result) {
                     // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
@@ -164,7 +164,7 @@
                     event.preventDefault();
                 }
             }
-             function confirmCheckAttendanceLinkByAll(event, freeSlotID) {
+            function confirmCheckAttendanceLinkByAll(event, freeSlotID) {
                 var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
                 if (result) {
                     // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
@@ -182,7 +182,7 @@
                     event.preventDefault();
                 }
             }
-             function confirmCheckAttendanceLinkBySubjectCode(event, freeSlotID) {
+            function confirmCheckAttendanceLinkBySubjectCode(event, freeSlotID) {
                 var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
                 if (result) {
                     // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
@@ -200,7 +200,7 @@
                     event.preventDefault();
                 }
             }
-             function confirmCheckAttendanceLinkByNull(event, freeSlotID) {
+            function confirmCheckAttendanceLinkByNull(event, freeSlotID) {
                 var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
                 if (result) {
                     // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
@@ -344,12 +344,13 @@
                         <div>
                             <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                                  onclick="showUserInfo()" />
-                            <div id="user-info" style="display: none;">
+                            <div id="user-info" style="display: none; position: absolute;">
                                 <p id="user-id"> </p>
                                 <p id="user-name"></p>
                                 <p id="user-email"></p>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -358,26 +359,30 @@
                 <img class="back-icon" alt="" src="./public/request/back.svg" />
             </div>
 
-            <div class="row align-items-center" style="margin-top: -38%;">
-                <form action="MainController" method="POST">
-                    <div class="form-group">
-                        <input type="datetime-local" class="form-control" name="txtStartTime" value="${param.txtStartTime}">
+            <div class="container">
+                <div class="row align-items-center justify-content-center" style="margin-top: -44%;">
+                    <div>
+                        <form action="MainController" method="POST" class="d-flex justify-content-center">
+                            <div class="form-group">
+                                <input type="datetime-local" class="form-control" name="txtStartTime" value="${param.txtStartTime}">
+                            </div>
+                            <div class="form-group">
+                                <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchCSlot">Search</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}">
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchCSlot">Search</button>
-                    </div>
-                </form>
+                </div>
             </div>
 
 
             <!--  LIST OF THE PAGE -------------------------------------------------------------->
-            <div class="container mt-5" style="    margin-top: -22% !important;">
+            <div class="container mt-5" style="    margin-top: -44% !important;">
                 <div class="row justify-content-center mt-5 tableview">
                     <c:if test="${requestScope.LIST_CREATED_SLOT !=null}">
                         <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">
@@ -398,11 +403,11 @@
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
                                                     <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.endTime}"/>
                                                 </div>
-                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
 <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.meetLink}"/>-->
-                                                    <a class="ml-auto" href="https://${listCreatedSlot.meetLink}" onclick="confirmCheckAttendanceLink(event, '${listCreatedSlot.freeSlotID}')"> Link Meet</a>
+                                                    <a class="ml-auto " href="https://${listCreatedSlot.meetLink}" onclick="confirmCheckAttendanceLink(event, '${listCreatedSlot.freeSlotID}')"> Link Meet</a>
                                                 </div>
-                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
                                                     <input type="text" class="ml-auto specific-input" name="semesterID" value="${listCreatedSlot.semesterID}"/>
                                                 </div>
                                                 <div class="d-flex justify-content-between btn-book">
@@ -464,11 +469,11 @@
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
                                                             <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.endTime}"/>
                                                         </div>
-                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
 <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.meetLink}"/>-->
                                                             <a class="ml-auto" href="https://${searchByStEt.meetLink}" onclick="confirmCheckAttendanceLinkByStEt(event, '${searchByStEt.freeSlotID}')"> Link Meet</a>
                                                         </div>
-                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
                                                             <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchByStEt.semesterID}"/>
                                                         </div>
                                                         <div class="d-flex justify-content-between btn-book">
@@ -531,11 +536,11 @@
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
                                                                 <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.endTime}"/>
                                                             </div>
-                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
 <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.meetLink}"/>-->
                                                                 <a class="ml-auto" href="https://${searchByAll.meetLink}" onclick="confirmCheckAttendanceLinkByAll(event, '${searchByAll.freeSlotID}')"> Link Meet</a>
                                                             </div>
-                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>semesterID:</b></strong> 
                                                                 <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchByAll.semesterID}"/>
                                                             </div>
                                                             <div class="d-flex justify-content-between btn-book">
@@ -599,11 +604,11 @@
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
                                                                     <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.endTime}"/>
                                                                 </div>
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b >Link Meet:</b></strong> 
 <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.meetLink}"/>-->
                                                                     <a class="ml-auto" href="https://${searchBySubjectCode.meetLink}" onclick="confirmCheckAttendanceLinkBySubjectCode(event, '${searchBySubjectCode.freeSlotID}')"> Link Meet</a>
                                                                 </div>
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>semesterID:</b></strong> 
                                                                     <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchBySubjectCode.semesterID}"/>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between btn-book">
@@ -643,74 +648,6 @@
 
                                 </div>
                             </c:if>
-                        <!--     SEARCH BY NULL ---------------------------------------------------------->
-                        <c:if test="${empty param.txtStartTime and empty param.txtEndTime and empty param.txtSubjectCode}">
-                            <div class="container mt-5" style="    margin-top: -3% !important;">
-                                <div class="row justify-content-center mt-5">
-                                    <c:if test="${requestScope.SEARCH_CREATED_SLOT_BY_NULL !=null}">
-                                        <c:if test="${not empty requestScope.SEARCH_CREATED_SLOT_BY_NULL}">
-                                            <c:forEach var="searchByNull" varStatus="counter" items="${requestScope.SEARCH_CREATED_SLOT_BY_NULL}">
-                                                <div class="col-md-4">
-                                                    <div class="card" style="width: 364px; height:  242px; border-radius: 5%;">
-                                                        <div class="card-body">
-                                                            <form action="MainController" method="POST">
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByNull.subjectCode.trim()}"/>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
-                                                                    <span class="ml-auto">${searchByNull.lectureName}</span>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByNull.startTime}"/>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.endTime}"/>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-<!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.meetLink}"/>-->
-                                                                    <a class="ml-auto" href="https://${searchByNull.meetLink}" onclick="confirmCheckAttendanceLinkByNull(event, '${searchByNull.freeSlotID}')"> Link Meet</a>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchByNull.semesterID}"/>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between btn-book">
-
-                                                                    <div>
-                                                                        <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to hide this Free Slot')" href="MainController?action=hideFS&freeSlotID=${searchByNull.freeSlotID}">
-                                                                            <i class="material-icons">cancel</i>Hide
-                                                                        </a>
-                                                                        <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to delete this Free Slot')" href="MainController?action=deleteFS&freeSlotID=${searchByNull.freeSlotID}">
-                                                                            <i class="material-icons">delete</i>Delete
-                                                                        </a>
-                                                                    </div>
-                                                                    <div>
-
-                                                                        <a class="d-flex justify-content-between" style="text-decoration: none; gap: 2px; width: 11px; margin-left: 10px;" href="MainController?action=viewFS&freeSlotID=${searchByNull.freeSlotID}">
-                                                                            <i class="fas fa-search"></i>View
-                                                                        </a>
-                                                                        <form action="MainController" method="GET">
-                                                                            <input type="hidden" name="action" value="updateFS">
-                                                                            <input type="hidden" name="freeSlotID" value="${searchByNull.freeSlotID}">
-                                                                            <input type="hidden" name="subjectCode" value="${searchByNull.subjectCode.trim()}" required/>
-                                                                            <input type="hidden" name="startTime" value="${searchByNull.startTime}">
-                                                                            <input type="hidden" name="endTime" value="${searchByNull.endTime}">
-                                                                            <input type="hidden" name="semesterID" value="${searchByNull.semesterID}">
-                                                                            <button type="submit" style="display: flex; text-decoration: none; justify-content: center;">
-                                                                                <i class="material-icons">update</i>Update
-                                                                            </button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </c:forEach>
-                                        </c:if>
-                                    </c:if>          
-
-                                </div>
-                            </c:if>
-
 
                             <h3>
                                 <span class="error-message">
