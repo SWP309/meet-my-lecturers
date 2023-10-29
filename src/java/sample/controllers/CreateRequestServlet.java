@@ -1,4 +1,3 @@
-
 package sample.controllers;
 
 import java.io.IOException;
@@ -16,7 +15,9 @@ import javax.servlet.http.HttpSession;
 import sample.requests.RequestDAO;
 import sample.requests.RequestDTO;
 import sample.requests.RequestError;
+import sample.timetables.TimetableDAO;
 import sample.users.UserDTO;
+import services.Service;
 
 public class CreateRequestServlet extends HttpServlet {
 
@@ -27,7 +28,7 @@ public class CreateRequestServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        try{
+        try {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String lecturer = request.getParameter("txtLecturer");
@@ -54,11 +55,11 @@ public class CreateRequestServlet extends HttpServlet {
             calendar.add(Calendar.HOUR, 2);
             Date timeInFuture = calendar.getTime();
             //compare input time to current time
-            if (starts.before(timeInFuture) || ends.before(timeInFuture) ) {
+            if (starts.before(timeInFuture) || ends.before(timeInFuture)) {
                 checkValidate = false;
                 requestError.setCurrentDateError("- The start and end times must be in the future"
                         + " and at least 2 hours greater than the current time!!!");
-            } 
+            }
             //****check end time greater than start time
             if (ends.before(starts) || ends.equals(starts)) {
                 checkValidate = false;
@@ -98,6 +99,12 @@ public class CreateRequestServlet extends HttpServlet {
 //                        + "Please click View Timetable to check again!!!");
 //            }
 //            System.out.println("Check Timetable valid: " + checkValidate);
+            boolean checkTimetableDuplicate = Service.duplicateSlot(requestDTO);
+            if (checkTimetableDuplicate == false ) {
+                checkValidate = false;
+                requestError.setDuplicateTimetableError("- The time you entered overlaps with lecturer's timetable. "
+                        + "Please click View Timetable to check again!!!");
+            }
             request.setAttribute("REQUEST_ERROR", requestError);
             if (checkValidate) {
                 boolean checkCreated = requestDAO.createARequest(requestDTO);
@@ -107,10 +114,10 @@ public class CreateRequestServlet extends HttpServlet {
             }
         } catch (SQLException | ClassNotFoundException | ParseException ex) {
             log("Error at CreateRequestServlet" + ex.toString());
-        }  finally {
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

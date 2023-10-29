@@ -16,10 +16,6 @@
                 var form = document.querySelector('.searchfunction form');
                 form.submit();
             }
-            function submitFormLogout() {
-                var form = document.querySelector('.logout form');
-                form.submit();
-            }
         </script>
     </head>
     <body>
@@ -40,15 +36,12 @@
                                 </div>
                                 <div class="div add-new-user">Add new User</div>
                             </div>
-                            <div class="frame-div logout" onclick="submitFormLogout()">
-                                <form action="MainController" method="POST" style="display: none;">
-                                    <input type="hidden" name="action" value="Logout" />
-                                </form>
+                            <div class="frame-div">
                                 <div class="logout-wrapper">
-                                    <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                                    <img class="logout-icon1" alt="" src="./public/UsersView/logout1.svg" />
                                 </div>
-                                <div class="request">
-                                    <p class="logout1" style=" margin-top: 2px">Logout</p>
+                                <div class="div">
+                                    <p class="logout2">Logout</p>
                                 </div>
                             </div>
                         </div>
@@ -183,9 +176,11 @@
                                     <form action="MainController" method="POST">
                                         <td>${status.count}</td>
                                         <td>
+                                            <c:set var="breakLoop" value="false" />
                                             <c:forEach var="role" items="${requestScope.ROLES_BY_ALL}">
-                                                <c:if test="${role.roleID eq user.roleID}">
+                                                <c:if test="${!breakLoop and role.roleID eq user.roleID}">
                                                     ${role.roleName}
+                                                    <c:set var="breakLoop" value="true" />
                                                 </c:if>
                                             </c:forEach>
                                         </td>

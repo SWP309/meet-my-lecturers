@@ -16,6 +16,8 @@ public class ViewCreatedSlotDTO {
     private String startTime;
     private String endTime;
     private String freeSlotID;
+    private String semesterID;
+    private String meetLink;
 
     public ViewCreatedSlotDTO() {
         this.subjectCode = "";
@@ -23,14 +25,18 @@ public class ViewCreatedSlotDTO {
         this.startTime = null;
         this.endTime = null;
         this.freeSlotID = "";
+        this.semesterID = "";
+        this.meetLink = "";
     }
 
-    public ViewCreatedSlotDTO(String subjectCode, String lectureName, String startTime, String endTime, String freeSlotID) {
+    public ViewCreatedSlotDTO(String subjectCode, String lectureName, String startTime, String endTime, String freeSlotID, String semesterID, String meetLink) {
         this.subjectCode = subjectCode;
         this.lectureName = lectureName;
         this.startTime = startTime;
         this.endTime = endTime;
         this.freeSlotID = freeSlotID;
+        this.semesterID = semesterID;
+        this.meetLink = meetLink;
     }
 
     public String getSubjectCode() {
@@ -72,6 +78,25 @@ public class ViewCreatedSlotDTO {
     public void setFreeSlotID(String freeSlotID) {
         this.freeSlotID = freeSlotID;
     }
+
+    public String getSemesterID() {
+        return semesterID;
+    }
+
+    public void setSemesterID(String semesterID) {
+        this.semesterID = semesterID;
+    }
+
+    public String getMeetLink() {
+        return meetLink;
+    }
+
+    public void setMeetLink(String meetLink) {
+        this.meetLink = meetLink;
+    }
+
+   
+   
 
    
     

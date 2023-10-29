@@ -201,33 +201,24 @@
             </div>
 
 
-            <div class="container mt-5" style="    margin-top: -33% !important;">
-                <div class="row justify-content-center mt-5">
-                    <c:if test="${requestScope.LIST_CREATED_SLOT_SUB !=null}">
-                        <c:if test="${not empty requestScope.LIST_CREATED_SLOT_SUB}">
-                            <c:forEach var="listCreatedSlotSub" varStatus="counter" items="${requestScope.LIST_CREATED_SLOT_SUB}">
-                                <div class="col-md-4">
-                                    <div class="card" style="width: 340px; height: 192px; border-radius: 5%;">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject Code:</b></strong> <span class="ml-auto">${listCreatedSlotSub.subjectCode.trim()}</span></div>
-                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's Name:</b></strong> <span class="ml-auto">${listCreatedSlotSub.lectureName}</span></div>
-                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${listCreatedSlotSub.startTime}</span></div>
-                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${listCreatedSlotSub.endTime}</span></div>
-                                            <div class="d-flex justify-content-between btn-book">
-                                                <!--                                             Added d-flex justify-content-between to create a flex container -->
-                                                <div>
-                                                    <a  class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to Unhide this Free Slot')"
-                                                        href="MainController?action=UnhideFS&freeSlotID=${listCreatedSlotSub.freeSlotID}">
-                                                        <i class="material-icons">cancel</i>Unhide</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </c:forEach>
-                        </c:if>
-                    </c:if>          
-
+            <div class="container">
+                <div class="row align-items-center justify-content-center" style="margin-top: -44%;">
+                    <div>
+                        <form action="MainController" method="POST" class="d-flex justify-content-center">
+                            <div class="form-group">
+                                <input type="datetime-local" class="form-control" name="txtStartTime" value="${param.txtStartTime}">
+                            </div>
+                            <div class="form-group">
+                                <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchCSlot">Search</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 

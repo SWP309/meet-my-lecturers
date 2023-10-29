@@ -22,7 +22,7 @@ public class CreatedSlotController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        try {
+             try {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
@@ -31,7 +31,7 @@ public class CreatedSlotController extends HttpServlet {
             if (listCreatedSlot.size() > 0) {
                 request.setAttribute("LIST_CREATED_SLOT", listCreatedSlot);
                 url = SUCCESS;
-            }
+                          }
         } catch (Exception e) {
             log("Error at SearchController: " + e.toString());
         } finally {
