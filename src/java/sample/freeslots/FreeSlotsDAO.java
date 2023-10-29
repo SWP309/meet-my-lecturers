@@ -83,6 +83,7 @@ public class FreeSlotsDAO {
             "FROM FreeSlots fs\n" +
             "JOIN Users lec ON fs.lecturerID = lec.userID\n" +
             "WHERE fs.status = 1";
+
     
 
     public boolean createFreeSlot(FreeSlotsDTO freeSlotsDTO) throws SQLException {
