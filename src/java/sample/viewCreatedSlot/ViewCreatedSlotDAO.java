@@ -71,7 +71,7 @@ public class ViewCreatedSlotDAO {
 
     private static String convertDateToString(Timestamp sqlTime) {
         // Sử dụng SimpleDateFormat để định dạng ngày giờ
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         // Sử dụng phương thức format để chuyển đổi Time thành String
         return dateFormat.format(sqlTime);
@@ -447,7 +447,7 @@ public class ViewCreatedSlotDAO {
         PreparedStatement ptm = null;
 
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             Date startTime = simpleDateFormat.parse(listCreatedSlot.getStartTime());
             Date endTime = simpleDateFormat.parse(listCreatedSlot.getEndTime());
             conn = DBUtils.getConnection();

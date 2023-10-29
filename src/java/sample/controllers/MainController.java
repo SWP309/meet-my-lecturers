@@ -25,6 +25,8 @@ public class MainController extends HttpServlet {
 
     private static final String STUDENT_PAGE = "StudentPage";
     private static final String STUDENT_PAGE_ACTION = "StudentHome_1.jsp";
+    private static final String BOOKING_FREE_SLOT = "BookFreeSlot";
+    private static final String BOOKING_FREE_SLOT_SERVLET = "BookFSlotServlet";
 
     private static final String LECTURER_PAGE = "LecturerPage";
     private static final String CREATE_FREE_SLOT_ACTION = "createFreeSlotAction";
@@ -112,6 +114,9 @@ public class MainController extends HttpServlet {
 
     private static final String SEARCH_FREE_SLOT_ACTION = "SearchFSlot";
     private static final String SEARCH_FREE_SLOT_SERVLET = "SearchFreeSlotServlet";
+    
+    private static final String SEARCH_BOOKED_SLOT_ACTION = "searchBSlot";
+    private static final String SEARCH_BOOKED_SLOT_SERVLET = "SearchBookedServlet";
 
     private static final String BACK = "back";
 
@@ -209,6 +214,10 @@ public class MainController extends HttpServlet {
                 url = CHECK_ATTENDANCE_SERVLET_STUDENT;
             } else if (CHECK_ATTENDANCE_ACTION_LECTURER.equals(action)) {
                 url = CHECK_ATTENDANCE_SERVLET_LECTURER;
+            } else if (BOOKING_FREE_SLOT.equals(action)) {
+                url = BOOKING_FREE_SLOT_SERVLET;
+            } else if (SEARCH_BOOKED_SLOT_ACTION.equals(action)) {
+                url = SEARCH_BOOKED_SLOT_SERVLET;
             }
 
         } catch (Exception e) {
