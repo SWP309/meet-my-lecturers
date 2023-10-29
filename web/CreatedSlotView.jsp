@@ -410,6 +410,9 @@
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
                                                     <input type="text" class="ml-auto specific-input" name="semesterID" value="${listCreatedSlot.semesterID}"/>
                                                 </div>
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
+                                                            ${listCreatedSlot.joinedMembers}/${listCreatedSlot.capacity}
+                                                </div>
                                                 <div class="d-flex justify-content-between btn-book">
 
                                                     <div>
@@ -475,6 +478,9 @@
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
                                                             <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchByStEt.semesterID}"/>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
+                                                            ${searchByStEt.joinedMembers}/${searchByStEt.capacity}
                                                         </div>
                                                         <div class="d-flex justify-content-between btn-book">
 
@@ -543,6 +549,9 @@
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>semesterID:</b></strong> 
                                                                 <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchByAll.semesterID}"/>
                                                             </div>
+                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
+                                                                 ${searchByAll.joinedMembers}/${searchByAll.capacity}
+                                                            </div>
                                                             <div class="d-flex justify-content-between btn-book">
 
                                                                 <div>
@@ -610,6 +619,9 @@
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>semesterID:</b></strong> 
                                                                     <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchBySubjectCode.semesterID}"/>
+                                                                </div>
+                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
+                                                                    ${searchBySubjectCode.joinedMembers}/${searchBySubjectCode.capacity}
                                                                 </div>
                                                                 <div class="d-flex justify-content-between btn-book">
 
