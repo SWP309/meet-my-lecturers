@@ -56,6 +56,7 @@
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             if (us != null) {
+                ViewCreatedSlotDTO listCreatedSlot = (ViewCreatedSlotDTO) request.getAttribute("listCreatedSlot");
 
         %>
         <script>
@@ -118,12 +119,102 @@
                 if (result) {
                     // N?u ng??i dùng ch?n OK, chuy?n ??n trang MainController ?? x? lý hành ??ng "cancel".
                     // Ví d?:
-                    window.location.href = "MainController?action=delete&freeSlotID=2";
+                    window.location.href = "MainController?action=delete&freeSlotID=" + listCreatedSlot.freeSlotID;
 //                   window.location.href = "MainController?action=delete&freeSlotID=" + document.querySelector('[name="freeSlotID"]').value;
                 } else {
                     // N?u ng??i dùng ch?n Cancel, không làm gì c?.
 //                    alert("Booking cancel canceled!"); // Hi?n th? thông báo cho ng??i dùng
                     // N?u ng??i dùng ch?n Cancel, ng?n ch?n chuy?n h??ng trang m?c ??nh sau ?ó.
+                    event.preventDefault();
+                }
+            }
+            function confirmCheckAttendanceLink(event, freeSlotID) {
+                var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
+                if (result) {
+                    // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
+                    var xhr = new XMLHttpRequest();
+                    var url = "MainController?action=AttendanceLinkLecturer&freeSlotID=" + freeSlotID;
+                    xhr.open("POST", url, true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            // X? lý k?t qu? tr? v? n?u c?n
+                        }
+                    };
+                    xhr.send();
+                } else {
+                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
+                    event.preventDefault();
+                }
+            }
+            function confirmCheckAttendanceLinkByStEt(event, freeSlotID) {
+                var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
+                if (result) {
+                    // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
+                    var xhr = new XMLHttpRequest();
+                    var url = "MainController?action=AttendanceLinkLecturer&freeSlotID=" + freeSlotID;
+                    xhr.open("POST", url, true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            // X? lý k?t qu? tr? v? n?u c?n
+                        }
+                    };
+                    xhr.send();
+                } else {
+                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
+                    event.preventDefault();
+                }
+            }
+            function confirmCheckAttendanceLinkByAll(event, freeSlotID) {
+                var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
+                if (result) {
+                    // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
+                    var xhr = new XMLHttpRequest();
+                    var url = "MainController?action=AttendanceLinkLecturer&freeSlotID=" + freeSlotID;
+                    xhr.open("POST", url, true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            // X? lý k?t qu? tr? v? n?u c?n
+                        }
+                    };
+                    xhr.send();
+                } else {
+                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
+                    event.preventDefault();
+                }
+            }
+            function confirmCheckAttendanceLinkBySubjectCode(event, freeSlotID) {
+                var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
+                if (result) {
+                    // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
+                    var xhr = new XMLHttpRequest();
+                    var url = "MainController?action=AttendanceLinkLecturer&freeSlotID=" + freeSlotID;
+                    xhr.open("POST", url, true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            // X? lý k?t qu? tr? v? n?u c?n
+                        }
+                    };
+                    xhr.send();
+                } else {
+                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
+                    event.preventDefault();
+                }
+            }
+            function confirmCheckAttendanceLinkByNull(event, freeSlotID) {
+                var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
+                if (result) {
+                    // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
+                    var xhr = new XMLHttpRequest();
+                    var url = "MainController?action=AttendanceLinkLecturer&freeSlotID=" + freeSlotID;
+                    xhr.open("POST", url, true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            // X? lý k?t qu? tr? v? n?u c?n
+                        }
+                    };
+                    xhr.send();
+                } else {
+                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
                     event.preventDefault();
                 }
             }
@@ -134,7 +225,7 @@
                 position: relative;
             }
 
-            input[type="text"] {
+            .specific-input{
                 /*                width: 100%;
                                 box-sizing: border-box;
                                 position: absolute;
@@ -151,6 +242,51 @@
                 border: none; /* Lo?i b? vi?n */
                 background-color: white;
                 color: #007bff;
+            }
+            .card-body > div {
+                margin-bottom: 0.2rem;
+            }
+
+            .card-body > .btn-book {
+                margin-top: 1rem;
+            }
+
+            .form-group {
+                margin: 0.4rem;
+                border-radius: 35px;
+            }
+
+            .form-control {
+                border-radius: 35px;
+            }
+
+            .btn-book > .btn {
+                border-radius: 15px;
+                border: 1px solid black;
+            }
+
+            .cus {
+                background-color: #f27125;
+                margin: 0 0.5rem;
+                border-radius: 5px;
+                color: #fff!important;
+            }
+
+            .text-black {
+                color: #333!important;
+                font-size: 18px;
+            }
+
+            .navbar {
+                padding: 2rem;
+                border-bottom: 1px solid black;
+            }
+
+            @media screen and (max-width: 980px) {
+                .cus {
+                    background: none!important;
+                    color: #333!important;
+                }
             }
         </style>
 
@@ -222,26 +358,56 @@
                 <img class="back-icon" alt="" src="./public/request/back.svg" />
             </div>
 
-            <div class="container mt-5" style="    margin-top: -33% !important;">
-                <div class="row justify-content-center mt-5">
+            <div class="container">
+                <div class="row align-items-center justify-content-center" style="margin-top: -44%;">
+                    <div>
+                        <form action="MainController" method="POST" class="d-flex justify-content-center">
+                            <div class="form-group">
+                                <input type="datetime-local" class="form-control" name="txtStartTime" value="${param.txtStartTime}">
+                            </div>
+                            <div class="form-group">
+                                <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchCSlot">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--  LIST OF THE PAGE -------------------------------------------------------------->
+            <div class="container mt-5" style="    margin-top: -44% !important;">
+                <div class="row justify-content-center mt-5 tableview">
                     <c:if test="${requestScope.LIST_CREATED_SLOT !=null}">
                         <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">
                             <c:forEach var="listCreatedSlot" varStatus="counter" items="${requestScope.LIST_CREATED_SLOT}">
                                 <div class="col-md-4">
-                                    <div class="card" style="width: 357px; height: 211px; border-radius: 5%;">
+                                    <div class="card" style="width: 357px; height: 242px; border-radius: 5%;">
                                         <div class="card-body">
                                             <form action="MainController" method="POST">
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                    <input type="text" class="ml-auto" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}"/>
+                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}"/>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
                                                     <span class="ml-auto">${listCreatedSlot.lectureName}</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                    <input type="text" class="ml-auto" name="startTime" value="${listCreatedSlot.startTime}"/>
+                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${listCreatedSlot.startTime}"/>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                    <input type="text" class="ml-auto" name="endTime" value="${listCreatedSlot.endTime}"/>
+                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.endTime}"/>
+                                                </div>
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+<!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.meetLink}"/>-->
+                                                    <a class="ml-auto" href="https://${listCreatedSlot.meetLink}" onclick="confirmCheckAttendanceLink(event, '${listCreatedSlot.freeSlotID}')"> Link Meet</a>
+                                                </div>
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                    <input type="text" class="ml-auto specific-input" name="semesterID" value="${listCreatedSlot.semesterID}"/>
                                                 </div>
                                                 <div class="d-flex justify-content-between btn-book">
 
@@ -264,7 +430,8 @@
                                                             <input type="hidden" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}" required/>
                                                             <input type="hidden" name="startTime" value="${listCreatedSlot.startTime}">
                                                             <input type="hidden" name="endTime" value="${listCreatedSlot.endTime}">
-                                                            <button type="submit" style="display: flex; text-decoration: none; justify-content: center;">
+                                                            <input type="hidden" name="semesterID" value="${searchByNull.semesterID}">
+                                                            <button type="submit" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
                                                                 <i class="material-icons">update</i>Update
                                                             </button>
                                                         </form>
@@ -278,25 +445,292 @@
                     </c:if>          
 
                 </div>
+                <!--     SEARCH BY ST AND ET ---------------------------------------------------------->
+                <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and empty param.txtSubjectCode}">
+                    <div class="container mt-5" style="    margin-top: -3% !important;">
+                        <div class="row justify-content-center mt-5">
+                            <c:if test="${requestScope.SEARCH_FREE_SLOT_BY_ST_ET !=null}">
+                                <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_ST_ET}">
+                                    <c:forEach var="searchByStEt" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_ST_ET}">
+                                        <div class="col-md-4">
+                                            <div class="card" style="width: 364px; height: 242px; border-radius: 5%;">
+                                                <div class="card-body">
+                                                    <form action="MainController" method="POST">
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
+                                                            <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByStEt.subjectCode.trim()}"/>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
+                                                            <span class="ml-auto">${searchByStEt.lectureName}</span>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
+                                                            <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEt.startTime}"/>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                            <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.endTime}"/>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+<!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.meetLink}"/>-->
+                                                            <a class="ml-auto" href="https://${searchByStEt.meetLink}" onclick="confirmCheckAttendanceLinkByStEt(event, '${searchByStEt.freeSlotID}')"> Link Meet</a>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                            <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchByStEt.semesterID}"/>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between btn-book">
+
+                                                            <div>
+                                                                <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to hide this Free Slot')" href="MainController?action=hideFS&freeSlotID=${searchByStEt.freeSlotID}">
+                                                                    <i class="material-icons">cancel</i>Hide
+                                                                </a>
+                                                                <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to delete this Free Slot')" href="MainController?action=deleteFS&freeSlotID=${searchByStEt.freeSlotID}">
+                                                                    <i class="material-icons">delete</i>Delete
+                                                                </a>
+                                                            </div>
+                                                            <div>
+
+                                                                <a class="d-flex justify-content-between" style="text-decoration: none; gap: 2px; width: 11px; margin-left: 10px;" href="MainController?action=viewFS&freeSlotID=${searchByStEt.freeSlotID}">
+                                                                    <i class="fas fa-search"></i>View
+                                                                </a>
+                                                                <form action="MainController" method="GET">
+                                                                    <input type="hidden" name="action" value="updateFS">
+                                                                    <input type="hidden" name="freeSlotID" value="${searchByStEt.freeSlotID}">
+                                                                    <input type="hidden" name="subjectCode" value="${searchByStEt.subjectCode.trim()}" required/>
+                                                                    <input type="hidden" name="startTime" value="${searchByStEt.startTime}">
+                                                                    <input type="hidden" name="endTime" value="${searchByStEt.endTime}">
+                                                                    <input type="hidden" name="semesterID" value="${searchByNull.semesterID}">
+                                                                    <button type="submit" style="display: flex; text-decoration: none; justify-content: center; background-color: white;">
+                                                                        <i class="material-icons">update</i>Update
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </c:if>
+                            </c:if>          
+
+                        </div>
+                    </c:if>
+                    <!--     SEARCH BY ALL ---------------------------------------------------------->
+                    <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and  not empty param.txtSubjectCode}">
+                        <div class="container mt-5" style="    margin-top: -3% !important;">
+                            <div class="row justify-content-center mt-5">
+                                <c:if test="${requestScope.SEARCH_FREE_SLOT_BY_ALL !=null}">
+                                    <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_ALL}">
+                                        <c:forEach var="searchByAll" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_ALL}">
+                                            <div class="col-md-4">
+                                                <div class="card" style="width: 364px; height: 242px; border-radius: 5%;">
+                                                    <div class="card-body">
+                                                        <form action="MainController" method="POST">
+                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
+                                                                <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByAll.subjectCode.trim()}"/>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
+                                                                <span class="ml-auto">${searchByAll.lectureName}</span>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
+                                                                <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByAll.startTime}"/>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                                <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.endTime}"/>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+<!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.meetLink}"/>-->
+                                                                <a class="ml-auto" href="https://${searchByAll.meetLink}" onclick="confirmCheckAttendanceLinkByAll(event, '${searchByAll.freeSlotID}')"> Link Meet</a>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                                <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchByAll.semesterID}"/>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between btn-book">
+
+                                                                <div>
+                                                                    <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to hide this Free Slot')" href="MainController?action=hideFS&freeSlotID=${searchByAll.freeSlotID}">
+                                                                        <i class="material-icons">cancel</i>Hide
+                                                                    </a>
+                                                                    <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to delete this Free Slot')" href="MainController?action=deleteFS&freeSlotID=${searchByAll.freeSlotID}">
+                                                                        <i class="material-icons">delete</i>Delete
+                                                                    </a>
+                                                                </div>
+                                                                <div>
+
+                                                                    <a class="d-flex justify-content-between" style="text-decoration: none; gap: 2px; width: 11px; margin-left: 10px;" href="MainController?action=viewFS&freeSlotID=${searchByAll.freeSlotID}">
+                                                                        <i class="fas fa-search"></i>View
+                                                                    </a>
+                                                                    <form action="MainController" method="GET">
+                                                                        <input type="hidden" name="action" value="updateFS">
+                                                                        <input type="hidden" name="freeSlotID" value="${searchByAll.freeSlotID}">
+                                                                        <input type="hidden" name="subjectCode" value="${searchByAll.subjectCode.trim()}" required/>
+                                                                        <input type="hidden" name="startTime" value="${searchByAll.startTime}">
+                                                                        <input type="hidden" name="endTime" value="${searchByAll.endTime}">
+                                                                        <input type="hidden" name="semesterID" value="${searchByNull.semesterID}">
+                                                                        <button type="submit" style="display: flex; text-decoration: none; justify-content: center; background-color: white;">
+                                                                            <i class="material-icons">update</i>Update
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+                                    </c:if>
+                                </c:if>          
+
+                            </div>
+                        </c:if>
+
+                        <!--     SEARCH BY subjectCode ---------------------------------------------------------->
+                        <c:if test="${empty param.txtStartTime and empty param.txtEndTime and not empty param.txtSubjectCode}">
+                            <div class="container mt-5" style="    margin-top: -3% !important;">
+                                <div class="row justify-content-center mt-5">
+                                    <c:if test="${requestScope.SEARCH_FREE_SLOT_BY_SUBJECT !=null}">
+                                        <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_SUBJECT}">
+                                            <c:forEach var="searchBySubjectCode" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_SUBJECT}">
+                                                <div class="col-md-4">
+                                                    <div class="card" style="width: 364px; height:  242px; border-radius: 5%;">
+                                                        <div class="card-body">
+                                                            <form action="MainController" method="POST">
+                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
+                                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchBySubjectCode.subjectCode.trim()}"/>
+                                                                </div>
+                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
+                                                                    <span class="ml-auto">${searchBySubjectCode.lectureName}</span>
+                                                                </div>
+                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
+                                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${searchBySubjectCode.startTime}"/>
+                                                                </div>
+                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.endTime}"/>
+                                                                </div>
+                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+<!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.meetLink}"/>-->
+                                                                    <a class="ml-auto" href="https://${searchBySubjectCode.meetLink}" onclick="confirmCheckAttendanceLinkBySubjectCode(event, '${searchBySubjectCode.freeSlotID}')"> Link Meet</a>
+                                                                </div>
+                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                                    <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchBySubjectCode.semesterID}"/>
+                                                                </div>
+                                                                <div class="d-flex justify-content-between btn-book">
+
+                                                                    <div>
+                                                                        <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to hide this Free Slot')" href="MainController?action=hideFS&freeSlotID=${searchBySubjectCode.freeSlotID}">
+                                                                            <i class="material-icons">cancel</i>Hide
+                                                                        </a>
+                                                                        <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to delete this Free Slot')" href="MainController?action=deleteFS&freeSlotID=${searchBySubjectCode.freeSlotID}">
+                                                                            <i class="material-icons">delete</i>Delete
+                                                                        </a>
+                                                                    </div>
+                                                                    <div>
+
+                                                                        <a class="d-flex justify-content-between" style="text-decoration: none; gap: 2px; width: 11px; margin-left: 10px;" href="MainController?action=viewFS&freeSlotID=${searchBySubjectCode.freeSlotID}">
+                                                                            <i class="fas fa-search"></i>View
+                                                                        </a>
+                                                                        <form action="MainController" method="GET">
+                                                                            <input type="hidden" name="action" value="updateFS">
+                                                                            <input type="hidden" name="freeSlotID" value="${searchBySubjectCode.freeSlotID}">
+                                                                            <input type="hidden" name="subjectCode" value="${searchBySubjectCode.subjectCode.trim()}" required/>
+                                                                            <input type="hidden" name="startTime" value="${searchBySubjectCode.startTime}">
+                                                                            <input type="hidden" name="endTime" value="${searchBySubjectCode.endTime}">
+                                                                            <input type="hidden" name="semesterID" value="${searchByNull.semesterID}">
+                                                                            <button type="submit" style="display: flex; text-decoration: none; justify-content: center;">
+                                                                                <i class="material-icons">update</i>Update
+                                                                            </button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </c:forEach>
+                                        </c:if>
+                                    </c:if>          
+
+                                </div>
+                            </c:if>
+                            <!--     SEARCH BY NULL ---------------------------------------------------------->
+                            <c:if test="${empty param.txtStartTime and empty param.txtEndTime and empty param.txtSubjectCode}">
+                                <div class="container mt-5" style="    margin-top: -3% !important;">
+                                    <div class="row justify-content-center mt-5">
+                                        <c:if test="${requestScope.SEARCH_CREATED_SLOT_BY_NULL !=null}">
+                                            <c:if test="${not empty requestScope.SEARCH_CREATED_SLOT_BY_NULL}">
+                                                <c:forEach var="searchByNull" varStatus="counter" items="${requestScope.SEARCH_CREATED_SLOT_BY_NULL}">
+                                                    <div class="col-md-4">
+                                                        <div class="card" style="width: 364px; height:  242px; border-radius: 5%;">
+                                                            <div class="card-body">
+                                                                <form action="MainController" method="POST">
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
+                                                                        <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByNull.subjectCode.trim()}"/>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
+                                                                        <span class="ml-auto">${searchByNull.lectureName}</span>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
+                                                                        <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByNull.startTime}"/>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                                        <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.endTime}"/>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+    <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.meetLink}"/>-->
+                                                                        <a class="ml-auto" href="https://${searchByNull.meetLink}" onclick="confirmCheckAttendanceLinkByNull(event, '${searchByNull.freeSlotID}')"> Link Meet</a>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                                        <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchByNull.semesterID}"/>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between btn-book">
+
+                                                                        <div>
+                                                                            <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to hide this Free Slot')" href="MainController?action=hideFS&freeSlotID=${searchByNull.freeSlotID}">
+                                                                                <i class="material-icons">cancel</i>Hide
+                                                                            </a>
+                                                                            <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to delete this Free Slot')" href="MainController?action=deleteFS&freeSlotID=${searchByNull.freeSlotID}">
+                                                                                <i class="material-icons">delete</i>Delete
+                                                                            </a>
+                                                                        </div>
+                                                                        <div>
+
+                                                                            <a class="d-flex justify-content-between" style="text-decoration: none; gap: 2px; width: 11px; margin-left: 10px;" href="MainController?action=viewFS&freeSlotID=${searchByNull.freeSlotID}">
+                                                                                <i class="fas fa-search"></i>View
+                                                                            </a>
+                                                                            <form action="MainController" method="GET">
+                                                                                <input type="hidden" name="action" value="updateFS">
+                                                                                <input type="hidden" name="freeSlotID" value="${searchByNull.freeSlotID}">
+                                                                                <input type="hidden" name="subjectCode" value="${searchByNull.subjectCode.trim()}" required/>
+                                                                                <input type="hidden" name="startTime" value="${searchByNull.startTime}">
+                                                                                <input type="hidden" name="endTime" value="${searchByNull.endTime}">
+                                                                                <input type="hidden" name="semesterID" value="${searchByNull.semesterID}">
+                                                                                <button type="submit" style="display: flex; text-decoration: none; justify-content: center;">
+                                                                                    <i class="material-icons">update</i>Update
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:forEach>
+                                            </c:if>
+                                        </c:if>          
+
+                                    </div>
+                                </c:if>
 
 
+                                <h3>
+                                    <span class="error-message">
+                                        ${requestScope.ERROR}
+                                    </span>
+                                </h3> 
 
+                                <script>
+                                    // L?y thông tin l?i t? bi?n requestScope.ERROR
+                                    var errorMessage = "${requestScope.ERROR}";
 
-                <h3>
-                    <span class="error-message">
-                        ${requestScope.ERROR}
-                    </span>
-                </h3> 
-
-                <script>
-                    // L?y thông tin l?i t? bi?n requestScope.ERROR
-                    var errorMessage = "${requestScope.ERROR}";
-
-                    // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
-                    if (errorMessage.trim() !== "") {
-                        alert(errorMessage);
-                    }
-                </script>
-                <% }%>
-                </body>
-                </html>
+                                    // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+                                    if (errorMessage.trim() !== "") {
+                                        alert(errorMessage);
+                                    }
+                                </script>
+                                <% }%>
+                                </body>
+                                </html>

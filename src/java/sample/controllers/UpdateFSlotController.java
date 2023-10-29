@@ -42,12 +42,14 @@ public class UpdateFSlotController extends HttpServlet {
             String startTime = request.getParameter("startTime");
             String endTime = request.getParameter("endTime");
             String freeSlotID = request.getParameter("freeSlotID");
+            String semesterID = request.getParameter("semesterID");
             System.out.println(subjectCode);
             ViewCreatedSlotDTO dto = new ViewCreatedSlotDTO();
             dto.setStartTime(startTime);
             dto.setEndTime(endTime);
             dto.setSubjectCode(subjectCode);
             dto.setFreeSlotID(freeSlotID);
+            dto.setSemesterID(semesterID);
             if (freeSlotID != null) {
                 boolean checkUpdate = dao.update(dto);
                 List<ViewCreatedSlotDTO> listbooking = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
@@ -60,6 +62,9 @@ public class UpdateFSlotController extends HttpServlet {
 //                        System.out.println("list booking is null");
                         request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
                     }
+                } else { 
+                     request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
+                    
                 }
             }
         } catch (Exception e) {

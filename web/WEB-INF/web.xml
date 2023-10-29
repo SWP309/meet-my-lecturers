@@ -68,10 +68,14 @@
         <servlet-name>SearchFreeSlotServlet</servlet-name>
         <servlet-class>sample.controllers.SearchFreeSlotServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>CreateFreeSlotServlet</servlet-name>
-        <url-pattern>/newfreeslot</url-pattern>
-    </servlet-mapping>
+    <servlet>
+        <servlet-name>CheckAttendanceBookingView</servlet-name>
+        <servlet-class>sample.controllers.CheckAttendanceBookingView</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchCreateSlotServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchCreateSlotServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>ViewStudentSlotController</servlet-name>
         <servlet-class>sample.controllers.ViewStudentSlotController</servlet-class>
@@ -80,10 +84,6 @@
         <servlet-name>UpdateFSlotController</servlet-name>
         <servlet-class>sample.controllers.UpdateFSlotController</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>CreatedSlotController</servlet-name>
-        <url-pattern>/CreatedSlotController</url-pattern>
-    </servlet-mapping>
     <servlet>
         <servlet-name>ViewLecturerServlet</servlet-name>
         <servlet-class>sample.controllers.ViewLecturerServlet</servlet-class>
@@ -104,6 +104,18 @@
         <servlet-name>UpdateUserServlet</servlet-name>
         <servlet-class>sample.controllers.UpdateUserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CheckAttendanceCreateSlot</servlet-name>
+        <servlet-class>sample.controllers.CheckAttendanceCreateSlot</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateFreeSlotServlet</servlet-name>
+        <url-pattern>/newfreeslot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreatedSlotController</servlet-name>
+        <url-pattern>/CreatedSlotController</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -192,10 +204,20 @@
         <servlet-name>SearchFreeSlotServlet</servlet-name>
         <url-pattern>/SearchFreeSlotServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckAttendanceBookingView</servlet-name>
+        <url-pattern>/CheckAttendanceBookingView</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchCreateSlotServlet</servlet-name>
+        <url-pattern>/SearchCreateSlotServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckAttendanceCreateSlot</servlet-name>
+        <url-pattern>/CheckAttendanceCreateSlot</url-pattern>
+    </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>MainController</welcome-file>
