@@ -134,7 +134,7 @@
                 Swal.fire({
                     title: 'User Information',
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
-                            + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
+                            + userName + '<br><b style="color: red;">User Email: </b>' + userEmail
                 });
             }
         </script>
@@ -158,13 +158,13 @@
                     <div class="frame-group">
                         <div class="frame-div bookingview" style=" cursor: pointer" onclick="submitForm()" id="booking-view-div">
                             <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="ViewBooking" />
+                                <input type="hidden" name="action" value="ViewRequestStatus" />
                             </form>
                             <div class="bookedslot-wrapper">
                                 <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
                                 <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
                             </div>
-                            <div class="view-booking" >View Booking</div>
+                            <div class="view-booking" >View Request Status</div>
                         </div>
                         <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()" style=" width: 34%;">
                             <form action="MainController" method="POST">
@@ -219,10 +219,6 @@
                             <input type="text" class="form-control"  id="txtLecturer"  name="txtLecturer" value="${param.txtLecturer}" placeholder="GVxxxx" required=""
                                    pattern="^GV[0-9]{4}$">
                         </div>
-
-                        <!--<a class="btn btn-primary col-sm-2" href="ViewTimetableServlet?txtLecturer={param.txtLecturer}&txtSemester={param.txtSemester}">View Timetable</a>-->
-<!--                        <input type="hidden" name="txtSemester" value="{param.txtSemester}">
-                        <input type="hidden" name="txtLecturer" value="{param.txtLecturer}">-->
                             <button class="btn btn-primary col-sm-2" type="submit" name="action" value="ViewTimetable">View Timetable</button>
                         
                     </div>
