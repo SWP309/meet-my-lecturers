@@ -37,7 +37,6 @@ public class CreateRequestServlet extends HttpServlet {
             String endTime = request.getParameter("txtEndTime");
             String description = request.getParameter("txtDescription");
             String semesterID = request.getParameter("txtSemester");
-            System.out.println(semesterID);
             RequestDAO requestDAO = new RequestDAO();
             RequestDTO requestDTO = new RequestDTO(semesterID, 2, subjectCode, startTime, endTime, description, us.getUserID(), lecturer, semesterID);
             RequestError requestError = new RequestError();

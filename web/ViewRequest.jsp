@@ -168,7 +168,7 @@
                         <div style="display: flex;
                              justify-content: center;
                              margin: auto;
-                             margin-top: 10%;">
+                             margin-top: 6%;">
                             <table border="1" class="table table-hover table-primary table-rounded">
                                 <thead class="table-danger">
                                     <tr>

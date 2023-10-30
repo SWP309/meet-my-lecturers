@@ -27,8 +27,8 @@ import sample.utils.DBUtils;
 public class FreeSlotsDAO {
 
     private final static String CREATE_FREESLOT = "INSERT INTO "
-            + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status) "
-            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status,semesterID) "
+            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final static String CHECK_DUPLICATE_GGMEETLINK = "SELECT freeSlotID "
             + "FROM FreeSlots WHERE meetLink=?";
     private final static String SEARCH_FREESLOT_BY_SUBJECTCODE = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
@@ -149,7 +149,7 @@ public class FreeSlotsDAO {
                 ps.setInt(7, freeSlotsDTO.getCount());
                 ps.setString(8, freeSlotsDTO.getLecturerID());
                 ps.setBoolean(9, freeSlotsDTO.getStatus());
-
+                ps.setString(10, freeSlotsDTO.getSemesterID());
                 result = ps.executeUpdate();
                 if (result > 0) {
                     checkCreate = true;

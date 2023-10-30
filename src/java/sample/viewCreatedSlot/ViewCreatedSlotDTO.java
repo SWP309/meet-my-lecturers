@@ -18,6 +18,8 @@ public class ViewCreatedSlotDTO {
     private String freeSlotID;
     private String semesterID;
     private String meetLink;
+    private int joinedMembers;
+    private int capacity;
 
     public ViewCreatedSlotDTO() {
         this.subjectCode = "";
@@ -27,9 +29,11 @@ public class ViewCreatedSlotDTO {
         this.freeSlotID = "";
         this.semesterID = "";
         this.meetLink = "";
+        this.joinedMembers = 0;
+        this.capacity = 0;
     }
 
-    public ViewCreatedSlotDTO(String subjectCode, String lectureName, String startTime, String endTime, String freeSlotID, String semesterID, String meetLink) {
+    public ViewCreatedSlotDTO(String subjectCode, String lectureName, String startTime, String endTime, String freeSlotID, String semesterID, String meetLink, int joinedMembers, int capacity) {
         this.subjectCode = subjectCode;
         this.lectureName = lectureName;
         this.startTime = startTime;
@@ -37,6 +41,8 @@ public class ViewCreatedSlotDTO {
         this.freeSlotID = freeSlotID;
         this.semesterID = semesterID;
         this.meetLink = meetLink;
+        this.joinedMembers = joinedMembers;
+        this.capacity = capacity;
     }
 
     public String getSubjectCode() {
@@ -95,9 +101,32 @@ public class ViewCreatedSlotDTO {
         this.meetLink = meetLink;
     }
 
-   
-   
+    /**
+     * @return the joinedMembers
+     */
+    public int getJoinedMembers() {
+        return joinedMembers;
+    }
 
-   
-    
+    /**
+     * @param joinedMembers the joinedMembers to set
+     */
+    public void setJoinedMembers(int joinedMembers) {
+        this.joinedMembers = joinedMembers;
+    }
+
+    /**
+     * @return the capacity
+     */
+    public int getCapacity() {
+        return capacity;
+    }
+
+    /**
+     * @param capacity the capacity to set
+     */
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
 }
