@@ -11,7 +11,7 @@ public class FreeSlotsDTO {
     private String meetLink;
     private int count;
     private String lecturerID;
-    private boolean status;
+    private int status;
     private String semesterID;
     //bien ngoai lai, t chi them vao cho de trong viec hien thi ten giang vien
     //bien nay khong co trong bang, nen la mn cu dat la String = null nha.
@@ -27,7 +27,7 @@ public class FreeSlotsDTO {
         this.meetLink = "";
         this.count = 0;
         this.lecturerID = "";
-        this.status = true; 
+        this.status = 0; 
     }
 
     public String getLecturerName() {
@@ -38,7 +38,7 @@ public class FreeSlotsDTO {
         this.lecturerName = lecturerName;
     }
 
-    public FreeSlotsDTO(String freeSlotID, String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, boolean status, String semesterID, String lecturerName) {
+    public FreeSlotsDTO(String freeSlotID, String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, int status, String semesterID, String lecturerName) {
         this.freeSlotID = freeSlotID;
         this.subjectCode = subjectCode;
         this.startTime = startTime;
@@ -53,7 +53,7 @@ public class FreeSlotsDTO {
         this.lecturerName = lecturerName;
     }
 
-    public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, boolean status, String semesterID) {
+    public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, int status, String semesterID) {
         this.subjectCode = subjectCode;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -138,18 +138,18 @@ public class FreeSlotsDTO {
         this.lecturerID = lecturerID;
     }
 
-    public boolean getStatus() {
+    public int getStatus() {
         return isStatus();
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
     /**
      * @return the status
      */
-    public boolean isStatus() {
+    public int isStatus() {
         return status;
     }
 
