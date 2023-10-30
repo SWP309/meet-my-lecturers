@@ -17,7 +17,6 @@ import sample.bookings.BookingDAO;
 import sample.bookings.BookingDTO;
 import sample.users.UserDTO;
 
-
 /**
  *
  * @author PC
@@ -30,7 +29,7 @@ public class SearchBookedServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       String url = ERROR;
+        String url = ERROR;
         System.out.println(url);
         try {
             HttpSession session = request.getSession();
