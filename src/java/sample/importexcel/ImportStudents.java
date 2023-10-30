@@ -1,4 +1,7 @@
 package sample.importexcel;
+
+
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,18 +12,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import org.apache.catalina.User;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import sample.users.UserDAO;
+import sample.users.UserDTO;
 
 /**
  *
  * @author Minh Khang
  */
-public class ImportStudent extends HttpServlet {
+public class ImportStudents extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,7 +49,7 @@ public class ImportStudent extends HttpServlet {
             if (fileName != null) {
                 
                 if (fileName.endsWith(".xls")) {
-                    
+                    System.out.println("chay vao file xls");
                     InputStream inp = filePart.getInputStream();
                     HSSFWorkbook wb = new HSSFWorkbook(new POIFSFileSystem(inp));
                     HSSFSheet sheet = wb.getSheetAt(0);
@@ -60,12 +66,12 @@ public class ImportStudent extends HttpServlet {
                         int passWord = (int) row.getCell(6).getNumericCellValue();
                         String password = String.valueOf(passWord);
 
-//                        User users = new User(userID, userName, userEmail, userStatus, roleID, password);
-//                        UserDAO.ImportExcel(users);
+                        UserDTO users = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
+                        UserDAO.ImportExcelUsers(users);
                     }
                     wb.close();
                     request.setAttribute("EXCSERVLET", "Import Successfully");
-                    URL = "MainController?action=2";
+                    URL = "MainController?action=importPage";
                 } else if (fileName.endsWith(".xlsx")) {
                     
                     InputStream inp = filePart.getInputStream();
@@ -84,19 +90,19 @@ public class ImportStudent extends HttpServlet {
                         int passWord = (int) row.getCell(6).getNumericCellValue();
                         String password = String.valueOf(passWord);
 
-//                        User users = new User(userID, userName, userEmail, userStatus, roleID, password);
-//                        UserDAO.ImportExcel(users);
+                        UserDTO users = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
+                        UserDAO.ImportExcelUsers(users);
                     }
                     wb.close();
                     request.setAttribute("EXCSERVLET", "Import Successfully");
-                    URL = "MainController?action=2";
+                    URL = "MainController?action=importPage";
                 } else {
                     request.setAttribute("EXCSERVLET", "Error: Incorrect file format");
-                    URL = "MainController?action=2";
+                    URL = "MainController?action=importPage";
                 }
             } else {
                 request.setAttribute("EXCSERVLET", "Error: Null file");
-                URL = "MainController?action=2";
+                URL = "MainController?action=importPage";
             }
             request.getRequestDispatcher(URL).forward(request, response);
         } catch (Exception e) {
