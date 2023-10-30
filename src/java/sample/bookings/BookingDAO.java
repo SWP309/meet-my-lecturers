@@ -40,19 +40,19 @@ public class BookingDAO {
             + "           JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
             + "            JOIN Users u ON b.studentID = u.userID\n"
             + "            JOIN Users u1 ON fs.lecturerID = u1.userID\n"
-            + "  where fs.startTime >= ? and fs.endTime <= ? and fs.subjectCode = ? and u.userEmail = ?";
+            + "  where b.status='1' and fs.startTime >= ? and fs.endTime <= ? and fs.subjectCode = ? and u.userEmail = ?";
     private static String SEARCH_BOOKED_SLOT_BY_ST_ET = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime,u.userName, b.bookingID,fs.meetLink\n"
             + "          FROM Bookings b\n"
             + "           JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
             + "            JOIN Users u ON b.studentID = u.userID\n"
             + "            JOIN Users u1 ON fs.lecturerID = u1.userID\n"
-            + "		  where fs.startTime >= ? and fs.endTime <= ? and u.userEmail = ?";
+            + "		  where b.status='1' and fs.startTime >= ? and fs.endTime <= ? and u.userEmail = ?";
     private static String SEARCH_BOOKED_SLOT_BY_SUBJECTCODE = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime,u.userName, b.bookingID,fs.meetLink\n"
             + "          FROM Bookings b\n"
             + "           JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
             + "            JOIN Users u ON b.studentID = u.userID\n"
             + "            JOIN Users u1 ON fs.lecturerID = u1.userID\n"
-            + "		  where  fs.subjectCode = ? and u.userEmail = ?";
+            + "		  where  b.status='1' and fs.subjectCode = ? and u.userEmail = ?";
 
     private static String convertDateToString(Timestamp sqlTime) {
         // Sử dụng SimpleDateFormat để định dạng ngày giờ

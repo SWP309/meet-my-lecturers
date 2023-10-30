@@ -21,7 +21,7 @@ import sample.users.UserDTO;
 public class CreateRequestServlet extends HttpServlet {
 
     private static final String ERROR = "request.jsp";
-    private static final String SUCCESS = "StudentHome.jsp";
+    private static final String SUCCESS = "StudentHome_1.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -382,7 +382,7 @@
 
 
             <!--  LIST OF THE PAGE -------------------------------------------------------------->
-            <div class="container mt-5" style="    margin-top: -44% !important;">
+            <div class="container mt-5" style="    margin-top: -44% !important; height: 356px; max-height: 300%;">
                 <div class="row justify-content-center mt-5 tableview">
                     <c:if test="${requestScope.LIST_CREATED_SLOT !=null}">
                         <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">
@@ -447,8 +447,8 @@
                             </c:forEach>
                         </c:if>
                     </c:if>          
-
                 </div>
+
                 <!--     SEARCH BY ST AND ET ---------------------------------------------------------->
                 <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and empty param.txtSubjectCode}">
                     <div class="container mt-5" style="    margin-top: -3% !important;">
@@ -662,11 +662,11 @@
                             </c:if>
                             <!--     SEARCH BY NULL ---------------------------------------------------------->
                             <c:if test="${empty param.txtStartTime and empty param.txtEndTime and empty param.txtSubjectCode}">
-                                <div class="container mt-5" style="    margin-top: -44% !important;">
+                                <div class="container mt-5" style="    margin-top: -8% !important;">
                                     <div class="row justify-content-center mt-5 tableview">
-                                        <c:if test="${requestScope.SEARCH_BOOKED_SLOT_BY_NULL !=null}">
-                                            <c:if test="${not empty requestScope.SEARCH_BOOKED_SLOT_BY_NULL}">
-                                                <c:forEach var="searchByNull" varStatus="counter" items="${requestScope.SEARCH_BOOKED_SLOT_BY_NULL}">
+                                        <c:if test="${requestScope.SEARCH_FREE_SLOT_BY_NULL !=null}">
+                                            <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_NULL}">
+                                                <c:forEach var="searchByNull" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_NULL}">
                                                     <div class="col-md-4">
                                                         <div class="card" style="width: 357px; height:270px; border-radius: 5%;">
                                                             <div class="card-body">

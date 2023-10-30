@@ -102,6 +102,54 @@
                 window.history.back();
             }
         </script>
+        <style>
+            .table-container {
+                display: flex;
+                justify-content: center;
+                margin: auto;
+                margin-top: 10%;
+            }
+
+            .custom-table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .custom-table th,
+            .custom-table td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: center;
+            }
+
+            .custom-table th {
+                background-color: #f2f2f2;
+                color: #333;
+            }
+
+            .btn-accept {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+            .btn-decline {
+                background-color: #f44336;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+            .error-message {
+                color: red;
+                text-align: center;
+            }
+        </style>
     </head>
     <body>
         <div class="admin-viewusersedited">
@@ -163,14 +211,10 @@
                     <img class="back-icon" alt="" src="./public/request/back.svg" />
                 </div>
                 <div class="view-user-table">
-
                     <c:if test="${not empty requestScope.LIST_REQUESTS}">
-                        <div style="display: flex;
-                             justify-content: center;
-                             margin: auto;
-                             margin-top: 10%;">
-                            <table border="1" class="table table-hover table-primary table-rounded">
-                                <thead class="table-danger">
+                        <div class="table-container">
+                            <table class="custom-table">
+                                <thead>
                                     <tr>
                                         <th>No.</th>
                                         <th>RequestID</th>
@@ -185,8 +229,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${requestScope.LIST_REQUESTS}" 
-                                               var="request" varStatus="counter">
+                                    <c:forEach items="${requestScope.LIST_REQUESTS}" var="request" varStatus="counter">
                                         <tr>
                                     <form action="MainController" method="POST">
                                         <td>${counter.count}</td>
@@ -206,16 +249,12 @@
                                         <td>${request.endTime}</td>
                                         <td>${request.description}</td>
                                         <td>
-                                            <input type="hidden" name="txtRequestID" 
-                                                   value="${request.requestID}" readonly="">
-                                            <button type="submit" name="action"
-                                                    value="AcceptRequest">Accept</button>
+                                            <input type="hidden" name="txtRequestID" value="${request.requestID}" readonly="">
+                                            <button type="submit" name="action" value="AcceptRequest" class="btn-accept">Accept</button>
                                         </td>
                                         <td>
-                                            <input type="hidden" name="txtRequestID" 
-                                                   value="${request.requestID}" readonly="">
-                                            <button type="submit" name="action"
-                                                    value="DeleteRequest">Decline</button>
+                                            <input type="hidden" name="txtRequestID" value="${request.requestID}" readonly="">
+                                            <button type="submit" name="action" value="DeleteRequest" class="btn-decline">Decline</button>
                                         </td>
                                     </form>
                                     </tr>
@@ -223,11 +262,12 @@
                                 </tbody>
                             </table>
                         </div>
-                    </c:if>  
+                    </c:if>
                     <c:if test="${empty requestScope.LIST_REQUESTS}">
-                        <h3 style="color: red">${requestScope.VIEW_REQUEST_MESSAGE}</h3>
-                    </c:if>  
+                        <h3 class="error-message">${requestScope.VIEW_REQUEST_MESSAGE}</h3>
+                    </c:if>
                 </div>
+
             </div>
 
         </div>

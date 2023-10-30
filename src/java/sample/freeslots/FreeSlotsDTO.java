@@ -27,7 +27,7 @@ public class FreeSlotsDTO {
         this.meetLink = "";
         this.count = 0;
         this.lecturerID = "";
-        this.status = true;
+        this.status = true; 
     }
 
     public String getLecturerName() {
