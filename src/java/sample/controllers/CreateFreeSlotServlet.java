@@ -119,8 +119,16 @@ public class CreateFreeSlotServlet extends HttpServlet {
                 freeSlotError.setRepeatedTimeError("The repeated time must be greater OR equal 0");
             }
             String lecturerID = us.getUserID();
-            boolean status = Boolean.parseBoolean(request.getParameter("txtStatusOption"));
-
+            
+            int status=0;
+            String statusOption=request.getParameter("txtStatusOption");
+            if (statusOption.equals("PUB")) {
+                status=1;
+            }
+            if (statusOption.equals("PRV")) {
+                status=0;
+            }
+            
             request.setAttribute("FREESLOT_ERROR", freeSlotError);
             if (flag) {
 
