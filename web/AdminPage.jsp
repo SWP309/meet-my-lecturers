@@ -160,6 +160,10 @@
         var form = document.querySelector('.logout form');
         form.submit();
     }
+    function submitFormImport() {
+        var form = document.querySelector('.import form');
+        form.submit();
+    }
 </script>
 
 <html lang="en">
@@ -197,9 +201,9 @@
                         </div>
                         <div class="view-booking" >Search Users</div>
                     </div>
-                    <div class="frame-div request" onclick="submitFormRequest()">
+                    <div class="frame-div request import" onclick="submitFormImport()">
                         <form action="MainController" method="POST">
-                            <input type="hidden" name="action" value="Request" />
+                            <input type="hidden" name="action" value="importPage" />
                         </form>
                         Import Schedule
 
