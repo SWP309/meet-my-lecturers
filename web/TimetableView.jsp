@@ -66,10 +66,10 @@
 
 
             </div>
-            <div class="table-timetable" style="margin-top: 19%;">
+            <div class="table-timetable" style="margin-top: 19%; padding: 40px;">
                 <c:if test="${not empty requestScope.TB_TIMETABLES}">
                     <table border="1" class="table table-hover table-rounded">
-                        <thead>
+                        <thead style="font-size: 20px;">
                             <tr  class="table table-warning">
                                 <th>No.</th>
                                 <th>Slot ID</th>

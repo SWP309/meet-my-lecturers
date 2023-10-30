@@ -55,14 +55,14 @@ public class SearchCreateSlotServlet extends HttpServlet {
                 if (searchBySubjectCode != null) {
                     request.setAttribute("SEARCH_FREE_SLOT_BY_SUBJECT", searchBySubjectCode);
                     System.out.println(subjectCode);
-                    url = SUCCESS;
+                        url = SUCCESS;
                 }
 
             } else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchByNull = searchFSlot.GetlistCreatedSlot(userEmail);
+                List<ViewCreatedSlotDTO> searchByNull = searchFSlot.GetlistCreatedSlot(us.getUserEmail());
+                System.out.println(us.getUserEmail());
                 if (searchByNull != null) {
-                    request.setAttribute("SEARCH_CREATED_SLOT_BY_NULL", searchByNull);
-                    System.out.println(subjectCode);
+                    request.setAttribute("SEARCH_FREE_SLOT_BY_NULL", searchByNull);
                     url = SUCCESS;
                 }
 

@@ -614,4 +614,26 @@ public class UserDAO implements Serializable {
         }
         return st;
     }
+    
+        public static int ImportExcelUsers(UserDTO users) throws ClassNotFoundException, SQLException {
+        Connection cn = DBUtils.getConnection();
+        int rs = 0;
+        if (cn != null) {
+            String sql = "INSERT INTO [dbo].[Users] (userID, userName, userEmail, userStatus, roleID, password)\n"
+                    + "VALUES (?, ?, ?, ?, ?, ?);";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, users.getUserID());
+            pst.setString(2, users.getUserName());
+            pst.setString(3, users.getUserEmail());
+            pst.setBoolean(4, users.isUserStatus());
+            pst.setString(5, users.getRoleID());
+            pst.setString(6, users.getPassword());
+            rs = pst.executeUpdate();
+            cn.close();
+            pst.close();
+        }else{
+            System.out.println("Error Import Excel func");
+        }
+        return rs;
+    }
 }
