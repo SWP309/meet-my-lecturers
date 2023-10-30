@@ -388,7 +388,7 @@
                         <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">
                             <c:forEach var="listCreatedSlot" varStatus="counter" items="${requestScope.LIST_CREATED_SLOT}">
                                 <div class="col-md-4">
-                                    <div class="card" style="width: 357px; height: 242px; border-radius: 5%;">
+                                    <div class="card" style="width: 357px; height:270px; border-radius: 5%;">
                                         <div class="card-body">
                                             <form action="MainController" method="POST">
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
@@ -411,7 +411,7 @@
                                                     <input type="text" class="ml-auto specific-input" name="semesterID" value="${listCreatedSlot.semesterID}"/>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
-                                                            ${listCreatedSlot.joinedMembers}/${listCreatedSlot.capacity}
+                                                    ${listCreatedSlot.joinedMembers}/${listCreatedSlot.capacity}
                                                 </div>
                                                 <div class="d-flex justify-content-between btn-book">
 
@@ -457,7 +457,7 @@
                                 <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_ST_ET}">
                                     <c:forEach var="searchByStEt" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_ST_ET}">
                                         <div class="col-md-4">
-                                            <div class="card" style="width: 364px; height: 242px; border-radius: 5%;">
+                                            <div class="card" style="width: 364px; height:270px; border-radius: 5%;">
                                                 <div class="card-body">
                                                     <form action="MainController" method="POST">
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
@@ -527,7 +527,7 @@
                                     <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_ALL}">
                                         <c:forEach var="searchByAll" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_ALL}">
                                             <div class="col-md-4">
-                                                <div class="card" style="width: 364px; height: 242px; border-radius: 5%;">
+                                                <div class="card" style="width: 364px; height:270px; border-radius: 5%;">
                                                     <div class="card-body">
                                                         <form action="MainController" method="POST">
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
@@ -546,11 +546,11 @@
 <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.meetLink}"/>-->
                                                                 <a class="ml-auto" href="https://${searchByAll.meetLink}" onclick="confirmCheckAttendanceLinkByAll(event, '${searchByAll.freeSlotID}')"> Link Meet</a>
                                                             </div>
-                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>semesterID:</b></strong> 
+                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
                                                                 <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchByAll.semesterID}"/>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
-                                                                 ${searchByAll.joinedMembers}/${searchByAll.capacity}
+                                                                ${searchByAll.joinedMembers}/${searchByAll.capacity}
                                                             </div>
                                                             <div class="d-flex justify-content-between btn-book">
 
@@ -598,7 +598,7 @@
                                         <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_SUBJECT}">
                                             <c:forEach var="searchBySubjectCode" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_SUBJECT}">
                                                 <div class="col-md-4">
-                                                    <div class="card" style="width: 364px; height:  242px; border-radius: 5%;">
+                                                    <div class="card" style="width: 364px; height: 270px; border-radius: 5%;">
                                                         <div class="card-body">
                                                             <form action="MainController" method="POST">
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
@@ -617,7 +617,7 @@
 <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.meetLink}"/>-->
                                                                     <a class="ml-auto" href="https://${searchBySubjectCode.meetLink}" onclick="confirmCheckAttendanceLinkBySubjectCode(event, '${searchBySubjectCode.freeSlotID}')"> Link Meet</a>
                                                                 </div>
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>semesterID:</b></strong> 
+                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
                                                                     <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchBySubjectCode.semesterID}"/>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
@@ -660,22 +660,93 @@
 
                                 </div>
                             </c:if>
+                            <!--     SEARCH BY NULL ---------------------------------------------------------->
+                            <c:if test="${empty param.txtStartTime and empty param.txtEndTime and empty param.txtSubjectCode}">
+                                <div class="container mt-5" style="    margin-top: -44% !important;">
+                                    <div class="row justify-content-center mt-5 tableview">
+                                        <c:if test="${requestScope.SEARCH_BOOKED_SLOT_BY_NULL !=null}">
+                                            <c:if test="${not empty requestScope.SEARCH_BOOKED_SLOT_BY_NULL}">
+                                                <c:forEach var="searchByNull" varStatus="counter" items="${requestScope.SEARCH_BOOKED_SLOT_BY_NULL}">
+                                                    <div class="col-md-4">
+                                                        <div class="card" style="width: 357px; height:270px; border-radius: 5%;">
+                                                            <div class="card-body">
+                                                                <form action="MainController" method="POST">
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
+                                                                        <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByNull.subjectCode.trim()}"/>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
+                                                                        <span class="ml-auto">${searchByNull.lectureName}</span>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
+                                                                        <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByNull.startTime}"/>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
+                                                                        <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.endTime}"/>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
+                    <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.meetLink}"/>-->
+                                                                        <a class="ml-auto " href="https://${searchByNull.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByNull.freeSlotID}')"> Link Meet</a>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
+                                                                        <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchByNull.semesterID}"/>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
+                                                                        ${searchByNull.joinedMembers}/${searchByNull.capacity}
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-between btn-book">
 
-                            <h3>
-                                <span class="error-message">
-                                    ${requestScope.ERROR}
-                                </span>
-                            </h3> 
+                                                                        <div>
+                                                                            <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to hide this Free Slot')" href="MainController?action=hideFS&freeSlotID=${searchByNull.freeSlotID}">
+                                                                                <i class="material-icons">cancel</i>Hide
+                                                                            </a>
+                                                                            <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to delete this Free Slot')" href="MainController?action=deleteFS&freeSlotID=${searchByNull.freeSlotID}">
+                                                                                <i class="material-icons">delete</i>Delete
+                                                                            </a>
+                                                                        </div>
+                                                                        <div>
 
-                            <script>
-                                // L?y thông tin l?i t? bi?n requestScope.ERROR
-                                var errorMessage = "${requestScope.ERROR}";
+                                                                            <a class="d-flex justify-content-between" style="text-decoration: none; gap: 2px; width: 11px; margin-left: 10px;" href="MainController?action=viewFS&freeSlotID=${searchByNull.freeSlotID}">
+                                                                                <i class="fas fa-search"></i>View
+                                                                            </a>
+                                                                            <form action="MainController" method="GET">
+                                                                                <input type="hidden" name="action" value="updateFS">
+                                                                                <input type="hidden" name="freeSlotID" value="${searchByNull.freeSlotID}">
+                                                                                <input type="hidden" name="subjectCode" value="${searchByNull.subjectCode.trim()}" required/>
+                                                                                <input type="hidden" name="startTime" value="${searchByNull.startTime}">
+                                                                                <input type="hidden" name="endTime" value="${searchByNull.endTime}">
+                                                                                <input type="hidden" name="semesterID" value="${searchByNull.semesterID}">
+                                                                                <button type="submit" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                                                    <i class="material-icons">update</i>Update
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </c:forEach>
+                                            </c:if>
+                                        </c:if>          
 
-                                // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
-                                if (errorMessage.trim() !== "") {
-                                    alert(errorMessage);
-                                }
-                            </script>
-                            <% }%>
-                            </body>
-                            </html>
+                                    </div>
+                                </c:if>
+
+
+                                <h3>
+                                    <span class="error-message">
+                                        ${requestScope.ERROR}
+                                    </span>
+                                </h3> 
+
+                                <script>
+                                    // L?y thông tin l?i t? bi?n requestScope.ERROR
+                                    var errorMessage = "${requestScope.ERROR}";
+
+                                    // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+                                    if (errorMessage.trim() !== "") {
+                                        alert(errorMessage);
+                                    }
+                                </script>
+                                <% }%>
+                                </body>
+                                </html>
