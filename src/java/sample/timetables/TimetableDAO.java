@@ -107,4 +107,82 @@ public class TimetableDAO implements Serializable{
         }
     }
     
+        public static int ImportExcelTimetables(TimetableDTO timetables) {
+        Connection cn = null;
+        int rs = 0;
+
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "INSERT INTO [dbo].[Timetables] ([subjectCode], [slotID], [lecturerID], [semesterID])\n"
+                        + "VALUES (?, ?, ?, ?);";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setString(1, timetables.getSubjectCode());
+                pst.setString(2, timetables.getSlotID());
+                pst.setString(3, timetables.getLecturerID());
+                pst.setString(4, timetables.getSemesterID());
+                rs = pst.executeUpdate();
+            } else {
+                System.out.println("Error Import Excel func");
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            // Handle exceptions here, you can log the error or take appropriate action
+            e.printStackTrace(); // This line will print the exception details to the console
+        } finally {
+            try {
+                if (cn != null) {
+                    cn.close();
+                }
+            } catch (SQLException e) {
+                // Handle closing the connection if it fails
+                e.printStackTrace();
+            }
+        }
+
+        return rs;
+    }
+
+    public static int removeTimetable(String lecID, String semesID) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "DELETE FROM Timetables \n"
+                    + "WHERE lecturerID = ? AND semesterID = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, lecID);
+            pst.setString(2, semesID);
+            rs = pst.executeUpdate();
+            cn.close();
+        }
+        return rs;
+    }
+
+    public static TimetableDTO getTimtables(String subjectCode, String slotID, String lecturerID, String semesterID) throws Exception {
+        TimetableDTO time = null;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+
+            String sql = "Select *\n"
+                    + "From [dbo].[Timetables]\n"
+                    + "Where [subjectCode] = ? AND [slotID] = ? AND [lecturerID] = ? AND [semesterID] = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, subjectCode);
+            pst.setString(2, slotID);
+            pst.setString(3, lecturerID);
+            pst.setString(4, semesterID);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    String sc = rs.getString("subjectCode");
+                    String slid = rs.getString("slotID");
+                    String lecid = rs.getString("lecturerID");
+                    String semid = rs.getString("semesterID");
+                    time = new TimetableDTO(sc, slid, lecid, semid);
+                }
+            }
+            cn.close();
+        }
+        return time;
+    }
+    
 }

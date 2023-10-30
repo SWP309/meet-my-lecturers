@@ -19,15 +19,6 @@
     position: relative;
 }
 
-.table-container {
-    height: 100%;
-    width: 100% !important;
-    /*    max-height: 400px;  thay đổi kích thước tối đa tùy ý */
-    overflow-y: auto; /* để hiển thị thanh cuộn dọc khi vượt quá kích thước cố định */
-    padding-bottom: 10%;
-    margin-top: -25%;
-    margin-bottom: 25%;
-}
 body {
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -126,7 +117,6 @@ td button {
     padding: 35px 40px;
     font-size: 17px;
     color: #fff;
-    box-shadow: -20px 1px 20px 8px #343a40;
     overflow: hidden;
 }
 
