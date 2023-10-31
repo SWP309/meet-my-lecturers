@@ -49,10 +49,11 @@ public class ImportStudents extends HttpServlet {
             if (fileName != null) {
                 
                 if (fileName.endsWith(".xls")) {
-                    System.out.println("chay vao file xls");
                     InputStream inp = filePart.getInputStream();
                     HSSFWorkbook wb = new HSSFWorkbook(new POIFSFileSystem(inp));
                     HSSFSheet sheet = wb.getSheetAt(0);
+                    
+                    
                     
                     for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                         Row row = sheet.getRow(i);
@@ -65,7 +66,8 @@ public class ImportStudents extends HttpServlet {
                         String roleID = String.valueOf(roleid);
                         int passWord = (int) row.getCell(6).getNumericCellValue();
                         String password = String.valueOf(passWord);
-
+                        UserDTO existed = UserDAO.getUserByID(userID);
+                        if(existed != null) continue;
                         UserDTO users = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
                         UserDAO.ImportExcelUsers(users);
                     }
@@ -148,5 +150,4 @@ public class ImportStudents extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

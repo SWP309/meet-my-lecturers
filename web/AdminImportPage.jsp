@@ -134,6 +134,7 @@
                 <%
                     String TIMESERVLET = (String) request.getAttribute("TIMESERVLET");
                     String DUPLICATEDATA = (String) request.getAttribute("DUPLICATEDATA");
+                    String DUPLICATEDATATIMETABLE = (String) request.getAttribute("DUPLICATEDATATIMETABLE");
 
                     if (TIMESERVLET != null) {
                 %>
@@ -146,6 +147,13 @@
                 %>
                 <span style="color: red; font-size: 1rem;">
                     <%= DUPLICATEDATA%>
+                </span>
+                <%
+                    }
+                    if (DUPLICATEDATATIMETABLE != null) {
+                %>
+                <span style="color: red; font-size: 1rem;">
+                    <%= DUPLICATEDATATIMETABLE%>
                 </span>
                 <%
                     }
