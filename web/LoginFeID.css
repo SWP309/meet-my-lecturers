@@ -122,6 +122,10 @@
     height: 2.56rem;
     color: #f27125;
 }
+
+#button{
+    background-color: white;
+}
 #button:hover {
     background-color: #f27125;
 }
