@@ -53,6 +53,14 @@
                 var form = document.querySelector('.logout form');
                 form.submit();
             }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitForm() {
+                var form = document.querySelector('.bookingview form');
+                form.submit();
+            }
         </script>
     </head>
     <body>
@@ -143,23 +151,27 @@
                 <img class="back-icon" alt="" src="./public/request/back.svg" />
             </div>
             <div class="header1">
-                <img
-                    class="fptu-eng-1-icon1"
-                    alt=""
-                    src="./public/TimetableView/2021fptueng-11@2x.png"
-                    />
-
+                <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="returnHomePageStudent" />
+                    </form>
+                    <img
+                        class="fptu-eng-1-icon"
+                        alt=""
+                        src="public/BookingView/2021fptueng-1@2x.png"
+                        />
+                </div>
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-container">
+                        <div class="frame-container bookingview" onclick="submitForm()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="ViewBooking" />
+                            </form>
                             <div class="bookedslot-wrapper">
-                                <img
-                                    class="bookedslot-icon1"
-                                    alt=""
-                                    src="./public/TimetableView/bookedslot1.svg"
-                                    />
+                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
+                                <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
                             </div>
-                            <div class="view-booking">View Booking</div>
+                            <div class="view-booking" >View Booking</div>
                         </div>
                         <div class="frame-div logout" onclick="submitFormLogout()" style="cursor: pointer">
                             <form action="MainController" method="POST" style="display: none;">

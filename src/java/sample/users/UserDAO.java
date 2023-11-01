@@ -146,6 +146,32 @@ public class UserDAO implements Serializable {
         return us;
     }
     
+    public static UserDTO getUserByID(String user_id) throws Exception {
+        UserDTO us = null;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "select *\n"
+                    + "from [dbo].[Users]\n"
+                    + " where userID = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, user_id);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    String id = rs.getString("userID").trim();
+                    String name = rs.getString("userName").trim();
+                    String email = rs.getString("userEmail").trim();
+                    boolean status = rs.getBoolean("userStatus");
+                    String roleID = rs.getString("roleID").trim();
+                    String password = rs.getString("password").trim();
+                    us = new UserDTO(id, name, email, status, roleID, password);
+                }
+            }
+            cn.close();
+        }
+        return us;
+    }
+    
     private List<UserDTO> usersByRoleID;
 
     public List<UserDTO> getUsersByRoleID() {

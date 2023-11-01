@@ -99,6 +99,7 @@ td button {
     font-size: 17px;
     color: #fff;
     overflow: hidden;
+    max-width: 200%;
 }
 
 .cancelbutton-child {

@@ -30,11 +30,11 @@ public class BookingDAO {
             + "            JOIN Users u1 ON fs.lecturerID = u1.userID\n"
             + "            WHERE b.status='1' and u.userEmail = ?";
 
-    private static String CANCEL_BOOKING = "UPDATE Bookings SET status = 0 WHERE bookingID = ?";
+    private static String CANCEL_BOOKING = "DELETE FROM [dbo].[Bookings] WHERE bookingID = ?";
+
     private static String CHECK_ATTENDANCE_BOOKING = "UPDATE Bookings SET status = 2 WHERE bookingID = ?";
-    private static String BOOKING_FREE_SLOT = "INSERT INTO \n"
-            + "          Bookings(studentID,freeSlotID,status) \n"
-            + "            VALUES(?, ?, 1);";
+    private static String BOOKING_FREE_SLOT = "IF NOT EXISTS (SELECT * FROM Bookings WHERE studentID = ? AND freeSlotID = ?) "
+            + "                              BEGIN INSERT INTO Bookings(studentID, freeSlotID, status) VALUES (?,?, 1) END;";
     private static String SEARCH_BOOKED_SLOT_BY_ALL = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime,u.userName, b.bookingID,fs.meetLink\n"
             + "          FROM Bookings b\n"
             + "           JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
@@ -206,7 +206,7 @@ public class BookingDAO {
                 ptm.setString(2, userEmail);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                     String fetchedSubjectCode = rs.getString("subjectCode");
+                    String fetchedSubjectCode = rs.getString("subjectCode");
                     String lectureName = rs.getString("lectureName");
                     Timestamp fetchedStartTime = rs.getTimestamp("startTime");
                     String startTimeStr = convertDateToString(fetchedStartTime);
@@ -235,7 +235,7 @@ public class BookingDAO {
     }
 
     public boolean Cancel(String bookingID) throws SQLException {
-        boolean checkCancel = false;
+        boolean checkDelete = false;
         Connection conn = null;
         PreparedStatement ptm = null;
 
@@ -244,7 +244,7 @@ public class BookingDAO {
             if (conn != null) {
                 ptm = conn.prepareStatement(CANCEL_BOOKING);
                 ptm.setString(1, bookingID);
-                checkCancel = ptm.executeUpdate() > 0 ? true : false;
+                checkDelete = ptm.executeUpdate() > 0 ? true : false;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -256,7 +256,7 @@ public class BookingDAO {
                 conn.close();
             }
         }
-        return checkCancel;
+        return checkDelete;
     }
 
     public boolean BookFSlot(BookingDTO bookingDTO) throws SQLException {
@@ -270,6 +270,8 @@ public class BookingDAO {
                 ps = conn.prepareStatement(BOOKING_FREE_SLOT);
                 ps.setString(1, bookingDTO.getStudentID());
                 ps.setString(2, bookingDTO.getFreeSlotID());
+                ps.setString(3, bookingDTO.getStudentID());
+                ps.setString(4, bookingDTO.getFreeSlotID());
                 checkUpdate = ps.executeUpdate() > 0;
                 System.out.println(checkUpdate);
             }
