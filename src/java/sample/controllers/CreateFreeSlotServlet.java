@@ -50,8 +50,21 @@ public class CreateFreeSlotServlet extends HttpServlet {
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String lecturerID = us.getUserID();
+            
             String semesterID = request.getParameter("txtSemesterID");
+            boolean existsSemesterID = freeSlotsDAO.checkSemesterID(semesterID);
+            if (!existsSemesterID) {
+                flag = false;
+                freeSlotError.setSemesterIDError("The semesterID is wrong format OR not exist in DB.");
+            }
+            
             String subjectCode = request.getParameter("txtSubjectCode");
+            boolean existsSubjectCode = freeSlotsDAO.checkSubjectCode(subjectCode);
+            if (!existsSubjectCode) {
+                flag = false;
+                freeSlotError.setSubjectCodeError("The Subject code is wrong format OR not exist in DB.");
+            }
+            
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
             //****Check input time with current time
@@ -114,8 +127,8 @@ public class CreateFreeSlotServlet extends HttpServlet {
             }
 
             String meetLink = request.getParameter("txtMeetLink");
-            boolean exists = freeSlotsDAO.checkDuplicateGGMeet(meetLink);
-            if (exists) {
+            boolean existsMeetLink = freeSlotsDAO.checkDuplicateGGMeet(meetLink);
+            if (existsMeetLink) {
                 flag = false;
                 freeSlotError.setMeetLinkError("The gg meet link is duplicated.");
             }

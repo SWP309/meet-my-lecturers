@@ -31,6 +31,8 @@ public class FreeSlotsDAO {
             + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final static String CHECK_DUPLICATE_GGMEETLINK = "SELECT freeSlotID "
             + "FROM FreeSlots WHERE meetLink=?";
+    private final static String CHECK_SEMESTERID = "SELECT semesterID FROM Semesters WHERE semesterID = ?";
+    private final static String CHECK_SUBJECTCODE = "SELECT subjectCode FROM Subjects WHERE subjectCode = ?";
     private final String CHECK_TIME_DUPLICATE_FS = "SELECT fs.freeSlotID\n"
             + "FROM FreeSlots fs\n"
             + "WHERE fs.lecturerID = ? \n"
@@ -987,5 +989,67 @@ public class FreeSlotsDAO {
             }
         }
         return check;
+    }
+
+    public boolean checkSemesterID(String semesterID) throws SQLException {
+        boolean exists = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ps = conn.prepareStatement(CHECK_SEMESTERID);
+                ps.setString(1, semesterID);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    exists = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return exists;
+    }
+
+    public boolean checkSubjectCode(String subjectCode) throws SQLException {
+        boolean exists = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ps = conn.prepareStatement(CHECK_SUBJECTCODE);
+                ps.setString(1, subjectCode);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    exists = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return exists;
     }
 }
