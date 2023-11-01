@@ -5,6 +5,7 @@
 package sample.controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -12,23 +13,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.bookings.BookingDAO;
+import sample.bookings.BookingDTO;
 import sample.users.UserDTO;
-import sample.viewCreatedSlot.ViewCreatedSlotDAO;
-import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
 /**
  *
  * @author PC
  */
-public class SearchCreateSlotServlet extends HttpServlet {
+public class SearchBookedServlet extends HttpServlet {
 
-    private final String SUCCESS = "CreatedSlotView.jsp";
-    private final String ERROR = "CreatedSlotView.jsp";
+    private final String SUCCESS = "BookingView.jsp";
+    private final String ERROR = "BookingView.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
+        System.out.println(url);
         try {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -36,33 +38,34 @@ public class SearchCreateSlotServlet extends HttpServlet {
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
             String userEmail = us.getUserEmail();
-            ViewCreatedSlotDAO searchFSlot = new ViewCreatedSlotDAO();
+            BookingDAO searchBSlot = new BookingDAO();
             if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchByStEt = searchFSlot.searchFSlotViewByStEt(startTime, endTime, userEmail);
+                List<BookingDTO> searchByStEt = searchBSlot.searchBSlotViewByStEt(startTime, endTime, userEmail);
                 if (searchByStEt != null) {
-                    request.setAttribute("SEARCH_FREE_SLOT_BY_ST_ET", searchByStEt);
+                    request.setAttribute("SEARCH_BOOKED_SLOT_BY_ST_ET", searchByStEt);
                     url = SUCCESS;
                 }
             } else if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchByAll = searchFSlot.searchFSlotViewByAll(subjectCode, startTime, endTime, userEmail);
+                List<BookingDTO> searchByAll = searchBSlot.searchBSlotViewByAll(subjectCode, startTime, endTime, userEmail);
                 if (searchByAll != null) {
-                    request.setAttribute("SEARCH_FREE_SLOT_BY_ALL", searchByAll);
+                    request.setAttribute("SEARCH_BOOKED_SLOT_BY_ALL", searchByAll);
                     url = SUCCESS;
                 }
 
             } else if (startTime.isEmpty() && endTime.isEmpty() && !subjectCode.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchBySubjectCode = searchFSlot.searchFSlotViewBySubjectCode(subjectCode, userEmail);
+                List<BookingDTO> searchBySubjectCode = searchBSlot.searchBSlotViewBySubjectCode(subjectCode, userEmail);
                 if (searchBySubjectCode != null) {
-                    request.setAttribute("SEARCH_FREE_SLOT_BY_SUBJECT", searchBySubjectCode);
+                    request.setAttribute("SEARCH_BOOKED_SLOT_BY_SUBJECT", searchBySubjectCode);
                     System.out.println(subjectCode);
-                        url = SUCCESS;
+                    url = SUCCESS;
                 }
 
             } else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchByNull = searchFSlot.GetlistCreatedSlot(us.getUserEmail());
-                System.out.println(us.getUserEmail());
+                List<BookingDTO> searchByNull = searchBSlot.getListBooking(userEmail);
+                System.out.println(searchByNull.toString());
                 if (searchByNull != null) {
-                    request.setAttribute("SEARCH_FREE_SLOT_BY_NULL", searchByNull);
+                    request.setAttribute("SEARCH_BOOKED_SLOT_BY_NULL", searchByNull);
+                    System.out.println(subjectCode);
                     url = SUCCESS;
                 }
 

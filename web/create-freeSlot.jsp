@@ -60,7 +60,13 @@
                 flex-direction: column;
                 justify-content: space-around;
             }
-
+            h6 {
+                border: none;
+                margin-top: 4px;
+                margin-bottom: 0px;
+                padding: 2px;
+                color: red;
+            }
             .d-flex > input {
                 width: 60%;
             }
@@ -96,9 +102,44 @@
                 }
             }
         </style>
+        <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+        %>
         <script>
             function submitFormHomePage() {
                 var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            var userDTO = {
+                userID: "<%= us.getUserID()%>",
+                userName: "<%= us.getUserName()%>",
+                userEmail: "<%= us.getUserEmail()%>"
+            };
+            function showUserInfo() {
+                var userInfo = document.getElementById("user-info");
+                if (userInfo.style.display === "none" || userInfo.style.display === "") {
+                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                } else {
+                    userInfo.style.display = "none";
+                }
+
+                var userID = userDTO.userID;
+                var userName = userDTO.userName;
+                var userEmail = userDTO.userEmail;
+
+                Swal.fire({
+                    title: 'User Information',
+                    html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
+                            + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
+                });
+            }
+            function submitFormLogout() {
+                var form = document.querySelector('.logout form');
+                form.submit();
+            }
+            function submitFormViewRequest() {
+                var form = document.querySelector('.request form');
                 form.submit();
             }
         </script>
@@ -138,7 +179,7 @@
                     <div>
                         <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                              onclick="showUserInfo()" />
-                        <div id="user-info" style="display: none;">
+                        <div id="user-info" style="display: none; position: absolute">
                             <p id="user-id"> </p>
                             <p id="user-name"></p>
                             <p id="user-email"></p>
@@ -154,12 +195,37 @@
 
                         <div class="card-body">
                             <form action="MainController" method="POST">
-                                <div class="d-flex justify-content-between"><strong>Subject code:</strong> <input type="text" class="form-control" name="txtSubjectCode" placeholder="ex:SWP391...etc" required="" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"></div>
-                                <div class="d-flex justify-content-between"><strong>Start time:</strong> <input type="datetime-local" class="form-control"  name="txtStartTime" required=""></div>
-                                <div class="d-flex justify-content-between"><strong>End time:</strong> <input type="datetime-local" class="form-control" name="txtEndTime" required=""></div>
-                                <div class="d-flex justify-content-between"><strong>Capacity:</strong> <input type="number" class="form-control" name="txtCapacity" placeholder="need more than 2 student" required=""></div>
-                                <div class="d-flex justify-content-between"><strong>Password(optional):</strong> <input type="password" class="form-control" name="txtPassword"></div>
-                                <div class="d-flex justify-content-between"><strong>Meet Link:</strong> <input type="text" class="form-control"  name="txtMeetLink" placeholder="ex:meet.google.com/...etc" required="" pattern="^https://meet.google.com/[a-z]{3}-[a-z]{4}-[a-z]{3}$"></div>
+                                <div class="d-flex justify-content-between"><strong>Semester ID:</strong> <input type="text" class="form-control" name="txtSemesterID" value="${param.txtSemesterID}" placeholder="ex:FA23...etc" required="" pattern="^(SP|SU|FA)[0-9]{2}$"></div>
+                                <div class="d-flex justify-content-between"><strong>Subject code:</strong> <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}"  placeholder="ex:SWP391...etc" required="" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"></div>
+                                <div class="d-flex justify-content-between"><strong>Start time:</strong> <input type="datetime-local" value="${param.txtStartTime}" class="form-control"  name="txtStartTime" required=""></div>
+                                    <c:if test="${not empty requestScope.FREESLOT_ERROR.pastTimeError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.pastTimeError}</h6>
+                                </c:if>
+                                <div class="d-flex justify-content-between"><strong>End time:</strong> <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}" required=""></div>
+                                    <c:if test="${not empty requestScope.FREESLOT_ERROR.endTimeError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.endTimeError}</h6>
+                                </c:if>
+                                <c:if test="${not empty requestScope.FREESLOT_ERROR.durationError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.durationError}</h6>
+                                </c:if>
+                                <div class="d-flex justify-content-between"><strong>Capacity:</strong> <input type="number" class="form-control" name="txtCapacity" value="${param.txtCapacity}" placeholder="need at least 2 student" required=""></div>
+                                    <c:if test="${not empty requestScope.FREESLOT_ERROR.capacityError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.capacityError}</h6>
+                                </c:if>
+                                <div class="d-flex justify-content-between"><strong>Password(optional):</strong> <input type="password" class="form-control" name="txtPassword" value="${param.txtPassword}"></div>
+                                <div class="d-flex justify-content-between"><strong>Meet Link:</strong> <input type="text" class="form-control"  name="txtMeetLink" value="${param.txtMeetLink}" placeholder="ex:meet.google.com/...etc" required="" pattern="^https://meet.google.com/[a-z]{3}-[a-z]{4}-[a-z]{3}$"></div>
+                                    <c:if test="${not empty requestScope.FREESLOT_ERROR.meetLinkError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.meetLinkError}</h6>
+                                </c:if>
+                                <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="^(SE|IA|SS|MC)[0-9]{6};(SE|IA|SS|MC)[0-9]{6}$"></div>
+                                <div class="d-flex justify-content-between"><strong>STATUS(public/private):</strong>
+                                    <div class="d-flex">
+                                        <select class="form-control" name="txtStatusOption">
+                                            <option value="PUB">Public</option>
+                                            <option value="PRV">Private (check Hide list)</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <label for="role" class="col-form-label"><strong><b style="color: red">SET BY:</b></strong></label>
@@ -170,7 +236,10 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="role" class="col-form-label"><strong><b style="color: red">REPEATED TIMES:</b></strong></label>
-                                        <input type="number" class="form-control" name="txtCount" required="">
+                                        <input type="number" class="form-control" name="txtCount" required="" value="${param.txtCount}">
+                                        <c:if test="${not empty requestScope.FREESLOT_ERROR.repeatedTimeError}">
+                                            <h6> ${requestScope.FREESLOT_ERROR.repeatedTimeError}</h6>
+                                        </c:if>
                                     </div>
                                 </div>
 
@@ -178,6 +247,14 @@
                                     <input type="hidden" value="createFreeSlotAction" name="action"/>
                                     <input type="submit" class="btn btn-primary" value="Create">
                                 </div>
+                                <input type="hidden" value="${param.txtSemesterID}">
+                                <input type="hidden" value="${param.txtSubjectCode}">
+                                <input type="hidden" value="${param.txtStartTime}">
+                                <input type="hidden" value="${param.txtEndTime}">
+                                <input type="hidden" value="${param.txtCapacity}">
+                                <input type="hidden" value="${param.txtPassword}">
+                                <input type="hidden" value="${param.txtMeetLink}">
+                                <input type="hidden" value="${param.txtCount}">
                             </form>
                         </div>
                     </div>
@@ -187,5 +264,6 @@
         <c:if test="${sessionScope.loginedUser == null || sessionScope.loginedUser.roleID != '2' }">
             <c:redirect url="LoginFeID.jsp"> </c:redirect>
         </c:if>
+        <% }%>
     </body>
 </html>

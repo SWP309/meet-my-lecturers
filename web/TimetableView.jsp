@@ -49,6 +49,18 @@
                 var form = document.querySelector('.backbutton form');
                 form.submit();
             }
+            function submitFormLogout() {
+                var form = document.querySelector('.logout form');
+                form.submit();
+            }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitForm() {
+                var form = document.querySelector('.bookingview form');
+                form.submit();
+            }
         </script>
     </head>
     <body>
@@ -62,10 +74,10 @@
 
 
             </div>
-            <div class="table-timetable" style="margin-top: 19%;">
+            <div class="table-timetable" style="margin-top: 19%; padding: 40px;">
                 <c:if test="${not empty requestScope.TB_TIMETABLES}">
                     <table border="1" class="table table-hover table-rounded">
-                        <thead>
+                        <thead style="font-size: 20px;">
                             <tr  class="table table-warning">
                                 <th>No.</th>
                                 <th>Slot ID</th>
@@ -139,30 +151,37 @@
                 <img class="back-icon" alt="" src="./public/request/back.svg" />
             </div>
             <div class="header1">
-                <img
-                    class="fptu-eng-1-icon1"
-                    alt=""
-                    src="./public/TimetableView/2021fptueng-11@2x.png"
-                    />
-
+                <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="returnHomePageStudent" />
+                    </form>
+                    <img
+                        class="fptu-eng-1-icon"
+                        alt=""
+                        src="public/BookingView/2021fptueng-1@2x.png"
+                        />
+                </div>
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-container">
+                        <div class="frame-container bookingview" onclick="submitForm()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="ViewBooking" />
+                            </form>
                             <div class="bookedslot-wrapper">
-                                <img
-                                    class="bookedslot-icon1"
-                                    alt=""
-                                    src="./public/TimetableView/bookedslot1.svg"
-                                    />
+                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
+                                <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
                             </div>
-                            <div class="view-booking">View Booking</div>
+                            <div class="view-booking" >View Booking</div>
                         </div>
-                        <div class="frame-div">
+                        <div class="frame-div logout" onclick="submitFormLogout()" style="cursor: pointer">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="Logout" />
+                            </form>
                             <div class="logout-wrapper">
-                                <img class="logout-icon1" alt="" src="./public/TimetableView/logout1.svg" />
+                                <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
                             </div>
-                            <div class="logout1">
-                                <p class="logout2">Logout</p>
+                            <div class="request">
+                                <p class="logout1">Logout</p>
                             </div>
                         </div>
                     </div>

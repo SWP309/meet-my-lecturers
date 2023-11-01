@@ -132,7 +132,7 @@
                     <div>
                         <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                              onclick="showUserInfo()" />
-                        <div id="user-info" style="display: none;">
+                        <div id="user-info" style="display: none; position: absolute">
                             <p id="user-id"> </p>
                             <p id="user-name"></p>
                             <p id="user-email"></p>
@@ -151,7 +151,7 @@
                             <thead>
                                 <tr class="table-danger">
                                     <th>No</th>
-                                    <th>Subject Code</th>
+                                    <th>Student ID</th>
                                     <th>Student's Name</th>
                                     <th>Start Time</th>
                                     <th>End Time</th>
@@ -163,7 +163,7 @@
                                     <tr>
                                         <td>${counter.count}</td>
                                         <td>
-                                            <span>${liststudent.subjectCode}</span>
+                                            <span>${liststudent.studentID}</span>
                                         </td>
                                         <td>
                                             <span>${liststudent.studentName}</span>

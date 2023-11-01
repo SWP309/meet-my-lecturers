@@ -147,7 +147,7 @@
     height: 68px;
     font-size: 18px;
     color: #fff;
-    box-shadow: -20px 1px 20px 8px #343a40;
+    max-width: 200%;
 }
 .student-lectures-schedule-edi {
     position: relative;
@@ -170,6 +170,14 @@
     border-collapse: separate;
     /*        border-spacing: 0 10px;  Điều chỉnh giá trị 10px để thay đổi khoảng cách giữa các cột */
 
+}
+.fptu-eng-1-icon {
+    position: absolute;
+    top: 4px;
+    left: 53px;
+    width: 149px;
+    height: 60px;
+    object-fit: cover;
 }
 
 .table-rounded th, .table-rounded td {

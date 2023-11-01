@@ -25,6 +25,8 @@ public class MainController extends HttpServlet {
 
     private static final String STUDENT_PAGE = "StudentPage";
     private static final String STUDENT_PAGE_ACTION = "StudentHome_1.jsp";
+    private static final String BOOKING_FREE_SLOT = "BookFreeSlot";
+    private static final String BOOKING_FREE_SLOT_SERVLET = "BookFSlotServlet";
 
     private static final String LECTURER_PAGE = "LecturerPage";
     private static final String CREATE_FREE_SLOT_ACTION = "createFreeSlotAction";
@@ -52,13 +54,17 @@ public class MainController extends HttpServlet {
 
     private static final String ADMIN_PAGE = "AdminPage";
     private static final String ADMIN_PAGE_ACTION = "AdminPage.jsp";
-//    private static final String ADMIN_PAGE_CONTROLLER = "ViewSemesterServlet";
     private static final String ADMIN_PAGE_CONTROLLER = "DashBoardServlet";
-//    private static final String ADMIN_PAGE_CONTROLLER_ACTION = "DashBoard";
     private static final String ADMIN_FIND_STUDENTMAXBOOKING = "Find";//booking most slot
     private static final String ADMIN_FIND_STUDENTMAXREQUEST = "FindSMR";//send most request
     private static final String ADMIN_FIND_LECTURERMAXBOOKING = "FindCMS";//create most slot
     private static final String ADMIN_FIND_LECTURERMAXREQUEST = "FindRMR";//recieve most request
+    private static final String ADMIN_IMPORT_PAGE = "importPage";
+    private static final String ADMIN_IMPORT_PAGE_ACTION = "AdminImportPage.jsp";
+    private static final String ADMIN_IMPORTSTUDENT = "importST";
+    private static final String ADMIN_IMPORTSTUDENT_ACTION = "ImportStudents";
+    private static final String ADMIN_IMPORTTIMETABLES = "importTB";
+    private static final String ADMIN_IMPORTTIMETABLES_ACTION = "ImportTimetables";
 
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
@@ -112,6 +118,9 @@ public class MainController extends HttpServlet {
 
     private static final String SEARCH_FREE_SLOT_ACTION = "SearchFSlot";
     private static final String SEARCH_FREE_SLOT_SERVLET = "SearchFreeSlotServlet";
+    
+    private static final String SEARCH_BOOKED_SLOT_ACTION = "searchBSlot";
+    private static final String SEARCH_BOOKED_SLOT_SERVLET = "SearchBookedServlet";
 
     private static final String BACK = "back";
 
@@ -189,6 +198,12 @@ public class MainController extends HttpServlet {
                 url = ADMIN_PAGE_CONTROLLER;
             } else if (action.equals(ADMIN_FIND_LECTURERMAXREQUEST)) {
                 url = ADMIN_PAGE_CONTROLLER;
+            } else if (action.equals(ADMIN_IMPORT_PAGE)) {
+                url = ADMIN_IMPORT_PAGE_ACTION;
+            } else if (action.equals(ADMIN_IMPORTSTUDENT)) {
+                url = ADMIN_IMPORTSTUDENT_ACTION;
+            } else if (action.equals(ADMIN_IMPORTTIMETABLES)) {
+                url = ADMIN_IMPORTTIMETABLES_ACTION;
             } else if (action.equals(ADMIN_PAGE)) {
                 url = ADMIN_PAGE_ACTION;
             } else if (ACCEPT_REQUEST.equals(action)) {
@@ -209,6 +224,10 @@ public class MainController extends HttpServlet {
                 url = CHECK_ATTENDANCE_SERVLET_STUDENT;
             } else if (CHECK_ATTENDANCE_ACTION_LECTURER.equals(action)) {
                 url = CHECK_ATTENDANCE_SERVLET_LECTURER;
+            } else if (BOOKING_FREE_SLOT.equals(action)) {
+                url = BOOKING_FREE_SLOT_SERVLET;
+            } else if (SEARCH_BOOKED_SLOT_ACTION.equals(action)) {
+                url = SEARCH_BOOKED_SLOT_SERVLET;
             }
 
         } catch (Exception e) {

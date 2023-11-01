@@ -175,12 +175,7 @@
   font-size: 15px;
   color: #000;
 }
-.view-user-table {
-    margin-top: 218px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-}
+
 input.in_userID {
     width: 77px;
     border: 0px;
