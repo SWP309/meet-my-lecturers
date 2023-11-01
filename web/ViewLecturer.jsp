@@ -53,6 +53,10 @@
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
         </script>
     </head>
     <body>
@@ -96,11 +100,16 @@
                 <img class="back-icon" alt="" src="./public/request/back.svg" />
             </div>
             <div class="header1">
-                <img
-                    class="fptu-eng-1-icon1"
-                    alt=""
-                    src="./public/TimetableView/2021fptueng-11@2x.png"
-                    />
+                <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="returnHomePageStudent" />
+                    </form>
+                    <img
+                        class="fptu-eng-1-icon"
+                        alt=""
+                        src="public/BookingView/2021fptueng-1@2x.png"
+                        />
+                </div>
 
                 <div class="frame-parent">
                     <div class="frame-group">
@@ -118,9 +127,9 @@
                         </div>
                     </div>
                     <div>
-                        <img class="frame-item" alt="" src="./public/StudentHome/group-33.svg" 
-                             onclick="showUserInfo()" />
-                        <div id="user-info" style="display: none;">
+                        <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
+                             onclick="showUserInfo()"  style="cursor: pointer"/>
+                        <div id="user-info" style="display: none; position: absolute">
                             <p id="user-id"> </p>
                             <p id="user-name"></p>
                             <p id="user-email"></p>

@@ -151,7 +151,7 @@
                             <thead>
                                 <tr class="table-danger">
                                     <th>No</th>
-                                    <th>Subject Code</th>
+                                    <th>Student ID</th>
                                     <th>Student's Name</th>
                                     <th>Start Time</th>
                                     <th>End Time</th>
@@ -163,7 +163,7 @@
                                     <tr>
                                         <td>${counter.count}</td>
                                         <td>
-                                            <span>${liststudent.subjectCode}</span>
+                                            <span>${liststudent.studentID}</span>
                                         </td>
                                         <td>
                                             <span>${liststudent.studentName}</span>

@@ -388,30 +388,30 @@
                         <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">
                             <c:forEach var="listCreatedSlot" varStatus="counter" items="${requestScope.LIST_CREATED_SLOT}">
                                 <div class="col-md-4">
-                                    <div class="card" style="width: 357px; height:270px; border-radius: 5%;">
+                                    <div class="card" style="width: 357px; height:291px; border-radius: 5%;">
                                         <div class="card-body">
                                             <form action="MainController" method="POST">
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}"/>
+                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"/>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
                                                     <span class="ml-auto">${listCreatedSlot.lectureName}</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${listCreatedSlot.startTime}"/>
+                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${listCreatedSlot.startTime}" pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.endTime}"/>
+                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.endTime}"  pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
 <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.meetLink}"/>-->
-                                                    <a class="ml-auto " href="https://${listCreatedSlot.meetLink}" onclick="confirmCheckAttendanceLink(event, '${listCreatedSlot.freeSlotID}')"> Link Meet</a>
+                                                    <a class="ml-auto specific-input" href="https://${listCreatedSlot.meetLink}" onclick="confirmCheckAttendanceLink(event, '${listCreatedSlot.freeSlotID}')"> Link Meet</a>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
-                                                    <input type="text" class="ml-auto specific-input" name="semesterID" value="${listCreatedSlot.semesterID}"/>
+                                                    <span class="ml-auto specific-input">${listCreatedSlot.semesterID}</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
-                                                    ${listCreatedSlot.joinedMembers}/${listCreatedSlot.capacity}
+                                                    <span class="ml-auto specific-input"> ${listCreatedSlot.joinedMembers}/${listCreatedSlot.capacity}</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between btn-book">
 
@@ -434,7 +434,6 @@
                                                             <input type="hidden" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}" required/>
                                                             <input type="hidden" name="startTime" value="${listCreatedSlot.startTime}">
                                                             <input type="hidden" name="endTime" value="${listCreatedSlot.endTime}">
-                                                            <input type="hidden" name="semesterID" value="${searchByNull.semesterID}">
                                                             <button type="submit" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
                                                                 <i class="material-icons">update</i>Update
                                                             </button>
@@ -457,30 +456,30 @@
                                 <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_ST_ET}">
                                     <c:forEach var="searchByStEt" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_ST_ET}">
                                         <div class="col-md-4">
-                                            <div class="card" style="width: 364px; height:270px; border-radius: 5%;">
+                                            <div class="card" style="width: 364px; height:291px; border-radius: 5%;">
                                                 <div class="card-body">
                                                     <form action="MainController" method="POST">
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                            <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByStEt.subjectCode.trim()}"/>
+                                                            <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByStEt.subjectCode.trim()}" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"/>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
                                                             <span class="ml-auto">${searchByStEt.lectureName}</span>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                            <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEt.startTime}"/>
+                                                            <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEt.startTime}"   pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                            <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.endTime}"/>
+                                                            <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.endTime}"   pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
 <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.meetLink}"/>-->
-                                                            <a class="ml-auto" href="https://${searchByStEt.meetLink}" onclick="confirmCheckAttendanceLinkByStEt(event, '${searchByStEt.freeSlotID}')"> Link Meet</a>
+                                                            <a class="ml-auto specific-input" href="https://${searchByStEt.meetLink}" onclick="confirmCheckAttendanceLinkByStEt(event, '${searchByStEt.freeSlotID}')"> Link Meet</a>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
-                                                            <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchByStEt.semesterID}"/>
+                                                            <span class="ml-auto specific-input">${searchByStEt.semesterID}</span>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
-                                                            ${searchByStEt.joinedMembers}/${searchByStEt.capacity}
+                                                            <span class="ml-auto specific-input"> ${searchByStEt.joinedMembers}/${searchByStEt.capacity}</span>
                                                         </div>
                                                         <div class="d-flex justify-content-between btn-book">
 
@@ -503,7 +502,6 @@
                                                                     <input type="hidden" name="subjectCode" value="${searchByStEt.subjectCode.trim()}" required/>
                                                                     <input type="hidden" name="startTime" value="${searchByStEt.startTime}">
                                                                     <input type="hidden" name="endTime" value="${searchByStEt.endTime}">
-                                                                    <input type="hidden" name="semesterID" value="${searchByNull.semesterID}">
                                                                     <button type="submit" style="display: flex; text-decoration: none; justify-content: center; background-color: white;">
                                                                         <i class="material-icons">update</i>Update
                                                                     </button>
@@ -527,30 +525,30 @@
                                     <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_ALL}">
                                         <c:forEach var="searchByAll" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_ALL}">
                                             <div class="col-md-4">
-                                                <div class="card" style="width: 364px; height:270px; border-radius: 5%;">
+                                                <div class="card" style="width: 364px; height:291px; border-radius: 5%;">
                                                     <div class="card-body">
                                                         <form action="MainController" method="POST">
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByAll.subjectCode.trim()}"/>
+                                                                <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByAll.subjectCode.trim()}" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"/>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
                                                                 <span class="ml-auto">${searchByAll.lectureName}</span>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByAll.startTime}"/>
+                                                                <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByAll.startTime}"  pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.endTime}"/>
+                                                                <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.endTime}"   pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
 <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.meetLink}"/>-->
-                                                                <a class="ml-auto" href="https://${searchByAll.meetLink}" onclick="confirmCheckAttendanceLinkByAll(event, '${searchByAll.freeSlotID}')"> Link Meet</a>
+                                                                <a class="ml-auto specific-input" href="https://${searchByAll.meetLink}" onclick="confirmCheckAttendanceLinkByAll(event, '${searchByAll.freeSlotID}')"> Link Meet</a>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
-                                                                <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchByAll.semesterID}"/>
+                                                                <span class="ml-auto specific-input">${searchByAll.semesterID}</span>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
-                                                                ${searchByAll.joinedMembers}/${searchByAll.capacity}
+                                                                <span class="ml-auto specific-input"> ${searchByAll.joinedMembers}/${searchByAll.capacity}</span>
                                                             </div>
                                                             <div class="d-flex justify-content-between btn-book">
 
@@ -573,7 +571,6 @@
                                                                         <input type="hidden" name="subjectCode" value="${searchByAll.subjectCode.trim()}" required/>
                                                                         <input type="hidden" name="startTime" value="${searchByAll.startTime}">
                                                                         <input type="hidden" name="endTime" value="${searchByAll.endTime}">
-                                                                        <input type="hidden" name="semesterID" value="${searchByNull.semesterID}">
                                                                         <button type="submit" style="display: flex; text-decoration: none; justify-content: center; background-color: white;">
                                                                             <i class="material-icons">update</i>Update
                                                                         </button>
@@ -598,30 +595,30 @@
                                         <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_SUBJECT}">
                                             <c:forEach var="searchBySubjectCode" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_SUBJECT}">
                                                 <div class="col-md-4">
-                                                    <div class="card" style="width: 364px; height: 270px; border-radius: 5%;">
+                                                    <div class="card" style="width: 364px; height:291px; border-radius: 5%;">
                                                         <div class="card-body">
                                                             <form action="MainController" method="POST">
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchBySubjectCode.subjectCode.trim()}"/>
+                                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchBySubjectCode.subjectCode.trim()}" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"/>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
                                                                     <span class="ml-auto">${searchBySubjectCode.lectureName}</span>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${searchBySubjectCode.startTime}"/>
+                                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${searchBySubjectCode.startTime}"  pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.endTime}"/>
+                                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.endTime}"   pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b >Link Meet:</b></strong> 
 <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.meetLink}"/>-->
-                                                                    <a class="ml-auto" href="https://${searchBySubjectCode.meetLink}" onclick="confirmCheckAttendanceLinkBySubjectCode(event, '${searchBySubjectCode.freeSlotID}')"> Link Meet</a>
+                                                                    <a class="ml-auto specific-input" href="https://${searchBySubjectCode.meetLink}" onclick="confirmCheckAttendanceLinkBySubjectCode(event, '${searchBySubjectCode.freeSlotID}')"> Link Meet</a>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchBySubjectCode.semesterID}"/>
+                                                                    <span class="ml-auto specific-input">${searchBySubjectCode.semesterID}</span>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
-                                                                    ${searchBySubjectCode.joinedMembers}/${searchBySubjectCode.capacity}
+                                                                    <span class="ml-auto specific-input"> ${searchBySubjectCode.joinedMembers}/${searchBySubjectCode.capacity}</span>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between btn-book">
 
@@ -644,7 +641,6 @@
                                                                             <input type="hidden" name="subjectCode" value="${searchBySubjectCode.subjectCode.trim()}" required/>
                                                                             <input type="hidden" name="startTime" value="${searchBySubjectCode.startTime}">
                                                                             <input type="hidden" name="endTime" value="${searchBySubjectCode.endTime}">
-                                                                            <input type="hidden" name="semesterID" value="${searchByNull.semesterID}">
                                                                             <button type="submit" style="display: flex; text-decoration: none; justify-content: center;">
                                                                                 <i class="material-icons">update</i>Update
                                                                             </button>
@@ -668,30 +664,30 @@
                                             <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_NULL}">
                                                 <c:forEach var="searchByNull" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_NULL}">
                                                     <div class="col-md-4">
-                                                        <div class="card" style="width: 357px; height:270px; border-radius: 5%;">
+                                                        <div class="card" style="width: 357px; height:291px; border-radius: 5%;">
                                                             <div class="card-body">
                                                                 <form action="MainController" method="POST">
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                        <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByNull.subjectCode.trim()}"/>
+                                                                        <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByNull.subjectCode.trim()}" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"/>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
                                                                         <span class="ml-auto">${searchByNull.lectureName}</span>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                        <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByNull.startTime}"/>
+                                                                        <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByNull.startTime}" pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                        <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.endTime}"/>
+                                                                        <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.endTime}"   pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
                     <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.meetLink}"/>-->
-                                                                        <a class="ml-auto " href="https://${searchByNull.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByNull.freeSlotID}')"> Link Meet</a>
+                                                                        <a class="ml-auto specific-input" href="https://${searchByNull.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByNull.freeSlotID}')"> Link Meet</a>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
-                                                                        <input type="text" class="ml-auto specific-input" name="semesterID" value="${searchByNull.semesterID}"/>
+                                                                        <span class="ml-auto specific-input">${searchByNull.semesterID}</span>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
-                                                                        ${searchByNull.joinedMembers}/${searchByNull.capacity}
+                                                                        <span class="ml-auto specific-input"> ${searchByNull.joinedMembers}/${searchByNull.capacity}</span>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between btn-book">
 
@@ -714,7 +710,6 @@
                                                                                 <input type="hidden" name="subjectCode" value="${searchByNull.subjectCode.trim()}" required/>
                                                                                 <input type="hidden" name="startTime" value="${searchByNull.startTime}">
                                                                                 <input type="hidden" name="endTime" value="${searchByNull.endTime}">
-                                                                                <input type="hidden" name="semesterID" value="${searchByNull.semesterID}">
                                                                                 <button type="submit" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
                                                                                     <i class="material-icons">update</i>Update
                                                                                 </button>
@@ -732,11 +727,7 @@
                                 </c:if>
 
 
-                                <h3>
-                                    <span class="error-message">
-                                        ${requestScope.ERROR}
-                                    </span>
-                                </h3> 
+
 
                                 <script>
                                     // L?y thông tin l?i t? bi?n requestScope.ERROR

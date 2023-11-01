@@ -16,6 +16,18 @@
     color: #fff;
     /*overflow: hidden;*/
     flex-wrap: wrap;
+/*=======
+    overflow: hidden;
+    max-width: 200%;
+}
+.fptu-eng-1-icon {
+    position: absolute;
+    top: 4px;
+    left: 53px;
+    width: 149px;
+    height: 60px;
+    object-fit: cover;
+>>>>>>> origin/mymain*/
 }
 .frame-parent {
     /*position: absolute;*/
