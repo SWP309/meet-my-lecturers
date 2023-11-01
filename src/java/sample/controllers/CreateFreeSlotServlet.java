@@ -50,21 +50,21 @@ public class CreateFreeSlotServlet extends HttpServlet {
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String lecturerID = us.getUserID();
-            
+
             String semesterID = request.getParameter("txtSemesterID");
             boolean existsSemesterID = freeSlotsDAO.checkSemesterID(semesterID);
             if (!existsSemesterID) {
                 flag = false;
                 freeSlotError.setSemesterIDError("The semesterID is wrong format OR not exist in DB.");
             }
-            
+
             String subjectCode = request.getParameter("txtSubjectCode");
             boolean existsSubjectCode = freeSlotsDAO.checkSubjectCode(subjectCode);
             if (!existsSubjectCode) {
                 flag = false;
                 freeSlotError.setSubjectCodeError("The Subject code is wrong format OR not exist in DB.");
             }
-            
+
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
             //****Check input time with current time
@@ -133,6 +133,11 @@ public class CreateFreeSlotServlet extends HttpServlet {
                 freeSlotError.setMeetLinkError("The gg meet link is duplicated.");
             }
 
+            String block_list = request.getParameter("txtBan").trim();
+            if (block_list.isEmpty()) {
+                block_list = null; // Chuyển chuỗi trống thành giá trị null
+            }
+
             String setByOption = request.getParameter("txtOption");
 
             int count = Integer.parseInt(request.getParameter("txtCount"));
@@ -154,7 +159,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
             if (flag) {
 
                 for (int i = 1; i <= count + 1; i++) {
-                    FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status, semesterID);
+                    FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status, semesterID, block_list);
                     checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");

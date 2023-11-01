@@ -27,12 +27,13 @@ import sample.utils.DBUtils;
 public class FreeSlotsDAO {
 
     private final static String CREATE_FREESLOT = "INSERT INTO "
-            + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status,semesterID) "
-            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status,semesterID,block_list) "
+            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final static String CHECK_DUPLICATE_GGMEETLINK = "SELECT freeSlotID "
             + "FROM FreeSlots WHERE meetLink=?";
     private final static String CHECK_SEMESTERID = "SELECT semesterID FROM Semesters WHERE semesterID = ?";
     private final static String CHECK_SUBJECTCODE = "SELECT subjectCode FROM Subjects WHERE subjectCode = ?";
+    private final static String CHECK_BLOCKLIST = "SELECT block_list FROM FreeSlots WHERE block_list LIKE CONCAT('%', ?, '%')";
     private final String CHECK_TIME_DUPLICATE_FS = "SELECT fs.freeSlotID\n"
             + "FROM FreeSlots fs\n"
             + "WHERE fs.lecturerID = ? \n"
@@ -1032,6 +1033,37 @@ public class FreeSlotsDAO {
             if (conn != null) {
                 ps = conn.prepareStatement(CHECK_SUBJECTCODE);
                 ps.setString(1, subjectCode);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    exists = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return exists;
+    }
+    
+    public boolean checkBlockList(String block_list) throws SQLException {
+        boolean exists = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ps = conn.prepareStatement(CHECK_BLOCKLIST);
+                ps.setString(1, block_list);
                 rs = ps.executeQuery();
                 if (rs.next()) {
                     exists = true;
