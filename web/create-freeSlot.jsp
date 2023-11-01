@@ -195,8 +195,14 @@
 
                         <div class="card-body">
                             <form action="MainController" method="POST">
-                                <div class="d-flex justify-content-between"><strong>Semester ID:</strong> <input type="text" class="form-control" name="txtSemesterID" value="${param.txtSemesterID}" placeholder="ex:FA23...etc" required="" pattern="^(SP|SU|FA)[0-9]{2}$"></div>
-                                <div class="d-flex justify-content-between"><strong>Subject code:</strong> <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}"  placeholder="ex:SWP391...etc" required="" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"></div>
+                                <div class="d-flex justify-content-between"><strong>Semester ID:</strong> <input type="text" class="form-control" name="txtSemesterID" value="${param.txtSemesterID}" placeholder="ex:FA23...etc" required=""></div>
+                                    <c:if test="${not empty requestScope.FREESLOT_ERROR.semesterIDError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.semesterIDError}</h6>
+                                </c:if>
+                                <div class="d-flex justify-content-between"><strong>Subject code:</strong> <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}"  placeholder="ex:SWP391...etc" required=""></div>
+                                    <c:if test="${not empty requestScope.FREESLOT_ERROR.subjectCodeError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.subjectCodeError}</h6>
+                                </c:if>
                                 <div class="d-flex justify-content-between"><strong>Start time:</strong> <input type="datetime-local" value="${param.txtStartTime}" class="form-control"  name="txtStartTime" required=""></div>
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.pastTimeError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.pastTimeError}</h6>
@@ -207,6 +213,9 @@
                                 </c:if>
                                 <c:if test="${not empty requestScope.FREESLOT_ERROR.durationError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.durationError}</h6>
+                                </c:if>
+                                <c:if test="${not empty requestScope.FREESLOT_ERROR.duplicateTimeError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.duplicateTimeError}</h6>
                                 </c:if>
                                 <div class="d-flex justify-content-between"><strong>Capacity:</strong> <input type="number" class="form-control" name="txtCapacity" value="${param.txtCapacity}" placeholder="need at least 2 student" required=""></div>
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.capacityError}">
@@ -220,7 +229,7 @@
                                 <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="^(SE|IA|SS|MC)[0-9]{6};(SE|IA|SS|MC)[0-9]{6}$"></div>
                                 <div class="d-flex justify-content-between"><strong>STATUS(public/private):</strong>
                                     <div class="d-flex">
-                                        <select class="form-control" name="txtStatusOption">
+                                        <select class="form-control" name="txtStatusOption" value="${param.txtStatusOption}">
                                             <option value="PUB">Public</option>
                                             <option value="PRV">Private (check Hide list)</option>
                                         </select>
@@ -229,7 +238,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <label for="role" class="col-form-label"><strong><b style="color: red">SET BY:</b></strong></label>
-                                        <select class="form-control" name="txtOption">
+                                        <select class="form-control" name="txtOption" value="${param.txtOption}">
                                             <option value="DA">Day after you created</option>
                                             <option value="DW">Day after week you created</option>
                                         </select>
@@ -255,6 +264,8 @@
                                 <input type="hidden" value="${param.txtPassword}">
                                 <input type="hidden" value="${param.txtMeetLink}">
                                 <input type="hidden" value="${param.txtCount}">
+                                <input type="hidden" value="${param.txtOption}">
+                                <input type="hidden" value="${param.txtStatusOption}">
                             </form>
                         </div>
                     </div>

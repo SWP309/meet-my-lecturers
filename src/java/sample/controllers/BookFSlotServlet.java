@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import sample.bookings.BookingDAO;
 import sample.bookings.BookingDTO;
+import sample.freeslots.FreeSlotsDAO;
 import sample.users.UserDTO;
 
 /**
@@ -35,31 +36,41 @@ public class BookFSlotServlet extends HttpServlet {
         String url = ERROR;
 
         try {
+            boolean flag=true;
             HttpSession session = request.getSession();
             BookingDAO dao = new BookingDAO();
+            BookingDTO dto = new BookingDTO();
+            FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String studentID = us.getUserID();
-            String freeSlotID = request.getParameter("txtFSlotID");
+            boolean existsInBlockList = freeSlotsDAO.checkBlockList(studentID);
+            if (existsInBlockList) {
+                System.out.println("You have been blocked from this slot, please contact your lecturer to know reasons");
+                flag=false;
+                dto.setStatus(0);
+            }
             
-            BookingDTO dto = new BookingDTO();
-           dto.setStudentID(studentID);
-           dto.setFreeSlotID(freeSlotID);
-            if (freeSlotID != null) {
-                boolean checkUpdate = dao.BookFSlot(dto);
-                List<BookingDTO> listbooking = dao.getListBooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
-                request.setAttribute("LIST_CREATED_SLOT", listbooking);
-                if (checkUpdate) {
-                    System.out.println(checkUpdate);
-                    url = SUCCESS;
-                    if (listbooking == null || listbooking.isEmpty()) {
+            if (flag) {
+                String freeSlotID = request.getParameter("txtFSlotID");
+                dto.setStudentID(studentID);
+                dto.setFreeSlotID(freeSlotID);
+                if (freeSlotID != null) {
+                    boolean checkUpdate = dao.BookFSlot(dto);
+                    List<BookingDTO> listbooking = dao.getListBooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                    request.setAttribute("LIST_CREATED_SLOT", listbooking);
+                    if (checkUpdate) {
+                        System.out.println(checkUpdate);
+                        url = SUCCESS;
+                        if (listbooking == null || listbooking.isEmpty()) {
 //                        System.out.println("list booking is null");
-                        request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
+                            request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
+                        }
+                    } else {
+                        request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
                     }
-                } else {
-                    request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
-
                 }
             }
+
         } catch (Exception e) {
             log("Error at UpdateController: " + e.toString());
         } finally {

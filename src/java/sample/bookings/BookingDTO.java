@@ -23,6 +23,7 @@ public class BookingDTO {
     private String meetLink;
     private String freeSlotID;
     private String studentID;
+    private int status;
 
     public BookingDTO() {
         this.subjectCode = "";
@@ -33,6 +34,7 @@ public class BookingDTO {
         this.bookingID = "";
         this.meetLink = "";
         this.freeSlotID = "";
+        this.status = 1;
     }
 
     public BookingDTO(String subjectCode, String lectureName, String startTime, String endTime, String userName, String bookingID, String meetLink) {
@@ -117,6 +119,12 @@ public class BookingDTO {
         this.studentID = studentID;
     }
 
-   
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
 }
