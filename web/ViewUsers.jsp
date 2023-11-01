@@ -7,10 +7,24 @@
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
         <link rel="stylesheet" href="./ViewUsers.css" />
-        <!--    <link
-              rel="stylesheet"
-              href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
-            />-->
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
+            />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Lohit Tamil:wght@400&display=swap"
+            />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
+            />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
         <script>
             function submitSearchForm() {
                 var form = document.querySelector('.searchfunction form');
@@ -21,6 +35,12 @@
                 form.submit();
             }
         </script>
+        <style>
+            .table-view {
+                height: 100vh;
+                overflow-y: auto;
+            }
+        </style>
     </head>
     <body>
         <div class="admin-viewusersedited">
@@ -55,45 +75,32 @@
                         <img class="frame-child" alt="" src="./public/UsersView/group-33.svg" />
                     </div>
                 </div>
-                <div class="searchfunction">
-                    <div class="search">
-                        <div class="search-child" onclick="submitSearchForm()"></div>
-                        <div class="search1" onclick="submitSearchForm()">Search</div>
+
+
+                <div class="row align-items-center justify-content-center">
+                    <div>
+                        <form action="MainController" method="POST" class="d-flex justify-content-center" style=" margin-top: 10%;">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="txtSearchUserID" value="${param.txtSearchUserID}"  placeholder="Input UserID">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="txtName"  value="${param.txtName}" placeholder="Input Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="txtRoleID" value="${param.txtRoleID}" placeholder="RoleID">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="SearchUsers">Search</button>
+                            </div>
+                        </form>
                     </div>
-                    <form action="MainController" method="POST">
-                        <input type="hidden" name="action" value="SearchUsers"/>
-
-                        <div class="lecture-4">
-                            <div class="searchbylec-parent">
-                                <img
-                                    class="searchbylec-parent"
-                                    alt=""
-                                    src="./public/UsersView/searchbylec.svg"
-                                    onclick="submitSearchForm()"
-                                    />
-
-                                <div class="userid"><input class="in_search_userID" type="text" name="txtSearchUserID" value="${param.txtSearchUserID}" placeholder="Input UserID"/></div>
-                            </div>
-                            <img class="bysemester-icon" alt="" src="./public/UsersView/bysemester.svg" />
-
-                            <div class="bysemester">
-                                <img
-                                    class="bysemester-child"
-                                    alt=""
-                                    src="./public/UsersView/rectangle-13.svg"
-                                    />
-
-                                <div class="username"><input class="in_name" type="text" name="txtName" value="${param.txtName}" placeholder="Input user's name"/></div>
-                            </div>
-                            <div class="roleid"><input class="in_role" type="text" name="txtRoleID" value="${param.txtRoleID}" placeholder="Input roleID"/></div>
-                        </div>
-                    </form>
                 </div>
-                <div class="view-user-table">
+
+                <div class="d-flex table table-responsive" style="justify-content: center;   margin-top: 6%;">
                     <c:if test="${not empty param.txtSearchUserID and empty param.txtName and empty param.txtRoleID and not empty requestScope.USERS_BY_USERID}">
                         <div>
-                            <table border="1">
-                                <thead>
+                            <table border="1" class="table-hover table-primary">
+                                <thead class="table-danger">
                                     <tr>
                                         <th>No.</th>
                                         <th>Role</th>
@@ -163,8 +170,8 @@
                     </c:if>
                     <c:if test="${not empty param.txtSearchUserID and not empty param.txtName and not empty param.txtRoleID and not empty requestScope.USERS_BY_ALL}">
                         <div>
-                            <table border="1">
-                                <thead>
+                           <table border="1" class="table-hover table-primary">
+                                <thead class="table-danger">
                                     <tr>
                                         <th>No.</th>
                                         <th>Role</th>
@@ -236,8 +243,8 @@
                     </c:if>
                     <c:if test="${not empty param.txtRoleID and empty param.txtName and empty param.txtSearchUserID and not empty requestScope.USERS_BY_ROLEID}">
                         <div>
-                            <table border="1">
-                                <thead>
+                            <table border="1" class="table-hover table-primary">
+                                <thead class="table-danger">
                                     <tr>
                                         <th>No.</th>
                                         <th>Role</th>
@@ -307,8 +314,8 @@
                     </c:if>
                     <c:if test="${empty param.txtRoleID and not empty param.txtName and empty param.txtSearchUserID and not empty requestScope.USERS_BY_NAME}">
                         <div>
-                            <table border="1">
-                                <thead>
+                            <table border="1" class="table-hover table-primary">
+                                <thead class="table-danger">
                                     <tr>
                                         <th>No.</th>
                                         <th>Role</th>
@@ -378,8 +385,8 @@
                     </c:if>
                     <c:if test="${not empty param.txtRoleID and not empty param.txtName and empty param.txtSearchUserID and not empty requestScope.USERS_BY_NAME_AND_ID}">
                         <div>
-                            <table border="1">
-                                <thead>
+                            <table border="1" class="table-hover table-primary">
+                                <thead class="table-danger">
                                     <tr>
                                         <th>No.</th>
                                         <th>Role</th>
@@ -451,8 +458,8 @@
                     </c:if>
                     <c:if test="${empty param.txtRoleID and empty param.txtName and empty param.txtSearchUserID and not empty requestScope.USERS}">
                         <div>
-                            <table border="1">
-                                <thead>
+                            <table border="1" class="table-hover table-primary">
+                                <thead class="table-danger">
                                     <tr>
                                         <th>No.</th>
                                         <th>RoleID</th>

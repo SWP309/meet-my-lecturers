@@ -3,6 +3,12 @@
     <servlet>
         <servlet-name>MainController</servlet-name>
         <servlet-class>sample.controllers.MainController</servlet-class>
+        <multipart-config>
+            <location>C:\File</location>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
     </servlet>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -107,6 +113,38 @@
     <servlet>
         <servlet-name>CheckAttendanceCreateSlot</servlet-name>
         <servlet-class>sample.controllers.CheckAttendanceCreateSlot</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BookFSlotServlet</servlet-name>
+        <servlet-class>sample.controllers.BookFSlotServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchBookedServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchBookedServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ImportTimetable</servlet-name>
+        <servlet-class>sample.importexcel.ImportTimetable</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ImportTimetables</servlet-name>
+        <servlet-class>sample.importexcel.ImportTimetables</servlet-class>
+        <multipart-config>
+            <location>C:\File</location>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
+    </servlet>
+    <servlet>
+        <servlet-name>ImportStudents</servlet-name>
+        <servlet-class>sample.importexcel.ImportStudents</servlet-class>
+        <multipart-config>
+            <location>C:\File</location>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
@@ -215,6 +253,26 @@
     <servlet-mapping>
         <servlet-name>CheckAttendanceCreateSlot</servlet-name>
         <url-pattern>/CheckAttendanceCreateSlot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookFSlotServlet</servlet-name>
+        <url-pattern>/BookFSlotServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchBookedServlet</servlet-name>
+        <url-pattern>/SearchBookedServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImportTimetable</servlet-name>
+        <url-pattern>/ImportTimetable</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImportTimetables</servlet-name>
+        <url-pattern>/ImportTimetables</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImportStudents</servlet-name>
+        <url-pattern>/ImportStudents</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -27,8 +27,8 @@ import sample.utils.DBUtils;
 public class FreeSlotsDAO {
 
     private final static String CREATE_FREESLOT = "INSERT INTO "
-            + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status) "
-            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status,semesterID) "
+            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final static String CHECK_DUPLICATE_GGMEETLINK = "SELECT freeSlotID "
             + "FROM FreeSlots WHERE meetLink=?";
     private final static String SEARCH_FREESLOT_BY_SUBJECTCODE = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
@@ -109,8 +109,8 @@ public class FreeSlotsDAO {
                 ps.setString(6, freeSlotsDTO.getMeetLink());
                 ps.setInt(7, freeSlotsDTO.getCount());
                 ps.setString(8, freeSlotsDTO.getLecturerID());
-                ps.setBoolean(9, freeSlotsDTO.getStatus());
-
+                ps.setInt(9, freeSlotsDTO.getStatus());
+                ps.setString(10, freeSlotsDTO.getSemesterID());
                 result = ps.executeUpdate();
                 if (result > 0) {
                     checkCreate = true;
@@ -302,7 +302,7 @@ public class FreeSlotsDAO {
             requests.setMeetLink(rs.getString("meetLink"));
             requests.setCount(rs.getInt("count"));
             requests.setLecturerID(rs.getString("lecturerID"));
-            requests.setStatus(rs.getBoolean("status"));
+            requests.setStatus(rs.getInt("status"));
             list.add(requests);
         }
         con.close();
@@ -333,7 +333,7 @@ public class FreeSlotsDAO {
             requests.setMeetLink(rs.getString("meetLink"));
             requests.setCount(rs.getInt("count"));
             requests.setLecturerID(rs.getString("lecturerID"));
-            requests.setStatus(rs.getBoolean("status"));
+            requests.setStatus(rs.getInt("status"));
             list.add(requests);
         }
         con.close();
@@ -363,7 +363,7 @@ public class FreeSlotsDAO {
             requests.setMeetLink(rs.getString("meetLink"));
             requests.setCount(rs.getInt("count"));
             requests.setLecturerID(rs.getString("lecturerID"));
-            requests.setStatus(rs.getBoolean("status"));
+            requests.setStatus(rs.getInt("status"));
             list.add(requests);
         }
         con.close();
@@ -401,7 +401,7 @@ public class FreeSlotsDAO {
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
                 String semester = rs.getString("semesterID");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
                 if(this.freeSlotBySubjectCode == null){
                     this.freeSlotBySubjectCode = new ArrayList<>();
                 }
@@ -444,7 +444,7 @@ public class FreeSlotsDAO {
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
                 String semester = rs.getString("semesterID");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
                 if(this.freeSlotByLecturerID == null){
                     this.freeSlotByLecturerID = new ArrayList<>();
                 }
@@ -488,7 +488,7 @@ public class FreeSlotsDAO {
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
                 String semester = rs.getString("semesterID");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
                 if(this.freeSlotByLecName == null){
                     this.freeSlotByLecName = new ArrayList<>();
                 }
@@ -531,7 +531,7 @@ public class FreeSlotsDAO {
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
                 if(this.freeSlotBySemesterID == null){
                     this.freeSlotBySemesterID = new ArrayList<>();
                 }
@@ -574,7 +574,7 @@ public class FreeSlotsDAO {
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
                 String semester = rs.getString("semesterID");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
                 if(this.freeSlotBySubjectAndLecID == null){
                     this.freeSlotBySubjectAndLecID = new ArrayList<>();
                 }
@@ -618,7 +618,7 @@ public class FreeSlotsDAO {
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
                 String semester = rs.getString("semesterID");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
                 if(this.freeSlotBySubjectAndLecName == null){
                     this.freeSlotBySubjectAndLecName = new ArrayList<>();
                 }
@@ -661,7 +661,7 @@ public class FreeSlotsDAO {
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
                 if(this.freeSlotBySubjectAndSemester == null){
                     this.freeSlotBySubjectAndSemester = new ArrayList<>();
                 }
@@ -704,7 +704,7 @@ public class FreeSlotsDAO {
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
                 if(this.freeSlotByLecIDAndSemester == null){
                     this.freeSlotByLecIDAndSemester = new ArrayList<>();
                 }
@@ -748,7 +748,7 @@ public class FreeSlotsDAO {
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
                 if(this.freeSlotByLecNameAndSemester == null){
                     this.freeSlotByLecNameAndSemester = new ArrayList<>();
                 }
@@ -793,7 +793,7 @@ public class FreeSlotsDAO {
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
                 if(this.freeSlotBySubCodeAndLecIDAndSemester == null){
                     this.freeSlotBySubCodeAndLecIDAndSemester = new ArrayList<>();
                 }
@@ -838,7 +838,7 @@ public class FreeSlotsDAO {
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
                 if(this.freeSlotBySubCodeAndLecNameAndSemester == null){
                     this.freeSlotBySubCodeAndLecNameAndSemester = new ArrayList<>();
                 }
@@ -884,7 +884,7 @@ public class FreeSlotsDAO {
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
                 if(this.freeSlotByAll == null){
                     this.freeSlotByAll = new ArrayList<>();
                 }
@@ -927,7 +927,7 @@ public class FreeSlotsDAO {
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
                 String semester = rs.getString("semesterID");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, true, semester, lecname);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
                 if(this.freeSlotList == null){
                     this.freeSlotList = new ArrayList<>();
                 }
