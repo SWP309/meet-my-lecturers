@@ -188,7 +188,7 @@
                     </div>
                     <div>
                         <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
-                             onclick="showUserInfo()" />
+                             onclick="showUserInfo()"  style="cursor: pointer"/>
                         <div id="user-info" style="display: none; position: absolute">
                             <p id="user-id"> </p>
                             <p id="user-name"></p>
