@@ -208,6 +208,9 @@
                                 <c:if test="${not empty requestScope.FREESLOT_ERROR.durationError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.durationError}</h6>
                                 </c:if>
+                                <c:if test="${not empty requestScope.FREESLOT_ERROR.duplicateTimeError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.duplicateTimeError}</h6>
+                                </c:if>
                                 <div class="d-flex justify-content-between"><strong>Capacity:</strong> <input type="number" class="form-control" name="txtCapacity" value="${param.txtCapacity}" placeholder="need at least 2 student" required=""></div>
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.capacityError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.capacityError}</h6>

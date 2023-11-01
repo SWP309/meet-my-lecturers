@@ -38,7 +38,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
     private static final String SUCCESS = "CreatedSlotController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         boolean flag = true;
@@ -49,6 +49,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
             FreeSlotError freeSlotError = new FreeSlotError();
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            String lecturerID = us.getUserID();
             String semesterID = request.getParameter("txtSemesterID");
             String subjectCode = request.getParameter("txtSubjectCode");
             String startTime = request.getParameter("txtStartTime");
@@ -93,6 +94,14 @@ public class CreateFreeSlotServlet extends HttpServlet {
                 flag = false;
                 freeSlotError.setDurationError("- Not allowed create slot <= 5AM or >= 11PM!!!");
             }
+            //****check duplicate time with created freeslot
+            boolean checkStartTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(lecturerID, starts);
+            boolean checkEndTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(lecturerID, ends);
+            if (checkStartTimeDuplicateFS == false || checkEndTimeDuplicateFS == false) {
+                flag = false;
+                freeSlotError.setDuplicateTimeError("- The time you entered overlaps with time of created FREESLOT!!! ");
+            }
+
             String password = request.getParameter("txtPassword").trim();
             if (password.isEmpty()) {
                 password = null; // Chuyển chuỗi trống thành giá trị null
@@ -114,21 +123,20 @@ public class CreateFreeSlotServlet extends HttpServlet {
             String setByOption = request.getParameter("txtOption");
 
             int count = Integer.parseInt(request.getParameter("txtCount"));
-            if (count<0) {
-                flag=false;
+            if (count < 0) {
+                flag = false;
                 freeSlotError.setRepeatedTimeError("The repeated time must be greater OR equal 0");
             }
-            String lecturerID = us.getUserID();
-            
-            int status=0;
-            String statusOption=request.getParameter("txtStatusOption");
+
+            int status = 0;
+            String statusOption = request.getParameter("txtStatusOption");
             if (statusOption.equals("PUB")) {
-                status=1;
+                status = 1;
             }
             if (statusOption.equals("PRV")) {
-                status=0;
+                status = 0;
             }
-            
+
             request.setAttribute("FREESLOT_ERROR", freeSlotError);
             if (flag) {
 
@@ -164,6 +172,8 @@ public class CreateFreeSlotServlet extends HttpServlet {
             log("Error at CreateFreeSlotServlet" + ex.toString());
         } catch (ParseException ex) {
             Logger.getLogger(CreateFreeSlotServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
@@ -181,7 +191,11 @@ public class CreateFreeSlotServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CreateFreeSlotServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -195,7 +209,11 @@ public class CreateFreeSlotServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CreateFreeSlotServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
