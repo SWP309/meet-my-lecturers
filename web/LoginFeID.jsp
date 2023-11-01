@@ -29,57 +29,53 @@
         <div class="login-feid">
             <div class="formlogin1">
                 <div class="surround">
-                    <div class="surround-child"></div>
-                    <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/meet-my-lecturers/LoginGoogleHandler&response_type=code&client_id=79561996257-0ctstd2ursldvmmufi3vpq6k6rp4ftrg.apps.googleusercontent.com&approval_prompt=force">
-                        <img class="google-icon1" alt="" src="./public/LoginHome/google1.svg" />
-                    </a>
-                    <div class="or">Or</div>
-                    <div class="error-appear-here1">
-                        <%
-                            String msg = (String) request.getAttribute("Error");
-                            if (msg != null) {
-                        %>
-                        <h2 id="123" style="color:red"><%=    msg%></h2>
-                        <%
-                            }
-                        %></div>
-                    <form action="MainController" method="post">
-                        <input type="hidden" value="loginFeIDAction" name="action"/>
-                        <div class="password">
-                            <div class="password1">Password</div>
-                            <div class="password-child">
-                                <div class="password-child-input"><input name="txtpassword" type="password" style="background-color: #ebebeb; border: none; height: 4.19rem; border-radius: 40px; width: 22.38rem; font-size: 1.5rem; padding: 20px; box-sizing: border-box" ></div>
-                            </div>           
-                        </div>
-
-                        <div class="account">
-                            <label class="account1">Account</label>
-                            <div class="account-child">
-                                <div class="account-child-input"><input name="txtemail" type="text" style="background-color: #ebebeb; border: none; height: 4.19rem; border-radius: 40px; width: 22.38rem; font-size: 1.5rem; padding: 20px; box-sizing: border-box" ></div>
+                    <div class="surround-child">
+                        <div class="sign-in1">
+                            <div class="method">
+                                <div class="sign-in2">Sign in</div>
                             </div>
-
+                            <div class="welcome1">Welcome !</div>
                         </div>
-                        <div class="loginbutton">
-                            <div class="loginbutton-child">
-                                <div class="login1"><input id="button" type="submit" value="Login" style=" border: none; font-size: 1rem;   width: 6.25rem; height: 2.56rem; border-radius: 40px; cursor: pointer; border: 0.5px #f27125 solid"></div>
+                        <form action="MainController" method="post">
+                            <input type="hidden" value="loginFeIDAction" name="action"/>
+                            <div class="account">
+                                <label class="account1">Account</label>
+                                <div class="account-child">
+                                    <div class="account-child-input"><input name="txtemail" type="text" style="background-color: #ebebeb; border: none; height: 4.19rem; border-radius: 40px; width: 22.38rem; font-size: 1.5rem; padding: 20px; box-sizing: border-box" ></div>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                    <div class="sign-in1">
-                        <div class="method">
-                            <div class="sign-in2">Sign in</div>
-                        </div>
-                        <div class="welcome1">Welcome !</div>
+                            <div class="password">
+                                <div class="password1">Password</div>
+                                <div class="password-child">
+                                    <div class="password-child-input"><input name="txtpassword" type="password" style="background-color: #ebebeb; border: none; height: 4.19rem; border-radius: 40px; width: 22.38rem; font-size: 1.5rem; padding: 20px; box-sizing: border-box" ></div>
+                                </div>           
+                            </div>
+                            <div class="loginbutton">
+                                <div class="loginbutton-child">
+                                    <div class="login1"><input id="button" type="submit" value="Login" style=" border: none; font-size: 1rem;   width: 6.25rem; height: 2.56rem; border-radius: 40px; cursor: pointer; border: 0.5px #f27125 solid"></div>
+                                </div>
+                            </div>
+                            <div class="error-appear-here1">
+                                <%
+                                    String msg = (String) request.getAttribute("Error");
+                                    if (msg != null) {
+                                %>
+                                <h2 id="123" style="color:red"><%=    msg%></h2>
+                                <%
+                                    }
+                                %></div>
+                            <div class="or">Or</div>
+                            <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/meet-my-lecturers/LoginGoogleHandler&response_type=code&client_id=79561996257-0ctstd2ursldvmmufi3vpq6k6rp4ftrg.apps.googleusercontent.com&approval_prompt=force">
+                                <img class="google-icon1" alt="" src="./public/LoginHome/google1.svg" />
+                            </a>
+                        </form>
                     </div>
                 </div>
             </div>
             <div class="logo1">
-                <img
-                    class="fptu-long-1-11"
-                    alt=""
-                    src="./public/LoginHome/2021fptulong-1-11@2x.png"
-                    />
-
+                <div class="fptu-long-1-11">
+                    <!--<img  alt="" src="./public/LoginHome/2021fptulong-1-11@2x.png"/>-->
+                </div>
                 <div class="appointment-scheduling-applica1">
                     Appointment Scheduling Application
                 </div>
@@ -91,15 +87,25 @@
                         <span class="fpt-university3">FPT University</span>
                     </a>
                     |
-                    <a
-                        class="fpt-university2"
-                        href="http://library.fpt.edu.vn/"
-                        target="_blank"
-                        >
+                    <a class="fpt-university2" href="http://library.fpt.edu.vn/" target="_blank">
                         <span class="fpt-university3">library</span>
                     </a>
                 </div>
             </div>
         </div>
+        <script>
+            function checkWindowSize() {
+                if (window.innerWidth < 1300) { // 600 là giá trị ngưỡng
+                    document.querySelector('.logo1').style.visibility = 'hidden';
+                } else {
+                    document.querySelector('.logo1').style.visibility = 'visible';
+                }
+            }
+
+            checkWindowSize(); // Kiểm tra kích thước ban đầu
+            window.addEventListener('resize', checkWindowSize); // Theo dõi sự kiện resize
+            
+        </script>
+        
     </body>
 </html>
