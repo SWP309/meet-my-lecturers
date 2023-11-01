@@ -11,7 +11,7 @@ package sample.viewCreatedSlot;
  */
 public class StudentViewSlotDTO {
 
-    private String subjectCode;
+    private String studentID;
     private String studentName;
     private String startTime;
     private String endTime;
@@ -19,7 +19,7 @@ public class StudentViewSlotDTO {
     private String freeSlotID;
 
     public StudentViewSlotDTO() {
-        this.subjectCode = "";
+        this.studentID = "";
         this.studentName = "";
         this.startTime = null;
         this.endTime = null;
@@ -27,8 +27,8 @@ public class StudentViewSlotDTO {
         this.freeSlotID = "";
     }
 
-    public StudentViewSlotDTO(String subjectCode, String studentName, String startTime, String endTime, String userName, String freeSlotID) {
-        this.subjectCode = subjectCode;
+    public StudentViewSlotDTO(String studentID, String studentName, String startTime, String endTime, String userName, String freeSlotID) {
+        this.studentID = studentID;
         this.studentName = studentName;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -36,12 +36,12 @@ public class StudentViewSlotDTO {
         this.freeSlotID = freeSlotID;
     }
 
-    public String getSubjectCode() {
-        return subjectCode;
+    public String getStudentID() {
+        return studentID;
     }
 
-    public void setSubjectCode(String subjectCode) {
-        this.subjectCode = subjectCode;
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
     public String getStudentName() {

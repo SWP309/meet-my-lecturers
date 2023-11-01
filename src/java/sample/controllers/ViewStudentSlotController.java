@@ -40,6 +40,8 @@ public class ViewStudentSlotController extends HttpServlet {
             if (liststudent.size() > 0) {
                 request.setAttribute("LIST_STUDENT", liststudent);
                 url = SUCCESS;
+            } else {
+                request.setAttribute("ERROR", "No one have booked your slot");
             }
         } catch (Exception e) {
             log("Error at SearchController: " + e.toString());
