@@ -108,6 +108,14 @@
     position: relative;
     line-height: 25px;
 }
+.fptu-eng-1-icon {
+    position: absolute;
+    top: 4px;
+    left: 53px;
+    width: 149px;
+    height: 60px;
+    object-fit: cover;
+}
 .frame-container {
     border-radius: 12px;
     background-color: #f27125;
@@ -187,6 +195,7 @@
     font-size: 18px;
     color: #fff;
     overflow: hidden;
+    max-width: 200%;
 }
 .student-lectures-schedule-edi {
     position: relative;

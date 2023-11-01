@@ -7,6 +7,10 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -43,28 +47,35 @@ public class UpdateFSlotController extends HttpServlet {
             String endTime = request.getParameter("endTime");
             String freeSlotID = request.getParameter("freeSlotID");
             String semesterID = request.getParameter("semesterID");
-            ViewCreatedSlotDTO dto = new ViewCreatedSlotDTO();
-            dto.setStartTime(startTime);
-            dto.setEndTime(endTime);
-            dto.setSubjectCode(subjectCode);
-            dto.setFreeSlotID(freeSlotID);
-            dto.setSemesterID(semesterID);
-            if (freeSlotID != null) {
-                boolean checkUpdate = dao.update(dto);
-                List<ViewCreatedSlotDTO> listbooking = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
-                request.setAttribute("LIST_CREATED_SLOT", listbooking);
-                if (checkUpdate) {
-                    System.out.println(checkUpdate);
-                    url = SUCCESS;
-                    if (listbooking == null || listbooking.isEmpty()) {
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            Date startDate = simpleDateFormat.parse(startTime);
+            Date endDate = simpleDateFormat.parse(endTime);
+            if (endDate.after(startDate) && (endDate.getTime() - startDate.getTime()) >= 15 * 60 * 1000) {
+                ViewCreatedSlotDTO dto = new ViewCreatedSlotDTO();
+                dto.setStartTime(startTime);
+                dto.setEndTime(endTime);
+                dto.setSubjectCode(subjectCode);
+                dto.setFreeSlotID(freeSlotID);
+                dto.setSemesterID(semesterID);
+                if (freeSlotID != null) {
+                    boolean checkUpdate = dao.update(dto);
+                    List<ViewCreatedSlotDTO> listbooking = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                    request.setAttribute("LIST_CREATED_SLOT", listbooking);
+                    if (checkUpdate) {
+                        System.out.println(checkUpdate);
+                        url = SUCCESS;
+                        if (listbooking == null || listbooking.isEmpty()) {
 //                        System.out.println("list booking is null");
-                        request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
+                            request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
+                        }
                     }
-                } else { 
-                     request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
-                    
                 }
+            } else {
+                request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
+
             }
+
         } catch (Exception e) {
             log("Error at UpdateController: " + e.toString());
         } finally {
