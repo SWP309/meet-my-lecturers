@@ -8,6 +8,7 @@ public class RequestError {
     private String duplicateRequestError;
     private String duplicateFreeSlotError;
     private String duplicateTimetableError;
+    private String limitTimeAtNight;
 
     public RequestError() {
         this.currentDateError = "";
@@ -16,17 +17,18 @@ public class RequestError {
         this.duplicateRequestError = "";
         this.duplicateFreeSlotError = "";
         this.duplicateTimetableError = "";
+        this.limitTimeAtNight = "";
     }
 
-    public RequestError(String currentDateError, String endTimeError, String durationError, String duplicateRequestError, String duplicateFreeSlotError, String duplicateTimetableError) {
+    public RequestError(String currentDateError, String endTimeError, String durationError, String duplicateRequestError, String duplicateFreeSlotError, String duplicateTimetableError, String limitTimeAtNight) {
         this.currentDateError = currentDateError;
         this.endTimeError = endTimeError;
         this.durationError = durationError;
         this.duplicateRequestError = duplicateRequestError;
         this.duplicateFreeSlotError = duplicateFreeSlotError;
         this.duplicateTimetableError = duplicateTimetableError;
+        this.limitTimeAtNight = limitTimeAtNight;
     }
-
 
 
     /**
@@ -111,6 +113,20 @@ public class RequestError {
      */
     public void setDuplicateFreeSlotError(String duplicateFreeSlotError) {
         this.duplicateFreeSlotError = duplicateFreeSlotError;
+    }
+
+    /**
+     * @return the limitTimeAtNight
+     */
+    public String getLimitTimeAtNight() {
+        return limitTimeAtNight;
+    }
+
+    /**
+     * @param limitTimeAtNight the limitTimeAtNight to set
+     */
+    public void setLimitTimeAtNight(String limitTimeAtNight) {
+        this.limitTimeAtNight = limitTimeAtNight;
     }
     
 }

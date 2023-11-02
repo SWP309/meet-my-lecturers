@@ -219,10 +219,27 @@
 
                     <i class="material-icons">add</i>
                 </div>
-                <div class="backbutton"  onclick="goBack()">
-                    <img class="back-icon" alt="" src="./public/request/back.svg" /><p style="margin-left: 44px;">Back</p>
+                <div class="container">
+                    <div class="row align-items-center justify-content-center" style="margin: 80px 0 -60px 0">
+                        <div>
+                            <form action="MainController" method="POST" class="d-flex justify-content-center">
+                                <div class="form-group"  style="margin-left: 5px">
+                                    <input type="datetime-local" class="form-control" name="txtStartTime" value="${param.txtStartTime}">
+                                </div>
+                                <div class="form-group" style="margin-left: 5px">
+                                    <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}">
+                                </div>
+                                <div class="form-group" style="margin-left: 5px">
+                                    <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}" placeholder="Subject Code">
+                                </div>
+                                <div class="form-group" style="margin-left: 5px">
+                                    <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchCSlot">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="view-user-table">
+                <div class="view-user-table" style="width: 80%; margin: 0 auto; border-radius: 20px;">
                     <c:if test="${not empty requestScope.LIST_REQUESTS}">
                         <div class="table-container">
                             <table class="custom-table">
@@ -276,7 +293,7 @@
                         </div>
                     </c:if>
                     <c:if test="${empty requestScope.LIST_REQUESTS}">
-                        <h3 class="error-message">${requestScope.VIEW_REQUEST_MESSAGE}</h3>
+                        <h3 class="error-message " style= "margin-top: 10%;">${requestScope.VIEW_REQUEST_MESSAGE}</h3>
                     </c:if>
                 </div>
 

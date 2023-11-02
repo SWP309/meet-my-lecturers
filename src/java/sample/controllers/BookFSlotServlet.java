@@ -6,6 +6,9 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import sample.bookings.BookingDAO;
 import sample.bookings.BookingDTO;
+import sample.bookings.BookingError;
 import sample.users.UserDTO;
 
 /**
@@ -40,28 +44,56 @@ public class BookFSlotServlet extends HttpServlet {
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String studentID = us.getUserID();
             String freeSlotID = request.getParameter("txtFSlotID");
-            
+            String startTime = request.getParameter("txtStartTime");
+            String endTime = request.getParameter("txtEndTime");
+            int capacity = Integer.parseInt(request.getParameter("intCapacity"));
             BookingDTO dto = new BookingDTO();
-           dto.setStudentID(studentID);
-           dto.setFreeSlotID(freeSlotID);
-            if (freeSlotID != null) {
-                boolean checkUpdate = dao.BookFSlot(dto);
-                List<BookingDTO> listbooking = dao.getListBooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
-                request.setAttribute("LIST_CREATED_SLOT", listbooking);
-                if (checkUpdate) {
-                    System.out.println(checkUpdate);
-                    url = SUCCESS;
-                    if (listbooking == null || listbooking.isEmpty()) {
-//                        System.out.println("list booking is null");
-                        request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
-                    }
-                } else {
-                    request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
-
-                }
+            dto.setStudentID(studentID);
+            dto.setFreeSlotID(freeSlotID);
+            BookingError bookingError = new BookingError();
+            boolean checkValidation = true;
+            //tranfer String to Date
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            Date starts = format.parse(startTime);
+            Date ends = format.parse(endTime);
+            //*****check overCapacity
+            int bookedStudent = dao.getBookedStudent(freeSlotID);
+            if (bookedStudent >= capacity) {
+                checkValidation = false;
+                bookingError.setOverCapacity("- This slot is full!!!");
             }
+            //*****check duplicateBookedFSlot
+            boolean checkStartDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, starts);
+            boolean checkEndDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, ends);
+            if (checkStartDuplicateBookedFS == false || checkEndDuplicateBookedFS == false) {
+                checkValidation = false;
+                bookingError.setDuplicateBookedSlot("- This slot was duplicated with another booked slot!!!");
+            }
+            //*****check duplicate with accepted request
+            boolean checkStartDuplicateRequest = dao.checkTimeDuplicateInRequest(studentID, starts);
+            boolean checkEndDuplicateRequest = dao.checkTimeDuplicateInRequest(studentID, ends);
+            if (checkStartDuplicateRequest == false || checkEndDuplicateRequest == false) {
+                checkValidation = false;
+                bookingError.setDuplicateAcceptedRequest("- This slot was duplicated with another request!!!");
+            }
+            request.setAttribute("BOOKING_ERROR", bookingError);
+            if (checkValidation) {
+                    boolean checkUpdate = dao.BookFSlot(dto);
+                    List<BookingDTO> listbooking = dao.getListBooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                    request.setAttribute("LIST_CREATED_SLOT", listbooking);
+                    if (checkUpdate) {
+                        url = SUCCESS;
+                        if (listbooking == null || listbooking.isEmpty()) {
+                            request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
+                        }
+                    } else {
+                        request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
+
+                    }
+            }
+                
         } catch (Exception e) {
-            log("Error at UpdateController: " + e.toString());
+            log("Error at BookFSlotServlet: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

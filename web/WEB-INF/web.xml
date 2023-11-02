@@ -146,6 +146,14 @@
             <file-size-threshold>1048576</file-size-threshold>
         </multipart-config>
     </servlet>
+    <servlet>
+        <servlet-name>ViewStudentBookingPresenceServlet</servlet-name>
+        <servlet-class>sample.controllers.ViewStudentBookingPresenceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchRequestStatusServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchRequestStatusServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -273,6 +281,14 @@
     <servlet-mapping>
         <servlet-name>ImportStudents</servlet-name>
         <url-pattern>/ImportStudents</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewStudentBookingPresenceServlet</servlet-name>
+        <url-pattern>/ViewStudentBookingPresenceServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchRequestStatusServlet</servlet-name>
+        <url-pattern>/SearchRequestStatusServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
