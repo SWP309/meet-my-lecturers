@@ -29,36 +29,6 @@
     bottom: 260px;
     left: -43%;
 }
-.vector-icon,
-.vector-icon1,
-.vector-icon2 {
-    position: absolute;
-    height: 94.29%;
-    width: 25.99%;
-    top: 8.57%;
-    right: 74.81%;
-    bottom: -2.86%;
-    left: -0.8%;
-    max-width: 100%;
-    overflow: hidden;
-    max-height: 100%;
-}
-.vector-icon1,
-.vector-icon2 {
-    height: 41.14%;
-    width: 6.48%;
-    top: 35.14%;
-    right: 87.01%;
-    bottom: 23.71%;
-    left: 6.52%;
-}
-.vector-icon2 {
-    height: 5.71%;
-    width: 11.36%;
-    top: 52.86%;
-    right: 82.13%;
-    bottom: 41.43%;
-}
 .back,
 .backbutton {
     position: absolute;
@@ -72,31 +42,14 @@
     top: 101px;
     left: 25px;
 }
-.fptu-eng-1-icon1 {
-    position: absolute;
-    top: 4px;
-    left: 53px;
-    width: 149px;
-    height: 60px;
-    object-fit: cover;
+.returnHome{
+    width: 120px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: url("public/BookingView/2021fptueng-1@2x.png");
 }
-.logout-icon1 {
-    position: relative;
-    width: 13px;
-    height: 25px;
-}
-.logout-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-}
-.logout2 {
-    margin: 0;
-}
-.logout1 {
-    position: relative;
-}
+
 .frame-div,
 .frame-group {
     cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
@@ -109,16 +62,16 @@
     cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
     border-radius: 12px;
     background-color: #f27125;
-    width: 123px;
+    width: 188px;
     height: 43px;
-    align-items: flex-start;
-    padding: 10px 16px;
+    /*align-items: flex-start;*/
+    padding: 10px 9px;
     box-sizing: border-box;
     gap: 8px;
 }
 .frame-group {
-    align-items: flex-end;
     gap: 16px;
+    flex-wrap: wrap;
 }
 .frame-child {
     position: relative;
@@ -126,28 +79,29 @@
     height: 42px;
 }
 .frame-parent {
-    position: absolute;
-    top: 12px;
-    left: 952px;
-    width: 432px;
-    display: inline-flex;
+    display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    justify-content: end;
-    gap: 20px;
+    gap: 23px;
 }
-.header1 {
-    position: absolute;
-    top: 1px;
-    left: 0;
+.fptu-eng-1-parent {
+    position: relative;
     background-color: rgba(0, 0, 0, 0.125);
-    border: 1px solid #000;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
     box-sizing: border-box;
     width: 100%;
-    height: 68px;
-    font-size: 18px;
+    min-height: 68px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /*padding: 35px 40px;*/
+    padding-left: 35px;
+    font-size: 17px;
     color: #fff;
-    max-width: 200%;
+
+    /*overflow: hidden;*/
+    flex-wrap: wrap;
 }
 .student-lectures-schedule-edi {
     position: relative;

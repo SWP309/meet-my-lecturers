@@ -114,11 +114,6 @@
                 });
             }
 
-//
-//            function hideUserInfo() {
-//                var userInfo = document.getElementById("user-info");
-//                userInfo.style.display = "none"; // ?n thông tin ng??i dùng khi r?i chu?t ra kh?i hình ?nh
-//            }
             function confirmCancel() {
                 var result = confirm("Are you sure about cancel your booking ?");
                 if (result) {
@@ -201,17 +196,21 @@
                 background-color: #007bff;
                 color: blue;
             }
+            @media (max-width: 767px) {
+                .logout i {
+                    display: none;
+                }
+            }
         </style>
     </head>
     <body>
         <div class="student-home">
             <div class="fptu-eng-1-parent">
-                <img
-                    class="fptu-eng-1-icon"
-                    alt=""
-                    src="public/BookingView/2021fptueng-1@2x.png"
-                    />
-
+                <div class="returnHome"> 
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="returnHomePageStudent" />
+                    </form>
+                </div>
                 <div class="frame-parent">
                     <div class="frame-group">
                         <div class="frame-div bookingview" onclick="submitForm()">
@@ -231,20 +230,15 @@
 
                             <i class="material-icons">mail_outline</i> Request
                         </div>
-                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: 26%;">
+                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: 21%; text-align: center">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
-                            <div class="logout-wrapper">
-                                <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
-                            </div>
-                            <div class="request">
-                                <p class="logout1">Logout</p>
-                            </div>
+                            <i class="material-icons">logout</i> Logout
                         </div>
                     </div>
                     <div>
-                        <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
+                        <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
                              onclick="showUserInfo()" />
                         <div id="user-info" style="display: none; position: absolute">
                             <p id="user-id"> </p>
@@ -664,7 +658,7 @@
                     </c:forEach>
                 </c:if>
                 <c:if test="${empty param.txtSubjectCode and empty param.txtUserID and not empty param.txtUserName and not empty param.txtSemesterID and not empty requestScope.FREESLOT_BY_LECNAME_AND_SEMESTER}">
-                    <c:forEach items="${requestScope.FREESLOT_BY_LECNAME_AND_SEMESTER}" 
+                    <c:forEach items="${requestScope.FREESLOT_BY_LECNAME_AND_SEMESTER}"
                                var="freeslot" varStatus="status">
                         <div style="width: calc((100% - 60px) / 3)">
                             <div class="card" style="border-radius: 5%;">
