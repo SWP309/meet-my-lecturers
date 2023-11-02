@@ -101,7 +101,7 @@
                 </div>
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: 21%; text-align: center">
+                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: -11%; justify-content: center; text-align: center">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>

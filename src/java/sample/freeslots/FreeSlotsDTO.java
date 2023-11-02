@@ -27,7 +27,7 @@ public class FreeSlotsDTO {
         this.meetLink = "";
         this.count = 0;
         this.lecturerID = "";
-        this.status = 0; 
+        this.status = 1;
     }
 
     public String getLecturerName() {
@@ -138,19 +138,19 @@ public class FreeSlotsDTO {
         this.lecturerID = lecturerID;
     }
 
-    public int getStatus() {
+    public boolean getStatus() {
         return isStatus();
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setStatus(boolean status) {
+        this.setStatus(status);
     }
 
     /**
      * @return the status
      */
-    public int isStatus() {
-        return status;
+    public boolean isStatus() {
+        return getStatus();
     }
 
     /**
@@ -165,6 +165,13 @@ public class FreeSlotsDTO {
      */
     public void setSemesterID(String semesterID) {
         this.semesterID = semesterID;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
     }
 
 }

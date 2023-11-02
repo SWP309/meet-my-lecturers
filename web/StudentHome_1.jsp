@@ -90,6 +90,10 @@
                 var form = document.querySelector('.searchfunction form');
                 form.submit();
             }
+            function submitFormViewLecturer() {
+                var form = document.querySelector('.viewLecturer form');
+                form.submit();
+            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -230,7 +234,14 @@
 
                             <i class="material-icons">mail_outline</i> Request
                         </div>
-                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: 21%; text-align: center">
+                        <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="ViewAllLecturers" />
+                            </form>
+
+                            <i class="fas fa-search"></i> <p style="font-size: 16px">View Lecturer</p>
+                        </div>
+                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: 15%; text-align: center">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
@@ -804,7 +815,7 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${freeslot.startTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
-                                        <div class="d-flex justify-content-between">
+                                               <div class="d-flex justify-content-between">
                                             <div class="form-group" style="background-color: red;">
                                                 <div class="form-control">
                                                     <form action="MainController" method="GET">

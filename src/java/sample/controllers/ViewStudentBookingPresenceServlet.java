@@ -11,35 +11,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import sample.requests.RequestDAO;
-import sample.requests.RequestDTO;
-import sample.users.UserDTO;
+import sample.bookings.BookingDAO;
+import sample.bookings.BookingDTO;
 
-public class ViewRequestServlet extends HttpServlet {
-    private final String SUCCESS = "ViewRequest.jsp";
-    private final String ERROR = "ViewRequest.jsp";
+public class ViewStudentBookingPresenceServlet extends HttpServlet {
+    private final String SUCCESS = "StudentBookingPresence.jsp";
+    private final String ERROR = "StudentBookingPresence.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            HttpSession session = request.getSession();
-            UserDTO userDTO = (UserDTO) session.getAttribute("loginedUser");
-            RequestDAO requestDAO = new RequestDAO();
-            requestDAO.getRequest(userDTO.getUserID());
-            List<RequestDTO> requests = requestDAO.getListRequests();
-            List<UserDTO> users = requestDAO.getListUsers();
-            if (requests != null) {
-                    request.setAttribute("LIST_REQUESTS", requests);
-                    request.setAttribute("LIST_REQUESTS_USERS", users);
-                    url = SUCCESS;
-            } else {
-                request.setAttribute("VIEW_REQUEST_MESSAGE", "No request!!!");
-            }
-        } catch (ClassNotFoundException | SQLException ex) {
-            log("Error at ViewRequestServlet: " + ex.toString());
-        } finally {
+            BookingDAO bookingDAO = new BookingDAO();
+            List<BookingDTO> listBookingPreSenceInfo = bookingDAO.bookingPresenceInformation();
+                    request.setAttribute("LIST_BOOKING_PRESENCE_INFO", listBookingPreSenceInfo);
+            List<BookingDTO> listBookingAbsenceNumber = bookingDAO.bookingAbsenceNumber();        
+            request.setAttribute("LIST_BOOKING_ABSENCE_NUMBER", listBookingAbsenceNumber);
+        } catch (SQLException | ClassNotFoundException ex) {
+            log("Error at ViewStudentBookingPresenceServlet: " + ex.toString());
+        }  finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

@@ -36,10 +36,11 @@
             }
         </script>
         <style>
-            .table-view {
+            .table-view { 
                 height: 100vh;
                 overflow-y: auto;
             }
+             
         </style>
     </head>
     <body>
@@ -96,7 +97,7 @@
                     </div>
                 </div>
 
-                <div class="d-flex table table-responsive" style="justify-content: center;   margin-top: 6%;">
+                <div class="d-flex table-responsive" style="justify-content: center;   margin-top: 6%;">
                     <c:if test="${not empty param.txtSearchUserID and empty param.txtName and empty param.txtRoleID and not empty requestScope.USERS_BY_USERID}">
                         <div>
                             <table border="1" class="table-hover table-primary">
@@ -128,27 +129,27 @@
                                             </c:forEach>
                                         </td>
                                         <td>
-                                            <input class="in_userID" type="text" name="txtUserID" 
+                                            <input class="specific-input in_userID " type="text" name="txtUserID" 
                                                    value="${user.userID}"
                                                    readonly="">
                                         </td>
                                         <td>
-                                            <input class="in_userName" type="text" name="txtUserName" 
+                                            <input class="specific-input in_userName" type="text" name="txtUserName" 
                                                    value="${user.userName}"
                                                    required="">
                                         </td>
                                         <td>
-                                            <input class="in_email" type="text" name="txtEmail" 
+                                            <input class="specific-input in_email" type="text" name="txtEmail" 
                                                    value="${user.userEmail}"
                                                    required="">
                                         </td>
                                         <td>
-                                            <input class="in-password" type="text" name="txtPassword" 
+                                            <input class="specific-input in-password" type="text" name="txtPassword" 
                                                    value="${user.password}"
                                                    required="">
                                         </td>
                                         <td>
-                                            <input type="checkbox" name="txtStatus" 
+                                            <input type="specific-input checkbox" name="txtStatus" 
                                                    value="${user.userStatus}" ${user.userStatus ? 'checked' : ''}
                                                    >
                                         </td>
