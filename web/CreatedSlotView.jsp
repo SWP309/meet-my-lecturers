@@ -75,7 +75,7 @@
                 form.submit();
             }
             function submitFormViewRequest() {
-                var form = document.querySelector('.request form');
+                var form = document.querySelector('.request-div form');
                 form.submit();
             }
             function submitFormHideView() {
@@ -293,74 +293,75 @@
 
     </head>
     <body>
-        <div class="student-viewbookedslot">
-            <div class="fptu-eng-1-parent">
-                <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
-                    <form action="MainController" method="POST">
-                        <input type="hidden" name="action" value="returnHomePageLecturer" />
-                    </form>
-                    <img
-                        class="fptu-eng-1-icon"
-                        alt=""
-                        src="public/BookingView/2021fptueng-1@2x.png"
-                        />
-                </div>
 
-                <div class="frame-parent">
-                    <div class="frame-group">
-                        <div class="frame-Create CreateFSlot" onclick="submitFormCreate()">
-                            <form action="MainController" method="POST">
-                                <input type="hidden" name="action" value="CreateFS" />
-                            </form>
-
-                            <i class="material-icons">create</i> Create Free Slot
-                        </div>
-                        <div class="frame-div request" style="width: 25%;" onclick="submitFormViewRequest()">
-                            <form action="MainController" method="POST">
-                                <input type="hidden" name="action" value="ViewRequest" />
-                            </form>
-
-                            <i class="material-icons">mail_outline</i>View Request
-                        </div>
-                        <div class="frame-div logout" onclick="submitFormLogout()">
-                            <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="Logout" />
-                            </form>
-                            <div class="logout-wrapper">
-                                <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
-                            </div>
-                            <div class="request">
-                                <p class="logout1">Logout</p>
-                            </div>
-                        </div>
-                        <div class="frame-div hideView" onclick="submitFormHideView()">
-                            <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="HideView" />
-                            </form>
-                            <div>
-                                <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
-                            </div>
-                        </div>
-                        <div>
-                            <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
-                                 onclick="showUserInfo()" />
-                            <div id="user-info" style="display: none; position: absolute;">
-                                <p id="user-id"> </p>
-                                <p id="user-name"></p>
-                                <p id="user-email"></p>
-                            </div>
-                        </div>
-
+        <div class="fptu-eng-1-parent">
+            <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="returnHomePageLecturer" />
+                </form>
+            </div>
+            <div class="frame-parent">
+                <div class="frame-group">
+                    <div class="frame-div viewCreateSlot" onclick="submitForm()" style="background-color: #b7b7b7;">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="viewFSlotLecturer" />
+                        </form>
+                        <i class="material-icons">visibility</i>View Create Slot
                     </div>
+                    <div class="frame-div request-div" onclick="submitFormViewRequest()">
+                        <form action="MainController" method="POST">
+                            <input type="hidden" name="action" value="ViewRequest" />
+                        </form>
+
+                        <i class="material-icons">mail_outline</i>View Request
+                    </div>
+                    <div class="frame-div hideView" onclick="submitFormHideView()">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="HideView" />
+                        </form>
+                        <div>
+                            <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
+                        </div>
+                    </div>
+                    <div class="frame-div logout" style="text-align: center;" onclick="submitFormLogout()">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="Logout" />
+                        </form>
+                        <div class="logout-wrapper">
+                            <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                        </div>
+                        <div class="logout">
+                            <p class="logout1">Logout</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
+                             onclick="showUserInfo()" />
+                        <div id="user-info" style="display: none; position: absolute;">
+                            <p id="user-id"> </p>
+                            <p id="user-name"></p>
+                            <p id="user-email"></p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <div class="backbutton"  onclick="goBack()">
-                <div class="back"><p>Back</p></div>
-                <img class="back-icon" alt="" src="./public/request/back.svg" />
-            </div>
+        </div>
+        <div class="frame-Create CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()">
+            <form action="MainController" method="POST">
+                <input type="hidden" name="action" value="CreateFS" />
+            </form>
 
+            <i class="material-icons">add</i>
+        </div>
+        <div class="backbutton"  onclick="goBack()">
+            <img class="back-icon" alt="" src="./public/request/back.svg" /><p style="margin-left: 44px;">Back</p>
+        </div>
+
+        <div class="student-viewbookedslot">
             <div class="container">
-                <div class="row align-items-center justify-content-center" style="margin-top: -44%;">
+                <div class="row align-items-center justify-content-center">
                     <div>
                         <form action="MainController" method="POST" class="d-flex justify-content-center">
                             <div class="form-group">
@@ -382,7 +383,7 @@
 
 
             <!--  LIST OF THE PAGE -------------------------------------------------------------->
-            <div class="container mt-5" style="    margin-top: -44% !important; height: 356px; max-height: 300%;">
+            <div class="container mt-5" style="    margin-top: -15% !important; height: 356px; max-height: 300%;">
                 <div class="row justify-content-center mt-5 tableview">
                     <c:if test="${requestScope.LIST_CREATED_SLOT !=null}">
                         <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">

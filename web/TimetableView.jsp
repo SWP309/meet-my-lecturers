@@ -1,3 +1,4 @@
+<%@page import="sample.users.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -44,6 +45,10 @@
 
         <!-- JavaScript c?a SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+        <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+        %>
         <script>
             function submitFormBack() {
                 var form = document.querySelector('.backbutton form');
@@ -61,9 +66,73 @@
                 var form = document.querySelector('.bookingview form');
                 form.submit();
             }
+            var userDTO = {
+                userID: "<%= us.getUserID()%>",
+                userName: "<%= us.getUserName()%>",
+                userEmail: "<%= us.getUserEmail()%>"
+            };
+            function showUserInfo() {
+                var userInfo = document.getElementById("user-info");
+                if (userInfo.style.display === "none" || userInfo.style.display === "") {
+                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                } else {
+                    userInfo.style.display = "none";
+                }
+
+                var userID = userDTO.userID;
+                var userName = userDTO.userName;
+                var userEmail = userDTO.userEmail;
+
+                Swal.fire({
+                    title: 'User Information',
+                    html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
+                            + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
+                });
+            }
         </script>
     </head>
     <body>
+        <div class="fptu-eng-1-parent">
+            <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="returnHomePageStudent" />
+                </form>
+            </div>
+            <div class="frame-parent">
+                <div class="frame-group">
+                    <div class="frame-container bookingview" onclick="submitForm()">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="ViewBooking" />
+                        </form>
+                        <div class="bookedslot-wrapper">
+                            <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
+                            <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                        </div>
+                        <div class="view-booking" >View Booking</div>
+                    </div>
+                    <div class="frame-div logout" onclick="submitFormLogout()" style="cursor: pointer">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="Logout" />
+                        </form>
+                        <div class="logout-wrapper">
+                            <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                        </div>
+                        <div class="request">
+                            <p class="logout1">Logout</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <img class="frame-item" style="cursor: pointer" alt="" src="public/BookingView/group-33.svg" 
+                         onclick="showUserInfo()" />
+                    <div id="user-info" style="display: none; position: absolute">
+                        <p id="user-id"> </p>
+                        <p id="user-name"></p>
+                        <p id="user-email"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="student-lectures-schedule-edi">
             <div class="infor-lec">
                 <div class="lecturer-lamnn15">Lecturer: ${requestScope.TB_TIMETABLES.get(0).lecturerID}</div>
@@ -150,44 +219,10 @@
                 <div class="back">Back</div>
                 <img class="back-icon" alt="" src="./public/request/back.svg" />
             </div>
-            <div class="header1">
-                <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
-                    <form action="MainController" method="POST">
-                        <input type="hidden" name="action" value="returnHomePageStudent" />
-                    </form>
-                    <img
-                        class="fptu-eng-1-icon"
-                        alt=""
-                        src="public/BookingView/2021fptueng-1@2x.png"
-                        />
-                </div>
-                <div class="frame-parent">
-                    <div class="frame-group">
-                        <div class="frame-container bookingview" onclick="submitForm()">
-                            <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="ViewBooking" />
-                            </form>
-                            <div class="bookedslot-wrapper">
-                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
-                                <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
-                            </div>
-                            <div class="view-booking" >View Booking</div>
-                        </div>
-                        <div class="frame-div logout" onclick="submitFormLogout()" style="cursor: pointer">
-                            <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="Logout" />
-                            </form>
-                            <div class="logout-wrapper">
-                                <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
-                            </div>
-                            <div class="request">
-                                <p class="logout1">Logout</p>
-                            </div>
-                        </div>
-                    </div>
-                    <img class="frame-child" alt="" src="./public/TimetableView/group-33.svg" />
-                </div>
-            </div>
+
         </div>
+        <%} else {
+                response.sendRedirect("MainController");
+            }%>
     </body>
 </html>

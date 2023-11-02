@@ -87,7 +87,9 @@ public class MainController extends HttpServlet {
 
     private static final String LOGOUT = "Logout";
     private static final String LOGOUT_ACTION = "LoginFeID.jsp";
-
+    
+    
+    private static final String CREATED_VIEW_FREE_SLOT_ACTION = "viewFSlotLecturer";
     private static final String CREATED_VIEW_CONTROLLER = "CreatedSlotController";
 
     private static final String CREATED_PAGE_HIDE = "HideView";
@@ -228,6 +230,8 @@ public class MainController extends HttpServlet {
                 url = BOOKING_FREE_SLOT_SERVLET;
             } else if (SEARCH_BOOKED_SLOT_ACTION.equals(action)) {
                 url = SEARCH_BOOKED_SLOT_SERVLET;
+            } else if (CREATED_VIEW_FREE_SLOT_ACTION.equals(action)) {
+                url = CREATED_VIEW_CONTROLLER;
             }
 
         } catch (Exception e) {

@@ -59,20 +59,24 @@
                 var form = document.querySelector('.logout form');
                 form.submit();
             }
-            function submitFormLogout() {
-                var form = document.querySelector('.logout form');
-                form.submit();
-            }
             function submitFormCreate() {
                 var form = document.querySelector('.CreateFSlot form');
+                form.submit();
+            }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitFormViewRequest() {
+                var form = document.querySelector('.request-div form');
                 form.submit();
             }
             function submitFormHideView() {
                 var form = document.querySelector('.hideView form');
                 form.submit();
             }
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
+            function submitForm() {
+                var form = document.querySelector('.viewCreateSlot form');
                 form.submit();
             }
             var userDTO = {
@@ -159,32 +163,21 @@
                         <form action="MainController" method="POST">
                             <input type="hidden" name="action" value="returnHomePageLecturer" />
                         </form>
-                        <img
-                            class="fptu-eng-1-icon"
-                            alt=""
-                            src="public/BookingView/2021fptueng-1@2x.png"
-                            />
                     </div>
-
                     <div class="frame-parent">
                         <div class="frame-group">
-                            <div class="frame-Create CreateFSlot" onclick="submitFormCreate()">
+                            <div class="frame-div viewCreateSlot" onclick="submitForm()">
+                                <form action="MainController" method="POST" style="display: none;">
+                                    <input type="hidden" name="action" value="viewFSlotLecturer" />
+                                </form>
+                                <i class="material-icons">visibility</i>View Create Slot
+                            </div>
+                            <div class="frame-div request-div" style="background-color: #b7b7b7;">
                                 <form action="MainController" method="POST">
-                                    <input type="hidden" name="action" value="CreateFS" />
+                                    <input type="hidden" name="action" value="ViewRequest" />
                                 </form>
 
-                                <i class="material-icons">create</i> Create Free Slot
-                            </div>
-                            <div class="frame-div logout" onclick="submitFormLogout()">
-                                <form action="MainController" method="POST" style="display: none;">
-                                    <input type="hidden" name="action" value="Logout" />
-                                </form>
-                                <div class="logout-wrapper">
-                                    <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
-                                </div>
-                                <div class="request">
-                                    <p class="logout1">Logout</p>
-                                </div>
+                                <i class="material-icons">mail_outline</i>View Request
                             </div>
                             <div class="frame-div hideView" onclick="submitFormHideView()">
                                 <form action="MainController" method="POST" style="display: none;">
@@ -194,21 +187,40 @@
                                     <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
                                 </div>
                             </div>
+                            <div class="frame-div logout" style="text-align: center;" onclick="submitFormLogout()">
+                                <form action="MainController" method="POST" style="display: none;">
+                                    <input type="hidden" name="action" value="Logout" />
+                                </form>
+                                <div class="logout-wrapper">
+                                    <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                                </div>
+                                <div class="logout">
+                                    <p class="logout1">Logout</p>
+                                </div>
+                            </div>
+
                             <div>
                                 <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                                      onclick="showUserInfo()" />
-                                <div id="user-info" style="display: none; position: absolute">
+                                <div id="user-info" style="display: none; position: absolute;">
                                     <p id="user-id"> </p>
                                     <p id="user-name"></p>
                                     <p id="user-email"></p>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
+                <div class="frame-Create CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()">
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="CreateFS" />
+                    </form>
+
+                    <i class="material-icons">add</i>
+                </div>
                 <div class="backbutton"  onclick="goBack()">
-                    <div class="back">Back</div>
-                    <img class="back-icon" alt="" src="./public/request/back.svg" />
+                    <img class="back-icon" alt="" src="./public/request/back.svg" /><p style="margin-left: 44px;">Back</p>
                 </div>
                 <div class="view-user-table">
                     <c:if test="${not empty requestScope.LIST_REQUESTS}">
