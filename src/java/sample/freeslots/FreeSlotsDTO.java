@@ -16,6 +16,7 @@ public class FreeSlotsDTO {
     //bien ngoai lai, t chi them vao cho de trong viec hien thi ten giang vien
     //bien nay khong co trong bang, nen la mn cu dat la String = null nha.
     private String lecturerName;
+    private String block_list;
 
     public FreeSlotsDTO() {
         this.freeSlotID = "";
@@ -27,7 +28,8 @@ public class FreeSlotsDTO {
         this.meetLink = "";
         this.count = 0;
         this.lecturerID = "";
-        this.status = 1;
+        this.status = 0;
+        this.block_list = null;
     }
 
     public String getLecturerName() {
@@ -53,7 +55,7 @@ public class FreeSlotsDTO {
         this.lecturerName = lecturerName;
     }
 
-    public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, int status, String semesterID) {
+    public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, int status, String semesterID, String block_list) {
         this.subjectCode = subjectCode;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -64,6 +66,7 @@ public class FreeSlotsDTO {
         this.lecturerID = lecturerID;
         this.status = status;
         this.semesterID = semesterID;
+        this.block_list = block_list;
     }
 
     public String getFreeSlotID() {
@@ -138,19 +141,12 @@ public class FreeSlotsDTO {
         this.lecturerID = lecturerID;
     }
 
-    public boolean getStatus() {
-        return isStatus();
+    public int getStatus() {
+        return status;
     }
 
-    public void setStatus(boolean status) {
-        this.setStatus(status);
-    }
-
-    /**
-     * @return the status
-     */
-    public boolean isStatus() {
-        return getStatus();
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     /**
@@ -167,11 +163,12 @@ public class FreeSlotsDTO {
         this.semesterID = semesterID;
     }
 
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
+    public String getBlock_list() {
+        return block_list;
+    }
+
+    public void setBlock_list(String block_list) {
+        this.block_list = block_list;
     }
 
 }

@@ -51,12 +51,24 @@
             if (us != null) {
         %>
         <script>
-            function submitFormBack() {
-                var form = document.querySelector('.backbutton form');
+            function submitForm() {
+                var form = document.querySelector('.bookingview form');
                 form.submit();
             }
             function submitFormLogout() {
                 var form = document.querySelector('.logout form');
+                form.submit();
+            }
+            function submitFormRequest() {
+                var form = document.querySelector('.request form');
+                form.submit();
+            }
+            function submitSearchForm() {
+                var form = document.querySelector('.searchfunction form');
+                form.submit();
+            }
+            function submitFormRequestStatus() {
+                var form = document.querySelector('.requestViewStatus form');
                 form.submit();
             }
             function goBack() {
@@ -94,14 +106,44 @@
     <body>
         <div class="student-lectures-schedule-edi">
             <div class="fptu-eng-1-parent">
-                <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                <div class="returnHome"> 
                     <form action="MainController" method="POST">
                         <input type="hidden" name="action" value="returnHomePageStudent" />
                     </form>
                 </div>
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: -11%; justify-content: center; text-align: center">
+                        <div class="frame-div bookingview" onclick="submitForm()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="ViewBooking" />
+                            </form>
+                            <div class="bookedslot-wrapper">
+                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
+                                <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                            </div>
+                            <div class="view-booking" >View Booking</div>
+                        </div>
+                        <div class="frame-div requestViewStatus" style=" cursor: pointer" onclick="submitFormRequestStatus()" id="booking-view-div">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="ViewRequestStatus" />
+                            </form>
+                            <i class="material-icons">visibility</i>View Request Status
+                        </div>
+                        <div class="frame-div request" onclick="submitFormRequest()">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="Request" />
+                            </form>
+
+                            <i class="material-icons">mail_outline</i> Request
+                        </div>
+                        <div class="frame-div viewLecturer" style="background-color: #b7b7b7;">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="ViewAllLecturers" />
+                            </form>
+
+                            <i class="fas fa-search"></i> <p style="font-size: 16px">View Lecturer</p>
+                        </div>
+                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: 10%; text-align: center">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
@@ -109,14 +151,15 @@
                         </div>
                     </div>
                     <div>
-                        <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
-                             onclick="showUserInfo()"  style="cursor: pointer"/>
+                        <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
+                             onclick="showUserInfo()" />
                         <div id="user-info" style="display: none; position: absolute">
                             <p id="user-id"> </p>
                             <p id="user-name"></p>
                             <p id="user-email"></p>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="table-timetable" style="margin-right: 21%;

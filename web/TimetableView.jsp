@@ -50,20 +50,28 @@
             if (us != null) {
         %>
         <script>
-            function submitFormBack() {
-                var form = document.querySelector('.backbutton form');
+            function submitForm() {
+                var form = document.querySelector('.bookingview form');
                 form.submit();
             }
             function submitFormLogout() {
                 var form = document.querySelector('.logout form');
                 form.submit();
             }
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
+            function submitFormRequest() {
+                var form = document.querySelector('.request form');
                 form.submit();
             }
-            function submitForm() {
-                var form = document.querySelector('.bookingview form');
+            function submitSearchForm() {
+                var form = document.querySelector('.searchfunction form');
+                form.submit();
+            }
+            function submitFormViewLecturer() {
+                var form = document.querySelector('.viewLecturer form');
+                form.submit();
+            }
+            function submitFormRequestStatus() {
+                var form = document.querySelector('.requestViewStatus form');
                 form.submit();
             }
             var userDTO = {
@@ -93,14 +101,14 @@
     </head>
     <body>
         <div class="fptu-eng-1-parent">
-            <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+            <div class="returnHome"> 
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="returnHomePageStudent" />
                 </form>
             </div>
             <div class="frame-parent">
                 <div class="frame-group">
-                    <div class="frame-container bookingview" onclick="submitForm()">
+                    <div class="frame-div bookingview" onclick="submitForm()">
                         <form action="MainController" method="POST" style="display: none;">
                             <input type="hidden" name="action" value="ViewBooking" />
                         </form>
@@ -110,20 +118,35 @@
                         </div>
                         <div class="view-booking" >View Booking</div>
                     </div>
-                    <div class="frame-div logout" onclick="submitFormLogout()" style="cursor: pointer">
+                    <div class="frame-div requestViewStatus" style=" cursor: pointer" onclick="submitFormRequestStatus()" id="booking-view-div">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="ViewRequestStatus" />
+                        </form>
+                        <i class="material-icons">visibility</i>View Request Status
+                    </div>
+                    <div class="frame-div request" onclick="submitFormRequest()">
+                        <form action="MainController" method="POST">
+                            <input type="hidden" name="action" value="Request" />
+                        </form>
+
+                        <i class="material-icons">mail_outline</i> Request
+                    </div>
+                    <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
+                        <form action="MainController" method="POST">
+                            <input type="hidden" name="action" value="ViewAllLecturers" />
+                        </form>
+
+                        <i class="fas fa-search"></i> <p style="font-size: 16px">View Lecturer</p>
+                    </div>
+                    <div class="frame-div logout" onclick="submitFormLogout()" style="width: 10%; text-align: center">
                         <form action="MainController" method="POST" style="display: none;">
                             <input type="hidden" name="action" value="Logout" />
                         </form>
-                        <div class="logout-wrapper">
-                            <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
-                        </div>
-                        <div class="request">
-                            <p class="logout1">Logout</p>
-                        </div>
+                        <i class="material-icons">logout</i> Logout
                     </div>
                 </div>
                 <div>
-                    <img class="frame-item" style="cursor: pointer" alt="" src="public/BookingView/group-33.svg" 
+                    <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
                          onclick="showUserInfo()" />
                     <div id="user-info" style="display: none; position: absolute">
                         <p id="user-id"> </p>
@@ -131,6 +154,7 @@
                         <p id="user-email"></p>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="student-lectures-schedule-edi">
