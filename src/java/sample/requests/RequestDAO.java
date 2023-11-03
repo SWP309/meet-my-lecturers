@@ -31,8 +31,9 @@ public class RequestDAO implements Serializable {
             + "SET status = ?\n"
             + "WHERE requestID = ?";
 
-    private final String DELETE_REQUEST = "DELETE FROM Requests\n"
-            + "            WHERE requestID = ?";
+    private final String DELETE_REQUEST = "UPDATE Requests\n"
+            + "SET status = ?\n"
+            + "WHERE requestID = ?";
 
     private final String CHECK_TIME_DUPLICATE = "SELECT r.requestID\n"
             + "FROM Requests r\n"
@@ -45,6 +46,30 @@ public class RequestDAO implements Serializable {
             + "WHERE fs.lecturerID = ? \n"
             + "AND ? BETWEEN fs.startTime AND fs.endTime\n"
             + "AND fs.status = ?";
+
+    private final String SEARCH_REQUEST_BY_STATUS = "SELECT r.semesterID, r.subjectCode, r.lecturerID, u.userName, r.startTime, r.endTime\n" +
+            "FROM Requests r \n" +
+            "JOIN Users u ON r.lecturerID = u.userID\n" +
+            "WHERE r.studentID = ? AND r.status = ?\n" +
+            "ORDER BY r.ID DESC";
+    
+    private final String SEARCH_REQUEST_BY_SUBCODE_AND_STATUS = "SELECT r.semesterID, r.subjectCode, r.lecturerID, u.userName, r.startTime, r.endTime, r.status\n" +
+            "FROM Requests r \n" +
+            "JOIN Users u ON r.lecturerID = u.userID\n" +
+            "WHERE r.studentID = ? AND r.subjectCode = ? AND r.status = ?\n" +
+            "ORDER BY r.ID DESC";
+    
+    private final String SEARCH_ALL_REQUEST = "SELECT r.semesterID, r.subjectCode, r.lecturerID, u.userName, r.startTime, r.endTime, r.status\n" +
+            "FROM Requests r \n" +
+            "JOIN Users u ON r.lecturerID = u.userID\n" +
+            "WHERE r.studentID = ? \n" +
+            "ORDER BY r.ID DESC";
+    
+    private final String SEARCH_ALL_REQUEST_BY_SUBCODE = "SELECT r.semesterID, r.subjectCode, r.lecturerID, u.userName, r.startTime, r.endTime, r.status\n" +
+            "FROM Requests r \n" +
+            "JOIN Users u ON r.lecturerID = u.userID\n" +
+            "WHERE r.studentID = ? AND r.subjectCode = ? \n" +
+            "ORDER BY r.ID DESC";
 
 //    private final String CHECK_TIMETABLE_DUPLICATE1 = "DECLARE @DayOfWeek VARCHAR(15)\n"
 //            + "SET @DayOfWeek = DATENAME(dw, ?)\n"
@@ -84,7 +109,7 @@ public class RequestDAO implements Serializable {
         try {
             con = DBUtils.getConnection();
             stm = con.prepareStatement(CREATE_REQUEST);
-            stm.setBoolean(1, requestDTO.isStatus());
+            stm.setInt(1, requestDTO.getStatus());
             stm.setString(2, requestDTO.getSubjectCode());
             String start = requestDTO.getStartTime();
             String end = requestDTO.getEndTime();
@@ -132,7 +157,7 @@ public class RequestDAO implements Serializable {
             con = DBUtils.getConnection();
             stm = con.prepareStatement(SEARCH_REQUESTS);
             stm.setString(1, userID);
-            stm.setBoolean(2, false);
+            stm.setInt(2, 2);
             rs = stm.executeQuery();
             while (rs.next()) {
                 String requestID = rs.getString("requestID");
@@ -145,7 +170,7 @@ public class RequestDAO implements Serializable {
                 String starts = dateFormat.format(startTime);
                 String ends = dateFormat.format(endTime);
                 String description = rs.getNString("description");
-                RequestDTO requestDTO = new RequestDTO(requestID, false, subjectCode,
+                RequestDTO requestDTO = new RequestDTO(requestID, 0, subjectCode,
                         starts, ends, description, studentID, userID, "");
                 UserDTO userDTO = new UserDTO(studentID, userName, "", true, "", "");
                 if (this.listRequests == null) {
@@ -178,7 +203,7 @@ public class RequestDAO implements Serializable {
         try {
             con = DBUtils.getConnection();
             stm = con.prepareStatement(ACCEPT_REQUEST);
-            stm.setBoolean(1, true);
+            stm.setInt(1, 1);
             stm.setString(2, roleID);
             result = stm.executeUpdate();
             if (result > 0) {
@@ -203,7 +228,8 @@ public class RequestDAO implements Serializable {
         try {
             con = DBUtils.getConnection();
             stm = con.prepareStatement(DELETE_REQUEST);
-            stm.setString(1, roleID);
+            stm.setInt(1, 0);
+            stm.setString(2, roleID);
             result = stm.executeUpdate();
             if (result > 0) {
                 checkDelete = true;
@@ -229,7 +255,7 @@ public class RequestDAO implements Serializable {
             stm = con.prepareStatement(CHECK_TIME_DUPLICATE);
             stm.setString(1, lecturerID);
             stm.setTimestamp(2, new Timestamp(date.getTime()));
-            stm.setBoolean(3, true);
+            stm.setInt(3, 1);
             rs = stm.executeQuery();
             if (rs.next()) {
                 check = false;
@@ -255,7 +281,7 @@ public class RequestDAO implements Serializable {
             stm = con.prepareStatement(CHECK_TIME_DUPLICATE_FS);
             stm.setString(1, lecturerID);
             stm.setTimestamp(2, new Timestamp(date.getTime()));
-            stm.setBoolean(3, true);
+            stm.setInt(3, 1);
             rs = stm.executeQuery();
             if (rs.next()) {
                 check = false;
@@ -356,11 +382,224 @@ public class RequestDAO implements Serializable {
         }
         return check;
     }
-    public static void main(String[] args) throws ParseException, ClassNotFoundException, SQLException {
-        RequestDAO requestDAO = new RequestDAO();
-        String startTime = "2023-10-27 9:45";
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-            Date starts = format.parse(startTime);
-        requestDAO.checkTimetableDuplicate(starts, "FA23", "GV0004");
+
+    private List<RequestDTO> requestByStatus;
+
+    public List<RequestDTO> getRequestByStatus() {
+        return requestByStatus;
+    }
+    
+    private List<UserDTO> userByStatus;
+
+    public List<UserDTO> getUserByStatus() {
+        return userByStatus;
+    }
+    public void getRequestByStatus(String studentID, int status) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_REQUEST_BY_STATUS);
+            stm.setString(1, studentID);
+            stm.setInt(2, status);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String semesterID = rs.getString("semesterID");
+                String subjectCode = rs.getString("subjectCode");
+                String lecturerID = rs.getString("lecturerID");
+                String lecName = rs.getNString("userName");
+                Date startTime = rs.getTimestamp("startTime");
+                Date endTime = rs.getTimestamp("endTime");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                String starts = dateFormat.format(startTime);
+                String ends = dateFormat.format(endTime);
+                RequestDTO requestDTO = new RequestDTO("", status, subjectCode, starts, ends, "", studentID, lecturerID, semesterID);
+                UserDTO userDTO = new UserDTO(lecturerID, lecName, "", true, "", "");
+                if(this.requestByStatus == null){
+                    this.requestByStatus = new ArrayList<>();
+                }
+                this.requestByStatus.add(requestDTO);
+                if(this.userByStatus == null){
+                    this.userByStatus = new ArrayList<>();
+                }
+                this.userByStatus.add(userDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<RequestDTO> requestBySubCodeAndStatus;
+
+    public List<RequestDTO> getRequestBySubCodeAndStatus() {
+        return requestBySubCodeAndStatus;
+    }
+    
+    private List<UserDTO> userBySubCodeAndStatus;
+
+    public List<UserDTO> getUserBySubCodeAndStatus() {
+        return userBySubCodeAndStatus;
+    }
+    public void getRequestBySubCodeAndStatus(String studentID, String subjectCode, int status) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_REQUEST_BY_SUBCODE_AND_STATUS);
+            stm.setString(1, studentID);
+            stm.setString(2, subjectCode);
+            stm.setInt(3, status);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String semesterID = rs.getString("semesterID");
+                String lecturerID = rs.getString("lecturerID");
+                String lecName = rs.getNString("userName");
+                Date startTime = rs.getTimestamp("startTime");
+                Date endTime = rs.getTimestamp("endTime");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                String starts = dateFormat.format(startTime);
+                String ends = dateFormat.format(endTime);
+                RequestDTO requestDTO = new RequestDTO("", status, subjectCode, starts, ends, "", studentID, lecturerID, semesterID);
+                UserDTO userDTO = new UserDTO(lecturerID, lecName, "", true, "", "");
+                if(this.requestBySubCodeAndStatus == null){
+                    this.requestBySubCodeAndStatus = new ArrayList<>();
+                }
+                this.requestBySubCodeAndStatus.add(requestDTO);
+                if(this.userBySubCodeAndStatus == null){
+                    this.userBySubCodeAndStatus = new ArrayList<>();
+                }
+                this.userBySubCodeAndStatus.add(userDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<RequestDTO> allRequest;
+
+    public List<RequestDTO> getAllRequest() {
+        return allRequest;
+    }
+    
+    private List<UserDTO> allUser;
+
+    public List<UserDTO> getAllUser() {
+        return allUser;
+    }
+    public void getAllRequest(String studentID) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_ALL_REQUEST);
+            stm.setString(1, studentID);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String semesterID = rs.getString("semesterID");
+                String lecturerID = rs.getString("lecturerID");
+                String lecName = rs.getNString("userName");
+                String subjectCode = rs.getString("subjectCode");
+                int status = rs.getInt("status");
+                Date startTime = rs.getTimestamp("startTime");
+                Date endTime = rs.getTimestamp("endTime");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                String starts = dateFormat.format(startTime);
+                String ends = dateFormat.format(endTime);
+                RequestDTO requestDTO = new RequestDTO("", status, subjectCode, starts, ends, "", studentID, lecturerID, semesterID);
+                UserDTO userDTO = new UserDTO(lecturerID, lecName, "", true, "", "");
+                if(this.allRequest == null){
+                    this.allRequest = new ArrayList<>();
+                }
+                this.allRequest.add(requestDTO);
+                if(this.allUser == null){
+                    this.allUser = new ArrayList<>();
+                }
+                this.allUser.add(userDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
+    }
+
+    private List<RequestDTO> allRequestBySubCode;
+
+    public List<RequestDTO> getAllRequestBySubCode() {
+        return allRequestBySubCode;
+    }
+    
+    private List<UserDTO> allUserBySubCode;
+
+    public List<UserDTO> getAllUserBySubCode() {
+        return allUserBySubCode;
+    }
+    public void getAllRequestBySubCode(String studentID, String subjectCode) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_ALL_REQUEST_BY_SUBCODE);
+            stm.setString(1, studentID);
+            stm.setString(2, subjectCode);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                String semesterID = rs.getString("semesterID");
+                String lecturerID = rs.getString("lecturerID");
+                String lecName = rs.getNString("userName");
+                int status = rs.getInt("status");
+                Date startTime = rs.getTimestamp("startTime");
+                Date endTime = rs.getTimestamp("endTime");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                String starts = dateFormat.format(startTime);
+                String ends = dateFormat.format(endTime);
+                RequestDTO requestDTO = new RequestDTO("", status, subjectCode, starts, ends, "", studentID, lecturerID, semesterID);
+                UserDTO userDTO = new UserDTO(lecturerID, lecName, "", true, "", "");
+                if(this.allRequestBySubCode == null){
+                    this.allRequestBySubCode = new ArrayList<>();
+                }
+                this.allRequestBySubCode.add(requestDTO);
+                if(this.allUserBySubCode == null){
+                    this.allUserBySubCode = new ArrayList<>();
+                }
+                this.allUserBySubCode.add(userDTO);
+            }
+        } finally {
+            if(rs != null){
+                rs.close();
+            }
+            if(stm != null){
+                stm.close();
+            }
+            if(con != null){
+                con.close();
+            }
+        }
     }
 }

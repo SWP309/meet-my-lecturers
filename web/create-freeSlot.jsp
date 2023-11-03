@@ -101,6 +101,10 @@
                     max-width: 39%;
                 }
             }
+/*            .div-CreateFS{
+                max-height: 500px;  Điều chỉnh chiều cao tối đa 
+                overflow-y: auto;  Hiển thị thanh cuộn khi nội dung tràn ra 
+            }*/
         </style>
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -109,6 +113,18 @@
         <script>
             function submitFormHomePage() {
                 var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitFormViewRequest() {
+                var form = document.querySelector('.request-div form');
+                form.submit();
+            }
+            function submitForm() {
+                var form = document.querySelector('.viewCreateSlot form');
+                form.submit();
+            }
+            function submitFormHideView() {
+                var form = document.querySelector('.hideView form');
                 form.submit();
             }
             var userDTO = {
@@ -139,7 +155,7 @@
                 form.submit();
             }
             function submitFormViewRequest() {
-                var form = document.querySelector('.request form');
+                var form = document.querySelector('.request-div form');
                 form.submit();
             }
         </script>
@@ -150,48 +166,60 @@
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="returnHomePageLecturer" />
                 </form>
-                <img
-                    class="fptu-eng-1-icon"
-                    alt=""
-                    src="public/BookingView/2021fptueng-1@2x.png"
-                    />
             </div>
             <div class="frame-parent">
                 <div class="frame-group">
-                    <div class="frame-div request" style="width: 64%;" onclick="submitFormViewRequest()">
+                    <div class="frame-div viewCreateSlot" onclick="submitForm()">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="viewFSlotLecturer" />
+                        </form>
+                        <i class="material-icons">visibility</i>View Create Slot
+                    </div>
+                    <div class="frame-div request-div" onclick="submitFormViewRequest()">
                         <form action="MainController" method="POST">
                             <input type="hidden" name="action" value="ViewRequest" />
                         </form>
 
                         <i class="material-icons">mail_outline</i>View Request
                     </div>
-                    <div class="frame-div logout" onclick="submitFormLogout()">
+                    <div class="frame-div hideView" onclick="submitFormHideView()">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="HideView" />
+                        </form>
+                        <div>
+                            <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
+                        </div>
+                    </div>
+                    <div class="frame-div logout" style="text-align: center;" onclick="submitFormLogout()">
                         <form action="MainController" method="POST" style="display: none;">
                             <input type="hidden" name="action" value="Logout" />
                         </form>
                         <div class="logout-wrapper">
                             <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
                         </div>
-                        <div class="request">
+                        <div class="logout">
                             <p class="logout1">Logout</p>
                         </div>
                     </div>
+
                     <div>
                         <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                              onclick="showUserInfo()" />
-                        <div id="user-info" style="display: none; position: absolute">
+                        <div id="user-info" style="display: none; position: absolute;">
                             <p id="user-id"> </p>
                             <p id="user-name"></p>
                             <p id="user-email"></p>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
+
         <c:if test="${sessionScope.loginedUser != null && sessionScope.loginedUser.roleID == '2'}">
-            <div class="container mt-5">
+            <div class="container mt-5 div-CreateFS">
                 <div class="d-flex justify-content-center">
-                    <div class="card" style="border-radius: 5%; width: 800px; height: 500px;">
+                    <div class="card" style="border-radius: 5%; width: 800px; max-height: 800px;">
 
                         <div class="card-body">
                             <form action="MainController" method="POST">

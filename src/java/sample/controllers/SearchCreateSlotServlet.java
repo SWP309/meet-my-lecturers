@@ -35,6 +35,7 @@ public class SearchCreateSlotServlet extends HttpServlet {
             String subjectCode = request.getParameter("txtSubjectCode");
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
+            String semesterID = request.getParameter("txtSemesterID");
             String userEmail = us.getUserEmail();
             ViewCreatedSlotDAO searchFSlot = new ViewCreatedSlotDAO();
             if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty()) {
@@ -43,26 +44,50 @@ public class SearchCreateSlotServlet extends HttpServlet {
                     request.setAttribute("SEARCH_FREE_SLOT_BY_ST_ET", searchByStEt);
                     url = SUCCESS;
                 }
-            } else if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchByAll = searchFSlot.searchFSlotViewByAll(subjectCode, startTime, endTime, userEmail);
+            } else if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty() && !semesterID.isEmpty()) {
+                List<ViewCreatedSlotDTO> searchByAll = searchFSlot.searchFSlotViewByAll(subjectCode, startTime, endTime, userEmail, semesterID);
                 if (searchByAll != null) {
                     request.setAttribute("SEARCH_FREE_SLOT_BY_ALL", searchByAll);
                     url = SUCCESS;
                 }
 
-            } else if (startTime.isEmpty() && endTime.isEmpty() && !subjectCode.isEmpty()) {
+            } else if (startTime.isEmpty() && endTime.isEmpty() && !subjectCode.isEmpty() && semesterID.isEmpty()) {
                 List<ViewCreatedSlotDTO> searchBySubjectCode = searchFSlot.searchFSlotViewBySubjectCode(subjectCode, userEmail);
                 if (searchBySubjectCode != null) {
                     request.setAttribute("SEARCH_FREE_SLOT_BY_SUBJECT", searchBySubjectCode);
                     System.out.println(subjectCode);
-                        url = SUCCESS;
+                    url = SUCCESS;
                 }
 
-            } else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty()) {
+            } else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty() && semesterID.isEmpty()) {
                 List<ViewCreatedSlotDTO> searchByNull = searchFSlot.GetlistCreatedSlot(us.getUserEmail());
                 System.out.println(us.getUserEmail());
                 if (searchByNull != null) {
                     request.setAttribute("SEARCH_FREE_SLOT_BY_NULL", searchByNull);
+                    url = SUCCESS;
+                }
+
+            } else if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty() && semesterID.isEmpty()) {
+                List<ViewCreatedSlotDTO> searchByStEtSubject = searchFSlot.searchFSlotViewByStEtSubjectCode(subjectCode, startTime, endTime, userEmail);
+                System.out.println(us.getUserEmail());
+                if (searchByStEtSubject != null) {
+                    request.setAttribute("SEARCH_FREE_SLOT_BY_ST_ET_SUBJECTCODE", searchByStEtSubject);
+                    url = SUCCESS;
+                }
+
+            } else if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty() && !semesterID.isEmpty()) {
+                List<ViewCreatedSlotDTO> searchByStEtSemesterID = searchFSlot.searchFSlotViewByStEtSemesterID(semesterID, startTime, endTime, userEmail);
+                System.out.println(us.getUserEmail());
+                if (searchByStEtSemesterID != null) {
+                    request.setAttribute("SEARCH_FREE_SLOT_BY_ST_ET_SEMESTER", searchByStEtSemesterID);
+                    url = SUCCESS;
+                }
+
+            }else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty() && !semesterID.isEmpty()) {
+                List<ViewCreatedSlotDTO> searchBySemesterID = searchFSlot.searchFSlotViewBySemesterID(semesterID, userEmail);
+                System.out.println(us.getUserEmail());
+                if (searchBySemesterID != null) {
+                    request.setAttribute("SEARCH_FREE_SLOT_BY_SEMESTER", searchBySemesterID);
                     url = SUCCESS;
                 }
 

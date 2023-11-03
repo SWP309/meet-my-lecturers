@@ -37,39 +37,55 @@ public class SearchBookedServlet extends HttpServlet {
             String subjectCode = request.getParameter("txtSubjectCode");
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
+            String semesterID = request.getParameter("txtSemesterID");
+            System.out.println(semesterID);
             String userEmail = us.getUserEmail();
             BookingDAO searchBSlot = new BookingDAO();
-            if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty()) {
+            if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty() && semesterID.isEmpty()) {
                 List<BookingDTO> searchByStEt = searchBSlot.searchBSlotViewByStEt(startTime, endTime, userEmail);
                 if (searchByStEt != null) {
                     request.setAttribute("SEARCH_BOOKED_SLOT_BY_ST_ET", searchByStEt);
+                    System.out.println(subjectCode);
                     url = SUCCESS;
                 }
-            } else if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty()) {
-                List<BookingDTO> searchByAll = searchBSlot.searchBSlotViewByAll(subjectCode, startTime, endTime, userEmail);
+            } else if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty() && !semesterID.isEmpty()) {
+                List<BookingDTO> searchByAll = searchBSlot.searchBSlotViewByAll(subjectCode, startTime, endTime, userEmail,semesterID);
                 if (searchByAll != null) {
                     request.setAttribute("SEARCH_BOOKED_SLOT_BY_ALL", searchByAll);
                     url = SUCCESS;
                 }
 
-            } else if (startTime.isEmpty() && endTime.isEmpty() && !subjectCode.isEmpty()) {
-                List<BookingDTO> searchBySubjectCode = searchBSlot.searchBSlotViewBySubjectCode(subjectCode, userEmail);
+            } else if (startTime.isEmpty() && endTime.isEmpty() && !subjectCode.isEmpty() && semesterID.isEmpty()) {
+                List<BookingDTO> searchBySubjectCode = searchBSlot.searchBSlotViewBySubjectCode(subjectCode, userEmail,semesterID);
                 if (searchBySubjectCode != null) {
                     request.setAttribute("SEARCH_BOOKED_SLOT_BY_SUBJECT", searchBySubjectCode);
-                    System.out.println(subjectCode);
                     url = SUCCESS;
                 }
 
-            } else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty()) {
+            } else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty() && semesterID.isEmpty()) {
                 List<BookingDTO> searchByNull = searchBSlot.getListBooking(userEmail);
-                System.out.println(searchByNull.toString());
                 if (searchByNull != null) {
                     request.setAttribute("SEARCH_BOOKED_SLOT_BY_NULL", searchByNull);
-                    System.out.println(subjectCode);
                     url = SUCCESS;
                 }
 
-            } else {
+            } else if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty() && semesterID.isEmpty()) {
+                List<BookingDTO> searchByStEtSubject = searchBSlot.searchBSlotViewByStEtSubjectCode(subjectCode, startTime, endTime, userEmail);
+                if (searchByStEtSubject != null) {
+                    request.setAttribute("SEARCH_BOOKED_SLOT_BY_ST_ET_SUBJECTCODE", searchByStEtSubject);
+                    url = SUCCESS;
+                }
+
+            }
+            else if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty() && !semesterID.isEmpty()) {
+                List<BookingDTO> searchByStEtSemesterID = searchBSlot.searchBSlotViewByStEtSemesterID(semesterID, startTime, endTime, userEmail);
+                System.out.println(searchByStEtSemesterID.toString());
+                if (searchByStEtSemesterID != null) {
+                    request.setAttribute("SEARCH_BOOKED_SLOT_BY_ST_ET_SEMESTER", searchByStEtSemesterID);
+                    url = SUCCESS;
+                }
+
+            }else {
                 request.setAttribute("SEARCH_FREESLOT_MESSAGE", "The system has no freeslot that meet your requirement!!!");
             }
         } catch (SQLException ex) {
