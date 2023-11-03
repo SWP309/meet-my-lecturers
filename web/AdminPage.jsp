@@ -196,7 +196,7 @@
                         </div>
                         <div class="view-booking" >Search Users</div>
                     </div>
-                    <div class="frame-div request import" onclick="submitFormImport()">
+                    <div class="frame-div import" onclick="submitFormImport()">
                         <form action="MainController" method="POST">
                             <input type="hidden" name="action" value="importPage" />
                         </form>
