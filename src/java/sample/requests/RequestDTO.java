@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class RequestDTO implements Serializable{
     private String requestID;
-    private boolean status;
+    private int status;
     private String subjectCode;
     private String startTime;
     private String endTime;
@@ -23,7 +23,7 @@ public class RequestDTO implements Serializable{
 
     public RequestDTO() {
         this.requestID = "";
-        this.status = false;
+        this.status = 0;
         this.subjectCode = "";
         this.startTime = "";
         this.endTime = "";
@@ -33,7 +33,7 @@ public class RequestDTO implements Serializable{
         this.semesterID = "";
     }
 
-    public RequestDTO(String requestID, boolean status, String subjectCode, String startTime, String endTime, String description, String studentID, String lecturerID, String semesterID) {
+    public RequestDTO(String requestID, int status, String subjectCode, String startTime, String endTime, String description, String studentID, String lecturerID, String semesterID) {
         this.requestID = requestID;
         this.status = status;
         this.subjectCode = subjectCode;
@@ -45,7 +45,7 @@ public class RequestDTO implements Serializable{
         this.semesterID = semesterID;
     }
 
-
+    
     /**
      * @return the requestID
      */
@@ -59,21 +59,7 @@ public class RequestDTO implements Serializable{
     public void setRequestID(String requestID) {
         this.requestID = requestID;
     }
-
-    /**
-     * @return the status
-     */
-    public boolean isStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
+   
     /**
      * @return the subjectCode
      */
@@ -156,6 +142,20 @@ public class RequestDTO implements Serializable{
      */
     public void setLecturerID(String lecturerID) {
         this.lecturerID = lecturerID;
+    }
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
     }
     
     

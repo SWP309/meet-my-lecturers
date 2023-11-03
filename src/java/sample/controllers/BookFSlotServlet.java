@@ -1,12 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package sample.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import sample.bookings.BookingDAO;
 import sample.bookings.BookingDTO;
+import sample.bookings.BookingError;
 import sample.freeslots.FreeSlotsDAO;
 import sample.users.UserDTO;
 
@@ -36,43 +39,56 @@ public class BookFSlotServlet extends HttpServlet {
         String url = ERROR;
 
         try {
-            boolean flag=true;
+            boolean checkValidation = true;
             HttpSession session = request.getSession();
             BookingDAO dao = new BookingDAO();
-            BookingDTO dto = new BookingDTO();
-            FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
+            FreeSlotsDAO FsDao = new FreeSlotsDAO();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String studentID = us.getUserID();
-            boolean existsInBlockList = freeSlotsDAO.checkBlockList(studentID);
+            System.out.println(studentID);
+            String freeSlotID = request.getParameter("txtFSlotID");
+            System.out.println(freeSlotID);
+            String startTime = request.getParameter("txtStartTime");
+            System.out.println(startTime);
+            String endTime = request.getParameter("txtEndTime");
+            System.out.println(endTime);
+            BookingDTO dto = new BookingDTO();
+            boolean existsInBlockList = FsDao.checkBlockList(studentID, freeSlotID);
             if (existsInBlockList) {
                 System.out.println("You have been blocked from this slot, please contact your lecturer to know reasons");
-                flag=false;
+                checkValidation = false;
                 dto.setStatus(0);
             }
-            
-            if (flag) {
-                String freeSlotID = request.getParameter("txtFSlotID");
-                dto.setStudentID(studentID);
-                dto.setFreeSlotID(freeSlotID);
-                if (freeSlotID != null) {
-                    boolean checkUpdate = dao.BookFSlot(dto);
-                    List<BookingDTO> listbooking = dao.getListBooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
-                    request.setAttribute("LIST_CREATED_SLOT", listbooking);
-                    if (checkUpdate) {
-                        System.out.println(checkUpdate);
-                        url = SUCCESS;
-                        if (listbooking == null || listbooking.isEmpty()) {
-//                        System.out.println("list booking is null");
-                            request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
-                        }
-                    } else {
-                        request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
+            dto.setStudentID(studentID);
+            dto.setFreeSlotID(freeSlotID);
+            BookingError bookingError = new BookingError();
+            //tranfer String to Date
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Date starts = format.parse(startTime);
+            Date ends = format.parse(endTime);
+            //*****check duplicateBookedFSlot
+            boolean checkStartDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, starts);
+            boolean checkEndDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, ends);
+            if (checkStartDuplicateBookedFS == false || checkEndDuplicateBookedFS == false) {
+                checkValidation = false;
+                bookingError.setDuplicateBookedSlot("- This slot was duplicated with another booked slot!!!");
+            }
+            request.setAttribute("BOOKING_ERROR", bookingError);
+            if (checkValidation) {
+                boolean checkUpdate = dao.BookFSlot(dto);
+                List<BookingDTO> listbooking = dao.getListBooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                request.setAttribute("LIST_CREATED_SLOT", listbooking);
+                if (checkUpdate) {
+                    url = SUCCESS;
+                    if (listbooking == null || listbooking.isEmpty()) {
+                        request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
                     }
+                } else {
+                    request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
                 }
             }
-
-        } catch (Exception e) {
-            log("Error at UpdateController: " + e.toString());
+        } catch (SQLException | ParseException | ClassNotFoundException ex) {
+            log("Error at BookFSlotServlet: " + ex.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

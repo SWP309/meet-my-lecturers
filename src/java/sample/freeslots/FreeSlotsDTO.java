@@ -142,18 +142,11 @@ public class FreeSlotsDTO {
     }
 
     public int getStatus() {
-        return isStatus();
+        return status;
     }
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    /**
-     * @return the status
-     */
-    public int isStatus() {
-        return status;
     }
 
     /**
