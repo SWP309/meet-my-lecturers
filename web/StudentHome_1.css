@@ -75,14 +75,6 @@
 #user-id, #user-name, #user-email {
     color: black; /* Đặt màu chữ thành màu đen */
 }
-.fptu-eng-1-icon1 {
-    position: absolute;
-    top: 4px;
-    left: 40px;
-    width: 149px;
-    height: 60px;
-    object-fit: cover;
-}
 .div {
     position: relative;
 }
@@ -127,18 +119,13 @@
     cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
     border-radius: 12px;
     background-color: #f27125;
-    width: 188px;
+    width: 213px;
     height: 43px;
     /*align-items: flex-start;*/
     padding: 10px 9px;
     box-sizing: border-box;
     gap: 8px;
     justify-content: center;
-}
-.frame-group {
-    /*    align-items: flex-end;*/
-    gap: 10px;
-    flex-wrap: wrap;
 }
 
 .logout{

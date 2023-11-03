@@ -78,7 +78,7 @@ public class MainController extends HttpServlet {
     private static final String CREATE_REQUEST = "CreateRequest";
     private static final String REQUEST_ACTION = "CreateRequestServlet";
 
-    private static final String VIEWBOOKING = "ViewBooking";
+    private static final String VIEW_BOOKING = "ViewBooking";
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
 
     private static final String VIEWTIMETABLE = "ViewTimetable";
@@ -154,7 +154,7 @@ public class MainController extends HttpServlet {
                 url = ADMIN_PAGE_ACTION;
             } else if (CREATE_REQUEST.equals(action)) {
                 url = REQUEST_ACTION;
-            } else if (VIEWBOOKING.equals(action)) {
+            } else if (VIEW_BOOKING.equals(action)) {
                 url = VIEW_BOOKING_CONTROLLER;
             } else if (VIEWTIMETABLE.equals(action)) {
                 url = VIEW_TIMETABLE_CONTROLLER;

@@ -101,6 +101,10 @@
                     max-width: 39%;
                 }
             }
+/*            .div-CreateFS{
+                max-height: 500px;  Điều chỉnh chiều cao tối đa 
+                overflow-y: auto;  Hiển thị thanh cuộn khi nội dung tràn ra 
+            }*/
         </style>
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -213,9 +217,9 @@
         </div>
 
         <c:if test="${sessionScope.loginedUser != null && sessionScope.loginedUser.roleID == '2'}">
-            <div class="container mt-5">
+            <div class="container mt-5 div-CreateFS">
                 <div class="d-flex justify-content-center">
-                    <div class="card" style="border-radius: 5%; width: 800px; height: 500px;">
+                    <div class="card" style="border-radius: 5%; width: 800px; max-height: 800px;">
 
                         <div class="card-body">
                             <form action="MainController" method="POST">
@@ -250,7 +254,7 @@
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.meetLinkError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.meetLinkError}</h6>
                                 </c:if>
-                                <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="^(SE|IA|SS|MC)[0-9]{6};(SE|IA|SS|MC)[0-9]{6}$"></div>
+                                <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="(^(SE|IA|SS|MC)[0-9]{6});*"></div>
                                 <div class="d-flex justify-content-between"><strong>STATUS(public/private):</strong>
                                     <div class="d-flex">
                                         <select class="form-control" name="txtStatusOption" value="${param.txtStatusOption}">

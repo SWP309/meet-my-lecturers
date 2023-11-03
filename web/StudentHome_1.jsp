@@ -94,6 +94,10 @@
                 var form = document.querySelector('.viewLecturer form');
                 form.submit();
             }
+            function submitFormRequestStatus() {
+                var form = document.querySelector('.requestViewStatus form');
+                form.submit();
+            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -227,6 +231,12 @@
                             </div>
                             <div class="view-booking" >View Booking</div>
                         </div>
+                        <div class="frame-div requestViewStatus" style=" cursor: pointer" onclick="submitFormRequestStatus()" id="booking-view-div">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="ViewRequestStatus" />
+                            </form>
+                            <i class="material-icons">visibility</i>View Request Status
+                        </div>
                         <div class="frame-div request" onclick="submitFormRequest()">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="Request" />
@@ -241,7 +251,7 @@
 
                             <i class="fas fa-search"></i> <p style="font-size: 16px">View Lecturer</p>
                         </div>
-                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: 15%; text-align: center">
+                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: 10%; text-align: center">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
@@ -350,13 +360,13 @@
                                                     <form action="MainController" method="GET">
                                                         <input type="hidden" name="action" value="BookFreeSlot">
                                                         <input type="hidden" name="txtFSlotID" 
-                                                               value="${freeSlot.freeSlotID}" readonly="">
+                                                               value="${freeslot.freeSlotID}" readonly="">
                                                         <input type="hidden" name="txtStartTime" 
-                                                               value="${freeSlot.startTime}" readonly="">
+                                                               value="${freeslot.startTime}" readonly="">
                                                         <input type="hidden" name="txtEndTime" 
-                                                               value="${freeSlot.endTime}" readonly="">
+                                                               value="${freeslot.endTime}" readonly="">
                                                         <input type="hidden" name="intCapacity" 
-                                                               value="${freeSlot.capacity}" readonly="">
+                                                               value="${freeslot.capacity}" readonly="">
                                                         <input type="hidden" name="txtSubjectCode" 
                                                                value="${param.txtSubjectCode}" readonly="">
                                                         <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
@@ -394,11 +404,11 @@
                                                         <input type="hidden" name="txtFSlotID" 
                                                                value="${freeslot.freeSlotID}" readonly="">
                                                         <input type="hidden" name="txtStartTime" 
-                                                               value="${freeSlot.startTime}" readonly="">
+                                                               value="${freeslot.startTime}" readonly="">
                                                         <input type="hidden" name="txtEndTime" 
-                                                               value="${freeSlot.endTime}" readonly="">
+                                                               value="${freeslot.endTime}" readonly="">
                                                         <input type="hidden" name="intCapacity" 
-                                                               value="${freeSlot.capacity}" readonly="">
+                                                               value="${freeslot.capacity}" readonly="">
                                                         <input type="hidden" name="txtUserID" 
                                                                value="${param.txtUserID}" readonly="">
                                                         <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
@@ -433,13 +443,13 @@
                                                     <form action="MainController" method="GET">
                                                         <input type="hidden" name="action" value="BookFreeSlot">
                                                         <input type="hidden" name="txtFSlotID" 
-                                                               value="${freeSlot.freeSlotID}" readonly="">
+                                                               value="${freeslot.freeSlotID}" readonly="">
                                                         <input type="hidden" name="txtStartTime" 
-                                                               value="${freeSlot.startTime}" readonly="">
+                                                               value="${freeslot.startTime}" readonly="">
                                                         <input type="hidden" name="txtEndTime" 
-                                                               value="${freeSlot.endTime}" readonly="">
+                                                               value="${freeslot.endTime}" readonly="">
                                                         <input type="hidden" name="intCapacity" 
-                                                               value="${freeSlot.capacity}" readonly="">
+                                                               value="${freeslot.capacity}" readonly="">
                                                         <input type="hidden" name="txtUserName" 
                                                                value="${param.txtUserName}" readonly="">
                                                         <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
@@ -474,13 +484,13 @@
                                                     <form action="MainController" method="GET">
                                                         <input type="hidden" name="action" value="BookFreeSlot">
                                                         <input type="hidden" name="txtFSlotID" 
-                                                               value="${freeSlot.freeSlotID}" readonly="">
+                                                               value="${freeslot.freeSlotID}" readonly="">
                                                         <input type="hidden" name="txtStartTime" 
-                                                               value="${freeSlot.startTime}" readonly="">
+                                                               value="${freeslot.startTime}" readonly="">
                                                         <input type="hidden" name="txtEndTime" 
-                                                               value="${freeSlot.endTime}" readonly="">
+                                                               value="${freeslot.endTime}" readonly="">
                                                         <input type="hidden" name="intCapacity" 
-                                                               value="${freeSlot.capacity}" readonly="">
+                                                               value="${freeslot.capacity}" readonly="">
                                                         <input type="hidden" name="txtSemesterID" 
                                                                value="${param.txtSemesterID}" readonly="">
                                                         <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
@@ -515,13 +525,13 @@
                                                     <form action="MainController" method="GET">
                                                         <input type="hidden" name="action" value="BookFreeSlot">
                                                         <input type="hidden" name="txtFSlotID" 
-                                                               value="${freeSlot.freeSlotID}" readonly="">
+                                                               value="${freeslot.freeSlotID}" readonly="">
                                                         <input type="hidden" name="txtStartTime" 
-                                                               value="${freeSlot.startTime}" readonly="">
+                                                               value="${freeslot.startTime}" readonly="">
                                                         <input type="hidden" name="txtEndTime" 
-                                                               value="${freeSlot.endTime}" readonly="">
+                                                               value="${freeslot.endTime}" readonly="">
                                                         <input type="hidden" name="intCapacity" 
-                                                               value="${freeSlot.capacity}" readonly="">
+                                                               value="${freeslot.capacity}" readonly="">
                                                         <input type="hidden" name="txtSubjectCode" 
                                                                value="${param.txtSubjectCode}" readonly="">
                                                         <input type="hidden" name="txtUserID" 
@@ -558,13 +568,13 @@
                                                     <form action="MainController" method="GET">
                                                         <input type="hidden" name="action" value="BookFreeSlot">
                                                         <input type="hidden" name="txtFSlotID" 
-                                                               value="${freeSlot.freeSlotID}" readonly="">
+                                                               value="${freeslot.freeSlotID}" readonly="">
                                                         <input type="hidden" name="txtStartTime" 
-                                                               value="${freeSlot.startTime}" readonly="">
+                                                               value="${freeslot.startTime}" readonly="">
                                                         <input type="hidden" name="txtEndTime" 
-                                                               value="${freeSlot.endTime}" readonly="">
+                                                               value="${freeslot.endTime}" readonly="">
                                                         <input type="hidden" name="intCapacity" 
-                                                               value="${freeSlot.capacity}" readonly="">
+                                                               value="${freeslot.capacity}" readonly="">
                                                         <input type="hidden" name="txtSubjectCode" 
                                                                value="${param.txtSubjectCode}" readonly="">
                                                         <input type="hidden" name="txtUserName" 
@@ -601,13 +611,13 @@
                                                     <form action="MainController" method="GET">
                                                         <input type="hidden" name="action" value="BookFreeSlot">
                                                         <input type="hidden" name="txtFSlotID" 
-                                                               value="${freeSlot.freeSlotID}" readonly="">
+                                                               value="${freeslot.freeSlotID}" readonly="">
                                                         <input type="hidden" name="txtStartTime" 
-                                                               value="${freeSlot.startTime}" readonly="">
+                                                               value="${freeslot.startTime}" readonly="">
                                                         <input type="hidden" name="txtEndTime" 
-                                                               value="${freeSlot.endTime}" readonly="">
+                                                               value="${freeslot.endTime}" readonly="">
                                                         <input type="hidden" name="intCapacity" 
-                                                               value="${freeSlot.capacity}" readonly="">
+                                                               value="${freeslot.capacity}" readonly="">
                                                         <input type="hidden" name="txtSubjectCode" 
                                                                value="${param.txtSubjectCode}" readonly="">
                                                         <input type="hidden" name="txtSemesterID" 
@@ -644,13 +654,13 @@
                                                     <form action="MainController" method="GET">
                                                         <input type="hidden" name="action" value="BookFreeSlot">
                                                         <input type="hidden" name="txtFSlotID" 
-                                                               value="${freeSlot.freeSlotID}" readonly="">
+                                                               value="${freeslot.freeSlotID}" readonly="">
                                                         <input type="hidden" name="txtStartTime" 
-                                                               value="${freeSlot.startTime}" readonly="">
+                                                               value="${freeslot.startTime}" readonly="">
                                                         <input type="hidden" name="txtEndTime" 
-                                                               value="${freeSlot.endTime}" readonly="">
+                                                               value="${freeslot.endTime}" readonly="">
                                                         <input type="hidden" name="intCapacity" 
-                                                               value="${freeSlot.capacity}" readonly="">
+                                                               value="${freeslot.capacity}" readonly="">
                                                         <input type="hidden" name="txtUserID" 
                                                                value="${param.txtUserID}" readonly="">
                                                         <input type="hidden" name="txtSemesterID" 
@@ -687,13 +697,13 @@
                                                     <form action="MainController" method="GET">
                                                         <input type="hidden" name="action" value="BookFreeSlot">
                                                         <input type="hidden" name="txtFSlotID" 
-                                                               value="${freeSlot.freeSlotID}" readonly="">
+                                                               value="${freeslot.freeSlotID}" readonly="">
                                                         <input type="hidden" name="txtStartTime" 
-                                                               value="${freeSlot.startTime}" readonly="">
+                                                               value="${freeslot.startTime}" readonly="">
                                                         <input type="hidden" name="txtEndTime" 
-                                                               value="${freeSlot.endTime}" readonly="">
+                                                               value="${freeslot.endTime}" readonly="">
                                                         <input type="hidden" name="intCapacity" 
-                                                               value="${freeSlot.capacity}" readonly="">
+                                                               value="${freeslot.capacity}" readonly="">
                                                         <input type="hidden" name="txtUserName" 
                                                                value="${param.txtUserName}" readonly="">
                                                         <input type="hidden" name="txtSemesterID" 
@@ -730,13 +740,13 @@
                                                     <form action="MainController" method="GET">
                                                         <input type="hidden" name="action" value="BookFreeSlot">
                                                         <input type="hidden" name="txtFSlotID" 
-                                                               value="${freeSlot.freeSlotID}" readonly="">
+                                                               value="${freeslot.freeSlotID}" readonly="">
                                                         <input type="hidden" name="txtStartTime" 
-                                                               value="${freeSlot.startTime}" readonly="">
+                                                               value="${freeslot.startTime}" readonly="">
                                                         <input type="hidden" name="txtEndTime" 
-                                                               value="${freeSlot.endTime}" readonly="">
+                                                               value="${freeslot.endTime}" readonly="">
                                                         <input type="hidden" name="intCapacity" 
-                                                               value="${freeSlot.capacity}" readonly="">
+                                                               value="${freeslot.capacity}" readonly="">
                                                         <input type="hidden" name="txtSubjectCode" 
                                                                value="${param.txtSubjectCode}" readonly="">
                                                         <input type="hidden" name="txtUserID" 
@@ -775,13 +785,13 @@
                                                     <form action="MainController" method="GET">
                                                         <input type="hidden" name="action" value="BookFreeSlot">
                                                         <input type="hidden" name="txtFSlotID" 
-                                                               value="${freeSlot.freeSlotID}" readonly="">
+                                                               value="${freeslot.freeSlotID}" readonly="">
                                                         <input type="hidden" name="txtStartTime" 
-                                                               value="${freeSlot.startTime}" readonly="">
+                                                               value="${freeslot.startTime}" readonly="">
                                                         <input type="hidden" name="txtEndTime" 
-                                                               value="${freeSlot.endTime}" readonly="">
+                                                               value="${freeslot.endTime}" readonly="">
                                                         <input type="hidden" name="intCapacity" 
-                                                               value="${freeSlot.capacity}" readonly="">
+                                                               value="${freeslot.capacity}" readonly="">
                                                         <input type="hidden" name="txtSubjectCode" 
                                                                value="${param.txtSubjectCode}" readonly="">
                                                         <input type="hidden" name="txtUserName" 
@@ -815,15 +825,15 @@
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${freeslot.startTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
-                                               <div class="d-flex justify-content-between">
+                                        <div class="d-flex justify-content-between">
                                             <div class="form-group" style="background-color: red;">
                                                 <div class="form-control">
                                                     <form action="MainController" method="GET">
                                                         <input type="hidden" name="action" value="BookFreeSlot">
                                                         <input type="hidden" name="txtFSlotID"  value="${freeslot.freeSlotID}" readonly="">
                                                         <input type="hidden" name="txtStartTime"  value="${freeslot.startTime}" readonly="">
-                                                        <input type="hidden" name="txtEndTime"   value="${freeSlot.endTime}" readonly="">
-                                                        <input type="hidden" name="intCapacity"   value="${freeSlot.capacity}" readonly="">
+                                                        <input type="hidden" name="txtEndTime"   value="${freeslot.endTime}" readonly="">
+                                                        <input type="hidden" name="intCapacity"   value="${freeslot.capacity}" readonly="">
                                                         <input type="hidden" name="txtUserID"  value="${param.txtUserID}" readonly="">
                                                         <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
                                                             book
@@ -859,8 +869,8 @@
                                                     <input type="hidden" name="action" value="BookFreeSlot">
                                                     <input type="hidden" name="txtFSlotID"  value="${freeslot.freeSlotID}" readonly="">
                                                     <input type="hidden" name="txtStartTime"  value="${freeslot.startTime}" readonly="">
-                                                    <input type="hidden" name="txtEndTime"   value="${freeSlot.endTime}" readonly="">
-                                                    <input type="hidden" name="intCapacity"   value="${freeSlot.capacity}" readonly="">
+                                                    <input type="hidden" name="txtEndTime"   value="${freeslot.endTime}" readonly="">
+                                                    <input type="hidden" name="intCapacity"   value="${freeslot.capacity}" readonly="">
                                                     <input type="hidden" name="txtUserID"  value="${param.txtUserID}" readonly="">
                                                     <button type="submit" class="button-style" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
                                                         book
@@ -890,9 +900,17 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
-
     <script>
-                                $(document).foundation();
+    // L?y thông tin l?i t? bi?n requestScope.ERROR
+    var errorMessage = "${requestScope.BOOKING_ERROR.duplicateBookedSlot}";
+
+    // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+    if (errorMessage.trim() !== "") {
+        alert(errorMessage);
+    }
+    </script>
+    <script>
+        $(document).foundation();
     </script>
     <%} else {
             response.sendRedirect("MainController");
