@@ -59,20 +59,24 @@
                 var form = document.querySelector('.logout form');
                 form.submit();
             }
-            function submitFormLogout() {
-                var form = document.querySelector('.logout form');
-                form.submit();
-            }
             function submitFormCreate() {
                 var form = document.querySelector('.CreateFSlot form');
+                form.submit();
+            }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitFormViewRequest() {
+                var form = document.querySelector('.request-div form');
                 form.submit();
             }
             function submitFormHideView() {
                 var form = document.querySelector('.hideView form');
                 form.submit();
             }
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
+            function submitForm() {
+                var form = document.querySelector('.viewCreateSlot form');
                 form.submit();
             }
             var userDTO = {
@@ -159,32 +163,21 @@
                         <form action="MainController" method="POST">
                             <input type="hidden" name="action" value="returnHomePageLecturer" />
                         </form>
-                        <img
-                            class="fptu-eng-1-icon"
-                            alt=""
-                            src="public/BookingView/2021fptueng-1@2x.png"
-                            />
                     </div>
-
                     <div class="frame-parent">
                         <div class="frame-group">
-                            <div class="frame-Create CreateFSlot" onclick="submitFormCreate()">
+                            <div class="frame-div viewCreateSlot" onclick="submitForm()">
+                                <form action="MainController" method="POST" style="display: none;">
+                                    <input type="hidden" name="action" value="viewFSlotLecturer" />
+                                </form>
+                                <i class="material-icons">visibility</i>View Create Slot
+                            </div>
+                            <div class="frame-div request-div" style="background-color: #b7b7b7;">
                                 <form action="MainController" method="POST">
-                                    <input type="hidden" name="action" value="CreateFS" />
+                                    <input type="hidden" name="action" value="ViewRequest" />
                                 </form>
 
-                                <i class="material-icons">create</i> Create Free Slot
-                            </div>
-                            <div class="frame-div logout" onclick="submitFormLogout()">
-                                <form action="MainController" method="POST" style="display: none;">
-                                    <input type="hidden" name="action" value="Logout" />
-                                </form>
-                                <div class="logout-wrapper">
-                                    <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
-                                </div>
-                                <div class="request">
-                                    <p class="logout1">Logout</p>
-                                </div>
+                                <i class="material-icons">mail_outline</i>View Request
                             </div>
                             <div class="frame-div hideView" onclick="submitFormHideView()">
                                 <form action="MainController" method="POST" style="display: none;">
@@ -194,23 +187,59 @@
                                     <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
                                 </div>
                             </div>
+                            <div class="frame-div logout" style="text-align: center;" onclick="submitFormLogout()">
+                                <form action="MainController" method="POST" style="display: none;">
+                                    <input type="hidden" name="action" value="Logout" />
+                                </form>
+                                <div class="logout-wrapper">
+                                    <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                                </div>
+                                <div class="logout">
+                                    <p class="logout1">Logout</p>
+                                </div>
+                            </div>
+
                             <div>
                                 <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                                      onclick="showUserInfo()" />
-                                <div id="user-info" style="display: none; position: absolute">
+                                <div id="user-info" style="display: none; position: absolute;">
                                     <p id="user-id"> </p>
                                     <p id="user-name"></p>
                                     <p id="user-email"></p>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
-                <div class="backbutton"  onclick="goBack()">
-                    <div class="back">Back</div>
-                    <img class="back-icon" alt="" src="./public/request/back.svg" />
+                <div class="frame-Create CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()">
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="CreateFS" />
+                    </form>
+
+                    <i class="material-icons">add</i>
                 </div>
-                <div class="view-user-table">
+                <div class="container">
+                    <div class="row align-items-center justify-content-center" style="margin: 80px 0 -60px 0">
+                        <div>
+                            <form action="MainController" method="POST" class="d-flex justify-content-center">
+                                <div class="form-group"  style="margin-left: 5px">
+                                    <input type="datetime-local" class="form-control" name="txtStartTime" value="${param.txtStartTime}">
+                                </div>
+                                <div class="form-group" style="margin-left: 5px">
+                                    <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}">
+                                </div>
+                                <div class="form-group" style="margin-left: 5px">
+                                    <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}" placeholder="Subject Code">
+                                </div>
+                                <div class="form-group" style="margin-left: 5px">
+                                    <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchCSlot">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="view-user-table" style="width: 80%; margin: 0 auto; border-radius: 20px;">
                     <c:if test="${not empty requestScope.LIST_REQUESTS}">
                         <div class="table-container">
                             <table class="custom-table">
@@ -264,7 +293,7 @@
                         </div>
                     </c:if>
                     <c:if test="${empty requestScope.LIST_REQUESTS}">
-                        <h3 class="error-message">${requestScope.VIEW_REQUEST_MESSAGE}</h3>
+                        <h3 class="error-message " style= "margin-top: 10%;">${requestScope.VIEW_REQUEST_MESSAGE}</h3>
                     </c:if>
                 </div>
 
