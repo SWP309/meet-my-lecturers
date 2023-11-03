@@ -888,6 +888,12 @@
 
     <script>
                                 $(document).foundation();
+                                var errorMessage = "${requestScope.ERROR}";
+
+                                    // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+                                    if (errorMessage.trim() !== "") {
+                                        alert(errorMessage);
+                                    }
     </script>
     <%} else {
             response.sendRedirect("MainController");

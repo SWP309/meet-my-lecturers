@@ -33,7 +33,7 @@ public class FreeSlotsDAO {
             + "FROM FreeSlots WHERE meetLink=?";
     private final static String CHECK_SEMESTERID = "SELECT semesterID FROM Semesters WHERE semesterID = ?";
     private final static String CHECK_SUBJECTCODE = "SELECT subjectCode FROM Subjects WHERE subjectCode = ?";
-    private final static String CHECK_BLOCKLIST = "SELECT block_list FROM FreeSlots WHERE block_list LIKE CONCAT('%', ?, '%')";
+    private final static String CHECK_BLOCKLIST = "SELECT freeSlotID FROM FreeSlots WHERE block_list LIKE CONCAT('%', ?, '%') AND freeSlotID = ?";
     private final String CHECK_TIME_DUPLICATE_FS = "SELECT fs.freeSlotID\n"
             + "FROM FreeSlots fs\n"
             + "WHERE fs.lecturerID = ? \n"
@@ -1055,7 +1055,7 @@ public class FreeSlotsDAO {
         return exists;
     }
     
-    public boolean checkBlockList(String block_list) throws SQLException {
+    public boolean checkBlockList(String block_list, String freeslotID) throws SQLException {
         boolean exists = false;
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1065,6 +1065,7 @@ public class FreeSlotsDAO {
             if (conn != null) {
                 ps = conn.prepareStatement(CHECK_BLOCKLIST);
                 ps.setString(1, block_list);
+                ps.setString(2, freeslotID);
                 rs = ps.executeQuery();
                 if (rs.next()) {
                     exists = true;

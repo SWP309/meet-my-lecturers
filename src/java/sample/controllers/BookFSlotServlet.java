@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import sample.bookings.BookingDAO;
 import sample.bookings.BookingDTO;
 import sample.freeslots.FreeSlotsDAO;
+import sample.freeslots.FreeSlotsDTO;
 import sample.users.UserDTO;
 
 /**
@@ -36,22 +37,23 @@ public class BookFSlotServlet extends HttpServlet {
         String url = ERROR;
 
         try {
-            boolean flag=true;
+            boolean flag = true;
             HttpSession session = request.getSession();
             BookingDAO dao = new BookingDAO();
             BookingDTO dto = new BookingDTO();
             FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
+            String freeSlotID = request.getParameter("txtFSlotID");
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String studentID = us.getUserID();
-            boolean existsInBlockList = freeSlotsDAO.checkBlockList(studentID);
+            boolean existsInBlockList = freeSlotsDAO.checkBlockList(studentID,freeSlotID);
             if (existsInBlockList) {
-                System.out.println("You have been blocked from this slot, please contact your lecturer to know reasons");
-                flag=false;
+                request.setAttribute("ERROR", "You have been BLOCKED from this slot, please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
+                flag = false;
                 dto.setStatus(0);
             }
-            
+
             if (flag) {
-                String freeSlotID = request.getParameter("txtFSlotID");
+                
                 dto.setStudentID(studentID);
                 dto.setFreeSlotID(freeSlotID);
                 if (freeSlotID != null) {
