@@ -117,6 +117,7 @@ public class FreeSlotsDAO {
                 ps.setString(8, freeSlotsDTO.getLecturerID());
                 ps.setInt(9, freeSlotsDTO.getStatus());
                 ps.setString(10, freeSlotsDTO.getSemesterID());
+                ps.setString(11, freeSlotsDTO.getBlock_list());
                 result = ps.executeUpdate();
                 if (result > 0) {
                     checkCreate = true;
