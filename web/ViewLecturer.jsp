@@ -71,9 +71,7 @@
                 var form = document.querySelector('.requestViewStatus form');
                 form.submit();
             }
-            function goBack() {
-                window.history.back();
-            }
+
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
