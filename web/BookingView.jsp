@@ -195,12 +195,8 @@
 
                 </div>
             </div>
-            <div class="backbutton"  onclick="goBack()">
-                <div class="back">Back</div>
-                <img class="back-icon" alt="" src="./public/request/back.svg" />
-            </div>
             <div class="container">
-                <div class="row align-items-center justify-content-center" style="margin-top: -44%;">
+                <div class="row align-items-center justify-content-center" style="margin-top: -20%;">
                     <div>
                         <form action="MainController" method="POST" class="d-flex justify-content-center" style=" margin-top: 10%;">
                             <div class="form-group">
@@ -212,8 +208,8 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}" placeholder="Input the subject code">
                             </div>
-                             <div class="form-group">
-                                 <input type="text" class="form-control" name="txtSemesterID" value="${param.txtSemesterID} " placeholder="Input the semester">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="txtSemesterID" value="${param.txtSemesterID}" placeholder="Input the semester">
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchBSlot">Search</button>
@@ -222,11 +218,42 @@
                     </div>
                 </div>
             </div>
+            <!--                            LIST OF THE PAGE------------------------------------------->
+            <div class="container mt-5" style="    margin-top: -24% !important;">
+                <div class="row justify-content-center mt-5">
+                    <c:if test="${requestScope.LIST_BOOKING !=null}">
+                        <c:if test="${not empty requestScope.LIST_BOOKING}">
+                            <c:forEach var="listBooking" varStatus="counter" items="${requestScope.LIST_BOOKING}">
+                                <div class="col-md-4"><a h>
+                                        <div class="card" style="width: 403px;  max-height: 250px; border-radius: 5%;">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject Code:</b></strong> <span class="ml-auto">${listBooking.subjectCode.trim()}</span></div>
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's Name:</b></strong> <span class="ml-auto">${listBooking.lectureName}</span></div>
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${listBooking.startTime}</span></div>
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${listBooking.endTime}</span></div>
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" href="https://${listBooking.meetLink}" onclick="confirmCheckAttendanceLink(event, '${listBooking.bookingID}')"> Link Meet</a></span></div>
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${listBooking.semesterID}</span></div>
+                                                <div class="d-flex justify-content-between btn-book">
+                                                    <!--                                             Added d-flex justify-content-between to create a flex container -->
+                                                    <div>
+                                                        <a class="d-flex justify-content-between" style="text-decoration: none;" 
+                                                           onclick="return confirm('Are you sure to cancel this booking')" href="MainController?action=cancel&bookingID=${listBooking.bookingID}">
+                                                            <i class="material-icons">cancel</i>Cancel</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </c:forEach>
+                        </c:if>
+                    </c:if>          
 
+                </div>
+            </div>
 
             <!--LIST OF SEARCH BY ALL ------------------------------------------------------------------>
             <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and not empty param.txtSubjectCode and not empty param.txtSemesterID }">
-                <div class="container mt-5" style="    margin-top: -45% !important;">
+                <div class="container mt-5" style="    margin-top: -24%!important;">
                     <div class="row justify-content-center mt-5">
                         <c:if test="${requestScope.SEARCH_BOOKED_SLOT_BY_ALL !=null}">
                             <c:if test="${not empty requestScope.SEARCH_BOOKED_SLOT_BY_ALL}">
@@ -260,7 +287,7 @@
             </c:if>
             <!--SEARCH BY ST AND ET ------------------------------------------------------------------>
             <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and empty param.txtSubjectCode and empty param.txtSemesterID }">
-                <div class="container mt-5" style="    margin-top: -45% !important;">
+                <div class="container mt-5" style="    margin-top: -24% !important;">
                     <div class="row justify-content-center mt-5">
                         <c:if test="${requestScope.SEARCH_BOOKED_SLOT_BY_ST_ET !=null}">
                             <c:if test="${not empty requestScope.SEARCH_BOOKED_SLOT_BY_ST_ET}">
@@ -273,7 +300,7 @@
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${searchByStEt.startTime}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${searchByStEt.endTime}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" href="https://${searchByStEt.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByStEt.bookingID}')"> Link Meet</a></span></div>
-                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchByStEt.semesterID}</span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchByStEt.semesterID}</span></div>
                                                     <div class="d-flex justify-content-between btn-book">
                                                         <!--                                             Added d-flex justify-content-between to create a flex container -->
                                                         <div>
@@ -294,7 +321,7 @@
             </c:if>
             <!--SEARCH BY SUBJECT CODE  ------------------------------------------------------------------>
             <c:if test="${empty param.txtStartTime and empty param.txtEndTime and not empty param.txtSubjectCode and empty param.txtSemesterID }">
-                <div class="container mt-5" style="    margin-top: -45% !important;">
+                <div class="container mt-5" style="    margin-top: -24% !important;">
                     <div class="row justify-content-center mt-5">
                         <c:if test="${requestScope.SEARCH_BOOKED_SLOT_BY_SUBJECT !=null}">
                             <c:if test="${not empty requestScope.SEARCH_BOOKED_SLOT_BY_SUBJECT}">
@@ -307,7 +334,7 @@
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${searchBySubjectCode.startTime}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${searchBySubjectCode.endTime}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" href="https://${searchBySubjectCode.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchBySubjectCode.bookingID}')"> Link Meet</a></span></div>
-                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchBySubjectCode.semesterID}</span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchBySubjectCode.semesterID}</span></div>
                                                     <div class="d-flex justify-content-between btn-book">
                                                         <!--                                             Added d-flex justify-content-between to create a flex container -->
                                                         <div>
@@ -326,9 +353,43 @@
                     </div>
                 </div>
             </c:if>
+              <!--SEARCH BY SEMESTER  ------------------------------------------------------------------>
+            <c:if test="${empty param.txtStartTime and empty param.txtEndTime and empty param.txtSubjectCode and not empty param.txtSemesterID }">
+                <div class="container mt-5" style="    margin-top: -24% !important;">
+                    <div class="row justify-content-center mt-5">
+                        <c:if test="${requestScope.SEARCH_BOOKED_SLOT_BY_SEMESTER !=null}">
+                            <c:if test="${not empty requestScope.SEARCH_BOOKED_SLOT_BY_SEMESTER}">
+                                <c:forEach var="searchBySemesterID" varStatus="counter" items="${requestScope.SEARCH_BOOKED_SLOT_BY_SEMESTER}">
+                                    <div class="col-md-4"><a h>
+                                            <div class="card" style="width: 403px; max-height: 250px; border-radius: 5%;">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject Code:</b></strong> <span class="ml-auto">${searchBySemesterID.subjectCode.trim()}</span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's Name:</b></strong> <span class="ml-auto">${searchBySemesterID.lectureName}</span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${searchBySemesterID.startTime}</span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${searchBySemesterID.endTime}</span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" href="https://${searchBySemesterID.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchBySemesterID.bookingID}')"> Link Meet</a></span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchBySemesterID.semesterID}</span></div>
+                                                    <div class="d-flex justify-content-between btn-book">
+                                                        <!--                                             Added d-flex justify-content-between to create a flex container -->
+                                                        <div>
+                                                            <a class="d-flex justify-content-between" style="text-decoration: none;" 
+                                                               onclick="return confirm('Are you sure to cancel this booking')" href="MainController?action=cancel&bookingID=${searchBySemesterID.bookingID}">
+                                                                <i class="material-icons">cancel</i>Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </c:forEach>
+                            </c:if>
+                        </c:if>          
+
+                    </div>
+                </div>
+            </c:if>
             <!--SEARCH BY NULL  ------------------------------------------------------------------>
             <c:if test="${empty param.txtStartTime and empty param.txtEndTime and empty param.txtSubjectCode and empty param.txtSemesterID }">
-                <div class="container mt-5" style="    margin-top: -45% !important;">
+                <div class="container mt-5" style="    margin-top: -24% !important;">
                     <div class="row justify-content-center mt-5">
                         <c:if test="${requestScope.SEARCH_BOOKED_SLOT_BY_NULL !=null}">
                             <c:if test="${not empty requestScope.SEARCH_BOOKED_SLOT_BY_NULL}">
@@ -341,7 +402,7 @@
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${searchByNull.startTime}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${searchByNull.endTime}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" href="https://${searchByNull.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByNull.bookingID}')"> Link Meet</a></span></div>
-                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchByNull.semesterID}</span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchByNull.semesterID}</span></div>
                                                     <div class="d-flex justify-content-between btn-book">
                                                         <!--                                             Added d-flex justify-content-between to create a flex container -->
                                                         <div>
@@ -360,9 +421,9 @@
                     </div>
                 </div>
             </c:if>
-             <!--LIST OF SEARCH BY ST ET SUBJECT CODE ------------------------------------------------------------------>
+            <!--LIST OF SEARCH BY ST ET SUBJECT CODE ------------------------------------------------------------------>
             <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and not empty param.txtSubjectCode and empty param.txtSemesterID }">
-                <div class="container mt-5" style="    margin-top: -45% !important;">
+                <div class="container mt-5" style="    margin-top: -24% !important;">
                     <div class="row justify-content-center mt-5">
                         <c:if test="${requestScope.SEARCH_BOOKED_SLOT_BY_ST_ET_SUBJECTCODE !=null}">
                             <c:if test="${not empty requestScope.SEARCH_BOOKED_SLOT_BY_ST_ET_SUBJECTCODE}">
@@ -394,9 +455,9 @@
                     </div>
                 </div>
             </c:if>
-              <!--LIST OF SEARCH BY ST ET SESMESTER ------------------------------------------------------------------>
+            <!--LIST OF SEARCH BY ST ET SESMESTER ------------------------------------------------------------------>
             <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and empty param.txtSubjectCode and not empty param.txtSemesterID }">
-                <div class="container mt-5" style="    margin-top: -45% !important;">
+                <div class="container mt-5" style="    margin-top: -24% !important;">
                     <div class="row justify-content-center mt-5">
                         <c:if test="${requestScope.SEARCH_BOOKED_SLOT_BY_ST_ET_SEMESTER !=null}">
                             <c:if test="${not empty requestScope.SEARCH_BOOKED_SLOT_BY_ST_ET_SEMESTER}">

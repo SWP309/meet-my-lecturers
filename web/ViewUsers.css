@@ -251,35 +251,6 @@ input.in_search_userID {
     border: 0px;
     background-color: rgb(231,231,231);
 }
-.back {
-    position: absolute;
-    top: 0;
-    left: 46.7px;
-    display: inline-block;
-    width: 79px;
-    height: 26px;
-}
-.back-icon {
-    position: absolute;
-    height: 94.29%;
-    width: 25.51%;
-    top: 8.57%;
-    right: 75.28%;
-    bottom: -2.86%;
-    left: -0.8%;
-    max-width: 100%;
-    overflow: hidden;
-    max-height: 100%;
-}
-.backbutton {
-    position: absolute;
-    top: 104px;
-    left: 39px;
-    width: 125.7px;
-    height: 35px;
-    font-size: 30px;
-    color: #000;
-}
 .admin-viewusersedited {
     position: relative;
     width: 100%;

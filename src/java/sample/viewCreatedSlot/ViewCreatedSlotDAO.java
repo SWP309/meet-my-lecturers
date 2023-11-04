@@ -32,6 +32,7 @@ public class ViewCreatedSlotDAO {
             + "              WHERE b.status = 1\n"
             + "              GROUP BY b.freeSlotID) bo ON fs.freeSlotID = bo.freeSlotID\n"
             + "           WHERE fs.status='1' AND u1.userEmail = ?";
+   
     private static String CREATED_SLOT_VIEW_SUB = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID ,fs.semesterID,fs.meetLink, bo.[Number of students], fs.capacity\n"
             + "           FROM FreeSlots fs\n"
             + "          JOIN Users u1 ON fs.lecturerID = u1.userID\n"
@@ -76,7 +77,7 @@ public class ViewCreatedSlotDAO {
             + "              WHERE b.status = 1\n"
             + "              GROUP BY b.freeSlotID) bo ON fs.freeSlotID = bo.freeSlotID\n"
             + "		  where fs.status='1' and fs.startTime >= ? and fs.endTime <= ? and fs.subjectCode = ? and u1.userEmail = ?";
-     private static String SEARCH_FREE_SLOT_BY_ST_ET_SEMESTER = "SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID,fs.semesterID,fs.meetLink, bo.[Number of students], fs.capacity\n"
+    private static String SEARCH_FREE_SLOT_BY_ST_ET_SEMESTER = "SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID,fs.semesterID,fs.meetLink, bo.[Number of students], fs.capacity\n"
             + "           FROM FreeSlots fs\n"
             + "          JOIN Users u1 ON fs.lecturerID = u1.userID\n"
             + "           LEFT JOIN (SELECT freeSlotID, COUNT(*) AS 'Number of students'\n"
@@ -100,7 +101,7 @@ public class ViewCreatedSlotDAO {
             + "              WHERE b.status = 1\n"
             + "              GROUP BY b.freeSlotID) bo ON fs.freeSlotID = bo.freeSlotID\n"
             + "		  where  fs.status='1' and fs.subjectCode = ? and u1.userEmail = ?";
-     private static String SEARCH_FREE_SLOT_BY_SEMESTER = "SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID,fs.semesterID,fs.meetLink, bo.[Number of students], fs.capacity\n"
+    private static String SEARCH_FREE_SLOT_BY_SEMESTER = "SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID,fs.semesterID,fs.meetLink, bo.[Number of students], fs.capacity\n"
             + "           FROM FreeSlots fs\n"
             + "          JOIN Users u1 ON fs.lecturerID = u1.userID\n"
             + "           LEFT JOIN (SELECT freeSlotID, COUNT(*) AS 'Number of students'\n"
@@ -198,6 +199,8 @@ public class ViewCreatedSlotDAO {
         return listCreatedSlotSub;
     }
 
+
+
     public List<ViewCreatedSlotDTO> GetlistCreatedSlotSub(String userEmail) throws SQLException {
         List<ViewCreatedSlotDTO> listCreatedSlot = new ArrayList<>();
         Connection conn = null;
@@ -288,7 +291,8 @@ public class ViewCreatedSlotDAO {
         }
         return searchFSlotList;
     }
-     public List<ViewCreatedSlotDTO> searchFSlotViewByStEtSubjectCode(String subjectCode, String startTime, String endTime, String userEmail) throws SQLException {
+
+    public List<ViewCreatedSlotDTO> searchFSlotViewByStEtSubjectCode(String subjectCode, String startTime, String endTime, String userEmail) throws SQLException {
         List<ViewCreatedSlotDTO> searchFSlotList = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -335,7 +339,8 @@ public class ViewCreatedSlotDAO {
         }
         return searchFSlotList;
     }
-     public List<ViewCreatedSlotDTO> searchFSlotViewByStEtSemesterID(String semesterID, String startTime, String endTime, String userEmail) throws SQLException {
+
+    public List<ViewCreatedSlotDTO> searchFSlotViewByStEtSemesterID(String semesterID, String startTime, String endTime, String userEmail) throws SQLException {
         List<ViewCreatedSlotDTO> searchFSlotList = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -473,6 +478,7 @@ public class ViewCreatedSlotDAO {
         }
         return searchFSlotList;
     }
+
     public List<ViewCreatedSlotDTO> searchFSlotViewBySemesterID(String semesterID, String userEmail) throws SQLException {
         List<ViewCreatedSlotDTO> searchFSlotList = new ArrayList<>();
         Connection conn = null;

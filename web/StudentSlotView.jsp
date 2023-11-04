@@ -92,10 +92,6 @@
                     event.preventDefault();
                 }
             }
-            function submitFormBack() {
-                var form = document.querySelector('.backbutton form')
-                form.submit();
-            }
              function submitFormHomePage() {
                 var form = document.querySelector('.returnHome form');
                 form.submit();
@@ -187,13 +183,6 @@
                     </c:if>
                 </c:if>
 
-            </div>
-            <div class="backbutton" onclick="submitFormBack()">
-                <form action="MainController" method="POST" style="display: none;">
-                    <input type="hidden" name="action" value="back" />
-                </form>
-                <div class="back" id="back-button">Back</div>
-                <img class="back-icon" alt="" src="public/BookingView/back.svg" />
             </div>
         </div>
         <h3>
