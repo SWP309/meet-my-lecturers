@@ -152,36 +152,6 @@ td button {
     height: 21.02px;
 }
 
-.back {
-    position: absolute;
-    top: 0;
-    left: 46px;
-    display: inline-block;
-    width: 79px;
-    height: 26px;
-}
-.back-icon {
-    position: absolute;
-    height: 85.29%;
-    width: 40.99%;
-    top: 22.57%;
-    right: 74.81%;
-    bottom: -2.86%;
-    left: -0.8%;
-    max-width: 100%;
-    overflow: hidden;
-    max-height: 100%;
-}
-.backbutton {
-    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
-    position: relative;
-    width: 125px;
-    height: 35px;
-    font-size: 30px;
-    color: #000;
-    bottom: 260px;
-    left: -43%;
-}
 .student-viewbookedslot {
     position: relative;
     background-color: #fff;

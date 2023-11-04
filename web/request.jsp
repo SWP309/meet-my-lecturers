@@ -195,10 +195,6 @@
 
                 </div>
             </div>
-            <div class="backbutton"  onclick="goBack()">
-                <div class="back">Back</div>
-                <img class="back-icon" alt="" src="./public/request/back.svg" />
-            </div>
             <div class="container mt-5 create-request" style="margin-top: 8% !important;">
                 <form action="MainController" method="POST">
 

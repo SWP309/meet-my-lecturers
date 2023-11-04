@@ -38,7 +38,7 @@ public class SearchCreateSlotServlet extends HttpServlet {
             String semesterID = request.getParameter("txtSemesterID");
             String userEmail = us.getUserEmail();
             ViewCreatedSlotDAO searchFSlot = new ViewCreatedSlotDAO();
-            if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty()) {
+            if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty() && semesterID.isEmpty()) {
                 List<ViewCreatedSlotDTO> searchByStEt = searchFSlot.searchFSlotViewByStEt(startTime, endTime, userEmail);
                 if (searchByStEt != null) {
                     request.setAttribute("SEARCH_FREE_SLOT_BY_ST_ET", searchByStEt);

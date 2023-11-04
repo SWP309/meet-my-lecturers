@@ -65,7 +65,13 @@ public class BookingDAO {
             + "           JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
             + "            JOIN Users u ON b.studentID = u.userID\n"
             + "            JOIN Users u1 ON fs.lecturerID = u1.userID\n"
-            + "		  where  b.status='1' and fs.subjectCode = ? and u.userEmail = ? and fs.semesterID = ?";
+            + "		  where  b.status='1' and fs.subjectCode = ? and u.userEmail = ?";
+     private static String SEARCH_BOOKED_SLOT_BY_SEMESTER = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime,u.userName, b.bookingID,fs.meetLink, fs.semesterID\n"
+            + "          FROM Bookings b\n"
+            + "           JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
+            + "            JOIN Users u ON b.studentID = u.userID\n"
+            + "            JOIN Users u1 ON fs.lecturerID = u1.userID\n"
+            + "		  where  b.status='1' and fs.semesterID = ? and u.userEmail = ?";
     private static String SEARCH_BOOKED_SLOT_BY_NULL = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime,u.userName, b.bookingID,fs.meetLink, fs.semesterID\n"
             + "          FROM Bookings b\n"
             + "           JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
@@ -367,7 +373,7 @@ public class BookingDAO {
         return searchBSlot;
     }
 
-    public List<BookingDTO> searchBSlotViewBySubjectCode(String subjectCode, String userEmail, String semesterID) throws SQLException {
+    public List<BookingDTO> searchBSlotViewBySubjectCode(String subjectCode, String userEmail) throws SQLException {
         List<BookingDTO> searchBSlot = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -378,7 +384,47 @@ public class BookingDAO {
                 ptm = conn.prepareStatement(SEARCH_BOOKED_SLOT_BY_SUBJECTCODE);
                 ptm.setString(1, subjectCode);
                 ptm.setString(2, userEmail);
-                ptm.setString(3, semesterID);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String fetchedSubjectCode = rs.getString("subjectCode");
+                    String lectureName = rs.getString("lectureName");
+                    Timestamp fetchedStartTime = rs.getTimestamp("startTime");
+                    String startTimeStr = convertDateToString(fetchedStartTime);
+                    Timestamp fetchedEndTime = rs.getTimestamp("endTime");
+                    String endTimeStr = convertDateToString(fetchedEndTime);
+                    String userName = rs.getString("userName");
+                    String bookingID = rs.getString("bookingID");
+                    String meetLink = rs.getString("meetLink");
+                    String fetchedSemesterID = rs.getString("semesterID");
+                    searchBSlot.add(new BookingDTO(fetchedSubjectCode, lectureName, startTimeStr, endTimeStr, userName, bookingID, meetLink, fetchedSemesterID));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return searchBSlot;
+    }
+    public List<BookingDTO> searchBSlotViewBySemester(String semesterID, String userEmail) throws SQLException {
+        List<BookingDTO> searchBSlot = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(SEARCH_BOOKED_SLOT_BY_SEMESTER);
+                ptm.setString(1, semesterID);
+                ptm.setString(2, userEmail);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
                     String fetchedSubjectCode = rs.getString("subjectCode");
