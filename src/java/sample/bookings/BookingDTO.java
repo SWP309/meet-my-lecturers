@@ -117,6 +117,12 @@ public class BookingDTO {
         this.studentID = studentID;
     }
 
+    public BookingDTO(String freeSlotID , String studentID , String subjectCode) {
+        this.subjectCode = subjectCode;
+        this.freeSlotID = freeSlotID;
+        this.studentID = studentID;
+    }
+
    
 
 }

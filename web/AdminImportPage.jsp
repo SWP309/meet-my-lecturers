@@ -48,11 +48,6 @@
             <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="returnHomePageAdmin" />
-<!--                <img
-                    class="fptu-eng-1-icon"
-                    alt=""
-                    src="public/BookingView/2021fptueng-1@2x.png"
-                    />-->
                 </form>
             </div>
 
@@ -119,6 +114,7 @@
                 <%
                     }
                 %>
+                <a href="https://drive.google.com/drive/folders/195tJBz5ZndD9dh9Lvdw3K1SH_dh8ACnZ?usp=sharing" target="_blank" style="color: blueviolet">Download template</a>
                 <div class="form-group input-group">
                     <div class="custom-file">
                         <input type="file" name="txtexcel" class="custom-file-input" id="imageUpload"  onchange="updateFileName('imageUpload')" required>
@@ -146,21 +142,8 @@
                 </span>
                 <%
                     }
-                    if (DUPLICATEDATA != null) {
                 %>
-                <span style="color: red; font-size: 1rem;">
-                    <%= DUPLICATEDATA%>
-                </span>
-                <%
-                    }
-                    if (DUPLICATEDATATIMETABLE != null) {
-                %>
-                <span style="color: red; font-size: 1rem;">
-                    <%= DUPLICATEDATATIMETABLE%>
-                </span>
-                <%
-                    }
-                %>
+                <a href="https://drive.google.com/drive/folders/1s_yu8ElI5rP6RaON6SLxFOIN5kmEUh4D?usp=drive_link" target="_blank" style="color: blueviolet">Download template</a>
                 <div class="form-group input-group">
                     <div class="custom-file">
                         <input type="hidden" value="importTB" name="action">
