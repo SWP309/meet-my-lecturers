@@ -30,7 +30,7 @@ public class MainController extends HttpServlet {
 
     private static final String LECTURER_PAGE = "LecturerPage";
     private static final String CREATE_FREE_SLOT_ACTION = "createFreeSlotAction";
-    private static final String CREATE_FREE_SLOT_PAGE = "create-freeSlot.jsp";
+    private static final String CREATE_FREE_SLOT_PAGE = "ViewOptionCreateFS";
     private static final String CREATE_FREE_SLOT = "CreateFS";
     private static final String CREATE_FREE_SLOT_SERVLET = "newfreeslot";
 

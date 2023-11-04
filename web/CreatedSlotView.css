@@ -9,26 +9,6 @@
 .CreateFSlot{
     width: 50% !important;
 }
-.back-icon {
-    position: absolute;
-    height: 85.29%;
-    width: 40.99%;
-    top: 22.57%;
-    right: 74.81%;
-    bottom: -2.86%;
-    left: -0.8%;
-    max-width: 100%;
-    overflow: hidden;
-    max-height: 100%;
-}
-.backbutton {
-    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
-    position: relative;
-    width: 125px;
-    height: 35px;
-    font-size: 30px;
-    color: #000;
-}
 .center-content {
     display: flex !important;
     align-items: center !important;

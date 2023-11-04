@@ -127,26 +127,6 @@ td button {
     height: 21.02px;
 }
 
-.back {
-    position: absolute;
-    top: 0;
-    left: 46px;
-    display: inline-block;
-    width: 79px;
-    height: 26px;
-}
-.back-icon {
-    position: absolute;
-    height: 94.29%;
-    width: 25.99%;
-    top: 8.57%;
-    right: 74.81%;
-    bottom: -2.86%;
-    left: -0.8%;
-    max-width: 100%;
-    overflow: hidden;
-    max-height: 100%;
-}
 .boxoftable th{
     text-align: center;
 }

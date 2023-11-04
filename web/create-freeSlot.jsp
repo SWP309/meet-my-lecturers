@@ -101,10 +101,10 @@
                     max-width: 39%;
                 }
             }
-/*            .div-CreateFS{
-                max-height: 500px;  Điều chỉnh chiều cao tối đa 
-                overflow-y: auto;  Hiển thị thanh cuộn khi nội dung tràn ra 
-            }*/
+            .option{
+                width: 60%;
+
+            }
         </style>
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -157,6 +157,14 @@
             function submitFormViewRequest() {
                 var form = document.querySelector('.request-div form');
                 form.submit();
+            }
+
+        </script>
+
+        <script>
+            function updateHiddenField(selectElement, hiddenFieldId) {
+                var selectedValue = selectElement.value;
+                document.getElementById(hiddenFieldId).value = selectedValue;
             }
         </script>
     </head>
@@ -220,16 +228,25 @@
             <div class="container mt-5 div-CreateFS">
                 <div class="d-flex justify-content-center">
                     <div class="card" style="border-radius: 5%; width: 800px; max-height: 800px;">
-
                         <div class="card-body">
                             <form action="MainController" method="POST">
-                                <div class="d-flex justify-content-between"><strong>Semester ID:</strong> <input type="text" class="form-control" name="txtSemesterID" value="${param.txtSemesterID}" placeholder="ex:FA23...etc" required=""></div>
-                                    <c:if test="${not empty requestScope.FREESLOT_ERROR.semesterIDError}">
-                                    <h6> ${requestScope.FREESLOT_ERROR.semesterIDError}</h6>
-                                </c:if>
-                                <div class="d-flex justify-content-between"><strong>Subject code:</strong> <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}"  placeholder="ex:SWP391...etc" required=""></div>
-                                    <c:if test="${not empty requestScope.FREESLOT_ERROR.subjectCodeError}">
-                                    <h6> ${requestScope.FREESLOT_ERROR.subjectCodeError}</h6>
+                                <c:if test="${not empty requestScope.LIST_SEMESTER and not empty requestScope.LIST_SUBJECT}">
+                                    <div class="d-flex justify-content-between">
+                                        <strong style="width: 120px;">Semester ID:</strong> 
+                                        <select class="form-control option" name="txtSemesterID" onchange="updateHiddenField(this, 'hiddenSemesterID')">
+                                            <c:forEach var="listSemester" varStatus="counter" items="${requestScope.LIST_SEMESTER}">
+                                                <option value="${listSemester.semesterID}">${listSemester.semesterID}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <strong style="width: 120px;">Subject Code:</strong> 
+                                        <select class="form-control option" name="txtSubjectCode" onchange="updateHiddenField(this, 'hiddenSubjectCode')">
+                                            <c:forEach var="listSubject" varStatus="counter" items="${requestScope.LIST_SUBJECT}">
+                                                <option value="${listSubject.subjectCode}">${listSubject.subjectCode}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
                                 </c:if>
                                 <div class="d-flex justify-content-between"><strong>Start time:</strong> <input type="datetime-local" value="${param.txtStartTime}" class="form-control"  name="txtStartTime" required=""></div>
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.pastTimeError}">
@@ -284,8 +301,8 @@
                                     <input type="hidden" value="createFreeSlotAction" name="action"/>
                                     <input type="submit" class="btn btn-primary" value="Create">
                                 </div>
-                                <input type="hidden" value="${param.txtSemesterID}">
-                                <input type="hidden" value="${param.txtSubjectCode}">
+                                <input type="hidden" id="hiddenSemesterID" name="hiddenSemesterID">
+                                <input type="hidden" id="hiddenSubjectCode" name="hiddenSubjectCode">
                                 <input type="hidden" value="${param.txtStartTime}">
                                 <input type="hidden" value="${param.txtEndTime}">
                                 <input type="hidden" value="${param.txtCapacity}">
