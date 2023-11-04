@@ -146,6 +146,14 @@
             <file-size-threshold>1048576</file-size-threshold>
         </multipart-config>
     </servlet>
+    <servlet>
+        <servlet-name>AttendanceServlet</servlet-name>
+        <servlet-class>sample.controllers.AttendanceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AttendanceSemesServlet</servlet-name>
+        <servlet-class>sample.controllers.AttendanceSemesServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -273,6 +281,14 @@
     <servlet-mapping>
         <servlet-name>ImportStudents</servlet-name>
         <url-pattern>/ImportStudents</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendanceServlet</servlet-name>
+        <url-pattern>/AttendanceServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendanceSemesServlet</servlet-name>
+        <url-pattern>/AttendanceSemesServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

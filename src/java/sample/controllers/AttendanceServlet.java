@@ -5,22 +5,24 @@
  */
 package sample.controllers;
 
-import sample.users.UserGoogleDto;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import sample.users.UserDAO;
+import sample.attendance.AttendanceDAO;
+import sample.attendance.AttendanceDTO;
+import sample.semester.SemesterDTO;
 import sample.users.UserDTO;
 
 /**
  *
  * @author Minh Khang
  */
-public class LoginServlet extends HttpServlet {
+public class AttendanceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,31 +37,25 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            UserGoogleDto dto = new UserGoogleDto();
-            dto = (UserGoogleDto) request.getAttribute("UserGG");
-            String email = dto.getEmail();
-            UserDTO us = UserDAO.getUserByMail(email);
-            boolean flag = false;
-            if (us != null) {                
-                    flag = true;
-                    HttpSession session = request.getSession();
-                    session.setAttribute("loginedUser", us);
-                    if (us.getRoleID().equals("3")) {
-                        response.sendRedirect("MainController?action=StudentPage");
-                    } else if ((us.getRoleID().equals("2"))) {
-                        response.sendRedirect("MainController?action=LecturerPage");
-                    } else if ((us.getRoleID().equals("1"))) {
-                        response.sendRedirect("MainController?action=AdminPage");
-                    }
-            } else {
-                flag = false;
+            /* TODO output your page here. You may use following sample code. */
+                        HttpSession session = request.getSession();
+            UserDTO userDTO = (UserDTO) session.getAttribute("loginedUser");
+            String semes = request.getParameter("txtsemes");
+            String studentID = userDTO.getUserID();
+            
+            String url = "MainController?action=2";
+            ArrayList<AttendanceDTO> listItem = AttendanceDAO.getAttendanceSlot(studentID, semes);
+            if (listItem != null) {
+                request.setAttribute("Items", listItem);
+            }else{
+                out.print("list null");
             }
-            if (!flag) {
-                String msg = "Your email is not granted access to the system";
-                request.setAttribute("Error", msg);
-                request.getRequestDispatcher("MainController?action=").forward(request, response);
+            String faq = request.getParameter("faq");
+            if(faq!=null) {
+                url = "MainController?action=5";
             }
-        } catch (Exception e) {
+            request.getRequestDispatcher(url).forward(request, response);
+        } catch(Exception e){
             e.printStackTrace();
         }
     }

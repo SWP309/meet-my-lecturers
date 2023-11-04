@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -311,5 +312,32 @@ public class BookingDAO {
             }
         }
         return checkAttendanceBK;
+    }
+
+    public static ArrayList<BookingDTO> getAllBookings(String studentID, String semesID) throws Exception {
+        ArrayList<BookingDTO> list = new ArrayList<>();
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "SELECT fs.freeSlotID, fs.semesterID, fs.subjectCode\n"
+                    + "				FROM Bookings b\n"
+                    + "				JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
+                    + "				WHERE b.status = 2 AND b.studentID = ? AND fs.semesterID = ?";
+
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, studentID);
+            pst.setString(2, semesID);
+            ResultSet rs = pst.executeQuery(sql);
+            if (rs != null) {
+                while (rs.next()) {
+                    String id = rs.getString("freeSlotID");
+                    String semester = rs.getString("semesterID");
+                    String subject = rs.getString("subjectCode");
+                    BookingDTO us = new BookingDTO(id, semester, subject);
+                    list.add(us);
+                }
+            }
+            cn.close();
+        }
+        return list;
     }
 }
