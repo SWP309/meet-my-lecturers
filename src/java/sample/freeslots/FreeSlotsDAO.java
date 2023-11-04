@@ -31,99 +31,97 @@ public class FreeSlotsDAO {
             + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final static String CHECK_DUPLICATE_GGMEETLINK = "SELECT freeSlotID "
             + "FROM FreeSlots WHERE meetLink=?";
-    private final static String SEARCH_FREESLOT_BY_SUBJECTCODE = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
-"					FROM FreeSlots fs\n" +
-"					JOIN Users lec ON fs.lecturerID = lec.userID\n" +
-"					WHERE fs.subjectCode = ? AND fs.status = 1 \n" +
-"					AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
-"								FROM Bookings b\n" +
-"								WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_LECTURERID = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
-                            "            FROM FreeSlots fs\n" +
-                            "			JOIN Users lec ON fs.lecturerID = lec.userID\n" +
-                            "            WHERE fs.lecturerID = ? AND fs.status = 1\n" +
-                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
-                            "						FROM Bookings b\n" +
-                            "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_LECNAME = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
-                            "            FROM FreeSlots fs\n" +
-                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
-                            "            WHERE lec.userName LIKE ? AND fs.status = 1\n" +
-                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
-                            "						FROM Bookings b\n" +
-                            "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_SEMESTERID = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
-                            "            FROM FreeSlots fs\n" +
-                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
-                            "            WHERE fs.semesterID = ? AND fs.status = 1\n" +
-                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
-                            "						FROM Bookings b\n" +
-                            "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_LECID = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
-                            "            FROM FreeSlots fs\n" +
-                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
-                            "            WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND fs.status = 1\n" +
-                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
-                            "						FROM Bookings b\n" +
-                            "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_LECNAME = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
-                            "            FROM FreeSlots fs\n" +
-                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
-                            "            WHERE fs.subjectCode = ? AND lec.userName LIKE ? AND fs.status = 1\n" +
-                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
-                            "						FROM Bookings b\n" +
-                            "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
-                            "            FROM FreeSlots fs\n" +
-                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
-                            "            WHERE fs.subjectCode = ? AND fs.semesterID = ? AND fs.status = 1\n" +
-                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
-                            "						FROM Bookings b\n" +
-                            "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_LECID_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
-                            "            FROM FreeSlots fs\n" +
-                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
-                            "            WHERE fs.lecturerID = ? AND fs.semesterID = ? AND fs.status = 1\n" +
-                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
-                            "						FROM Bookings b\n" +
-                            "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_LECNAME_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
-                            "            FROM FreeSlots fs\n" +
-                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
-                            "            WHERE lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1\n" +
-                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
-                            "						FROM Bookings b\n" +
-                            "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_SUBCODE_AND_LECID_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
-                            "            FROM FreeSlots fs\n" +
-                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
-                            "            WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND fs.semesterID = ? AND fs.status = 1\n" +
-                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
-                            "						FROM Bookings b\n" +
-                            "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_SUBCODE_AND_LECNAME_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
-                            "            FROM FreeSlots fs\n" +
-                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
-                            "            WHERE fs.subjectCode = ? AND lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1\n" +
-                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
-                            "						FROM Bookings b\n" +
-                            "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_ALL = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
-                            "            FROM FreeSlots fs\n" +
-                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
-                            "            WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1\n" +
-                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
-                            "						FROM Bookings b\n" +
-                            "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
-                            "            FROM FreeSlots fs\n" +
-                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
-                            "            WHERE fs.status = 1\n" +
-                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
-                            "						FROM Bookings b\n" +
-                            "						WHERE b.studentID = ? and b.status = 1)";
-
-    
+    private final static String SEARCH_FREESLOT_BY_SUBJECTCODE = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
+            + "					FROM FreeSlots fs\n"
+            + "					JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "					WHERE fs.subjectCode = ? AND fs.status = 1 \n"
+            + "					AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
+            + "								FROM Bookings b\n"
+            + "								WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_LECTURERID = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
+            + "            FROM FreeSlots fs\n"
+            + "			JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "            WHERE fs.lecturerID = ? AND fs.status = 1\n"
+            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
+            + "						FROM Bookings b\n"
+            + "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_LECNAME = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
+            + "            FROM FreeSlots fs\n"
+            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "            WHERE lec.userName LIKE ? AND fs.status = 1\n"
+            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
+            + "						FROM Bookings b\n"
+            + "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_SEMESTERID = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
+            + "            FROM FreeSlots fs\n"
+            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "            WHERE fs.semesterID = ? AND fs.status = 1\n"
+            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
+            + "						FROM Bookings b\n"
+            + "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_LECID = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
+            + "            FROM FreeSlots fs\n"
+            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "            WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND fs.status = 1\n"
+            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
+            + "						FROM Bookings b\n"
+            + "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_LECNAME = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
+            + "            FROM FreeSlots fs\n"
+            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "            WHERE fs.subjectCode = ? AND lec.userName LIKE ? AND fs.status = 1\n"
+            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
+            + "						FROM Bookings b\n"
+            + "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
+            + "            FROM FreeSlots fs\n"
+            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "            WHERE fs.subjectCode = ? AND fs.semesterID = ? AND fs.status = 1\n"
+            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
+            + "						FROM Bookings b\n"
+            + "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_LECID_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
+            + "            FROM FreeSlots fs\n"
+            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "            WHERE fs.lecturerID = ? AND fs.semesterID = ? AND fs.status = 1\n"
+            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
+            + "						FROM Bookings b\n"
+            + "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_LECNAME_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
+            + "            FROM FreeSlots fs\n"
+            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "            WHERE lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1\n"
+            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
+            + "						FROM Bookings b\n"
+            + "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_SUBCODE_AND_LECID_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
+            + "            FROM FreeSlots fs\n"
+            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "            WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND fs.semesterID = ? AND fs.status = 1\n"
+            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
+            + "						FROM Bookings b\n"
+            + "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_SUBCODE_AND_LECNAME_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
+            + "            FROM FreeSlots fs\n"
+            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "            WHERE fs.subjectCode = ? AND lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1\n"
+            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
+            + "						FROM Bookings b\n"
+            + "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_ALL = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
+            + "            FROM FreeSlots fs\n"
+            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "            WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1\n"
+            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
+            + "						FROM Bookings b\n"
+            + "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
+            + "            FROM FreeSlots fs\n"
+            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "            WHERE fs.status = 1\n"
+            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
+            + "						FROM Bookings b\n"
+            + "						WHERE b.studentID = ? and b.status = 1)";
 
     private final static String CHECK_SEMESTERID = "SELECT semesterID FROM Semesters WHERE semesterID = ?";
     private final static String CHECK_SUBJECTCODE = "SELECT subjectCode FROM Subjects WHERE subjectCode = ?";
@@ -133,6 +131,11 @@ public class FreeSlotsDAO {
             + "WHERE fs.lecturerID = ? \n"
             + "AND ? BETWEEN fs.startTime AND fs.endTime\n"
             + "AND fs.status = ?";
+
+    private static String SEMESTER = "  SELECT DISTINCT fs.semesterID\n"
+            + "            FROM [Semesters] fs;";
+    private static String SUBJECT = "    SELECT DISTINCT fs.[subjectCode]\n"
+            + "            FROM [Subjects] fs;";
 
     public boolean createFreeSlot(FreeSlotsDTO freeSlotsDTO) throws SQLException {
         boolean checkCreate = false;
@@ -478,7 +481,8 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotByLecturerID() {
         return freeSlotByLecturerID;
     }
-  public void getFreeSlotByLecturerID(String lecturerID, String studentID) throws ClassNotFoundException, SQLException {
+
+    public void getFreeSlotByLecturerID(String lecturerID, String studentID) throws ClassNotFoundException, SQLException {
 
         Connection con = null;
         PreparedStatement stm = null;
@@ -1121,7 +1125,7 @@ public class FreeSlotsDAO {
         }
         return exists;
     }
-    
+
     public boolean checkBlockList(String block_list, String freeslotID) throws SQLException {
         boolean exists = false;
         Connection conn = null;
@@ -1152,5 +1156,67 @@ public class FreeSlotsDAO {
             }
         }
         return exists;
+    }
+
+    public List<FreeSlotsDTO> GetListSemesterID() throws SQLException {
+        List<FreeSlotsDTO> listSemester = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(SEMESTER);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String semesterID = rs.getString("semesterID");
+                    listSemester.add(new FreeSlotsDTO(semesterID));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listSemester;
+    }
+
+    public List<FreeSlotsDTO> GetListSubject() throws SQLException {
+        List<FreeSlotsDTO> listSubject = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(SUBJECT);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String subjectCode = rs.getString("subjectCode");
+                    listSubject.add(new FreeSlotsDTO(subjectCode));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listSubject;
     }
 }

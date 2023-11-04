@@ -26,29 +26,6 @@
     padding: 0 175px;
     gap: 38px;
 }
-.back1 {
-    top: 0;
-    display: inline-block;
-    width: 79px;
-    height: 26px;
-}
-
-.back,
-.backbutton {
-    position: absolute;
-    top: 31px;
-    left: 0;
-    width: 125px;
-    height: 35px;
-    cursor: pointer;
-    margin-left: 36px;
-    margin-top: -29px
-
-}
-.backbutton {
-    top: 101px;
-    left: 25px;
-}
 .returnHome{
     /*position: absolute;*/
     width: 120px;

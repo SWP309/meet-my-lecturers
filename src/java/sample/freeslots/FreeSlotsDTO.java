@@ -69,6 +69,12 @@ public class FreeSlotsDTO {
         this.block_list = block_list;
     }
 
+    public FreeSlotsDTO(String ofject) {
+        this.semesterID = ofject;
+        this.subjectCode = ofject;
+    }
+
+
     public String getFreeSlotID() {
         return freeSlotID;
     }
