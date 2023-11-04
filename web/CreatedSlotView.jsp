@@ -86,9 +86,6 @@
                 var form = document.querySelector('.returnHome form');
                 form.submit();
             }
-            function goBack() {
-                window.history.back();
-            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -355,9 +352,6 @@
 
             <i class="material-icons">add</i>
         </div>
-        <div class="backbutton"  onclick="goBack()">
-            <img class="back-icon" alt="" src="./public/request/back.svg" /><p style="margin-left: 44px;">Back</p>
-        </div>
 
         <div class="student-viewbookedslot">
             <div class="container">
@@ -453,7 +447,7 @@
                 </div>
 
                 <!--     SEARCH BY ST AND ET ---------------------------------------------------------->
-                <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and empty param.txtSubjectCode}">
+                <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and empty param.txtSubjectCode and empty param.txtSemesterID}">
                     <div class="container mt-5" style="    margin-top: -3% !important;">
                         <div class="row justify-content-center mt-5">
                             <c:if test="${requestScope.SEARCH_FREE_SLOT_BY_ST_ET !=null}">

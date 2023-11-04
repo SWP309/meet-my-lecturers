@@ -125,10 +125,6 @@
                     event.preventDefault();
                 }
             }
-            function submitFormBack() {
-                var form = document.querySelector('.backbutton form')
-                form.submit();
-            }
 
         </script>
         <style>
@@ -220,10 +216,6 @@
             <i class="material-icons">add</i>
         </div>
       
-            <div class="backbutton"  onclick="goBack()">
-                <img class="back-icon" alt="" src="./public/request/back.svg" /><p style="margin-left: 44px;">Back</p>
-            </div>
-
   <div class="student-viewbookedslot">
             <div class="container mt-5" style="    margin-top: 9% !important;">
                 <div class="row justify-content-center mt-5">
