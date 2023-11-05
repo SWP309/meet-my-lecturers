@@ -71,6 +71,10 @@
                 var form = document.querySelector('.requestViewStatus form');
                 form.submit();
             }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
 
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
@@ -104,7 +108,7 @@
     <body>
         <div class="student-lectures-schedule-edi">
             <div class="fptu-eng-1-parent">
-                <div class="returnHome"> 
+                <div class="returnHome" onclick="submitFormHomePage()" >
                     <form action="MainController" method="POST">
                         <input type="hidden" name="action" value="returnHomePageStudent" />
                     </form>
@@ -159,6 +163,13 @@
                     </div>
 
                 </div>
+            </div>
+            <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="attendanceSemes" />
+                </form>
+
+                <i class="material-icons">history</i>
             </div>
 
 
