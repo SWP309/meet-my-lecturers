@@ -142,6 +142,9 @@ public class MainController extends HttpServlet {
     private static final String SEARCH_BOOKED_SLOT_ACTION = "searchBSlot";
     private static final String SEARCH_BOOKED_SLOT_SERVLET = "SearchBookedServlet";
 
+    private static final String SEND_EMAIL_ACTION = "sendEMailAction";
+    private static final String SEND_EMAIL_SERVLET = "SendEMailServlet";
+    
     private static final String CHANGE_PASS = "changePass";
     private static final String CHANGE_PASS_ACTION = "ChangePassword.jsp";
     private static final String CHANGE_PASS_PAGE_ACTION = "changePassServlet";
@@ -263,6 +266,8 @@ public class MainController extends HttpServlet {
                 url = SEARCH_REQUEST_STATUS_ACTION;
             } else if (REQUEST_STATUS.equals(action)) {
                 url = REQUEST_STATUS_PAGE;
+            } else if (SEND_EMAIL_ACTION.equals(action)) {
+                url = SEND_EMAIL_SERVLET;
             } else if (VIEW_BOOKING_HISTORY.equals(action)) {
                 url = VIEW_BOOKING_HISTORY_CHECK_SEMES_ACTION;
             } else if (VIEW_BOOKING_HISTORY_CHECK_SEMES.equals(action)) {
@@ -279,7 +284,6 @@ public class MainController extends HttpServlet {
                 url = STUDENT_PAGE_ACTION;
             }
             
-
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
         } finally {

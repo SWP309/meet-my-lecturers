@@ -1,6 +1,6 @@
 <%-- 
-    Document   : create-freeSlot
-    Created on : Oct 12, 2023, 12:14:21 AM
+    Document   : send-email
+    Created on : Nov 5, 2023, 6:28:48 PM
     Author     : W10(hiep-tm)
 --%>
 
@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Create Free Slot</title>
+        <title>Send Email Form</title>
         <link rel="stylesheet" href="./createfreeSlot.css" />
         <link
             rel="stylesheet"
@@ -139,11 +139,11 @@
                 } else {
                     userInfo.style.display = "none";
                 }
-                
+
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
-                
+
                 Swal.fire({
                     title: 'User Information',
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
@@ -158,7 +158,7 @@
                 var form = document.querySelector('.request-div form');
                 form.submit();
             }
-            
+
         </script>
 
         <script>
@@ -224,105 +224,35 @@
             </div>
         </div>
 
-        <c:if test="${sessionScope.loginedUser != null && sessionScope.loginedUser.roleID == '2'}">
+        <c:if test="${sessionScope.loginedUser != null && sessionScope.loginedUser.roleID == '2'}"></c:if>
             <div class="container mt-5 div-CreateFS">
                 <div class="d-flex justify-content-center">
                     <div class="card" style="border-radius: 5%; width: 800px; max-height: 800px;">
                         <div class="card-body">
                             <form action="MainController" method="POST">
-                                <c:if test="${not empty requestScope.LIST_SEMESTER and not empty requestScope.LIST_SUBJECT}">
-                                    <div class="d-flex justify-content-between">
-                                        <strong style="width: 120px;">Semester ID:</strong> 
-                                        <select class="form-control option" name="txtSemesterID" onchange="updateHiddenField(this, 'hiddenSemesterID')">
-                                            <c:forEach var="listSemester" varStatus="counter" items="${requestScope.LIST_SEMESTER}">
-                                                <option value="${listSemester.semesterID}">${listSemester.semesterID}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <strong style="width: 120px;">Subject Code:</strong> 
-                                        <select class="form-control option" name="txtSubjectCode" onchange="updateHiddenField(this, 'hiddenSubjectCode')">
-                                            <c:forEach var="listSubject" varStatus="counter" items="${requestScope.LIST_SUBJECT}">
-                                                <option value="${listSubject.subjectCode}">${listSubject.subjectCode}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                </c:if>
-                                <div class="d-flex justify-content-between"><strong>Start time:</strong> <input type="datetime-local" value="${param.txtStartTime}" class="form-control"  name="txtStartTime" required=""></div>
-                                    <c:if test="${not empty requestScope.FREESLOT_ERROR.pastTimeError}">
-                                    <h6> ${requestScope.FREESLOT_ERROR.pastTimeError}</h6>
-                                </c:if>
-                                <div class="d-flex justify-content-between"><strong>End time:</strong> <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}" required=""></div>
-                                    <c:if test="${not empty requestScope.FREESLOT_ERROR.endTimeError}">
-                                    <h6> ${requestScope.FREESLOT_ERROR.endTimeError}</h6>
-                                </c:if>
-                                <c:if test="${not empty requestScope.FREESLOT_ERROR.durationError}">
-                                    <h6> ${requestScope.FREESLOT_ERROR.durationError}</h6>
-                                </c:if>
-                                <c:if test="${not empty requestScope.FREESLOT_ERROR.duplicateTimeError}">
-                                    <h6> ${requestScope.FREESLOT_ERROR.duplicateTimeError}</h6>
-                                </c:if>
-                                <div class="d-flex justify-content-between"><strong>Capacity:</strong> <input type="number" class="form-control" name="txtCapacity" value="${param.txtCapacity}" placeholder="need at least 2 student" required=""></div>
-                                    <c:if test="${not empty requestScope.FREESLOT_ERROR.capacityError}">
-                                    <h6> ${requestScope.FREESLOT_ERROR.capacityError}</h6>
-                                </c:if>
-                                <div class="d-flex justify-content-between"><strong>Password(optional):</strong> <input type="password" class="form-control" name="txtPassword" value="${param.txtPassword}"></div>
-                                <div class="d-flex justify-content-between"><strong>Meet Link:</strong> <input type="text" class="form-control"  name="txtMeetLink" value="${param.txtMeetLink}" placeholder="ex:meet.google.com/...etc" required="" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$"></div>
-                                    <c:if test="${not empty requestScope.FREESLOT_ERROR.meetLinkError}">
-                                    <h6> ${requestScope.FREESLOT_ERROR.meetLinkError}</h6>
-                                </c:if>
-                                <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="^((SE|IA|SS|MC)[0-9]{6};)*$"></div>
-                                <div class="d-flex justify-content-between"><strong>STATUS(public/private):</strong>
-                                    <div class="d-flex">
-                                        <select class="form-control" name="txtStatusOption" value="${param.txtStatusOption}">
-                                            <option value="PUB">Public</option>
-                                            <option value="PRV">Private (check Hide list)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-md-6">
-                                        <label for="role" class="col-form-label"><strong><b style="color: red">SET BY:</b></strong></label>
-                                        <select class="form-control" name="txtOption" value="${param.txtOption}">
-                                            <option value="DA">Day after you created</option>
-                                            <option value="DW">Day after week you created</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="role" class="col-form-label"><strong><b style="color: red">TIMES:</b></strong></label>
-                                        <input type="number" class="form-control" name="txtCount" required="" value="${param.txtCount}">
-                                        <c:if test="${not empty requestScope.FREESLOT_ERROR.repeatedTimeError}">
-                                            <h6> ${requestScope.FREESLOT_ERROR.repeatedTimeError}</h6>
-                                        </c:if>
-                                    </div>
-                                </div>
 
-                                <div class="d-flex justify-content-center btn-book">
-                                    <input type="hidden" value="createFreeSlotAction" name="action"/>
-                                    <input type="submit" class="btn btn-primary" value="Create">
-                                </div>
-                                <input type="hidden" id="hiddenSemesterID" name="hiddenSemesterID">
-                                <input type="hidden" id="hiddenSubjectCode" name="hiddenSubjectCode">
-                                <input type="hidden" value="${param.txtStartTime}">
-                                <input type="hidden" value="${param.txtEndTime}">
-                                <input type="hidden" value="${param.txtCapacity}">
-                                <input type="hidden" value="${param.txtPassword}">
-                                <input type="hidden" value="${param.txtMeetLink}">
-                                <input type="hidden" value="${param.txtCount}">
-                                <input type="hidden" value="${param.txtOption}">
-                                <input type="hidden" value="${param.txtStatusOption}">
-                            </form>
-                        </div>
+                                <div class="d-flex justify-content-between"><strong>Recipient:</strong> <input type="text" class="form-control" name="txtRecipient" value="${param.txtRecipient}" required=""></div>
+                            <div class="d-flex justify-content-between"><strong>Subject Code:</strong> <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}" required=""></div>
+                            <div class="d-flex justify-content-between"><strong>Start Time:</strong> <input type="datetime-local" class="form-control" name="txtStartTime" value="${param.txtStartTime}" required=""></div>
+                            <div class="d-flex justify-content-between"><strong>End Time:</strong> <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}" required=""></div>
+                            <div class="d-flex justify-content-between"><strong>Password(access code of your free slot):</strong> <input type="text" class="form-control" name="txtPassword" value="${param.txtPassword}" required=""></div>
+                            <div class="d-flex justify-content-between"><strong>Message(optional):</strong> <textarea name="txtMessage" rows="10" cols="60"></textarea></div>
+
+                            <div class="d-flex justify-content-center btn-book">
+                                <input type="hidden" value="sendEMailAction" name="action"/>
+                                <input type="submit" class="btn btn-primary" value="Send email">
+                            </div>
+
+                            <input type="hidden" value="${param.txtPassword}">
+                        </form>
                     </div>
                 </div>
             </div>
-        </c:if>
+        </div>
         <c:if test="${sessionScope.loginedUser == null || sessionScope.loginedUser.roleID != '2' }">
             <c:redirect url="LoginFeID.jsp"> </c:redirect>
         </c:if>
-        <% } else {
-                response.sendRedirect("MainController?action=");
-            }
-        %>
+        <% }%>
     </body>
 </html>
+
