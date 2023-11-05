@@ -57,7 +57,7 @@ public class ImportStudents extends HttpServlet {
                             String userID = row.getCell(1).getStringCellValue();
                             String userName = row.getCell(2).getStringCellValue();
                             String userEmail = row.getCell(3).getStringCellValue();
-                            boolean userStatus = row.getCell(4).getBooleanCellValue();
+                            int userStatus = (int) row.getCell(4).getNumericCellValue();
                             int roleid = (int) row.getCell(5).getNumericCellValue();
                             String roleID = String.valueOf(roleid);
                             int passWord = (int) row.getCell(6).getNumericCellValue();
@@ -89,7 +89,7 @@ public class ImportStudents extends HttpServlet {
                             String userID = row.getCell(1).getStringCellValue();
                             String userName = row.getCell(2).getStringCellValue();
                             String userEmail = row.getCell(3).getStringCellValue();
-                            boolean userStatus = row.getCell(4).getBooleanCellValue();
+                            int userStatus = (int) row.getCell(4).getNumericCellValue();
                             int roleid = (int) row.getCell(5).getNumericCellValue();
                             String roleID = String.valueOf(roleid);
                             int passWord = (int) row.getCell(6).getNumericCellValue();
@@ -161,4 +161,5 @@ public class ImportStudents extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

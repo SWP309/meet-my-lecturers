@@ -3,11 +3,17 @@
     Created on : Oct 28, 2023, 1:20:11 AM
     Author     : Minh Khang
 --%>
+<%@page import="sample.users.UserDTO"%>
 <%@page import="sample.dashboard.UserMaxSlotDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+                        
+        %>
         <script>
             function submitFormHomePage() {
                 var form = document.querySelector('.returnHome form');
@@ -103,9 +109,8 @@
                 <div style="padding-right: 100px; display: inline-block">
                     Import List Student
                 </div>
-                <%
-                    String EXCSERVLET = (String) request.getAttribute("EXCSERVLET");
-
+                <%                    String EXCSERVLET = (String) request.getAttribute("EXCSERVLET");
+                    
                     if (EXCSERVLET != null) {
                 %>
                 <span style="color: red; font-size: 1rem;">
@@ -130,11 +135,11 @@
                 <div style="padding-right: 100px; display: inline-block">
                     Import Timetables
                 </div>
-                <%
+                <%    
                     String TIMESERVLET = (String) request.getAttribute("TIMESERVLET");
                     String DUPLICATEDATA = (String) request.getAttribute("DUPLICATEDATA");
                     String DUPLICATEDATATIMETABLE = (String) request.getAttribute("DUPLICATEDATATIMETABLE");
-
+                    
                     if (TIMESERVLET != null) {
                 %>
                 <span style="color: red; font-size: 1rem;">
@@ -168,5 +173,10 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <%
+            } else {
+                response.sendRedirect("MainController?action=");
+            }            
+        %>
     </body>
 </html>

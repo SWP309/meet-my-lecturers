@@ -23,6 +23,10 @@ public class BookingDTO {
     private String meetLink;
     private String freeSlotID;
     private String studentID;
+    private int status;
+    //Biến ngoại lai
+    private int numberOfAbsenceSlot;
+    private String semesterID;
 
     public BookingDTO() {
         this.subjectCode = "";
@@ -33,6 +37,36 @@ public class BookingDTO {
         this.bookingID = "";
         this.meetLink = "";
         this.freeSlotID = "";
+        this.status = 0;
+        this.numberOfAbsenceSlot = 0;
+        this.semesterID = "";
+    }
+
+    public BookingDTO(String subjectCode, String lectureName, String startTime, String endTime, String userName, String bookingID, String meetLink, String freeSlotID, String studentID, int status, int numberOfAbsenceSlot) {
+        this.subjectCode = subjectCode;
+        this.lectureName = lectureName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.userName = userName;
+        this.bookingID = bookingID;
+        this.meetLink = meetLink;
+        this.freeSlotID = freeSlotID;
+        this.studentID = studentID;
+        this.status = status;
+        this.numberOfAbsenceSlot = numberOfAbsenceSlot;
+    }
+
+    public BookingDTO(String subjectCode, String lectureName, String startTime, String endTime, String userName, String bookingID, String meetLink, String freeSlotID, String studentID, int status) {
+        this.subjectCode = subjectCode;
+        this.lectureName = lectureName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.userName = userName;
+        this.bookingID = bookingID;
+        this.meetLink = meetLink;
+        this.freeSlotID = freeSlotID;
+        this.studentID = studentID;
+        this.status = status;
     }
 
     public BookingDTO(String subjectCode, String lectureName, String startTime, String endTime, String userName, String bookingID, String meetLink) {
@@ -43,6 +77,25 @@ public class BookingDTO {
         this.userName = userName;
         this.bookingID = bookingID;
         this.meetLink = meetLink;
+    }
+
+    public BookingDTO(String subjectCode, String lectureName, String startTime, String endTime, String userName, String bookingID, String meetLink, String semesterID) {
+        this.subjectCode = subjectCode;
+        this.lectureName = lectureName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.userName = userName;
+        this.bookingID = bookingID;
+        this.meetLink = meetLink;
+        this.semesterID = semesterID;
+    }
+
+    public String getSemesterID() {
+        return semesterID;
+    }
+
+    public void setSemesterID(String semesterID) {
+        this.semesterID = semesterID;
     }
 
     public String getSubjectCode() {
@@ -117,12 +170,32 @@ public class BookingDTO {
         this.studentID = studentID;
     }
 
-    public BookingDTO(String freeSlotID , String studentID , String subjectCode) {
-        this.subjectCode = subjectCode;
-        this.freeSlotID = freeSlotID;
-        this.studentID = studentID;
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
     }
 
-   
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the numberOfAbsenceSlot
+     */
+    public int getNumberOfAbsenceSlot() {
+        return numberOfAbsenceSlot;
+    }
+
+    /**
+     * @param numberOfAbsenceSlot the numberOfAbsenceSlot to set
+     */
+    public void setNumberOfAbsenceSlot(int numberOfAbsenceSlot) {
+        this.numberOfAbsenceSlot = numberOfAbsenceSlot;
+    }
 
 }

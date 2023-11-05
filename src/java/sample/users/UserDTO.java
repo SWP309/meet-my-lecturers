@@ -7,7 +7,7 @@ public class UserDTO implements Serializable{
     private String userID;
     private String userName;
     private String userEmail;
-    private boolean userStatus;
+    private int userStatus;
     private String roleID;
     private String password;
 
@@ -15,12 +15,12 @@ public class UserDTO implements Serializable{
         this.userID = "";
         this.userName = "";
         this.userEmail = "";
-        this.userStatus = true;
+        this.userStatus = 1;
         this.roleID = "";
         this.password = "";
     }
 
-    public UserDTO(String userID, String userName, String userEmail, boolean userStatus, String roleID, String password) {
+    public UserDTO(String userID, String userName, String userEmail, int userStatus, String roleID, String password) {
         this.userID = userID;
         this.userName = userName;
         this.userEmail = userEmail;
@@ -71,19 +71,14 @@ public class UserDTO implements Serializable{
         this.userEmail = userEmail;
     }
 
-    /**
-     * @return the userStatus
-     */
-    public boolean isUserStatus() {
+    public int getUserStatus() {
         return userStatus;
     }
 
-    /**
-     * @param userStatus the userStatus to set
-     */
-    public void setUserStatus(boolean userStatus) {
+    public void setUserStatus(int userStatus) {
         this.userStatus = userStatus;
     }
+
 
     /**
      * @return the roleID

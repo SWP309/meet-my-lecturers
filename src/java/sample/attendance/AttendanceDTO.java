@@ -24,6 +24,16 @@ public class AttendanceDTO {
     public AttendanceDTO() {
     }
 
+    public AttendanceDTO(String freeSlotID, String semesterID, String subjectCode, String startTime, String endTime, byte status) {
+        this.freeSlotID = freeSlotID;
+        this.semesterID = semesterID;
+        this.subjectCode = subjectCode;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.status = status;
+    }
+
+    
     public AttendanceDTO(String freeSlotID, String semesterID, String subjectCode, String startTime, String endTime, byte status, String studentID) {
         this.freeSlotID = freeSlotID;
         this.semesterID = semesterID;

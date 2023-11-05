@@ -101,6 +101,10 @@
                     max-width: 39%;
                 }
             }
+            .option{
+                width: 60%;
+
+            }
         </style>
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -109,6 +113,18 @@
         <script>
             function submitFormHomePage() {
                 var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitFormViewRequest() {
+                var form = document.querySelector('.request-div form');
+                form.submit();
+            }
+            function submitForm() {
+                var form = document.querySelector('.viewCreateSlot form');
+                form.submit();
+            }
+            function submitFormHideView() {
+                var form = document.querySelector('.hideView form');
                 form.submit();
             }
             var userDTO = {
@@ -123,11 +139,11 @@
                 } else {
                     userInfo.style.display = "none";
                 }
-
+                
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
-
+                
                 Swal.fire({
                     title: 'User Information',
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
@@ -139,8 +155,16 @@
                 form.submit();
             }
             function submitFormViewRequest() {
-                var form = document.querySelector('.request form');
+                var form = document.querySelector('.request-div form');
                 form.submit();
+            }
+            
+        </script>
+
+        <script>
+            function updateHiddenField(selectElement, hiddenFieldId) {
+                var selectedValue = selectElement.value;
+                document.getElementById(hiddenFieldId).value = selectedValue;
             }
         </script>
     </head>
@@ -150,53 +174,80 @@
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="returnHomePageLecturer" />
                 </form>
-                <img
-                    class="fptu-eng-1-icon"
-                    alt=""
-                    src="public/BookingView/2021fptueng-1@2x.png"
-                    />
             </div>
             <div class="frame-parent">
                 <div class="frame-group">
-                    <div class="frame-div request" style="width: 64%;" onclick="submitFormViewRequest()">
+                    <div class="frame-div viewCreateSlot" onclick="submitForm()">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="viewFSlotLecturer" />
+                        </form>
+                        <i class="material-icons">visibility</i>View Create Slot
+                    </div>
+                    <div class="frame-div request-div" onclick="submitFormViewRequest()">
                         <form action="MainController" method="POST">
                             <input type="hidden" name="action" value="ViewRequest" />
                         </form>
 
                         <i class="material-icons">mail_outline</i>View Request
                     </div>
-                    <div class="frame-div logout" onclick="submitFormLogout()">
+                    <div class="frame-div hideView" onclick="submitFormHideView()">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="HideView" />
+                        </form>
+                        <div>
+                            <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
+                        </div>
+                    </div>
+                    <div class="frame-div logout" style="text-align: center;" onclick="submitFormLogout()">
                         <form action="MainController" method="POST" style="display: none;">
                             <input type="hidden" name="action" value="Logout" />
                         </form>
                         <div class="logout-wrapper">
                             <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
                         </div>
-                        <div class="request">
+                        <div class="logout">
                             <p class="logout1">Logout</p>
                         </div>
                     </div>
+
                     <div>
                         <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                              onclick="showUserInfo()" />
-                        <div id="user-info" style="display: none; position: absolute">
+                        <div id="user-info" style="display: none; position: absolute;">
                             <p id="user-id"> </p>
                             <p id="user-name"></p>
                             <p id="user-email"></p>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
-        <c:if test="${sessionScope.loginedUser != null && sessionScope.loginedUser.roleID == '2'}">
-            <div class="container mt-5">
-                <div class="d-flex justify-content-center">
-                    <div class="card" style="border-radius: 5%; width: 800px; height: 500px;">
 
+        <c:if test="${sessionScope.loginedUser != null && sessionScope.loginedUser.roleID == '2'}">
+            <div class="container mt-5 div-CreateFS">
+                <div class="d-flex justify-content-center">
+                    <div class="card" style="border-radius: 5%; width: 800px; max-height: 800px;">
                         <div class="card-body">
                             <form action="MainController" method="POST">
-                                <div class="d-flex justify-content-between"><strong>Semester ID:</strong> <input type="text" class="form-control" name="txtSemesterID" value="${param.txtSemesterID}" placeholder="ex:FA23...etc" required="" pattern="^(SP|SU|FA)[0-9]{2}$"></div>
-                                <div class="d-flex justify-content-between"><strong>Subject code:</strong> <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}"  placeholder="ex:SWP391...etc" required="" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"></div>
+                                <c:if test="${not empty requestScope.LIST_SEMESTER and not empty requestScope.LIST_SUBJECT}">
+                                    <div class="d-flex justify-content-between">
+                                        <strong style="width: 120px;">Semester ID:</strong> 
+                                        <select class="form-control option" name="txtSemesterID" onchange="updateHiddenField(this, 'hiddenSemesterID')">
+                                            <c:forEach var="listSemester" varStatus="counter" items="${requestScope.LIST_SEMESTER}">
+                                                <option value="${listSemester.semesterID}">${listSemester.semesterID}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <strong style="width: 120px;">Subject Code:</strong> 
+                                        <select class="form-control option" name="txtSubjectCode" onchange="updateHiddenField(this, 'hiddenSubjectCode')">
+                                            <c:forEach var="listSubject" varStatus="counter" items="${requestScope.LIST_SUBJECT}">
+                                                <option value="${listSubject.subjectCode}">${listSubject.subjectCode}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </c:if>
                                 <div class="d-flex justify-content-between"><strong>Start time:</strong> <input type="datetime-local" value="${param.txtStartTime}" class="form-control"  name="txtStartTime" required=""></div>
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.pastTimeError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.pastTimeError}</h6>
@@ -208,6 +259,9 @@
                                 <c:if test="${not empty requestScope.FREESLOT_ERROR.durationError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.durationError}</h6>
                                 </c:if>
+                                <c:if test="${not empty requestScope.FREESLOT_ERROR.duplicateTimeError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.duplicateTimeError}</h6>
+                                </c:if>
                                 <div class="d-flex justify-content-between"><strong>Capacity:</strong> <input type="number" class="form-control" name="txtCapacity" value="${param.txtCapacity}" placeholder="need at least 2 student" required=""></div>
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.capacityError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.capacityError}</h6>
@@ -217,10 +271,10 @@
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.meetLinkError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.meetLinkError}</h6>
                                 </c:if>
-                                <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="^(SE|IA|SS|MC)[0-9]{6};(SE|IA|SS|MC)[0-9]{6}$"></div>
+                                <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="(^(SE|IA|SS|MC)[0-9]{6});*"></div>
                                 <div class="d-flex justify-content-between"><strong>STATUS(public/private):</strong>
                                     <div class="d-flex">
-                                        <select class="form-control" name="txtStatusOption">
+                                        <select class="form-control" name="txtStatusOption" value="${param.txtStatusOption}">
                                             <option value="PUB">Public</option>
                                             <option value="PRV">Private (check Hide list)</option>
                                         </select>
@@ -229,7 +283,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <label for="role" class="col-form-label"><strong><b style="color: red">SET BY:</b></strong></label>
-                                        <select class="form-control" name="txtOption">
+                                        <select class="form-control" name="txtOption" value="${param.txtOption}">
                                             <option value="DA">Day after you created</option>
                                             <option value="DW">Day after week you created</option>
                                         </select>
@@ -247,14 +301,16 @@
                                     <input type="hidden" value="createFreeSlotAction" name="action"/>
                                     <input type="submit" class="btn btn-primary" value="Create">
                                 </div>
-                                <input type="hidden" value="${param.txtSemesterID}">
-                                <input type="hidden" value="${param.txtSubjectCode}">
+                                <input type="hidden" id="hiddenSemesterID" name="hiddenSemesterID">
+                                <input type="hidden" id="hiddenSubjectCode" name="hiddenSubjectCode">
                                 <input type="hidden" value="${param.txtStartTime}">
                                 <input type="hidden" value="${param.txtEndTime}">
                                 <input type="hidden" value="${param.txtCapacity}">
                                 <input type="hidden" value="${param.txtPassword}">
                                 <input type="hidden" value="${param.txtMeetLink}">
                                 <input type="hidden" value="${param.txtCount}">
+                                <input type="hidden" value="${param.txtOption}">
+                                <input type="hidden" value="${param.txtStatusOption}">
                             </form>
                         </div>
                     </div>
@@ -264,6 +320,9 @@
         <c:if test="${sessionScope.loginedUser == null || sessionScope.loginedUser.roleID != '2' }">
             <c:redirect url="LoginFeID.jsp"> </c:redirect>
         </c:if>
-        <% }%>
+        <% } else {
+                response.sendRedirect("MainController?action=");
+            }
+        %>
     </body>
 </html>

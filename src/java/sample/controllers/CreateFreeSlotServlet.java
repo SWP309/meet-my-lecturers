@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -26,6 +27,8 @@ import sample.freeslots.FreeSlotsDAO;
 import sample.freeslots.FreeSlotsDTO;
 import sample.users.UserDTO;
 import sample.utils.DBUtils;
+import sample.viewCreatedSlot.ViewCreatedSlotDAO;
+import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
 /**
  *
@@ -38,19 +41,37 @@ public class CreateFreeSlotServlet extends HttpServlet {
     private static final String SUCCESS = "CreatedSlotController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         boolean flag = true;
         boolean checkCreated = false;
         try {
             HttpSession session = request.getSession();
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
             FreeSlotError freeSlotError = new FreeSlotError();
-
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            String lecturerID = us.getUserID();
             String semesterID = request.getParameter("txtSemesterID");
+//            boolean existsSemesterID = freeSlotsDAO.checkSemesterID(semesterID);
+//            if (!existsSemesterID) {
+//                flag = false;
+//                freeSlotError.setSemesterIDError("The semesterID is wrong format OR not exist in DB.");
+//            }
+            List<FreeSlotsDTO> listSemester = freeSlotsDAO.GetListSemesterID();
+            List<FreeSlotsDTO> listSubject = freeSlotsDAO.GetListSubject();
+            if (us.getUserEmail() != null) {
+                request.setAttribute("LIST_SEMESTER", listSemester);
+                request.setAttribute("LIST_SUBJECT", listSubject);
+            }
+
             String subjectCode = request.getParameter("txtSubjectCode");
+//            boolean existsSubjectCode = freeSlotsDAO.checkSubjectCode(subjectCode);
+//            if (!existsSubjectCode) {
+//                flag = false;
+//                freeSlotError.setSubjectCodeError("The Subject code is wrong format OR not exist in DB.");
+//            }
+
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
             //****Check input time with current time
@@ -93,6 +114,14 @@ public class CreateFreeSlotServlet extends HttpServlet {
                 flag = false;
                 freeSlotError.setDurationError("- Not allowed create slot <= 5AM or >= 11PM!!!");
             }
+            //****check duplicate time with created freeslot
+            boolean checkStartTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(lecturerID, starts);
+            boolean checkEndTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(lecturerID, ends);
+            if (checkStartTimeDuplicateFS == false || checkEndTimeDuplicateFS == false) {
+                flag = false;
+                freeSlotError.setDuplicateTimeError("- The time you entered overlaps with time of created FREESLOT!!! ");
+            }
+
             String password = request.getParameter("txtPassword").trim();
             if (password.isEmpty()) {
                 password = null; // Chuyển chuỗi trống thành giá trị null
@@ -105,35 +134,39 @@ public class CreateFreeSlotServlet extends HttpServlet {
             }
 
             String meetLink = request.getParameter("txtMeetLink");
-            boolean exists = freeSlotsDAO.checkDuplicateGGMeet(meetLink);
-            if (exists) {
+            boolean existsMeetLink = freeSlotsDAO.checkDuplicateGGMeet(meetLink);
+            if (existsMeetLink) {
                 flag = false;
                 freeSlotError.setMeetLinkError("The gg meet link is duplicated.");
+            }
+
+            String block_list = request.getParameter("txtBan").trim();
+            if (block_list.isEmpty()) {
+                block_list = null; // Chuyển chuỗi trống thành giá trị null
             }
 
             String setByOption = request.getParameter("txtOption");
 
             int count = Integer.parseInt(request.getParameter("txtCount"));
-            if (count<0) {
-                flag=false;
+            if (count < 0) {
+                flag = false;
                 freeSlotError.setRepeatedTimeError("The repeated time must be greater OR equal 0");
             }
-            String lecturerID = us.getUserID();
-            
-            int status=0;
-            String statusOption=request.getParameter("txtStatusOption");
+
+            int status = 0;
+            String statusOption = request.getParameter("txtStatusOption");
             if (statusOption.equals("PUB")) {
-                status=1;
+                status = 1;
             }
             if (statusOption.equals("PRV")) {
-                status=0;
+                status = 0;
             }
-            
+
             request.setAttribute("FREESLOT_ERROR", freeSlotError);
             if (flag) {
 
                 for (int i = 1; i <= count + 1; i++) {
-                    FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status, semesterID);
+                    FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status, semesterID, block_list);
                     checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -164,6 +197,8 @@ public class CreateFreeSlotServlet extends HttpServlet {
             log("Error at CreateFreeSlotServlet" + ex.toString());
         } catch (ParseException ex) {
             Logger.getLogger(CreateFreeSlotServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
@@ -181,7 +216,11 @@ public class CreateFreeSlotServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CreateFreeSlotServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -195,7 +234,11 @@ public class CreateFreeSlotServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CreateFreeSlotServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

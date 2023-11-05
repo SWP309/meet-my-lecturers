@@ -92,8 +92,8 @@
                     event.preventDefault();
                 }
             }
-            function submitFormBack() {
-                var form = document.querySelector('.backbutton form')
+             function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
                 form.submit();
             }
 
@@ -102,12 +102,11 @@
     <body>
         <div class="student-viewbookedslot">
             <div class="fptu-eng-1-parent">
-                <img
-                    class="fptu-eng-1-icon"
-                    alt=""
-                    src="public/BookingView/2021fptueng-1@2x.png"
-                    />
-
+                <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="returnHomePageLecturer" />
+                    </form>
+                </div>
                 <div class="frame-parent">
                     <div class="frame-group">
                         <div class="frame-div request" onclick="submitFormRequest()">
@@ -184,13 +183,6 @@
                     </c:if>
                 </c:if>
 
-            </div>
-            <div class="backbutton" onclick="submitFormBack()">
-                <form action="MainController" method="POST" style="display: none;">
-                    <input type="hidden" name="action" value="back" />
-                </form>
-                <div class="back" id="back-button">Back</div>
-                <img class="back-icon" alt="" src="public/BookingView/back.svg" />
             </div>
         </div>
         <h3>

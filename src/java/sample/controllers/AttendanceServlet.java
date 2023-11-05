@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import sample.attendance.AttendanceDAO;
 import sample.attendance.AttendanceDTO;
 import sample.semester.SemesterDTO;
+import sample.semester.SemesterDAO;
 import sample.users.UserDTO;
 
 /**
@@ -37,25 +38,27 @@ public class AttendanceServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-                        HttpSession session = request.getSession();
+            HttpSession session = request.getSession();
+            SemesterDAO semesterDAO = new SemesterDAO();
+            ArrayList<SemesterDTO> listSemes = (ArrayList<SemesterDTO>) semesterDAO.select();
+            request.setAttribute("semester", listSemes);
             UserDTO userDTO = (UserDTO) session.getAttribute("loginedUser");
+            System.out.println(userDTO);
             String semes = request.getParameter("txtsemes");
+            System.out.println(semes);
             String studentID = userDTO.getUserID();
-            
-            String url = "MainController?action=2";
-            ArrayList<AttendanceDTO> listItem = AttendanceDAO.getAttendanceSlot(studentID, semes);
-            if (listItem != null) {
-                request.setAttribute("Items", listItem);
-            }else{
+            System.out.println(studentID);
+            System.out.println("AttendanceServletttttttt");
+            String url = "MainController?action=attendServlet";
+            ArrayList<AttendanceDTO> attendSlot = AttendanceDAO.getAttendanceSlot(studentID, semes);
+            System.out.println(attendSlot);
+            if (attendSlot != null) {
+                request.setAttribute("attend", attendSlot);
+            } else {
                 out.print("list null");
             }
-            String faq = request.getParameter("faq");
-            if(faq!=null) {
-                url = "MainController?action=5";
-            }
             request.getRequestDispatcher(url).forward(request, response);
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

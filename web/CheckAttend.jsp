@@ -3,6 +3,8 @@
     Created on : Nov 1, 2023, 11:34:56 PM
     Author     : Minh Khang
 --%>
+<%@page import="sample.users.UserDTO"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.ArrayList"%>
 <%@page import="sample.semester.SemesterDAO"%>
 <%@page import="sample.semester.SemesterDTO"%>
@@ -10,6 +12,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+                <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+                
+            %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="./ViewRequest.css" />
@@ -57,7 +64,7 @@
                 display: flex;
                 justify-content: center;
                 margin: auto;
-                margin-top: 10%;
+                margin-top: 5%;
             }
 
             .custom-table {
@@ -104,25 +111,22 @@
     </head>
     <body>
         <div class="container">
-            <div class="row mt-3">
-                <div class="col-md-2">
-                    <select class="form-select">
-                        <%
-                            ArrayList<SemesterDTO> semesList = (ArrayList<SemesterDTO>) request.getAttribute(".....");
-                            if(semesList != null){
-                                for(SemesterDTO semes : semesList){
-                        %>
-                        <option value="<% semes.getSemesterName(); %>"><% semes.getSemesterName(); %></option>
-                                <%
-                                    }
-                                }
-                                %>
-                    </select>
+            <form action="MainController" method="POST">
+                <div class="row mt-3">
+                    <div class="col-md-2">
+                        <c:if test="${not empty requestScope.semester}">
+                            <select class="form-select" name="txtsemes">
+                                <c:forEach var="semesList" varStatus="counter" items="${requestScope.semester}">
+                                    <option value="${semesList.semesterID}">${semesList.semesterName}</option>
+                                </c:forEach>
+                            </select>
+                        </c:if>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" value="attendanceservlet" name="action" class="btn btn-primary">Submit</button>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </div>
+            </form>
         </div>
 
         <div class="view-user-table">
@@ -137,44 +141,45 @@
                             <th>Subject Code</th>                             
                             <th>Start Time</th>                             
                             <th>End Time</th>                             
-                            <th>Status</th>                             
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${requestScope.LIST_REQUESTS}" var="request" varStatus="counter">
-                        <tr>
-                        <form action="MainController" method="POST">
-                            <td>${counter.count}</td>
-                            <td>${request.requestID}</td>
-                            <td>${request.studentID}</td>
-                            <td>
-                            <c:set var="breakLoop" value="false" />
-                            <c:forEach var="user" items="${requestScope.LIST_REQUESTS_USERS}">
-                                <c:if test="${!breakLoop and request.studentID eq user.userID}">
-                                    ${user.userName}
-                                    <c:set var="breakLoop" value="true" />
-                                </c:if>
-                            </c:forEach>
-                            </td>
-                            <td>${request.subjectCode}</td>
-                            <td>${request.startTime}</td>
-                            <td>${request.endTime}</td>
-                            <td>${request.description}</td>
-                            <td>
-                                <input type="hidden" name="txtRequestID" value="${request.requestID}" readonly="">
-                                <button type="submit" name="action" value="AcceptRequest" class="btn-accept">Accept</button>
-                            </td>
-                            <td>
-                                <input type="hidden" name="txtRequestID" value="${request.requestID}" readonly="">
-                                <button type="submit" name="action" value="DeleteRequest" class="btn-decline">Decline</button>
-                            </td>
-                        </form>
-                        </tr>
-                    </c:forEach>
+                        <c:forEach items="${requestScope.attend}" var="slotAttend" varStatus="counter">
+                            <tr>
+                                <td>${counter.count}</td>
+                                <td>${slotAttend.freeSlotID}</td>
+                                
+                                <td>${slotAttend.semesterID}</td>
+                                <td>${slotAttend.subjectCode}</td>
+                                <td>${slotAttend.startTime}</td>
+                                <td>${slotAttend.endTime}</td>
+                                
+                                <td style="color: green">Present</td>
+<%--                                
+                                <c:choose>
+                                     <c:when test="${slotAttend.status == 2}">
+                                <td>
+                                    <button type="submit" name="action" value="AcceptRequest" class="btn-accept">Accept</button>
+                                </td>
+                                     </c:when>
+                                     <c:otherwise>
+                                <td>
+                                    <button type="submit" name="action" value="DeleteRequest" class="btn-decline">Decline</button>
+                                </td>
+                                </c:otherwise>
+                                </c:choose>
+                                --%>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
 
         </div>
+        <% } else{
+        response.sendRedirect("MainController?action=");
+}
+        %>
     </body>
 </html>
