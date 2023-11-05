@@ -128,6 +128,9 @@ public class MainController extends HttpServlet {
     private static final String SEARCH_BOOKED_SLOT_ACTION = "searchBSlot";
     private static final String SEARCH_BOOKED_SLOT_SERVLET = "SearchBookedServlet";
 
+    private static final String SEND_EMAIL_ACTION = "sendEMailAction";
+    private static final String SEND_EMAIL_SERVLET = "SendEMailServlet";
+
     private static final String BACK = "back";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -240,6 +243,8 @@ public class MainController extends HttpServlet {
                 url = SEARCH_REQUEST_STATUS_ACTION;
             } else if (REQUEST_STATUS.equals(action)) {
                 url = REQUEST_STATUS_PAGE;
+            } else if (SEND_EMAIL_ACTION.equals(action)) {
+                url = SEND_EMAIL_SERVLET;
             }
 
         } catch (Exception e) {
