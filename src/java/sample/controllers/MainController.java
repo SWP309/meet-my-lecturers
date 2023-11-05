@@ -11,7 +11,7 @@ public class MainController extends HttpServlet {
     private static final String HOME_ACTION_LECTURER = "returnHomePageLecturer";
     private static final String HOME_PAGE_LECTURER = "CreatedSlotController";
     private static final String HOME_ACTION_STUDENT = "returnHomePageStudent";
-    private static final String HOME_PAGE_STUDENT = "SelectTop3Student";
+    private static final String HOME_PAGE_STUDENT = "StudentHome_1.jsp";
     private static final String HOME_ACTION_ADMIN = "returnHomePageAdmin";
     private static final String HOME_PAGE_ADMIN = "AdminPage.jsp";
 
@@ -24,6 +24,7 @@ public class MainController extends HttpServlet {
     private static final String LOGIN_BY_FEID_ACTION_CHECK = "loginFeIDAction";
 
     private static final String STUDENT_PAGE = "StudentPage";
+    private static final String STUDENT_PAGE_ACTION_RETURN = "CheckStatusUser";
     private static final String STUDENT_PAGE_ACTION = "CheckStatusServlet";
     private static final String BOOKING_FREE_SLOT = "BookFreeSlot";
     private static final String BOOKING_FREE_SLOT_SERVLET = "BookFSlotServlet";
@@ -262,6 +263,8 @@ public class MainController extends HttpServlet {
                 url = CHANGE_PASS_PAGE_SERVLET;
             } else if (HOME_ACTION_ADMIN.equals(action)) {
                 url = HOME_PAGE_ADMIN;
+            } else if (STUDENT_PAGE_ACTION_RETURN.equals(action)) {
+                url = STUDENT_PAGE_ACTION;
             }
             
 

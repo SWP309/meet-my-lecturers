@@ -1,5 +1,7 @@
 
 
+<%@page import="sample.users.Top3StudentDTO"%>
+<%@page import="sample.users.UserDAO"%>
 <%@page import="sample.users.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -13,6 +15,11 @@
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             if (us != null) {
+                UserDAO dao = new UserDAO();
+                List<Top3StudentDTO> listTop3 = dao.GetlistTop3();
+                if (listTop3 != null) {
+                    request.setAttribute("LIST_TOP3", listTop3);
+                }
 
         %>
         <meta charset="UTF-8" />
@@ -70,7 +77,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!--        font ch? gg-->
+        <!--        font ch? gg-->
         <link href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans&display=swap" rel="stylesheet">
 
@@ -147,12 +154,14 @@
                 var form = document.querySelector('.backbutton form');
                 form.submit();
             }
-
-            var errorMessage2 = confirm("${requestScope.showConfirmation}");
-            if (errorMessage2) {
-                window.location.href = "MainController?action=changePass";
-            } else {
-                event.preventDefault();
+            var userStatus = <%= us.getUserStatus()%>;
+            if (userStatus === 2) {
+                var errorMessage2 = confirm("${requestScope.showConfirmation}");
+                if (errorMessage2) {
+                    window.location.href = "MainController?action=changePass";
+                } else {
+                    event.preventDefault();
+                }
             }
 
         </script>
@@ -227,7 +236,6 @@
         </style>
     </head>
     <body>
-
         <div class="student-home">
             <div class="fptu-eng-1-parent">
                 <div class="returnHome"> 
@@ -336,19 +344,19 @@
                                             <img class="orbit-image" src="./public/StudentHome/User-avatar.png"  style="width: 2000px; height: 400px; object-fit:contain;" alt="Space">
                                             <c:if test="${requestScope.LIST_TOP3 !=null}">
                                             <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;"><b>${requestScope.LIST_TOP3[0].userName}</b></br>The number of booking slots: ${requestScope.LIST_TOP3[0].bookingCount}</p></figcaption>
-                                                </c:if>
+                                                    </c:if>
                                         </li>
                                         <li class="orbit-slide" data-slide="1" style="position: relative; top: 0px; display: none;">
                                             <img class="orbit-image" src="./public/StudentHome/User-avatar.png"  style="width: 2000px; height: 400px; object-fit:contain;" alt="Space">
                                             <c:if test="${requestScope.LIST_TOP3 !=null}">
                                             <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;"><b>${requestScope.LIST_TOP3[1].userName}</b></br>The number of booking slots: ${requestScope.LIST_TOP3[1].bookingCount}</p></figcaption>
-                                                </c:if>
+                                                    </c:if>
                                         </li>
                                         <li class="orbit-slide is-active" data-slide="4" style="position: relative; top: 0px; display: block;" aria-live="polite">
                                             <img class="orbit-image" src="./public/StudentHome/User-avatar.png"  style="width: 2000px; height: 400px; object-fit:contain;" alt="Space">
                                             <c:if test="${requestScope.LIST_TOP3 !=null}">
                                             <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;"><b>${requestScope.LIST_TOP3[2].userName}</b></br>The number of booking slots: ${requestScope.LIST_TOP3[2].bookingCount}</p></figcaption>
-                                                </c:if>
+                                                    </c:if>
                                         </li>
                                     </ul>
                                     <nav class="orbit-bullets">

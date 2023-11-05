@@ -703,7 +703,8 @@ public class UserDAO implements Serializable {
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
             String sql = "Update dbo.Users\n"
-                    + "Set password = ?\n"
+                    + "Set password = ?,\n"
+                    + " userStatus = 1\n"
                     + "Where userID = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, password);
