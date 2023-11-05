@@ -33,7 +33,6 @@ public class SearchFreeSlotServlet extends HttpServlet {
             if (listTop3 != null) {
                 request.setAttribute("LIST_TOP3", listTop3);
             }
-
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String subjectCode = request.getParameter("txtSubjectCode");

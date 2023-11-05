@@ -16,21 +16,28 @@ public class FreeSlotsDTO {
     //bien ngoai lai, t chi them vao cho de trong viec hien thi ten giang vien
     //bien nay khong co trong bang, nen la mn cu dat la String = null nha.
     private String lecturerName;
+    private String studentID;
+    private int bookedStudent;
     private String block_list;
 
     public FreeSlotsDTO() {
         this.freeSlotID = "";
         this.subjectCode = "";
-        this.startTime = null;
-        this.endTime = null;
-        this.password = null;
+        this.startTime = "";
+        this.endTime = "";
+        this.password = "";
         this.capacity = 0;
         this.meetLink = "";
         this.count = 0;
         this.lecturerID = "";
-        this.status = 0;
+        this.status = 1;
+        this.semesterID = "";
+        this.lecturerName = "";
+        this.bookedStudent = 0;
         this.block_list = null;
+        this.studentID = "";
     }
+    
 
     public String getLecturerName() {
         return lecturerName;
@@ -39,6 +46,37 @@ public class FreeSlotsDTO {
     public void setLecturerName(String lecturerName) {
         this.lecturerName = lecturerName;
     }
+    
+    public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, int status, String semesterID, String block_list) {
+        this.subjectCode = subjectCode;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.password = password;
+        this.capacity = capacity;
+        this.meetLink = meetLink;
+        this.count = count;
+        this.lecturerID = lecturerID;
+        this.status = status;
+        this.semesterID = semesterID;
+        this.block_list = block_list;
+    }
+
+    public FreeSlotsDTO(String freeSlotID, String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, int status, String semesterID, String lecturerName, int bookedStudent) {
+        this.freeSlotID = freeSlotID;
+        this.subjectCode = subjectCode;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.password = password;
+        this.capacity = capacity;
+        this.meetLink = meetLink;
+        this.count = count;
+        this.lecturerID = lecturerID;
+        this.status = status;
+        this.semesterID = semesterID;
+        this.lecturerName = lecturerName;
+        this.bookedStudent = bookedStudent;
+    }
+    
 
     public FreeSlotsDTO(String freeSlotID, String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, int status, String semesterID, String lecturerName) {
         this.freeSlotID = freeSlotID;
@@ -53,20 +91,6 @@ public class FreeSlotsDTO {
         this.status = status;
         this.semesterID = semesterID;
         this.lecturerName = lecturerName;
-    }
-
-    public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, int status, String semesterID, String block_list) {
-        this.subjectCode = subjectCode;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.password = password;
-        this.capacity = capacity;
-        this.meetLink = meetLink;
-        this.count = count;
-        this.lecturerID = lecturerID;
-        this.status = status;
-        this.semesterID = semesterID;
-        this.block_list = block_list;
     }
 
     public FreeSlotsDTO(String ofject) {
@@ -169,6 +193,38 @@ public class FreeSlotsDTO {
         this.semesterID = semesterID;
     }
 
+
+    /**
+     * @return the bookedStudent
+     */
+    public int getBookedStudent() {
+        return bookedStudent;
+    }
+
+    /**
+     * @param bookedStudent the bookedStudent to set
+     */
+    public void setBookedStudent(int bookedStudent) {
+        this.bookedStudent = bookedStudent;
+    }
+
+    /**
+     * @return the studentID
+     */
+    public String getStudentID() {
+        return studentID;
+    }
+
+    /**
+     * @param studentID the studentID to set
+     */
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
+    }
+
+    /**
+     * @return the block_list
+     */
     public String getBlock_list() {
         return block_list;
     }

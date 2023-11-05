@@ -1,4 +1,5 @@
 <%@page import="sample.users.UserDTO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,18 +7,18 @@
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
         <link rel="stylesheet" href="./request.css" />
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
-            />
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Lohit Tamil:wght@400&display=swap"
-            />
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
-            />
+        <!--        <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
+                    />-->
+        <!--            <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/css2?family=Lohit Tamil:wght@400&display=swap"
+                    />-->
+        <!--            <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
+                    />-->
         <!-- CSS c?a Bootstrap 5 -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
@@ -28,7 +29,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">-->
 
         <!-- CSS c?a SweetAlert -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
@@ -45,14 +46,20 @@
         <!-- JavaScript c?a SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
 
-        <!-- Thêm liên k?t ??n Bootstrap CSS -->
+        <!-- ThÃªm liÃªn k?t ??n Bootstrap CSS -->
         <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
             >
         <!-- Include Font Awesome CSS -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+        <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">-->
         <style>
+            *{ 
+                margin: 0;
+                padding: 0;
+                border: 0;
+                font-family: sans-serif;
+            }
             h6 {
                 border: none;
                 margin-top: 4px;
@@ -126,7 +133,7 @@
             function showUserInfo() {
                 var userInfo = document.getElementById("user-info");
                 if (userInfo.style.display === "none" || userInfo.style.display === "") {
-                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                    userInfo.style.display = "block"; // Hi?n th? thÃ´ng tin khi ???c nh?p chu?t
                 } else {
                     userInfo.style.display = "none";
                 }
@@ -156,13 +163,13 @@
                     <div class="frame-group">
                         <div class="frame-div bookingview" onclick="submitForm()">
                             <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="ViewBooking" />
+                                <input type="hidden" name="action" value="ViewRequestStatus" />
                             </form>
                             <div class="bookedslot-wrapper">
                                 <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
                                 <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
                             </div>
-                            <div class="view-booking" >View Booking</div>
+                            <div class="view-booking" >View Request Status</div>
                         </div>
                         <div class="frame-div requestViewStatus" style=" cursor: pointer" onclick="submitFormRequestStatus()">
                             <form action="MainController" method="POST" style="display: none;">
@@ -234,8 +241,15 @@
                     <div class="form-group row">
                         <label for="txtSubjectCode" class="col-md-2 col-form-label"><strong>Subject code:</strong></label>
                         <div class="col-md-10">
-                            <input class="form-control" type="text" id="txtSubjectCode" name="txtSubjectCode" value="${param.txtSubjectCode}" placeholder="(ex:SWP391)"
-                                   pattern="^[A-Z]{3}[0-9]{3}$"/>
+                            <select class="form-control" name="txtSubjectCode">
+                                <option value="PRJ301">PRJ301</option>
+                                <option value="PRM392">PRM392</option>
+                                <option value="SEP490">SEP490</option>
+                                <option value="SWD392">SWD392</option>
+                                <option value="SWP391">SWP391</option>
+                                <option value="SWR302">SWR302</option>
+                                <option value="SWT301">SWT301</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -262,7 +276,7 @@
                     <div class="form-group row">
                         <label for="txtDescription" class="col-md-2 col-form-label"><strong>Description:</strong></label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" id="txtDescription" name="txtDescription" value="${param.txtDescription}">
+                            <input type="text" style="font-family: sans-serif " class="form-control" id="txtDescription" name="txtDescription" value="${param.txtDescription}">
                         </div>
                         <c:if test="${not empty requestScope.REQUEST_ERROR.duplicateRequestError}">
                             <h6> ${requestScope.REQUEST_ERROR.duplicateRequestError}</h6>
@@ -297,7 +311,7 @@
 
         </div>
 
-        <!-- Thêm liên k?t ??n Bootstrap JS và jQuery -->
+        <!-- ThÃªm liÃªn k?t ??n Bootstrap JS vÃ  jQuery -->
         <script
             src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-KyZXEAg3QhqLMpG8r+J9pAEz6/LnYV5TOqDGIbpbzFq8qz5S7fF46kSEBzav6U7xj"
