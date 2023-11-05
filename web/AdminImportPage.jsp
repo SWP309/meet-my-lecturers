@@ -9,10 +9,21 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">-->
+        <link rel="stylesheet" href="./AdminHome.css">
+        <!-- SweetAlert2 CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+
+        <!-- SweetAlert2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+        <title>File Upload</title>
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             if (us != null) {
-                        
         %>
         <script>
             function submitFormHomePage() {
@@ -27,17 +38,31 @@
                 var form = document.querySelector('.logout form');
                 form.submit();
             }
-            function submitFormImport() {
-                var form = document.querySelector('.import form');
-                form.submit();
+            var userDTO = {
+                userID: "<%= us.getUserID()%>",
+                userName: "<%= us.getUserName()%>",
+                userEmail: "<%= us.getUserEmail()%>"
+            };
+            function showUserInfo() {
+                var userInfo = document.getElementById("user-info");
+                if (userInfo.style.display === "none" || userInfo.style.display === "") {
+                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                } else {
+                    userInfo.style.display = "none";
+                }
+
+                var userID = userDTO.userID;
+                var userName = userDTO.userName;
+                var userEmail = userDTO.userEmail;
+
+                Swal.fire({
+                    title: 'User Information',
+                    html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
+                            + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
+                });
             }
         </script>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">-->
-        <link rel="stylesheet" href="./AdminHome.css">
-        <title>File Upload</title>
+
         <style>
             .custom-submit-button {
                 background-color: #f27125; /* Màu xanh */
@@ -69,7 +94,7 @@
                         </div>
                         <div class="view-booking" >Search Users</div>
                     </div>
-                    <div class="frame-div request import" onclick="submitFormImport()">
+                    <div class="frame-div request import"  style="background-color: #b7b7b7;">
                         <form action="MainController" method="POST">
                             <input type="hidden" name="action" value="importPage" />
                         </form>
@@ -91,12 +116,14 @@
                         </div>
                     </div>
 
-                    <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
-                         onclick="showUserInfo()" />
-                    <div id="user-info" style="display: none; position: absolute;">
-                        <p id="user-id"> </p>
-                        <p id="user-name"></p>
-                        <p id="user-email"></p>
+                    <div>
+                        <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
+                             onclick="showUserInfo()" />
+                        <div id="user-info" style="display: none; position: absolute">
+                            <p id="user-id"> </p>
+                            <p id="user-name"></p>
+                            <p id="user-email"></p>
+                        </div>
                     </div>
                 </div>
 

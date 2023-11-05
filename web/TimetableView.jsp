@@ -234,7 +234,7 @@
                 </c:if>
 
             </div>
-            <div class="backbutton"  onclick="submitFormBack()">
+<!--            <div class="backbutton"  onclick="submitFormBack()">
                 <form action="MainController" method="POST" style="display: none;">
                     <input type="hidden" name="txtLecturer" value="${requestScope.TB_TIMETABLES.get(0).lecturerID}" />
                     <input type="hidden" name="txtSemester" value="${requestScope.TB_TIMETABLES.get(0).semesterID}" />
@@ -242,7 +242,7 @@
                 </form>
                 <div class="back">Back</div>
                 <img class="back-icon" alt="" src="./public/request/back.svg" />
-            </div>
+            </div>-->
 
         </div>
         <%} else {

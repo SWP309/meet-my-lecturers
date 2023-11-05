@@ -11,9 +11,9 @@ public class MainController extends HttpServlet {
     private static final String HOME_ACTION_LECTURER = "returnHomePageLecturer";
     private static final String HOME_PAGE_LECTURER = "CreatedSlotController";
     private static final String HOME_ACTION_STUDENT = "returnHomePageStudent";
-    private static final String HOME_PAGE_STUDENT = "StudentHome_1.jsp";
+    private static final String HOME_PAGE_STUDENT = "SelectTop3Student";
     private static final String HOME_ACTION_ADMIN = "returnHomePageAdmin";
-    private static final String HOME_PAGE_ADMIN = "CreatedSlotController";
+    private static final String HOME_PAGE_ADMIN = "AdminPage.jsp";
 
     private static final String LOGIN_BY_GOOGLE = "login";
     private static final String LOGIN_BY_GOOGLE_ACTION = "LoginServlet";
@@ -180,8 +180,6 @@ public class MainController extends HttpServlet {
                 url = LOGOUT_ACTION;
             } else if (CANCEL.equals(action)) {
                 url = CANCEL_CONTROLLER;
-            } else if (BACK.equals(action)) {
-                url = STUDENT_PAGE_ACTION;
             } else if (LOGOUT.equals(action)) {
                 url = LOGIN_BY_FEID_ACTION;
             } else if (HIDE_FREE_SLOT.equals(action)) {
@@ -262,6 +260,8 @@ public class MainController extends HttpServlet {
                 url = CHANGE_PASS_ACTION;
             } else if (CHANGE_PASS_PAGE_ACTION.equals(action)) {
                 url = CHANGE_PASS_PAGE_SERVLET;
+            } else if (HOME_ACTION_ADMIN.equals(action)) {
+                url = HOME_PAGE_ADMIN;
             }
             
 

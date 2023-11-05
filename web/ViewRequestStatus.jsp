@@ -196,6 +196,8 @@
                     </div>
                 </div>
             </form>
+                    
+                    
             <div class="row justify-content-center mt-5">
                 <c:if test="${empty param.txtSubjectCode and not empty requestScope.REQUEST_BY_STATUS}">
                     <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">

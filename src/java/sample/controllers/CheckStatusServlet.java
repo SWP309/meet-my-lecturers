@@ -7,11 +7,14 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.users.Top3StudentDTO;
+import sample.users.UserDAO;
 import sample.users.UserDTO;
 
 /**
@@ -39,8 +42,15 @@ public class CheckStatusServlet extends HttpServlet {
                 System.out.println(us.getUserStatus());
                 request.setAttribute("showConfirmation", "Do you want to change your password ?");
             }
+            UserDAO dao = new UserDAO();
+            List<Top3StudentDTO> listTop3 = dao.GetlistTop3();
+            if (listTop3 != null) {
+                request.setAttribute("LIST_TOP3", listTop3);
+            }
 
             request.getRequestDispatcher("StudentHome_1.jsp").forward(request, response);
+        } catch(Exception e) {
+            e.printStackTrace();
         }
     }
 

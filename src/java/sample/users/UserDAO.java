@@ -17,6 +17,11 @@ public class UserDAO implements Serializable {
     private final String SEARCH_LECTURERS = "SELECT userID, userName, userEmail\n"
             + "FROM Users\n"
             + "WHERE roleID = 2 AND userStatus = 1";
+    private final String SEARCH_TOP3_STUDENT = "SELECT top 3 b.studentID, u.userName, COUNT(b.bookingID) AS bookingCount\n"
+            + "FROM Bookings b\n"
+            + "JOIN Users u ON u.userID = b.studentID\n"
+            + "GROUP BY b.studentID, u.userName\n"
+            + "ORDER BY bookingCount DESC";
 
     private final String SEARCH_USERS_BY_ROLEID = "SELECT r.roleName, u.userID, u.userName, u.userEmail, u.password, u.userStatus\n"
             + "FROM Users u\n"
@@ -58,6 +63,38 @@ public class UserDAO implements Serializable {
 
     public List<UserDTO> getLecturers() {
         return lecturers;
+    }
+        public List<Top3StudentDTO> GetlistTop3() throws SQLException {
+        List<Top3StudentDTO> listTop3 = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(SEARCH_TOP3_STUDENT);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String studentID = rs.getString("studentID");
+                    String userName = rs.getString("userName");
+                    String bookingCount = rs.getString("bookingCount");
+                    listTop3.add(new Top3StudentDTO(studentID, userName, bookingCount));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listTop3;
     }
 
     public void getListLecturers() throws ClassNotFoundException, SQLException {
