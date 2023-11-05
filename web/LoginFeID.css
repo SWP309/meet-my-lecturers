@@ -1,3 +1,12 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+/*.login-feid{
+    display: flex;
+    align-content: center;
+}*/
 .surround-child {
     position: absolute;
     top: 0;
@@ -113,6 +122,10 @@
     height: 2.56rem;
     color: #f27125;
 }
+
+#button{
+    background-color: white;
+}
 #button:hover {
     background-color: #f27125;
 }
@@ -163,27 +176,34 @@
     justify-content: center;
 }
 .fptu-long-1-11 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 45.81rem;
-    height: 14.69rem;
-    object-fit: cover;
+    /*top: 0;*/
+    /*left: 0;*/
+    width: 90%;
+    height: 90%;
+    /*object-fit: cover;*/
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-image: url("./public/LoginHome/2021fptulong-1-11@2x.png");
 }
 .appointment-scheduling-applica1 {
-    position: absolute;
-    top: 15.69rem;
-    left: 5.25rem;
-    display: inline-block;
-    width: 40.56rem;
-    height: 5.06rem;
+    /*top: 15.69rem;*/
+    /*left: 5.25rem;*/
+    font-family: Poppins;
+    font-size: 2vw;
 }
 .logo1 {
+    /*max-width: 800px;*/
+    overflow: hidden;
     position: relative;
+    display: flex;
+    flex-direction: column;
     width: 45.81rem;
     height: 20.75rem;
     font-size: 2.25rem;
+    justify-content: center;
+    align-items: center;
     font-family: "Lohit Tamil";
+    visibility: visible;
 }
 .fpt-university3 {
     text-decoration: underline;
@@ -192,42 +212,38 @@
     color: inherit;
 }
 .powered-by-fpt-container1 {
-    position: relative;
+    position: absolute;
     font-weight: 500;
-    display: inline-block;
-    width: 37.53rem;
-    height: 1.13rem;
-    flex-shrink: 0;
-}
-.footer1,
-.login-feid {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
 }
 .footer1 {
+    position: fixed;
+    bottom: 0px;
+    display: flex;
     background-color: #f8d867;
-    width: 125rem;
-    height: 5.38rem;
-    justify-content: flex-start;
-    padding: 1.69rem 35.5rem;
+    width: 100%;
+    height: 4rem;
+    justify-content: center;
+    align-items: center;
+    /*padding: 1.69rem 35.5rem;*/
     box-sizing: border-box;
-    max-width: 125rem;
+    max-width: 100%;
     text-align: center;
     font-size: 1rem;
     color: inherit;
     font-family: Poppins;
 }
 .login-feid {
-    position: relative;
+    display: flex;
+    /*align-content: center;*/
+/*    position: relative;*/
     background-color: #fff;
-    width: 100%;
-    height: 64rem;
-    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     gap: 3.81rem;
-    text-align: left;
+/*    text-align: left;*/
     font-size: 1.25rem;
     color: #000;
     font-family: Lexend;
@@ -248,4 +264,21 @@
     width: 315px;
     height: 48px;
     left: 150px;
+}
+@media (max-width: 1300px) {
+  body {
+    overflow: hidden;
+  }
+
+  /* Tạo một lớp tràn lên để che thanh cuộn */
+  body::before {
+    content: "";
+    position: fixed;
+/*    top: 0;
+    left: 0;
+    right: 0;*/
+    height: 100vh;
+    background: white; /* Màu nền của trang */
+    z-index: 9999; /* Đảm bảo lớp này trên cùng */
+  }
 }

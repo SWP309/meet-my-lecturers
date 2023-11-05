@@ -66,7 +66,7 @@
                 margin-bottom: 0px;
                 padding: 2px;
                 color: red;
-            }           
+            }
             .cus {
                 background-color: #f27125;
                 margin: 0 0.5rem;
@@ -97,10 +97,6 @@
             if (us != null) {
         %>
         <script>
-            function submitFormViewLecturer() {
-                var form = document.querySelector('.viewLecturer form');
-                form.submit();
-            }
             function submitForm() {
                 var form = document.querySelector('.bookingview form');
                 form.submit();
@@ -109,18 +105,26 @@
                 var form = document.querySelector('.logout form');
                 form.submit();
             }
-            function submitFormSendRequest() {
-                var form = document.querySelector('.create-request form');
+            function submitSearchForm() {
+                var form = document.querySelector('.searchfunction form');
+                form.submit();
+            }
+            function submitFormViewLecturer() {
+                var form = document.querySelector('.viewLecturer form');
+                form.submit();
+            }
+            function submitFormRequestStatus() {
+                var form = document.querySelector('.requestViewStatus form');
                 form.submit();
             }
             function submitFormHomePage() {
                 var form = document.querySelector('.returnHome form');
                 form.submit();
             }
-//             function functionFormTimeTableView() {
-//                 var form = document.querySelector('.request form');
-//                 form.submit();
-//             }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -150,20 +154,14 @@
     <body>
         <div class="student-home">
             <div class="fptu-eng-1-parent">
-                <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                <div class="returnHome"  onclick="submitFormHomePage()"> 
                     <form action="MainController" method="POST">
                         <input type="hidden" name="action" value="returnHomePageStudent" />
                     </form>
-                    <img
-                        class="fptu-eng-1-icon"
-                        alt=""
-                        src="public/BookingView/2021fptueng-1@2x.png"
-                        />
                 </div>
-
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-div bookingview" style=" cursor: pointer" onclick="submitForm()" id="booking-view-div">
+                        <div class="frame-div bookingview" onclick="submitForm()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="ViewRequestStatus" />
                             </form>
@@ -173,28 +171,35 @@
                             </div>
                             <div class="view-booking" >View Request Status</div>
                         </div>
-                        <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()" style=" width: 34%;">
+                        <div class="frame-div requestViewStatus" style=" cursor: pointer" onclick="submitFormRequestStatus()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="ViewRequestStatus" />
+                            </form>
+                            <i class="material-icons">visibility</i>View Request Status
+                        </div>
+                        <div class="frame-div request" style="background-color: #b7b7b7;">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="Request" />
+                            </form>
+
+                            <i class="material-icons">mail_outline</i> Request
+                        </div>
+                        <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="ViewAllLecturers" />
                             </form>
 
                             <i class="fas fa-search"></i> <p style="font-size: 16px">View Lecturer</p>
                         </div>
-
-                        <div class="frame-div logout" onclick="submitFormLogout()">
+                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: 10%; text-align: center">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
-                            <div class="logout-wrapper">
-                                <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
-                            </div>
-                            <div class="request">
-                                <p class="logout1">Logout</p>
-                            </div>
+                            <i class="material-icons">logout</i> Logout
                         </div>
                     </div>
                     <div>
-                        <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
+                        <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
                              onclick="showUserInfo()" />
                         <div id="user-info" style="display: none; position: absolute">
                             <p id="user-id"> </p>
@@ -205,9 +210,12 @@
 
                 </div>
             </div>
-            <div class="backbutton"  onclick="goBack()">
-                <div class="back">Back</div>
-                <img class="back-icon" alt="" src="./public/request/back.svg" />
+            <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="attendanceSemes" />
+                </form>
+
+                <i class="material-icons">history</i>
             </div>
             <div class="container mt-5 create-request" style="margin-top: 8% !important;">
                 <form action="MainController" method="POST">
@@ -287,7 +295,19 @@
                         </div>
                     </div>
                 </form>
-            </div>       
+            </div>  
+            <div class="footer1">
+                <div class="powered-by-fpt-container1">
+                    © Powered by
+                    <a class="fpt-university2" href="http://fpt.edu.vn/" target="_blank">
+                        <span class="fpt-university3">FPT University</span>
+                    </a>
+                    |
+                    <a class="fpt-university2" href="http://library.fpt.edu.vn/" target="_blank">
+                        <span class="fpt-university3">library</span>
+                    </a>
+                </div>
+            </div>
 
         </div>
 
@@ -302,6 +322,9 @@
             integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI"
             crossorigin="anonymous"
         ></script>
-        <% }%>
+        <% } else {
+                response.sendRedirect("MainController?action=");
+            }
+        %>
     </body>
 </html>

@@ -14,16 +14,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import sample.freeslots.FreeSlotsDAO;
 import sample.freeslots.FreeSlotsDTO;
+import sample.users.Top3StudentDTO;
+import sample.users.UserDAO;
 import sample.users.UserDTO;
 
 public class SearchFreeSlotServlet extends HttpServlet {
+
     private final String SUCCESS = "StudentHome_1.jsp";
     private final String ERROR = "StudentHome_1.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
+            UserDAO dao = new UserDAO();
+            List<Top3StudentDTO> listTop3 = dao.GetlistTop3();
+            if (listTop3 != null) {
+                request.setAttribute("LIST_TOP3", listTop3);
+            }
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String subjectCode = request.getParameter("txtSubjectCode");
@@ -124,7 +133,7 @@ public class SearchFreeSlotServlet extends HttpServlet {
                 } else {
                     request.setAttribute("SEARCH_FREESLOT_MESSAGE", "The system has no freeslot that meet your requirement!!!");
                 }
-            } 
+            }
         } catch (ClassNotFoundException | SQLException ex) {
             log("Error at SearchFreeSlotServlet: " + ex.toString());
         } finally {

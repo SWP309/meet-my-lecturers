@@ -1,45 +1,50 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sample.controllers;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import sample.users.Top3StudentDTO;
 import sample.users.UserDAO;
 import sample.users.UserDTO;
 
-public class UpdateUserServlet extends HttpServlet {
-    
-    private final String SUCCESS = "SearchUserServlet";
-    private final String ERROR = "SearchUserServlet";
-    
+/**
+ *
+ * @author Minh Khang
+ */
+public class CheckStatusServlet extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
-        try {
-            String userName = request.getParameter("txtUserName");
-            String userEmail = request.getParameter("txtEmail");
-            String password = request.getParameter("txtPassword");
-            String userStatus = request.getParameter("txtStatus");
-            int check = Integer.parseInt(userStatus);
-            String userID = request.getParameter("txtUserID");
-            String searchUserID = request.getParameter("txtSearchUserID");
-            String name = request.getParameter("txtName");
-            String roleID = request.getParameter("txtRoleID");
-            UserDAO userDAO = new UserDAO();
-            UserDTO userDTO = new UserDTO(userID, userName, userEmail, check, "", password);
-            boolean checkUpdate;
-                checkUpdate = userDAO.updateAUser(userDTO);
-            if(checkUpdate) {
-                url = SUCCESS;
+        try (PrintWriter out = response.getWriter()) {
+            HttpSession session = request.getSession();
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us.getUserStatus() == 2) {
+                System.out.println(us.getUserStatus());
+                request.setAttribute("showConfirmation", "Do you want to change your password ?");
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-                log("Error at UpdateUserServlet: " + ex.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher("StudentHome_1.jsp").forward(request, response);
+        } catch(Exception e) {
+            e.printStackTrace();
         }
     }
 

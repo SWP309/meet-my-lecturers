@@ -9,27 +9,73 @@
         <link rel="stylesheet" href="./ViewLecturer.css" />
         <link
             rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
+            />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Lohit Tamil:wght@400&display=swap"
+            />
+        <link
+            rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
             />
         <!-- CSS c?a Bootstrap 5 -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+        <!-- CSS c?a Bootstrap 4 -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Icon -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+        <!-- CSS c?a SweetAlert -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- JavaScript c?a Bootstrap 4 -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+        <!-- JavaScript c?a Bootstrap 5 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+        <!-- JavaScript c?a SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
         <%
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             if (us != null) {
         %>
         <script>
-            function submitFormBack() {
-                var form = document.querySelector('.backbutton form');
+            function submitForm() {
+                var form = document.querySelector('.bookingview form');
                 form.submit();
             }
             function submitFormLogout() {
                 var form = document.querySelector('.logout form');
                 form.submit();
             }
-            function goBack() {
-                window.history.back();
+            function submitFormRequest() {
+                var form = document.querySelector('.request form');
+                form.submit();
             }
+            function submitSearchForm() {
+                var form = document.querySelector('.searchfunction form');
+                form.submit();
+            }
+            function submitFormRequestStatus() {
+                var form = document.querySelector('.requestViewStatus form');
+                form.submit();
+            }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
+
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -53,82 +99,130 @@
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
         </script>
     </head>
     <body>
         <div class="student-lectures-schedule-edi">
-            <div class="table-timetable" style="margin-right: 21%;
-                 margin-top: 18%;
-                 margin-left: -13%;
-                 width: 92%;">
-                <c:if test="${not empty requestScope.LIST_LECTURERS}">
-
-                    <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
-                        <thead>
-                            <tr class="table-danger">
-                                <th>No.</th>
-                                <th>LecturerID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${requestScope.LIST_LECTURERS}" 
-                                       var="lecturer" varStatus="status">
-                                <tr>
-                                    <td>${status.count}</td>
-                                    <td>${lecturer.userID}</td>
-                                    <td>${lecturer.userName}</td>
-                                    <td>${lecturer.userEmail}</td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </c:if>
-
-                <c:if test="${empty requestScope.LIST_LECTURERS}">
-                    <h3 style="color: red">${requestScope.MESSAGE}</h3>
-                </c:if>
-
-            </div>
-            <div class="backbutton"  onclick="goBack()">
-                <div class="back"><p class="backWord" style="margin-left: 45px;">Back</p></div>
-                <img class="back-icon" alt="" src="./public/request/back.svg" />
-            </div>
-            <div class="header1">
-                <img
-                    class="fptu-eng-1-icon1"
-                    alt=""
-                    src="./public/TimetableView/2021fptueng-11@2x.png"
-                    />
-
+            <div class="fptu-eng-1-parent">
+                <div class="returnHome" onclick="submitFormHomePage()" >
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="returnHomePageStudent" />
+                    </form>
+                </div>
                 <div class="frame-parent">
                     <div class="frame-group">
+                        <div class="frame-div bookingview" onclick="submitForm()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="ViewBooking" />
+                            </form>
+                            <div class="bookedslot-wrapper">
+                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
+                                <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                            </div>
+                            <div class="view-booking" >View Booking</div>
+                        </div>
+                        <div class="frame-div requestViewStatus" style=" cursor: pointer" onclick="submitFormRequestStatus()" id="booking-view-div">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="ViewRequestStatus" />
+                            </form>
+                            <i class="material-icons">visibility</i>View Request Status
+                        </div>
+                        <div class="frame-div request" onclick="submitFormRequest()">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="Request" />
+                            </form>
 
-                        <div class="frame-div logout" onclick="submitFormLogout()">
+                            <i class="material-icons">mail_outline</i> Request
+                        </div>
+                        <div class="frame-div viewLecturer" style="background-color: #b7b7b7;">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="ViewAllLecturers" />
+                            </form>
+
+                            <i class="fas fa-search"></i> <p style="font-size: 16px">View Lecturer</p>
+                        </div>
+                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: 10%; text-align: center">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
-                            <div class="logout-wrapper">
-                                <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
-                            </div>
-                            <div class="logout">
-                                <p class="logout1">Logout</p>
-                            </div>
+                            <i class="material-icons">logout</i> Logout
                         </div>
                     </div>
                     <div>
-                        <img class="frame-item" alt="" src="./public/StudentHome/group-33.svg" 
+                        <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
                              onclick="showUserInfo()" />
-                        <div id="user-info" style="display: none;">
+                        <div id="user-info" style="display: none; position: absolute">
                             <p id="user-id"> </p>
                             <p id="user-name"></p>
                             <p id="user-email"></p>
                         </div>
                     </div>
+
+                </div>
+            </div>
+            <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="attendanceSemes" />
+                </form>
+
+                <i class="material-icons">history</i>
+            </div>
+
+
+            <div class="view-user-table" style="width: 80%; margin: 0 auto; border-radius: 20px;">
+                <c:if test="${not empty requestScope.LIST_LECTURERS}">
+                    <div class="table-container">
+                        <table class="custom-table table-hover table-primary table-rounded">
+                            <thead>
+                                <tr class="table-danger">
+                                    <th>No.</th>
+                                    <th>LecturerID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${requestScope.LIST_LECTURERS}" 
+                                           var="lecturer" varStatus="status">
+                                    <tr>
+                                        <td>${status.count}</td>
+                                        <td>${lecturer.userID}</td>
+                                        <td>${lecturer.userName}</td>
+                                        <td>${lecturer.userEmail}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </c:if>
+            </div>
+            <div class="footer1">
+                <div class="powered-by-fpt-container1">
+                    © Powered by
+                    <a class="fpt-university2" href="http://fpt.edu.vn/" target="_blank">
+                        <span class="fpt-university3">FPT University</span>
+                    </a>
+                    |
+                    <a class="fpt-university2" href="http://library.fpt.edu.vn/" target="_blank">
+                        <span class="fpt-university3">library</span>
+                    </a>
                 </div>
             </div>
         </div>
+        <script>
+            // L?y thông tin l?i t? bi?n requestScope.ERROR
+            var errorMessage = "${requestScope.MESSAGE}";
+
+            // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+            if (errorMessage.trim() !== "") {
+                alert(errorMessage);
+            }
+        </script>
+
         <%
             } else {
                 response.sendRedirect("MainController");

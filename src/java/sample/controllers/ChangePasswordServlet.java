@@ -5,7 +5,6 @@
  */
 package sample.controllers;
 
-import sample.users.UserGoogleDto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -20,7 +19,7 @@ import sample.users.UserDTO;
  *
  * @author Minh Khang
  */
-public class LoginServlet extends HttpServlet {
+public class ChangePasswordServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,30 +34,39 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            UserGoogleDto dto = new UserGoogleDto();
-            dto = (UserGoogleDto) request.getAttribute("UserGG");
-            String email = dto.getEmail();
-            UserDTO us = UserDAO.getUserByMail(email);
-            boolean flag = false;
-            if (us != null) {                
-                    flag = true;
-                    HttpSession session = request.getSession();
-                    session.setAttribute("loginedUser", us);
-                    if (us.getRoleID().equals("3")) {
-                        response.sendRedirect("MainController?action=StudentPage");
-                    } else if ((us.getRoleID().equals("2"))) {
-                        response.sendRedirect("MainController?action=LecturerPage");
-                    } else if ((us.getRoleID().equals("1"))) {
-                        response.sendRedirect("MainController?action=AdminPage");
+            HttpSession session = request.getSession();
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            int rs;
+            String URL = "MainController?action=";
+            String userID = us.getUserID();
+            String usPass = us.getPassword();
+            String defaultPass = request.getParameter("txtdefault");
+            String newPass = request.getParameter("txtnewpass");
+            String confirmPass = request.getParameter("txtconfirmpass");
+            System.out.println(defaultPass);
+            System.out.println(newPass);
+            System.out.println(confirmPass);
+            if (usPass.equals(defaultPass)) {
+                System.out.println("qua dc default pass");
+                if (newPass.equals(confirmPass)) {
+                    rs = UserDAO.changePassword(userID, confirmPass);
+                    System.out.println("rs: " + rs);
+                    if (rs > 0) {
+                        request.setAttribute("CHANGEPASS", "Change password successfully");
+                        URL = "MainController?action=changePass";
+                    } else {
+                        request.setAttribute("FAILPASS", "Change password fail");
+                        URL = "MainController?action=changePass";
                     }
+                } else {
+                    request.setAttribute("CONFIRMPASS", "Confirm password not correct !");
+                    URL = "MainController?action=changePass";
+                }
             } else {
-                flag = false;
+                request.setAttribute("DEFAULTPASS", "Incorrect default password");
+                URL = "MainController?action=changePass";
             }
-            if (!flag) {
-                String msg = "Your email is not granted access to the system";
-                request.setAttribute("Error", msg);
-                request.getRequestDispatcher("MainController?action=").forward(request, response);
-            }
+            request.getRequestDispatcher(URL).forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,4 +110,5 @@ public class LoginServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

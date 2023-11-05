@@ -6,47 +6,60 @@
 package sample.controllers;
 
 import java.io.IOException;
-import java.util.List;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.attendance.AttendanceDAO;
+import sample.attendance.AttendanceDTO;
+import sample.semester.SemesterDTO;
+import sample.semester.SemesterDAO;
 import sample.users.UserDTO;
-import sample.viewCreatedSlot.StudentViewSlotDTO;
-import sample.viewCreatedSlot.ViewCreatedSlotDAO;
-import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
 /**
  *
- * @author PC
+ * @author Minh Khang
  */
-public class ViewStudentSlotController extends HttpServlet {
+public class AttendanceServlet extends HttpServlet {
 
-    private static final String ERROR = "StudentSlotView.jsp";
-    private static final String SUCCESS = "StudentSlotView.jsp";
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
-        try {
+        try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
-            String freeSlotID = request.getParameter("freeSlotID");
-            ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
-            System.out.println(freeSlotID);
-            List<StudentViewSlotDTO> liststudent = dao.GetListStudent(freeSlotID);
-            System.out.println(liststudent.toString());
-            if (liststudent.size() > 0) {
-                request.setAttribute("LIST_STUDENT", liststudent);
-                url = SUCCESS;
+            SemesterDAO semesterDAO = new SemesterDAO();
+            ArrayList<SemesterDTO> listSemes = (ArrayList<SemesterDTO>) semesterDAO.select();
+            request.setAttribute("semester", listSemes);
+            UserDTO userDTO = (UserDTO) session.getAttribute("loginedUser");
+            System.out.println(userDTO);
+            String semes = request.getParameter("txtsemes");
+            System.out.println(semes);
+            String studentID = userDTO.getUserID();
+            System.out.println(studentID);
+            System.out.println("AttendanceServletttttttt");
+            String url = "MainController?action=attendServlet";
+            ArrayList<AttendanceDTO> attendSlot = AttendanceDAO.getAttendanceSlot(studentID, semes);
+            System.out.println(attendSlot);
+            if (attendSlot != null) {
+                request.setAttribute("attend", attendSlot);
             } else {
-                request.setAttribute("ERROR", "No one have booked your slot");
+                out.print("list null");
             }
-        } catch (Exception e) {
-            log("Error at SearchController: " + e.toString());
-        } finally {
             request.getRequestDispatcher(url).forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -88,5 +101,4 @@ public class ViewStudentSlotController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

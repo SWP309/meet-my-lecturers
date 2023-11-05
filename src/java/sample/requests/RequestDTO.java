@@ -66,7 +66,6 @@ public class RequestDTO implements Serializable{
         this.note = note;
     }
     
-
     public RequestDTO(String requestID, int status, String subjectCode, String startTime, String endTime, String description, String studentID, String lecturerID, String semesterID) {
         this.requestID = requestID;
         this.status = status;
@@ -224,7 +223,6 @@ public class RequestDTO implements Serializable{
     public void setStudentName(String studentName) {
         this.studentName = studentName;
     }
-    
     
     
     

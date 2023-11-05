@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -26,6 +27,8 @@ import sample.freeslots.FreeSlotsDAO;
 import sample.freeslots.FreeSlotsDTO;
 import sample.users.UserDTO;
 import sample.utils.DBUtils;
+import sample.viewCreatedSlot.ViewCreatedSlotDAO;
+import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
 /**
  *
@@ -45,25 +48,29 @@ public class CreateFreeSlotServlet extends HttpServlet {
         boolean checkCreated = false;
         try {
             HttpSession session = request.getSession();
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
             FreeSlotError freeSlotError = new FreeSlotError();
-
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String lecturerID = us.getUserID();
-
             String semesterID = request.getParameter("txtSemesterID");
-            boolean existsSemesterID = freeSlotsDAO.checkSemesterID(semesterID);
-            if (!existsSemesterID) {
-                flag = false;
-                freeSlotError.setSemesterIDError("The semesterID is wrong format OR not exist in DB.");
+//            boolean existsSemesterID = freeSlotsDAO.checkSemesterID(semesterID);
+//            if (!existsSemesterID) {
+//                flag = false;
+//                freeSlotError.setSemesterIDError("The semesterID is wrong format OR not exist in DB.");
+//            }
+            List<FreeSlotsDTO> listSemester = freeSlotsDAO.GetListSemesterID();
+            List<FreeSlotsDTO> listSubject = freeSlotsDAO.GetListSubject();
+            if (us.getUserEmail() != null) {
+                request.setAttribute("LIST_SEMESTER", listSemester);
+                request.setAttribute("LIST_SUBJECT", listSubject);
             }
 
             String subjectCode = request.getParameter("txtSubjectCode");
-            boolean existsSubjectCode = freeSlotsDAO.checkSubjectCode(subjectCode);
-            if (!existsSubjectCode) {
-                flag = false;
-                freeSlotError.setSubjectCodeError("The Subject code is wrong format OR not exist in DB.");
-            }
+//            boolean existsSubjectCode = freeSlotsDAO.checkSubjectCode(subjectCode);
+//            if (!existsSubjectCode) {
+//                flag = false;
+//                freeSlotError.setSubjectCodeError("The Subject code is wrong format OR not exist in DB.");
+//            }
 
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
