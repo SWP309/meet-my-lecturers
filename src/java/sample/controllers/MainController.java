@@ -70,16 +70,22 @@ public class MainController extends HttpServlet {
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
     private static final String BACK_TO_REQUEST = "BackToRequest";
-    private static final String SEARCH_REQUEST_STATUS = "SearchRequestStatus";
-    private static final String SEARCH_REQUEST_STATUS_ACTION = "SearchRequestStatusServlet";
 
     private static final String REQUEST_STATUS = "ViewRequestStatus";
     private static final String REQUEST_STATUS_PAGE = "ViewRequestStatus.jsp";
+    private static final String ALL_REQUEST_STATUS_CONTROLLER = "ViewAllRequestStatus";
+
+    private static final String SEARCH_REQUEST_STATUS = "SearchRequestStatus";
+    private static final String SEARCH_REQUEST_STATUS_ACTION = "SearchRequestStatusServlet";
 
     private static final String CREATE_REQUEST = "CreateRequest";
     private static final String REQUEST_ACTION = "CreateRequestServlet";
 
+    private static final String SEARCH_REQUEST_FOR_LEC = "searchRequestForLec";
+    private static final String SEARCH_REQUEST_FOR_LEC_ACTION = "SearchRequestForLec";
+
     private static final String VIEW_BOOKING = "ViewBooking";
+
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
     private static final String VIEW_BOOKING_HISTORY = "attendanceSemes";
     private static final String VIEW_BOOKING_HISTORY_CHECK_SEMES_ACTION = "AttendanceSemesServlet";
@@ -237,6 +243,10 @@ public class MainController extends HttpServlet {
                 url = SEARCH_USERS_CONTROLLER;
             } else if (UPDATE_USERS.equals(action)) {
                 url = UPDATE_USERS_CONTROLLER;
+            } else if (REQUEST_STATUS.equals(action)) {
+                url = ALL_REQUEST_STATUS_CONTROLLER;
+            } else if (SEARCH_REQUEST_STATUS.equals(action)) {
+                url = SEARCH_REQUEST_STATUS_ACTION;
             } else if (CHECK_ATTENDANCE_ACTION_STUDENT.equals(action)) {
                 url = CHECK_ATTENDANCE_SERVLET_STUDENT;
             } else if (CHECK_ATTENDANCE_ACTION_LECTURER.equals(action)) {
@@ -245,6 +255,8 @@ public class MainController extends HttpServlet {
                 url = BOOKING_FREE_SLOT_SERVLET;
             } else if (SEARCH_BOOKED_SLOT_ACTION.equals(action)) {
                 url = SEARCH_BOOKED_SLOT_SERVLET;
+            } else if (SEARCH_REQUEST_FOR_LEC.equals(action)) {
+                url = SEARCH_REQUEST_FOR_LEC_ACTION;
             } else if (CREATED_VIEW_FREE_SLOT_ACTION.equals(action)) {
                 url = CREATED_VIEW_CONTROLLER;
             } else if (SEARCH_REQUEST_STATUS.equals(action)) {

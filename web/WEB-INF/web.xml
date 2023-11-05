@@ -75,6 +75,10 @@
         <servlet-class>sample.controllers.SearchFreeSlotServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>SearchRequestStatusServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchRequestStatusServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CheckAttendanceBookingView</servlet-name>
         <servlet-class>sample.controllers.CheckAttendanceBookingView</servlet-class>
     </servlet>
@@ -159,9 +163,13 @@
         <servlet-class>sample.controllers.ViewStudentBookingPresenceServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SearchRequestStatusServlet</servlet-name>
-        <servlet-class>sample.controllers.SearchRequestStatusServlet</servlet-class>
+        <servlet-name>ViewAllRequestStatus</servlet-name>
+        <servlet-class>sample.controllers.ViewAllRequestStatus</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchRequestForLec</servlet-name>
+        <servlet-class>sample.controllers.SearchRequestForLec</servlet-class>
+    </servlet>    
     <servlet>
         <servlet-name>ViewOptionCreateFS</servlet-name>
         <servlet-class>sample.controllers.ViewOptionCreateFS</servlet-class>
@@ -271,6 +279,10 @@
         <url-pattern>/SearchFreeSlotServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>SearchRequestStatusServlet</servlet-name>
+        <url-pattern>/SearchRequestStatusServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>CheckAttendanceBookingView</servlet-name>
         <url-pattern>/CheckAttendanceBookingView</url-pattern>
     </servlet-mapping>
@@ -315,8 +327,12 @@
         <url-pattern>/ViewStudentBookingPresenceServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SearchRequestStatusServlet</servlet-name>
-        <url-pattern>/SearchRequestStatusServlet</url-pattern>
+        <servlet-name>ViewAllRequestStatus</servlet-name>
+        <url-pattern>/ViewAllRequestStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchRequestForLec</servlet-name>
+        <url-pattern>/SearchRequestForLec</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ViewOptionCreateFS</servlet-name>

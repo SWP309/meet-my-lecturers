@@ -2,6 +2,10 @@
 package sample.controllers;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,12 +21,18 @@ public class DeleteRequestServlet extends HttpServlet {
         String url = ERROR;
         try {
             String roleID = request.getParameter("txtRequestID");
+            String note = request.getParameter("txtNote");
+            if (note.isEmpty()) {
+                note = null;
+            }
             RequestDAO requestDAO = new RequestDAO();
+            boolean checkUpdateNote = requestDAO.updateNoteRequest(note, roleID);
             boolean checkDelete = requestDAO.deleteARequest(roleID);
-            if(checkDelete) {
+            if(checkDelete && checkUpdateNote) {
                 url = SUCCESS;
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException | ParseException ex) {
+            log("Error at DeleteRequestServlet: " + ex.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

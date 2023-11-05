@@ -5,17 +5,20 @@ public class BookingError {
     private String duplicateBookedSlot;
     private String duplicateAcceptedRequest;
     private String overCapacity;
+    private String checkPassword;
 
     public BookingError() {
         this.duplicateBookedSlot = "";
         this.duplicateAcceptedRequest = "";
         this.overCapacity = "";
+        this.checkPassword = "";
     }
 
-    public BookingError(String duplicateBookedSlot, String duplicateAcceptedRequest, String overCapacity) {
+    public BookingError(String duplicateBookedSlot, String duplicateAcceptedRequest, String overCapacity, String checkPassword) {
         this.duplicateBookedSlot = duplicateBookedSlot;
         this.duplicateAcceptedRequest = duplicateAcceptedRequest;
         this.overCapacity = overCapacity;
+        this.checkPassword = checkPassword;
     }
     
     /**
@@ -58,6 +61,20 @@ public class BookingError {
      */
     public void setOverCapacity(String overCapacity) {
         this.overCapacity = overCapacity;
+    }
+
+    /**
+     * @return the checkPassword
+     */
+    public String getCheckPassword() {
+        return checkPassword;
+    }
+
+    /**
+     * @param checkPassword the checkPassword to set
+     */
+    public void setCheckPassword(String checkPassword) {
+        this.checkPassword = checkPassword;
     }
     
 }
