@@ -61,6 +61,13 @@
 
         <!-- Foundicons CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet" type="text/css">
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--        font ch? gg-->
+        <link href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans&display=swap" rel="stylesheet">
 
 
         <%
@@ -271,39 +278,85 @@
                 </div>
             </div>
 
-            <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize" style="margin-top: 54px;">
-                <ul class="orbit-container" tabindex="0" style="height: 613.389px;">
-                    <button class="orbit-previous" tabindex="0" style="color: gray;"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
-                    <button class="orbit-next" tabindex="0" style="color: gray;"><span class="show-for-sr">Next Slide</span>&#9654;</button>
-                    <li class="orbit-slide" data-slide="0" style="display: none; position: relative; top: 0px;">
-                        <img class="orbit-image" src="./public/StudentHome/anh1.jpg"  style="width: 2000px; height: 600px; object-fit:contain;" alt="Space">
-                    <figcaption class="orbit-caption">FPT University</figcaption>
-                    </li>
-                    <li class="orbit-slide" data-slide="1" style="position: relative; top: 0px; display: none;">
-                        <img class="orbit-image" src="./public/StudentHome/anh3.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
-                    <figcaption class="orbit-caption">Ceremony</figcaption>
-                    </li>
-                    <li class="orbit-slide" data-slide="2" style="position: relative; top: 0px; display: none;">
-                        <img class="orbit-image" src="./public/StudentHome/anh4.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
-                    <figcaption class="orbit-caption">Orientation Week</figcaption>
-                    </li>
-                    <li class="orbit-slide" data-slide="3" style="position: relative; top: 0px; display: block;" aria-live="polite">
-                        <img class="orbit-image" src="./public/StudentHome/anh5.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
-                    <figcaption class="orbit-caption">F-Camp</figcaption>
-                    </li>
-                    <li class="orbit-slide is-active" data-slide="4" style="position: relative; top: 0px; display: block;" aria-live="polite">
-                        <img class="orbit-image" src="./public/StudentHome/anh6.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
-                    <figcaption class="orbit-caption">Training at the military</figcaption>
-                    </li>
-                </ul>
-                <nav class="orbit-bullets">
-                    <button class="" data-slide="0"><span class="show-for-sr">First slide details.</span></button>
-                    <button data-slide="1" class=""><span class="show-for-sr">Second slide details.</span></button>
-                    <button data-slide="2" class=""><span class="show-for-sr">Third slide details.</span></button>
-                    <button data-slide="3" class=""><span class="show-for-sr">Third slide details.</span></button>
-                    <button data-slide="4" class="is-active"><span class="show-for-sr">Fourth slide details.</span><span class="show-for-sr">Current Slide</span></button>
-                </nav>
+
+            <div class="container-fluid ar-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-9 pr-5">
+                            <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize" style="margin-top: -8px;">
+                                <ul class="orbit-container" tabindex="0" style="height: 613.389px;">
+                                    <button class="orbit-previous" tabindex="0" style="color: gray;"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
+                                    <button class="orbit-next" tabindex="0" style="color: gray;"><span class="show-for-sr">Next Slide</span>&#9654;</button>
+                                    <li class="orbit-slide" data-slide="0" style="display: none; position: relative; top: 0px;">
+                                        <img class="orbit-image" src="./public/StudentHome/HCM-scaled.jpeg"  style="width: 2000px; height: 600px; object-fit:contain;" alt="Space">
+                                    <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">FPT University</p></figcaption>
+                                    </li>
+                                    <li class="orbit-slide" data-slide="1" style="position: relative; top: 0px; display: none;">
+                                        <img class="orbit-image" src="./public/StudentHome/anh3.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
+                                    <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">Ceremony</p></figcaption>
+                                    </li>
+                                    <li class="orbit-slide" data-slide="2" style="position: relative; top: 0px; display: none;">
+                                        <img class="orbit-image" src="./public/StudentHome/anh4.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
+                                    <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">Orientation Week</p></figcaption>
+                                    </li>
+                                    <li class="orbit-slide" data-slide="3" style="position: relative; top: 0px; display: block;" aria-live="polite">
+                                        <img class="orbit-image" src="./public/StudentHome/anh5.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
+                                    <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">F-Camp</p></figcaption>
+                                    </li>
+                                    <li class="orbit-slide is-active" data-slide="4" style="position: relative; top: 0px; display: block;" aria-live="polite">
+                                        <img class="orbit-image" src="./public/StudentHome/anh6.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
+                                    <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">Training at the military</p></figcaption>
+                                    </li>
+                                </ul>
+                                <nav class="orbit-bullets">
+                                    <button class="" data-slide="0"><span class="show-for-sr">First slide details.</span></button>
+                                    <button data-slide="1" class=""><span class="show-for-sr">Second slide details.</span></button>
+                                    <button data-slide="2" class=""><span class="show-for-sr">Third slide details.</span></button>
+                                    <button data-slide="3" class=""><span class="show-for-sr">Third slide details.</span></button>
+                                    <button data-slide="4" class="is-active"><span class="show-for-sr">Fourth slide details.</span><span class="show-for-sr">Current Slide</span></button>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 pl-0">
+                            <div class="sidebar">
+                                <hr class="bg-white" />
+                                <c:set var="listTop3" value="${requestScope.LIST_TOP3}" /> 
+                                <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize" style="margin-top: 54px;">
+                                    <ul class="orbit-container" tabindex="0" style="height: 613.389px;">
+                                        <li class="orbit-slide" data-slide="0" style="display: none; position: relative; top: 0px;">
+                                            <img class="orbit-image" src="./public/StudentHome/User-avatar.png"  style="width: 2000px; height: 400px; object-fit:contain;" alt="Space">
+                                            <c:if test="${requestScope.LIST_TOP3 !=null}">
+                                            <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;"><b>${requestScope.LIST_TOP3[0].userName}</b></br>The number of booking slots: ${requestScope.LIST_TOP3[0].bookingCount}</p></figcaption>
+                                                </c:if>
+                                        </li>
+                                        <li class="orbit-slide" data-slide="1" style="position: relative; top: 0px; display: none;">
+                                            <img class="orbit-image" src="./public/StudentHome/User-avatar.png"  style="width: 2000px; height: 400px; object-fit:contain;" alt="Space">
+                                            <c:if test="${requestScope.LIST_TOP3 !=null}">
+                                            <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;"><b>${requestScope.LIST_TOP3[1].userName}</b></br>The number of booking slots: ${requestScope.LIST_TOP3[1].bookingCount}</p></figcaption>
+                                                </c:if>
+                                        </li>
+                                        <li class="orbit-slide is-active" data-slide="4" style="position: relative; top: 0px; display: block;" aria-live="polite">
+                                            <img class="orbit-image" src="./public/StudentHome/User-avatar.png"  style="width: 2000px; height: 400px; object-fit:contain;" alt="Space">
+                                            <c:if test="${requestScope.LIST_TOP3 !=null}">
+                                            <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;"><b>${requestScope.LIST_TOP3[2].userName}</b></br>The number of booking slots: ${requestScope.LIST_TOP3[2].bookingCount}</p></figcaption>
+                                                </c:if>
+                                        </li>
+                                    </ul>
+                                    <nav class="orbit-bullets">
+                                        <button class="" data-slide="0"><span class="show-for-sr">First slide details.</span></button>
+                                        <button data-slide="1" class=""><span class="show-for-sr">Second slide details.</span></button>
+                                        <button data-slide="2" class="is-active"><span class="show-for-sr">Fourth slide details.</span><span class="show-for-sr">Current Slide</span></button>
+                                    </nav>
+                                </div>
+                                <h3 style="text-align: center; font-family: 'Agbalumo', sans-serif;">Top Student</h3>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
 
 
         </div>
@@ -901,16 +954,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
     <script>
-    // L?y thông tin l?i t? bi?n requestScope.ERROR
-    var errorMessage = "${requestScope.BOOKING_ERROR.duplicateBookedSlot}";
+                                // L?y thông tin l?i t? bi?n requestScope.ERROR
+                                var errorMessage = "${requestScope.BOOKING_ERROR.duplicateBookedSlot}";
 
-    // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
-    if (errorMessage.trim() !== "") {
-        alert(errorMessage);
-    }
+                                // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+                                if (errorMessage.trim() !== "") {
+                                    alert(errorMessage);
+                                }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script>
-        $(document).foundation();
+                                $(document).foundation();
     </script>
     <%} else {
             response.sendRedirect("MainController");

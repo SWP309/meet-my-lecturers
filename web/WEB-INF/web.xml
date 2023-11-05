@@ -158,6 +158,10 @@
         <servlet-name>ViewOptionCreateFS</servlet-name>
         <servlet-class>sample.controllers.ViewOptionCreateFS</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SelectTop3Student</servlet-name>
+        <servlet-class>sample.controllers.SelectTop3Student</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -297,6 +301,10 @@
     <servlet-mapping>
         <servlet-name>ViewOptionCreateFS</servlet-name>
         <url-pattern>/ViewOptionCreateFS</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SelectTop3Student</servlet-name>
+        <url-pattern>/SelectTop3Student</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
