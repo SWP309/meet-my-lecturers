@@ -10,6 +10,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+
+        %>
         <meta charset="UTF-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
@@ -70,10 +75,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans&display=swap" rel="stylesheet">
 
 
-        <%
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            if (us != null) {
-        %>
         <script>
             function confirmCancel(bookingID) {
                 if (confirm('Are you sure to cancel this booking')) {
@@ -145,6 +146,13 @@
             function submitFormBack() {
                 var form = document.querySelector('.backbutton form');
                 form.submit();
+            }
+
+            var errorMessage2 = confirm("${requestScope.showConfirmation}");
+            if (errorMessage2) {
+                window.location.href = "MainController?action=changePass";
+            } else {
+                event.preventDefault();
             }
 
         </script>
@@ -219,6 +227,7 @@
         </style>
     </head>
     <body>
+
         <div class="student-home">
             <div class="fptu-eng-1-parent">
                 <div class="returnHome"> 
@@ -971,4 +980,3 @@
         }%>
 </body>
 </html>
-

@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -135,9 +136,8 @@
                 <div style="padding-right: 100px; display: inline-block">
                     Import List Student
                 </div>
-                <%
-                    String EXCSERVLET = (String) request.getAttribute("EXCSERVLET");
-
+                <%                    String EXCSERVLET = (String) request.getAttribute("EXCSERVLET");
+                    
                     if (EXCSERVLET != null) {
                 %>
                 <span style="color: red; font-size: 1rem;">
@@ -146,6 +146,7 @@
                 <%
                     }
                 %>
+                <a href="https://drive.google.com/drive/folders/195tJBz5ZndD9dh9Lvdw3K1SH_dh8ACnZ?usp=sharing" target="_blank" style="color: blueviolet">Download template</a>
                 <div class="form-group input-group">
                     <div class="custom-file">
                         <input type="file" name="txtexcel" class="custom-file-input" id="imageUpload"  onchange="updateFileName('imageUpload')" required>
@@ -161,11 +162,11 @@
                 <div style="padding-right: 100px; display: inline-block">
                     Import Timetables
                 </div>
-                <%
+                <%    
                     String TIMESERVLET = (String) request.getAttribute("TIMESERVLET");
                     String DUPLICATEDATA = (String) request.getAttribute("DUPLICATEDATA");
                     String DUPLICATEDATATIMETABLE = (String) request.getAttribute("DUPLICATEDATATIMETABLE");
-
+                    
                     if (TIMESERVLET != null) {
                 %>
                 <span style="color: red; font-size: 1rem;">
@@ -173,21 +174,8 @@
                 </span>
                 <%
                     }
-                    if (DUPLICATEDATA != null) {
                 %>
-                <span style="color: red; font-size: 1rem;">
-                    <%= DUPLICATEDATA%>
-                </span>
-                <%
-                    }
-                    if (DUPLICATEDATATIMETABLE != null) {
-                %>
-                <span style="color: red; font-size: 1rem;">
-                    <%= DUPLICATEDATATIMETABLE%>
-                </span>
-                <%
-                    }
-                %>
+                <a href="https://drive.google.com/drive/folders/1s_yu8ElI5rP6RaON6SLxFOIN5kmEUh4D?usp=drive_link" target="_blank" style="color: blueviolet">Download template</a>
                 <div class="form-group input-group">
                     <div class="custom-file">
                         <input type="hidden" value="importTB" name="action">
@@ -212,9 +200,10 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-        <%} else {
-                response.sendRedirect("MainController");
-            }%>
+        <%
+            } else {
+                response.sendRedirect("MainController?action=");
+            }            
+        %>
     </body>
 </html>

@@ -9,6 +9,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {                        
+        %>
         <meta charset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
@@ -33,11 +37,6 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
 
 
-        <%
-
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-
-        %>
         <script>
             function confirmCancel(bookingID) {
                 if (confirm('Are you sure to cancel this booking')) {
@@ -65,8 +64,12 @@
                 var form = document.querySelector('.requestViewStatus form');
                 form.submit();
             }
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
+            function submitFormRequestStatus() {
+                var form = document.querySelector('.requestViewStatus form');
+                form.submit();
+            }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
                 form.submit();
             }
             var userDTO = {
@@ -81,11 +84,11 @@
                 } else {
                     userInfo.style.display = "none";
                 }
-
+                
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
-
+                
                 Swal.fire({
                     title: 'User Information',
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
@@ -123,7 +126,7 @@
                     event.preventDefault();
                 }
             }
-
+            
             function submitFormBack() {
                 var form = document.querySelector('.backbutton form');
                 form.submit();
@@ -197,7 +200,7 @@
         </div>
         <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
             <form action="MainController" method="POST">
-                <input type="hidden" name="action" value="CreateFS" />
+                <input type="hidden" name="action" value="attendanceSemes" />
             </form>
 
             <i class="material-icons">history</i>
@@ -501,5 +504,10 @@
             <h3>
                 ${requestScope.ERROR}
             </h3> 
+            <% } else {
+                    response.sendRedirect("MainController?action=");
+                }
+
+            %>
     </body>
 </html>

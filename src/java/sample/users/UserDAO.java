@@ -7,12 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import sample.roles.RoleDTO;
-
 import sample.dashboard.UserMaxRequestDTO;
 import sample.dashboard.UserMaxSlotDTO;
-
 import sample.utils.DBUtils;
 
 public class UserDAO implements Serializable {
@@ -112,7 +109,7 @@ public class UserDAO implements Serializable {
                 String userID = rs.getString("userID");
                 String userName = rs.getNString("userName");
                 String userEmail = rs.getString("userEmail");
-                UserDTO userDTO = new UserDTO(userID, userName, userEmail, true, "2", "");
+                UserDTO userDTO = new UserDTO(userID, userName, userEmail, 1, "2", "");
                 if (this.lecturers == null) {
                     this.lecturers = new ArrayList<>();
                 }
@@ -146,7 +143,7 @@ public class UserDAO implements Serializable {
                     String id = rs.getString("userID").trim();
                     String name = rs.getString("userName").trim();
                     String email = rs.getString("userEmail").trim();
-                    boolean status = rs.getBoolean("userStatus");
+                    int status = rs.getInt("userStatus");
                     String roleID = rs.getString("roleID").trim();
                     String password = rs.getString("password").trim();
                     us = new UserDTO(id, name, email, status, roleID, password);
@@ -172,7 +169,7 @@ public class UserDAO implements Serializable {
                     String id = rs.getString("userID").trim();
                     String name = rs.getString("userName").trim();
                     String email = rs.getString("userEmail").trim();
-                    boolean status = rs.getBoolean("userStatus");
+                    int status = rs.getInt("userStatus");
                     String roleID = rs.getString("roleID").trim();
                     String password = rs.getString("password").trim();
                     us = new UserDTO(id, name, email, status, roleID, password);
@@ -198,7 +195,7 @@ public class UserDAO implements Serializable {
                     String id = rs.getString("userID").trim();
                     String name = rs.getString("userName").trim();
                     String email = rs.getString("userEmail").trim();
-                    boolean status = rs.getBoolean("userStatus");
+                    int status = rs.getInt("userStatus");
                     String roleID = rs.getString("roleID").trim();
                     String password = rs.getString("password").trim();
                     us = new UserDTO(id, name, email, status, roleID, password);
@@ -236,7 +233,7 @@ public class UserDAO implements Serializable {
                 String userName = rs.getNString("userName");
                 String userEmail = rs.getString("userEmail");
                 String password = rs.getNString("password");
-                boolean userStatus = rs.getBoolean("userStatus");
+                int userStatus = rs.getInt("userStatus");
                 UserDTO userDTO = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
                 RoleDTO roleDTO = new RoleDTO(roleID, roleName);
                 if (this.usersByRoleID == null) {
@@ -288,7 +285,7 @@ public class UserDAO implements Serializable {
                 String userName = rs.getNString("userName");
                 String userEmail = rs.getString("userEmail");
                 String password = rs.getNString("password");
-                boolean userStatus = rs.getBoolean("userStatus");
+                int userStatus = rs.getInt("userStatus");
                 UserDTO userDTO = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
                 RoleDTO roleDTO = new RoleDTO(roleID, roleName);
                 if (this.usersByName == null) {
@@ -341,7 +338,7 @@ public class UserDAO implements Serializable {
                 String userName = rs.getNString("userName");
                 String userEmail = rs.getString("userEmail");
                 String password = rs.getNString("password");
-                boolean userStatus = rs.getBoolean("userStatus");
+                int userStatus = rs.getInt("userStatus");
                 UserDTO userDTO = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
                 RoleDTO roleDTO = new RoleDTO(roleID, roleName);
                 if (this.usersByNameAndRoleID == null) {
@@ -392,7 +389,7 @@ public class UserDAO implements Serializable {
                 String userName = rs.getNString("userName");
                 String userEmail = rs.getString("userEmail");
                 String password = rs.getNString("password");
-                boolean userStatus = rs.getBoolean("userStatus");
+                int userStatus = rs.getInt("userStatus");
                 UserDTO userDTO = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
                 RoleDTO roleDTO = new RoleDTO(roleID, roleName);
                 if (this.users == null) {
@@ -427,7 +424,7 @@ public class UserDAO implements Serializable {
             stm = con.prepareStatement(UPDATE_USER);
             stm.setNString(1, userDTO.getUserName());
             stm.setString(2, userDTO.getUserEmail());
-            stm.setBoolean(3, userDTO.isUserStatus());
+            stm.setInt(3, userDTO.getUserStatus());
             stm.setNString(4, userDTO.getPassword());
             stm.setString(5, userDTO.getUserID());
             result = stm.executeUpdate();
@@ -472,7 +469,7 @@ public class UserDAO implements Serializable {
                 String userName = rs.getNString("userName");
                 String userEmail = rs.getString("userEmail");
                 String password = rs.getNString("password");
-                boolean userStatus = rs.getBoolean("userStatus");
+                int userStatus = rs.getInt("userStatus");
                 UserDTO userDTO = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
                 RoleDTO roleDTO = new RoleDTO(roleID, roleName);
                 if (this.usersByUserID == null) {
@@ -525,7 +522,7 @@ public class UserDAO implements Serializable {
                 String userName = rs.getNString("userName");
                 String userEmail = rs.getString("userEmail");
                 String password = rs.getNString("password");
-                boolean userStatus = rs.getBoolean("userStatus");
+                int userStatus = rs.getInt("userStatus");
                 UserDTO userDTO = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
                 RoleDTO roleDTO = new RoleDTO(roleID, roleName);
                 if (this.usersByUserIDAndNameAndRoleID == null) {
@@ -689,7 +686,7 @@ public class UserDAO implements Serializable {
             pst.setString(1, users.getUserID());
             pst.setString(2, users.getUserName());
             pst.setString(3, users.getUserEmail());
-            pst.setBoolean(4, users.isUserStatus());
+            pst.setInt(4, users.getUserStatus());
             pst.setString(5, users.getRoleID());
             pst.setString(6, users.getPassword());
             rs = pst.executeUpdate();
@@ -697,6 +694,22 @@ public class UserDAO implements Serializable {
             pst.close();
         } else {
             System.out.println("Error Import Excel func");
+        }
+        return rs;
+    }
+
+    public static int changePassword(String userid, String password) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "Update dbo.Users\n"
+                    + "Set password = ?\n"
+                    + "Where userID = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, password);
+            pst.setString(2, userid);
+            rs = pst.executeUpdate();
+            cn.close();
         }
         return rs;
     }

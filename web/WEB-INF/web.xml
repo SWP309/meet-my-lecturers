@@ -147,6 +147,14 @@
         </multipart-config>
     </servlet>
     <servlet>
+        <servlet-name>AttendanceServlet</servlet-name>
+        <servlet-class>sample.controllers.AttendanceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AttendanceSemesServlet</servlet-name>
+        <servlet-class>sample.controllers.AttendanceSemesServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ViewStudentBookingPresenceServlet</servlet-name>
         <servlet-class>sample.controllers.ViewStudentBookingPresenceServlet</servlet-class>
     </servlet>
@@ -159,8 +167,12 @@
         <servlet-class>sample.controllers.ViewOptionCreateFS</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SelectTop3Student</servlet-name>
-        <servlet-class>sample.controllers.SelectTop3Student</servlet-class>
+        <servlet-name>CheckStatusServlet</servlet-name>
+        <servlet-class>sample.controllers.CheckStatusServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <servlet-class>sample.controllers.ChangePasswordServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
@@ -291,6 +303,14 @@
         <url-pattern>/ImportStudents</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>AttendanceServlet</servlet-name>
+        <url-pattern>/AttendanceServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendanceSemesServlet</servlet-name>
+        <url-pattern>/AttendanceSemesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ViewStudentBookingPresenceServlet</servlet-name>
         <url-pattern>/ViewStudentBookingPresenceServlet</url-pattern>
     </servlet-mapping>
@@ -303,8 +323,12 @@
         <url-pattern>/ViewOptionCreateFS</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SelectTop3Student</servlet-name>
-        <url-pattern>/SelectTop3Student</url-pattern>
+        <servlet-name>CheckStatusServlet</servlet-name>
+        <url-pattern>/CheckStatusServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <url-pattern>/ChangePasswordServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -24,8 +24,7 @@ public class MainController extends HttpServlet {
     private static final String LOGIN_BY_FEID_ACTION_CHECK = "loginFeIDAction";
 
     private static final String STUDENT_PAGE = "StudentPage";
-    private static final String STUDENT_PAGE_ACTION = "SelectTop3Student";
-
+    private static final String STUDENT_PAGE_ACTION = "CheckStatusServlet";
     private static final String BOOKING_FREE_SLOT = "BookFreeSlot";
     private static final String BOOKING_FREE_SLOT_SERVLET = "BookFSlotServlet";
 
@@ -81,6 +80,13 @@ public class MainController extends HttpServlet {
 
     private static final String VIEW_BOOKING = "ViewBooking";
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
+    private static final String VIEW_BOOKING_HISTORY = "attendanceSemes";
+    private static final String VIEW_BOOKING_HISTORY_CHECK_SEMES_ACTION = "AttendanceSemesServlet";
+    private static final String VIEW_BOOKING_HISTORY_CHECK_SEMES = "attendanceservlet";
+    private static final String VIEW_BOOKING_HISTORY_PAGE = "CheckAttend.jsp";
+    private static final String VIEW_BOOKING_HISTORY_PAGE_ACTION = "AttendanceServlet";
+    private static final String VIEW_BOOKING_HISTORY_SERVLET = "attendServlet";
+    private static final String VIEW_BOOKING_HISTORY_SERVLET_ACTION = "CheckAttend.jsp";
 
     private static final String VIEWTIMETABLE = "ViewTimetable";
     private static final String VIEW_TIMETABLE_CONTROLLER = "ViewTimetableServlet";
@@ -128,6 +134,11 @@ public class MainController extends HttpServlet {
 
     private static final String SEARCH_BOOKED_SLOT_ACTION = "searchBSlot";
     private static final String SEARCH_BOOKED_SLOT_SERVLET = "SearchBookedServlet";
+
+    private static final String CHANGE_PASS = "changePass";
+    private static final String CHANGE_PASS_ACTION = "ChangePassword.jsp";
+    private static final String CHANGE_PASS_PAGE_ACTION = "changePassServlet";
+    private static final String CHANGE_PASS_PAGE_SERVLET = "ChangePasswordServlet";
 
     private static final String BACK = "back";
 
@@ -239,9 +250,20 @@ public class MainController extends HttpServlet {
                 url = SEARCH_REQUEST_STATUS_ACTION;
             } else if (REQUEST_STATUS.equals(action)) {
                 url = REQUEST_STATUS_PAGE;
+            } else if (VIEW_BOOKING_HISTORY.equals(action)) {
+                url = VIEW_BOOKING_HISTORY_CHECK_SEMES_ACTION;
+            } else if (VIEW_BOOKING_HISTORY_CHECK_SEMES.equals(action)) {
+                url = VIEW_BOOKING_HISTORY_PAGE_ACTION;
+            } else if (VIEW_BOOKING_HISTORY_SERVLET.equals(action)) {
+                url = VIEW_BOOKING_HISTORY_SERVLET_ACTION;
+            } else if (CHANGE_PASS.equals(action)) {
+                url = CHANGE_PASS_ACTION;
+            } else if (CHANGE_PASS_PAGE_ACTION.equals(action)) {
+                url = CHANGE_PASS_PAGE_SERVLET;
             } else if (HOME_ACTION_ADMIN.equals(action)) {
                 url = HOME_PAGE_ADMIN;
             }
+            
 
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());

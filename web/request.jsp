@@ -85,7 +85,7 @@
             }
         </style>
         <%
-
+            
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             if (us != null) {
         %>
@@ -122,11 +122,11 @@
                 } else {
                     userInfo.style.display = "none";
                 }
-
+                
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
-
+                
                 Swal.fire({
                     title: 'User Information',
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
@@ -293,6 +293,9 @@
             integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI"
             crossorigin="anonymous"
         ></script>
-        <% }%>
+        <% } else {
+                response.sendRedirect("MainController?action=");
+            }
+        %>
     </body>
 </html>
