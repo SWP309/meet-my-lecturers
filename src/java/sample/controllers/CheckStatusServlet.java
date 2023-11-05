@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package sample.controllers;
 
@@ -11,34 +12,45 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import sample.users.Top3StudentDTO;
 import sample.users.UserDAO;
+import sample.users.UserDTO;
 
 /**
  *
- * @author PC
+ * @author Minh Khang
  */
-public class SelectTop3Student extends HttpServlet {
+public class CheckStatusServlet extends HttpServlet {
 
-    private final String ERROR = "StudentHome_1.jsp";
-    private final String SUCCESS = "StudentHome_1.jsp";
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
-        try {
-          
+        try (PrintWriter out = response.getWriter()) {
+            HttpSession session = request.getSession();
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us.getUserStatus() == 0) {
+                System.out.println(us.getUserStatus());
+                request.setAttribute("showConfirmation", "Do you want to change your password ?");
+            }
             UserDAO dao = new UserDAO();
             List<Top3StudentDTO> listTop3 = dao.GetlistTop3();
             if (listTop3 != null) {
                 request.setAttribute("LIST_TOP3", listTop3);
-                url = SUCCESS;
             }
-        } catch (Exception e) {
-            log("Error at BookingController: " + e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+
+            request.getRequestDispatcher("StudentHome_1.jsp").forward(request, response);
+        } catch(Exception e) {
+            e.printStackTrace();
         }
     }
 

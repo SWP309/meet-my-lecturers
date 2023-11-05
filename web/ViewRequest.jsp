@@ -307,5 +307,8 @@
 
         </div>
     </body>
-    <% }%>
+    <% } else{
+response.sendRedirect("MainController?ation=");
+}
+    %>
 </html>

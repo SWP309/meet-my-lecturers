@@ -139,11 +139,11 @@
                 } else {
                     userInfo.style.display = "none";
                 }
-
+                
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
-
+                
                 Swal.fire({
                     title: 'User Information',
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
@@ -158,7 +158,7 @@
                 var form = document.querySelector('.request-div form');
                 form.submit();
             }
-
+            
         </script>
 
         <script>
@@ -320,6 +320,9 @@
         <c:if test="${sessionScope.loginedUser == null || sessionScope.loginedUser.roleID != '2' }">
             <c:redirect url="LoginFeID.jsp"> </c:redirect>
         </c:if>
-        <% }%>
+        <% } else {
+                response.sendRedirect("MainController?action=");
+            }
+        %>
     </body>
 </html>

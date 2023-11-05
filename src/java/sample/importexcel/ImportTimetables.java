@@ -48,33 +48,16 @@ public class ImportTimetables extends HttpServlet {
             String URL = "";
             Part filePart = request.getPart("txtexcel");
             String fileName = filePart.getSubmittedFileName();
-            String lecID = request.getParameter("lecID");
-            String semesID = request.getParameter("semesID");
+            String lecID = request.getParameter("lecID").toUpperCase();
+            String semesID = request.getParameter("semesID").toUpperCase();
             boolean flag = true;
-//            tb.removeTimetable(lecID, semesID);
             if (fileName != null) {
                 if (fileName.endsWith(".xls")) {
 
                     InputStream inp = filePart.getInputStream();
                     HSSFWorkbook wb = new HSSFWorkbook(new POIFSFileSystem(inp));
                     HSSFSheet sheet = wb.getSheetAt(0);
-                    for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                        Row row = sheet.getRow(i);
-
-                        String subjectCode = row.getCell(1).getStringCellValue();
-                        String slotID = row.getCell(2).getStringCellValue();
-                        String lecturerID = row.getCell(3).getStringCellValue();
-                        String semesterID = row.getCell(4).getStringCellValue();
-
-                        if ((!lecID.equalsIgnoreCase(lecturerID) && !semesterID.equalsIgnoreCase(semesID))
-                                || (!lecID.equalsIgnoreCase(lecturerID)) || (!semesterID.equalsIgnoreCase(semesID))) {
-                            flag = false;
-                            request.setAttribute("DUPLICATEDATATIMETABLE", "Error data in Excel: Data must be correct with the given");
-                            URL = "MainController?action=importPage";
-                        }
-                    }
-                    if (flag) {
-                        tb.removeTimetable(lecID, semesID);
+                    try {
                         for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                             Row row = sheet.getRow(i);
 
@@ -83,16 +66,38 @@ public class ImportTimetables extends HttpServlet {
                             String lecturerID = row.getCell(3).getStringCellValue();
                             String semesterID = row.getCell(4).getStringCellValue();
 
-                            TimetableDTO time = new TimetableDTO(subjectCode, slotID, lecturerID, semesterID);
-                            TimetableDTO check = tb.getTimtables(subjectCode, slotID, lecturerID, semesterID);
-                            if (check == null) {
-                                request.setAttribute("TIMESERVLET", "Import Successfully");
-                                TimetableDAO.ImportExcelTimetables(time);
-                            } else {
-                                request.setAttribute("DUPLICATEDATA", "Duplicate data defected");
+                            if ((!lecID.equalsIgnoreCase(lecturerID) && !semesterID.equalsIgnoreCase(semesID))
+                                    || (!lecID.equalsIgnoreCase(lecturerID)) || (!semesterID.equalsIgnoreCase(semesID))) {
+                                flag = false;
+                                request.setAttribute("TIMESERVLET", "Error data in Excel: Data must be correct with the given");
+                                URL = "MainController?action=importPage";
                             }
                         }
+                        if (flag) {
+                            tb.removeTimetable(lecID, semesID);
+                            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                                Row row = sheet.getRow(i);
+
+                                String subjectCode = row.getCell(1).getStringCellValue();
+                                String slotID = row.getCell(2).getStringCellValue();
+                                String lecturerID = row.getCell(3).getStringCellValue();
+                                String semesterID = row.getCell(4).getStringCellValue();
+
+                                TimetableDTO time = new TimetableDTO(subjectCode, slotID, lecturerID, semesterID);
+                                TimetableDTO check = tb.getTimtables(subjectCode, slotID, lecturerID, semesterID);
+                                if (check == null) {
+                                    request.setAttribute("TIMESERVLET", "Import Successfully");
+                                    TimetableDAO.ImportExcelTimetables(time);
+                                } else {
+                                    request.setAttribute("TIMESERVLET", "Duplicate data defected");
+                                }
+                            }
+                            wb.close();
+                            URL = "MainController?action=importPage";
+                        }
+                    } catch (IllegalStateException e) {
                         wb.close();
+                        request.setAttribute("TIMESERVLET", "Error: Wrong format data");
                         URL = "MainController?action=importPage";
                     }
                 } else if (fileName.endsWith(".xlsx")) {
@@ -111,7 +116,7 @@ public class ImportTimetables extends HttpServlet {
                         if ((!lecID.equalsIgnoreCase(lecturerID) && !semesterID.equalsIgnoreCase(semesID))
                                 || (!lecID.equalsIgnoreCase(lecturerID)) || (!semesterID.equalsIgnoreCase(semesID))) {
                             flag = false;
-                            request.setAttribute("DUPLICATEDATATIMETABLE", "Error data in Excel: Data must be correct with the given");
+                            request.setAttribute("TIMESERVLET", "Error data in Excel: Data must be correct with the given");
                             URL = "MainController?action=importPage";
                         }
                     }
@@ -131,7 +136,7 @@ public class ImportTimetables extends HttpServlet {
                                 request.setAttribute("TIMESERVLET", "Import Successfully");
                                 TimetableDAO.ImportExcelTimetables(time);
                             } else {
-                                request.setAttribute("DUPLICATEDATA", "Duplicate data defected");
+                                request.setAttribute("TIMESERVLET", "Duplicate data defected");
                             }
                         }
                     }
