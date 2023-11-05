@@ -1,10 +1,10 @@
-.fptu-eng-1-icon1 {
-    position: absolute;
-    top: 4px;
-    left: 40px;
-    width: 149px;
-    height: 60px;
-    object-fit: cover;
+.returnHome{
+    /*position: absolute;*/
+    width: 120px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: url("public/BookingView/2021fptueng-1@2x.png");
 }
 .div {
     position: relative;
@@ -52,27 +52,25 @@
 .logout2 {
     margin: 0;
 }
-.frame-div,
-.frame-group {
+.frame-group, .frame-div{
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    color: white;
+    justify-content: center;
 }
 .frame-div {
+    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
     border-radius: 12px;
     background-color: #f27125;
-    width: 123px;
+    width: 188px;
     height: 43px;
-    align-items: flex-start;
-    padding: 10px 16px;
+    /*align-items: flex-start;*/
+    padding: 10px 9px;
     box-sizing: border-box;
     gap: 8px;
-    cursor: pointer;
 }
 .frame-group {
-    align-items: flex-end;
     gap: 16px;
+    flex-wrap: wrap;
 }
 .frame-child {
     position: relative;
@@ -80,24 +78,28 @@
     height: 42px;
 }
 .frame-parent {
-    position: absolute;
-    top: 12.5px;
-    left: 1021px;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 20px;
 }
 .fptu-eng-1-parent {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: #fff;
-    border: 1px solid #000;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.125);
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
     box-sizing: border-box;
-    width: 1440px;
-    height: 68px;
+    width: 100%;
+    min-height: 68px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /*padding: 35px 40px;*/
+    padding-left: 35px;
+    font-size: 17px;
+    color: #fff;
+
+    /*overflow: hidden;*/
+    flex-wrap: wrap;
 }
 .search-child {
     position: absolute;
@@ -189,12 +191,12 @@
     color: #000;
 }
 table td, table th {
-  border: 1px solid black; /* Đường viền cho các ô */
-  padding: 8px; /* Khoảng cách giữa nội dung và đường viền */
+    border: 1px solid black; /* Đường viền cho các ô */
+    padding: 8px; /* Khoảng cách giữa nội dung và đường viền */
 }
 
 table th {
-  background-color: #f2f2f2; /* Màu nền cho tiêu đề các cột */
+    background-color: #f2f2f2; /* Màu nền cho tiêu đề các cột */
 }
 input.in_userID {
     width: 77px;
@@ -259,4 +261,9 @@ input.in_search_userID {
     font-size: 18px;
     color: #000;
     font-family: sans-serif;
+}
+.frame-item {
+    position: relative;
+    width: 100px;
+    height: 42px;
 }
