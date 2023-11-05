@@ -18,6 +18,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import sample.bookings.BookingDAO;
 import sample.utils.DBUtils;
 
 /**
@@ -25,112 +26,116 @@ import sample.utils.DBUtils;
  * @author W10(hiep-tm)
  */
 public class FreeSlotsDAO {
-
-    private final static String CREATE_FREESLOT = "INSERT INTO "
-            + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status,semesterID,block_list) "
-            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private final static String CHECK_DUPLICATE_GGMEETLINK = "SELECT freeSlotID "
-            + "FROM FreeSlots WHERE meetLink=?";
-    private final static String SEARCH_FREESLOT_BY_SUBJECTCODE = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
-            + "					FROM FreeSlots fs\n"
-            + "					JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "					WHERE fs.subjectCode = ? AND fs.status = 1 \n"
-            + "					AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
-            + "								FROM Bookings b\n"
-            + "								WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_LECTURERID = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
-            + "            FROM FreeSlots fs\n"
-            + "			JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "            WHERE fs.lecturerID = ? AND fs.status = 1\n"
-            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
-            + "						FROM Bookings b\n"
-            + "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_LECNAME = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
-            + "            FROM FreeSlots fs\n"
-            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "            WHERE lec.userName LIKE ? AND fs.status = 1\n"
-            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
-            + "						FROM Bookings b\n"
-            + "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_SEMESTERID = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
-            + "            FROM FreeSlots fs\n"
-            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "            WHERE fs.semesterID = ? AND fs.status = 1\n"
-            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
-            + "						FROM Bookings b\n"
-            + "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_LECID = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
-            + "            FROM FreeSlots fs\n"
-            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "            WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND fs.status = 1\n"
-            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
-            + "						FROM Bookings b\n"
-            + "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_LECNAME = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
-            + "            FROM FreeSlots fs\n"
-            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "            WHERE fs.subjectCode = ? AND lec.userName LIKE ? AND fs.status = 1\n"
-            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
-            + "						FROM Bookings b\n"
-            + "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
-            + "            FROM FreeSlots fs\n"
-            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "            WHERE fs.subjectCode = ? AND fs.semesterID = ? AND fs.status = 1\n"
-            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
-            + "						FROM Bookings b\n"
-            + "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_LECID_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
-            + "            FROM FreeSlots fs\n"
-            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "            WHERE fs.lecturerID = ? AND fs.semesterID = ? AND fs.status = 1\n"
-            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
-            + "						FROM Bookings b\n"
-            + "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_LECNAME_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
-            + "            FROM FreeSlots fs\n"
-            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "            WHERE lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1\n"
-            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
-            + "						FROM Bookings b\n"
-            + "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_SUBCODE_AND_LECID_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
-            + "            FROM FreeSlots fs\n"
-            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "            WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND fs.semesterID = ? AND fs.status = 1\n"
-            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
-            + "						FROM Bookings b\n"
-            + "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_SUBCODE_AND_LECNAME_AND_SEMESTER = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
-            + "            FROM FreeSlots fs\n"
-            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "            WHERE fs.subjectCode = ? AND lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1\n"
-            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
-            + "						FROM Bookings b\n"
-            + "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT_BY_ALL = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
-            + "            FROM FreeSlots fs\n"
-            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "            WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1\n"
-            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
-            + "						FROM Bookings b\n"
-            + "						WHERE b.studentID = ? and b.status = 1)";
-    private final static String SEARCH_FREESLOT = "SELECT fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
-            + "            FROM FreeSlots fs\n"
-            + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "            WHERE fs.status = 1\n"
-            + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
-            + "						FROM Bookings b\n"
-            + "						WHERE b.studentID = ? and b.status = 1)";
-
     private final static String CHECK_SEMESTERID = "SELECT semesterID FROM Semesters WHERE semesterID = ?";
     private final static String CHECK_SUBJECTCODE = "SELECT subjectCode FROM Subjects WHERE subjectCode = ?";
-    private final static String CHECK_BLOCKLIST = "SELECT freeSlotID FROM FreeSlots WHERE block_list LIKE CONCAT('%', ?, '%') AND freeSlotID = ?";
+    private final static String CHECK_BLOCKLIST = "SELECT block_list FROM FreeSlots WHERE block_list LIKE CONCAT('%', ?, '%')";
     private final String CHECK_TIME_DUPLICATE_FS = "SELECT fs.freeSlotID\n"
             + "FROM FreeSlots fs\n"
             + "WHERE fs.lecturerID = ? \n"
             + "AND ? BETWEEN fs.startTime AND fs.endTime\n"
             + "AND fs.status = ?";
+    private final static String CREATE_FREESLOT = "INSERT INTO "
+            + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status,semesterID,block_list) "
+            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private final static String CHECK_DUPLICATE_GGMEETLINK = "SELECT freeSlotID "
+            + "FROM FreeSlots WHERE meetLink=?";
+    private final static String SEARCH_FREESLOT_BY_SUBJECTCODE = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+"					FROM FreeSlots fs\n" +
+"					JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+"					WHERE fs.subjectCode = ? AND fs.status = 1 \n" +
+"					AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
+"								FROM Bookings b\n" +
+"								WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_LECTURERID = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+                            "            FROM FreeSlots fs\n" +
+                            "			JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+                            "            WHERE fs.lecturerID = ? AND fs.status = 1\n" +
+                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
+                            "						FROM Bookings b\n" +
+                            "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_LECNAME = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+                            "            FROM FreeSlots fs\n" +
+                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+                            "            WHERE lec.userName LIKE ? AND fs.status = 1\n" +
+                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
+                            "						FROM Bookings b\n" +
+                            "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_SEMESTERID = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+                            "            FROM FreeSlots fs\n" +
+                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+                            "            WHERE fs.semesterID = ? AND fs.status = 1\n" +
+                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
+                            "						FROM Bookings b\n" +
+                            "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_LECID = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+                            "            FROM FreeSlots fs\n" +
+                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+                            "            WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND fs.status = 1\n" +
+                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
+                            "						FROM Bookings b\n" +
+                            "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_LECNAME = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+                            "            FROM FreeSlots fs\n" +
+                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+                            "            WHERE fs.subjectCode = ? AND lec.userName LIKE ? AND fs.status = 1\n" +
+                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
+                            "						FROM Bookings b\n" +
+                            "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_SUBJECT_AND_SEMESTER = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+                            "            FROM FreeSlots fs\n" +
+                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+                            "            WHERE fs.subjectCode = ? AND fs.semesterID = ? AND fs.status = 1\n" +
+                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
+                            "						FROM Bookings b\n" +
+                            "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_LECID_AND_SEMESTER = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+                            "            FROM FreeSlots fs\n" +
+                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+                            "            WHERE fs.lecturerID = ? AND fs.semesterID = ? AND fs.status = 1\n" +
+                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
+                            "						FROM Bookings b\n" +
+                            "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_LECNAME_AND_SEMESTER = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+                            "            FROM FreeSlots fs\n" +
+                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+                            "            WHERE lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1\n" +
+                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
+                            "						FROM Bookings b\n" +
+                            "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_SUBCODE_AND_LECID_AND_SEMESTER = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+                            "            FROM FreeSlots fs\n" +
+                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+                            "            WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND fs.semesterID = ? AND fs.status = 1\n" +
+                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
+                            "						FROM Bookings b\n" +
+                            "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_SUBCODE_AND_LECNAME_AND_SEMESTER = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+                            "            FROM FreeSlots fs\n" +
+                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+                            "            WHERE fs.subjectCode = ? AND lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1\n" +
+                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
+                            "						FROM Bookings b\n" +
+                            "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_ALL = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+                            "            FROM FreeSlots fs\n" +
+                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+                            "            WHERE fs.subjectCode = ? AND fs.lecturerID = ? AND lec.userName LIKE ? AND fs.semesterID = ? AND fs.status = 1\n" +
+                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
+                            "						FROM Bookings b\n" +
+                            "						WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
+                            "            FROM FreeSlots fs\n" +
+                            "            JOIN Users lec ON fs.lecturerID = lec.userID\n" +
+                            "            WHERE fs.status = 1\n" +
+                            "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n" +
+                            "						FROM Bookings b\n" +
+                            "						WHERE b.studentID = ? and b.status = 1)";
+
+    private final static String SEARCH_FS_ACCEPT = "SELECT fs.freeSlotID\n" +
+                                "FROM FreeSlots fs\n" +
+                                "WHERE fs.startTime = ? AND fs.lecturerID = ? AND fs.status = 1";
+    
+    private static BookingDAO bookingDAO = new BookingDAO();
 
     private static String SEMESTER = "  SELECT DISTINCT fs.semesterID\n"
             + "            FROM [Semesters] fs;";
@@ -437,7 +442,6 @@ public class FreeSlotsDAO {
     }
 
     public void getFreeSlotBySubjectCode(String subjectCode, String studentID) throws ClassNotFoundException, SQLException {
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -450,6 +454,7 @@ public class FreeSlotsDAO {
             while (rs.next()) {
                 String freeSlotID = rs.getString("freeSlotID");
                 String lecturerID = rs.getString("lecturerID");
+                String password = rs.getString("password");
                 String lecname = rs.getNString("userName");
                 Timestamp startTime = rs.getTimestamp("startTime");
                 String starts = convertDateToString(startTime);
@@ -457,8 +462,9 @@ public class FreeSlotsDAO {
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
                 String semester = rs.getString("semesterID");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
-                if (this.freeSlotBySubjectCode == null) {
+                int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                if(this.freeSlotBySubjectCode == null){
                     this.freeSlotBySubjectCode = new ArrayList<>();
                 }
                 this.freeSlotBySubjectCode.add(freeSlotsDTO);
@@ -483,7 +489,6 @@ public class FreeSlotsDAO {
     }
 
     public void getFreeSlotByLecturerID(String lecturerID, String studentID) throws ClassNotFoundException, SQLException {
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -497,14 +502,16 @@ public class FreeSlotsDAO {
                 String freeSlotID = rs.getString("freeSlotID");
                 String lecname = rs.getNString("userName");
                 String subjectCode = rs.getString("subjectCode");
+                String password = rs.getString("password");
                 Timestamp startTime = rs.getTimestamp("startTime");
                 String starts = convertDateToString(startTime);
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
                 String semester = rs.getString("semesterID");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
-                if (this.freeSlotByLecturerID == null) {
+                int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                if(this.freeSlotByLecturerID == null){
                     this.freeSlotByLecturerID = new ArrayList<>();
                 }
                 this.freeSlotByLecturerID.add(freeSlotsDTO);
@@ -529,7 +536,6 @@ public class FreeSlotsDAO {
     }
 
     public void getFreeSlotByLecName(String name, String studentID) throws ClassNotFoundException, SQLException {
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -542,6 +548,7 @@ public class FreeSlotsDAO {
             while (rs.next()) {
                 String freeSlotID = rs.getString("freeSlotID");
                 String lecturerID = rs.getString("lecturerID");
+                String password = rs.getString("password");
                 String lecname = rs.getString("userName");
                 String subjectCode = rs.getString("subjectCode");
                 Timestamp startTime = rs.getTimestamp("startTime");
@@ -550,8 +557,9 @@ public class FreeSlotsDAO {
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
                 String semester = rs.getString("semesterID");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
-                if (this.freeSlotByLecName == null) {
+                int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                if(this.freeSlotByLecName == null){
                     this.freeSlotByLecName = new ArrayList<>();
                 }
                 this.freeSlotByLecName.add(freeSlotsDTO);
@@ -576,7 +584,6 @@ public class FreeSlotsDAO {
     }
 
     public void getFreeSlotBySemesterID(String semester, String studentID) throws ClassNotFoundException, SQLException {
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -589,15 +596,17 @@ public class FreeSlotsDAO {
             while (rs.next()) {
                 String freeSlotID = rs.getString("freeSlotID");
                 String lecturerID = rs.getString("lecturerID");
-                String lecname = rs.getNString("userName");
+                String password = rs.getString("password");
+                String lecname = rs.getNString("userName");                
                 String subjectCode = rs.getString("subjectCode");
                 Timestamp startTime = rs.getTimestamp("startTime");
                 String starts = convertDateToString(startTime);
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
-                if (this.freeSlotBySemesterID == null) {
+                int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                if(this.freeSlotBySemesterID == null){
                     this.freeSlotBySemesterID = new ArrayList<>();
                 }
                 this.freeSlotBySemesterID.add(freeSlotsDTO);
@@ -622,7 +631,6 @@ public class FreeSlotsDAO {
     }
 
     public void getFreeSlotBySubjectAndLecID(String subjectCode, String lecturerID, String studentID) throws ClassNotFoundException, SQLException {
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -635,15 +643,17 @@ public class FreeSlotsDAO {
             rs = stm.executeQuery();
             while (rs.next()) {
                 String freeSlotID = rs.getString("freeSlotID");
-                String lecname = rs.getNString("userName");
+                String password = rs.getString("password");
+                String lecname = rs.getNString("userName");    
                 Timestamp startTime = rs.getTimestamp("startTime");
                 String starts = convertDateToString(startTime);
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
                 String semester = rs.getString("semesterID");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
-                if (this.freeSlotBySubjectAndLecID == null) {
+                int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                if(this.freeSlotBySubjectAndLecID == null){
                     this.freeSlotBySubjectAndLecID = new ArrayList<>();
                 }
                 this.freeSlotBySubjectAndLecID.add(freeSlotsDTO);
@@ -668,7 +678,6 @@ public class FreeSlotsDAO {
     }
 
     public void getFreeSlotBySubjectAndLecName(String subjectCode, String name, String studentID) throws ClassNotFoundException, SQLException {
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -681,16 +690,18 @@ public class FreeSlotsDAO {
             rs = stm.executeQuery();
             while (rs.next()) {
                 String freeSlotID = rs.getString("freeSlotID");
-                String lecturerID = rs.getString("lecturerID");
-                String lecname = rs.getNString("userName");
+                String lecturerID = rs.getString("lecturerID");    
+                String password = rs.getString("password");    
+                String lecname = rs.getNString("userName");    
                 Timestamp startTime = rs.getTimestamp("startTime");
                 String starts = convertDateToString(startTime);
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
                 String semester = rs.getString("semesterID");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
-                if (this.freeSlotBySubjectAndLecName == null) {
+                int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                if(this.freeSlotBySubjectAndLecName == null){
                     this.freeSlotBySubjectAndLecName = new ArrayList<>();
                 }
                 this.freeSlotBySubjectAndLecName.add(freeSlotsDTO);
@@ -713,9 +724,8 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotBySubjectAndSemester() {
         return freeSlotBySubjectAndSemester;
     }
-
+    
     public void getFreeSlotBySubjectAndSemester(String subjectCode, String semester, String studentID) throws ClassNotFoundException, SQLException {
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -728,15 +738,17 @@ public class FreeSlotsDAO {
             rs = stm.executeQuery();
             while (rs.next()) {
                 String freeSlotID = rs.getString("freeSlotID");
-                String lecturerID = rs.getString("lecturerID");
-                String lecname = rs.getNString("userName");
+                String lecturerID = rs.getString("lecturerID");    
+                String password = rs.getString("password");    
+                String lecname = rs.getNString("userName");    
                 Timestamp startTime = rs.getTimestamp("startTime");
                 String starts = convertDateToString(startTime);
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
-                if (this.freeSlotBySubjectAndSemester == null) {
+                int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                if(this.freeSlotBySubjectAndSemester == null){
                     this.freeSlotBySubjectAndSemester = new ArrayList<>();
                 }
                 this.freeSlotBySubjectAndSemester.add(freeSlotsDTO);
@@ -759,9 +771,7 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotByLecIDAndSemester() {
         return freeSlotByLecIDAndSemester;
     }
-
     public void getFreeSlotByLecIDAndSemester(String lecturerID, String semester, String studentID) throws ClassNotFoundException, SQLException {
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -772,17 +782,19 @@ public class FreeSlotsDAO {
             stm.setString(2, semester);
             stm.setString(3, studentID);
             rs = stm.executeQuery();
-            while (rs.next()) {
-                String freeSlotID = rs.getString("freeSlotID");
-                String lecname = rs.getNString("userName");
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID");    
+                String password = rs.getString("password");    
+                String lecname = rs.getNString("userName");    
                 String subjectCode = rs.getString("subjectCode");
                 Timestamp startTime = rs.getTimestamp("startTime");
                 String starts = convertDateToString(startTime);
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
-                if (this.freeSlotByLecIDAndSemester == null) {
+                int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                if(this.freeSlotByLecIDAndSemester == null){
                     this.freeSlotByLecIDAndSemester = new ArrayList<>();
                 }
                 this.freeSlotByLecIDAndSemester.add(freeSlotsDTO);
@@ -805,9 +817,7 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotByLecNameAndSemester() {
         return freeSlotByLecNameAndSemester;
     }
-
     public void getFreeSlotByLecNameAndSemester(String name, String semester, String studentID) throws ClassNotFoundException, SQLException {
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -818,18 +828,20 @@ public class FreeSlotsDAO {
             stm.setString(2, semester);
             stm.setString(3, studentID);
             rs = stm.executeQuery();
-            while (rs.next()) {
-                String freeSlotID = rs.getString("freeSlotID");
-                String lecturerID = rs.getString("lecturerID");
-                String lecname = rs.getNString("userName");
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID"); 
+                String lecturerID = rs.getString("lecturerID");    
+                String password = rs.getString("password");    
+                String lecname = rs.getNString("userName");    
                 String subjectCode = rs.getString("subjectCode");
                 Timestamp startTime = rs.getTimestamp("startTime");
                 String starts = convertDateToString(startTime);
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
-                if (this.freeSlotByLecNameAndSemester == null) {
+                int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                if(this.freeSlotByLecNameAndSemester == null){
                     this.freeSlotByLecNameAndSemester = new ArrayList<>();
                 }
                 this.freeSlotByLecNameAndSemester.add(freeSlotsDTO);
@@ -852,9 +864,7 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotBySubCodeAndLecIDAndSemester() {
         return freeSlotBySubCodeAndLecIDAndSemester;
     }
-
     public void getFreeSlotBySubCodeAndLecIDAndSemester(String subjectCode, String lecturerID, String semester, String studentID) throws ClassNotFoundException, SQLException {
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -866,8 +876,9 @@ public class FreeSlotsDAO {
             stm.setString(3, semester);
             stm.setString(4, studentID);
             rs = stm.executeQuery();
-            while (rs.next()) {
-                String freeSlotID = rs.getString("freeSlotID");
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID"); 
+                String password = rs.getString("password"); 
 //                String lecturerID = rs.getString("lecturerID");    
                 String lecname = rs.getNString("userName");
 //                String subjectCode = rs.getString("subjectCode");
@@ -876,8 +887,9 @@ public class FreeSlotsDAO {
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
-                if (this.freeSlotBySubCodeAndLecIDAndSemester == null) {
+                int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                if(this.freeSlotBySubCodeAndLecIDAndSemester == null){
                     this.freeSlotBySubCodeAndLecIDAndSemester = new ArrayList<>();
                 }
                 this.freeSlotBySubCodeAndLecIDAndSemester.add(freeSlotsDTO);
@@ -900,9 +912,7 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotBySubCodeAndLecNameAndSemester() {
         return freeSlotBySubCodeAndLecNameAndSemester;
     }
-
     public void getFreeSlotBySubCodeAndLecNameAndSemester(String subjectCode, String name, String semester, String studentID) throws ClassNotFoundException, SQLException {
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -914,18 +924,20 @@ public class FreeSlotsDAO {
             stm.setString(3, semester);
             stm.setString(4, studentID);
             rs = stm.executeQuery();
-            while (rs.next()) {
-                String freeSlotID = rs.getString("freeSlotID");
-                String lecturerID = rs.getString("lecturerID");
-                String lecname = rs.getNString("userName");
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID"); 
+                String lecturerID = rs.getString("lecturerID");    
+                String password = rs.getString("password");    
+                String lecname = rs.getNString("userName");    
 //                String subjectCode = rs.getString("subjectCode");
                 Timestamp startTime = rs.getTimestamp("startTime");
                 String starts = convertDateToString(startTime);
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
-                if (this.freeSlotBySubCodeAndLecNameAndSemester == null) {
+                int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                if(this.freeSlotBySubCodeAndLecNameAndSemester == null){
                     this.freeSlotBySubCodeAndLecNameAndSemester = new ArrayList<>();
                 }
                 this.freeSlotBySubCodeAndLecNameAndSemester.add(freeSlotsDTO);
@@ -948,9 +960,7 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotByAll() {
         return freeSlotByAll;
     }
-
     public void getFreeSlotByAll(String subjectCode, String lecturerID, String name, String semester, String studentID) throws ClassNotFoundException, SQLException {
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -963,8 +973,9 @@ public class FreeSlotsDAO {
             stm.setString(4, semester);
             stm.setString(5, studentID);
             rs = stm.executeQuery();
-            while (rs.next()) {
-                String freeSlotID = rs.getString("freeSlotID");
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID"); 
+                String password = rs.getString("password"); 
 //                String lecturerID = rs.getString("lecturerID");    
                 String lecname = rs.getNString("userName");
 //                String subjectCode = rs.getString("subjectCode");
@@ -973,8 +984,9 @@ public class FreeSlotsDAO {
                 Timestamp endTime = rs.getTimestamp("endTime");
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
-                if (this.freeSlotByAll == null) {
+                int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                if(this.freeSlotByAll == null){
                     this.freeSlotByAll = new ArrayList<>();
                 }
                 this.freeSlotByAll.add(freeSlotsDTO);
@@ -997,9 +1009,7 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotList() {
         return freeSlotList;
     }
-
     public void getFreeSlot(String studentID) throws ClassNotFoundException, SQLException {
-
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -1008,10 +1018,11 @@ public class FreeSlotsDAO {
             stm = con.prepareStatement(SEARCH_FREESLOT);
             stm.setString(1, studentID);
             rs = stm.executeQuery();
-            while (rs.next()) {
-                String freeSlotID = rs.getString("freeSlotID");
-                String lecturerID = rs.getString("lecturerID");
-                String lecname = rs.getNString("userName");
+            while(rs.next()){
+                String freeSlotID = rs.getString("freeSlotID"); 
+                String lecturerID = rs.getString("lecturerID");    
+                String password = rs.getString("password");    
+                String lecname = rs.getNString("userName");    
                 String subjectCode = rs.getString("subjectCode");
                 Timestamp startTime = rs.getTimestamp("startTime");
                 String starts = convertDateToString(startTime);
@@ -1019,8 +1030,9 @@ public class FreeSlotsDAO {
                 String ends = convertDateToString(endTime);
                 int capacity = rs.getInt("capacity");
                 String semester = rs.getString("semesterID");
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, "", capacity, "", 0, lecturerID, 1, semester, lecname);
-                if (this.freeSlotList == null) {
+                int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                if(this.freeSlotList == null){
                     this.freeSlotList = new ArrayList<>();
                 }
                 this.freeSlotList.add(freeSlotsDTO);
@@ -1126,6 +1138,35 @@ public class FreeSlotsDAO {
         return exists;
     }
 
+    public String searchFSAccept(String startTime, String lecturerID) throws ClassNotFoundException, SQLException, ParseException{
+        String freeSlotID = null;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_FS_ACCEPT);
+            Date starts = convertStringToTimestamp(startTime);
+            stm.setTimestamp(1, new Timestamp(starts.getTime()));
+            stm.setString(2, lecturerID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                freeSlotID = rs.getString("freeSlotID");
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return freeSlotID;
+    }
+    
     public boolean checkBlockList(String block_list, String freeslotID) throws SQLException {
         boolean exists = false;
         Connection conn = null;
@@ -1157,7 +1198,7 @@ public class FreeSlotsDAO {
         }
         return exists;
     }
-
+    
     public List<FreeSlotsDTO> GetListSemesterID() throws SQLException {
         List<FreeSlotsDTO> listSemester = new ArrayList<>();
         Connection conn = null;

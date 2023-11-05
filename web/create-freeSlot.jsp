@@ -139,11 +139,11 @@
                 } else {
                     userInfo.style.display = "none";
                 }
-
+                
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
-
+                
                 Swal.fire({
                     title: 'User Information',
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
@@ -158,7 +158,7 @@
                 var form = document.querySelector('.request-div form');
                 form.submit();
             }
-
+            
         </script>
 
         <script>
@@ -267,7 +267,7 @@
                                     <h6> ${requestScope.FREESLOT_ERROR.capacityError}</h6>
                                 </c:if>
                                 <div class="d-flex justify-content-between"><strong>Password(optional):</strong> <input type="password" class="form-control" name="txtPassword" value="${param.txtPassword}"></div>
-                                <div class="d-flex justify-content-between"><strong>Meet Link:</strong> <input type="text" class="form-control"  name="txtMeetLink" value="${param.txtMeetLink}" placeholder="ex:meet.google.com/...etc" required="" pattern="^https://meet.google.com/[a-z]{3}-[a-z]{4}-[a-z]{3}$"></div>
+                                <div class="d-flex justify-content-between"><strong>Meet Link:</strong> <input type="text" class="form-control"  name="txtMeetLink" value="${param.txtMeetLink}" placeholder="ex:meet.google.com/...etc" required="" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$"></div>
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.meetLinkError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.meetLinkError}</h6>
                                 </c:if>
@@ -320,6 +320,9 @@
         <c:if test="${sessionScope.loginedUser == null || sessionScope.loginedUser.roleID != '2' }">
             <c:redirect url="LoginFeID.jsp"> </c:redirect>
         </c:if>
-        <% }%>
+        <% } else {
+                response.sendRedirect("MainController?action=");
+            }
+        %>
     </body>
 </html>

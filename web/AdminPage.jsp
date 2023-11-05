@@ -4,29 +4,10 @@
     Author     : Minh Khang
 --%>
 
+<%@page import="sample.users.UserDTO"%>
 <%@page import="sample.dashboard.UserMaxSlotDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
-<script>
-    function submitFormHomePage() {
-        var form = document.querySelector('.returnHome form');
-        form.submit();
-    }
-    function submitFormViewUsers() {
-        var form = document.querySelector('.ViewUsers form');
-        form.submit();
-    }
-    function submitFormLogout() {
-        var form = document.querySelector('.logout form');
-        form.submit();
-    }
-    function submitFormImport() {
-        var form = document.querySelector('.import form');
-        form.submit();
-    }
-</script>
-
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -34,6 +15,68 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="./AdminHome.css" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+        <!-- SweetAlert2 CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+
+
+
+        <!-- SweetAlert2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+        <%
+
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+        %>
+        <script>
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitFormViewUsers() {
+                var form = document.querySelector('.ViewUsers form');
+                form.submit();
+            }
+            function submitFormLogout() {
+                var form = document.querySelector('.logout form');
+                form.submit();
+            }
+            function submitFormImport() {
+                var form = document.querySelector('.import form');
+                form.submit();
+            }
+            var userDTO = {
+                userID: "<%= us.getUserID()%>",
+                userName: "<%= us.getUserName()%>",
+                userEmail: "<%= us.getUserEmail()%>"
+            };
+            function showUserInfo() {
+                var userInfo = document.getElementById("user-info");
+                if (userInfo.style.display === "none" || userInfo.style.display === "") {
+                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                } else {
+                    userInfo.style.display = "none";
+                }
+
+                var userID = userDTO.userID;
+                var userName = userDTO.userName;
+                var userEmail = userDTO.userEmail;
+
+                Swal.fire({
+                    title: 'User Information',
+                    html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
+                            + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
+                });
+            }
+        </script>
+        <style>
+            .textDashBoard{
+                font-family: 'Agbalumo', 'Playfair Display', sans-serif;
+            }
+        </style>
 
         <title>Dashboard</title>
     </head>
@@ -80,21 +123,20 @@
                     </div>
                 </div>
                 <div>
-                    <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
+                    <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
                          onclick="showUserInfo()" />
-                    <div id="user-info" style="display: none; position: absolute;">
+                    <div id="user-info" style="display: none; position: absolute">
                         <p id="user-id"> </p>
                         <p id="user-name"></p>
                         <p id="user-email"></p>
                     </div>
                 </div>
 
-
             </div>
         </div>
 
         <div class="container mt-4">
-            <h1 class="text-center">Dashboard</h1>
+            <h1 class="text-center textDashBoard">Dashboard</h1>
             <form action="MainController" method="POST">
                 <div class="d-flex justify-content-between mt-2">
                     <input type="hidden" value="Find" name="action"/>
@@ -165,5 +207,9 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <%            } else {
+                response.sendRedirect("MainController?action=");
+            }
+        %>
     </body>
 </html>

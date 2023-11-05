@@ -8,6 +8,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+                        
+        %>
         <meta charset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
@@ -51,11 +56,6 @@
         <!-- JavaScript c?a SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
 
-
-        <%
-
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-        %>
         <script>
             function confirmCancel(bookingID) {
                 if (confirm('Are you sure to cancel this booking')) {
@@ -79,7 +79,7 @@
                 var form = document.querySelector('.CreateFSlot form');
                 form.submit();
             }
-             function submitFormViewRequest() {
+            function submitFormViewRequest() {
                 var form = document.querySelector('.request-div form');
                 form.submit();
             }
@@ -98,18 +98,18 @@
                 } else {
                     userInfo.style.display = "none";
                 }
-
+                
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
-
+                
                 Swal.fire({
                     title: 'User Information',
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
-
+            
             function confirmDelete() {
                 var result = confirm("Are you sure about delete this Free Slot ?");
                 console.log(result);
@@ -125,7 +125,7 @@
                     event.preventDefault();
                 }
             }
-
+            
         </script>
         <style>
             td {
@@ -215,8 +215,8 @@
 
             <i class="material-icons">add</i>
         </div>
-      
-  <div class="student-viewbookedslot">
+
+        <div class="student-viewbookedslot">
             <div class="container mt-5" style="    margin-top: 9% !important;">
                 <div class="row justify-content-center mt-5">
                     <c:if test="${requestScope.LIST_CREATED_SLOT_SUB !=null}">
@@ -256,11 +256,16 @@
             <script>
                 // L?y thông tin l?i t? bi?n requestScope.ERROR
                 var errorMessage = "${requestScope.ERROR}";
-
+                
                 // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
                 if (errorMessage.trim() !== "") {
                     alert(errorMessage);
                 }
             </script>
+            <% 
+                } else {
+                    response.sendRedirect("Maincontroller?action=");
+                }
+            %>
     </body>
 </html>

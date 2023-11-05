@@ -24,7 +24,7 @@ public class UpdateUserServlet extends HttpServlet {
             String userEmail = request.getParameter("txtEmail");
             String password = request.getParameter("txtPassword");
             String userStatus = request.getParameter("txtStatus");
-            boolean check = Boolean.parseBoolean(userStatus);
+            int check = Integer.parseInt(userStatus);
             String userID = request.getParameter("txtUserID");
             String searchUserID = request.getParameter("txtSearchUserID");
             String name = request.getParameter("txtName");

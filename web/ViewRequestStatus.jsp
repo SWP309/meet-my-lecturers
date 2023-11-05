@@ -61,6 +61,22 @@
             td {
                 text-align: center;
             }
+            .frame-History{
+                border-radius: 20px;
+                background-color: #f27125;
+                width: 40px !important;
+                height: 40px;
+                align-items: center;
+                padding: 10px 9px;
+                box-sizing: border-box;
+                /* gap: 0px; */
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                float: right;
+                margin-top: 15px;
+                margin-right: 20px;
+            }
         </style>
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -71,7 +87,7 @@
                 var form = document.querySelector('.bookingview form');
                 form.submit();
             }
-             function submitFormHomePage() {
+            function submitFormHomePage() {
                 var form = document.querySelector('.returnHome form');
                 form.submit();
             }
@@ -91,7 +107,11 @@
                 var form = document.querySelector('.viewLecturer form');
                 form.submit();
             }
-         
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
+
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -120,7 +140,7 @@
     </head>
     <body>
         <div class="fptu-eng-1-parent">
-             <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+            <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="returnHomePageStudent" />
                 </form>
@@ -176,6 +196,13 @@
 
             </div>
         </div>
+        <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+            <form action="MainController" method="POST">
+                <input type="hidden" name="action" value="attendanceSemes" />
+            </form>
+
+            <i class="material-icons">history</i>
+        </div>
 
         <div class="container mt-5">
             <form action="MainController" method="POST">
@@ -189,6 +216,15 @@
                             <option value="Accepted">Accepted</option>
                             <option value="Declined">Declined</option>
                             <option value="InProgress">In progress</option>
+                            <option value="Overdue">Overdue</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="txtSemesterID">
+                            <option value="FA23">FA23</option>
+                            <option value="SU23">SU23</option>
+                            <option value="SP23">SP23</option>
+                            <option value="FA22">FA22</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -196,7 +232,74 @@
                     </div>
                 </div>
             </form>
+
             <div class="row justify-content-center mt-5">
+                <c:if test="${empty param.txtSubjectCode and not empty requestScope.LIST_REQUEST}">
+                    <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
+                        <thead>
+                            <tr class="table-danger">
+                                <th>No.</th>
+                                <th>Semester</th>
+                                <th>Subject Code</th>
+                                <th>LecturerID</th>
+                                <th>Name</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Status</th>
+                                <th>Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${requestScope.LIST_REQUEST}" 
+                                       var="request" varStatus="status">
+                                <tr>
+                                    <td>${status.count}</td>
+                                    <td>${request.semesterID}</td>
+                                    <td>${request.subjectCode}</td>
+                                    <td>${request.lecturerID}</td>
+                                    <td>
+                                        <c:set var="breakLoop" value="false" />
+                                        <c:forEach var="user" items="${requestScope.LIST_USER}">
+                                            <c:if test="${!breakLoop and user.userID eq request.lecturerID}">
+                                                ${user.userName}
+                                                <c:set var="breakLoop" value="true" />
+                                            </c:if>
+                                        </c:forEach>
+                                    </td>
+                                    <td>${request.startTime}</td>
+                                    <td>${request.endTime}</td>
+                                    <td>
+                                        <c:if test="${request.status == 1}">
+                                            <b style="color: green">Accepted</b>
+                                        </c:if>
+                                        <c:if test="${request.status == 2}">
+                                            <b style="color: #cccc00">In progress</b>
+                                        </c:if>
+                                        <c:if test="${request.status == 0}">
+                                            <b style="color: red">Declined</b>
+
+                                            <c:if test="${request.status == 3}">
+                                                <b style="color: gray">Overdue</b>
+                                            </c:if></c:if>
+                                        <c:if test="${request.status == 3}">
+                                            <b style="color: gray">Overdue</b>
+                                        </c:if>
+                                    </td>
+                                    <c:if test="${empty request.note || request.note == null}">
+                                        <td>
+                                            <b>None</b>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${not empty request.note || request.note != null}">
+                                        <td>
+                                            <b>${request.note}</b>
+                                        </td>
+                                    </c:if>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
                 <c:if test="${empty param.txtSubjectCode and not empty requestScope.REQUEST_BY_STATUS}">
                     <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
                         <thead>
@@ -209,6 +312,7 @@
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>Status</th>
+                                <th>Note</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -240,7 +344,20 @@
                                         <c:if test="${request.status == 0}">
                                             <b style="color: red">Declined</b>
                                         </c:if>
+                                        <c:if test="${request.status == 3}">
+                                            <b style="color: gray">Overdue</b>
+                                        </c:if>
                                     </td>
+                                    <c:if test="${empty request.note || request.note == null}">
+                                        <td>
+                                            <b>None</b>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${not empty request.note || request.note != null}">
+                                        <td>
+                                            <b>${request.note}</b>
+                                        </td>
+                                    </c:if>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -258,6 +375,7 @@
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>Status</th>
+                                <th>Note</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -289,7 +407,20 @@
                                         <c:if test="${request.status == 0}">
                                             <b style="color: red">Declined</b>
                                         </c:if>
+                                        <c:if test="${request.status == 3}">
+                                            <b style="color: gray">Overdue</b>
+                                        </c:if>
                                     </td>
+                                    <c:if test="${empty request.note || request.note == null}">
+                                        <td>
+                                            <b>None</b>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${not empty request.note || request.note != null}">
+                                        <td>
+                                            <b>${request.note}</b>
+                                        </td>
+                                    </c:if>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -302,11 +433,12 @@
                                 <th>No.</th>
                                 <th>Semester</th>
                                 <th>Subject Code</th>
-                                <th>LecturerID</th>
+                                <th>Lecturer ID</th>
                                 <th>Name</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>Status</th>
+                                <th>Note</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -338,7 +470,20 @@
                                         <c:if test="${request.status == 0}">
                                             <b style="color: red">Declined</b>
                                         </c:if>
+                                        <c:if test="${request.status == 3}">
+                                            <b style="color: gray">Overdue</b>
+                                        </c:if>
                                     </td>
+                                    <c:if test="${empty request.note || request.note == null}">
+                                        <td>
+                                            <b>None</b>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${not empty request.note || request.note != null}">
+                                        <td>
+                                            <b>${request.note}</b>
+                                        </td>
+                                    </c:if>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -356,6 +501,7 @@
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>Status</th>
+                                <th>Note</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -387,7 +533,20 @@
                                         <c:if test="${request.status == 0}">
                                             <b style="color: red">Declined</b>
                                         </c:if>
+                                        <c:if test="${request.status == 3}">
+                                            <b style="color: gray">Overdue</b>
+                                        </c:if>
                                     </td>
+                                    <c:if test="${empty request.note || request.note == null}">
+                                        <td>
+                                            <b>None</b>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${not empty request.note || request.note != null}">
+                                        <td>
+                                            <b>${request.note}</b>
+                                        </td>
+                                    </c:if>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -396,8 +555,8 @@
             </div>
         </div>        
         <%} else {
-                                response.sendRedirect("MainController");
-                            }%>
+                response.sendRedirect("MainController");
+            }%>
         <!-- Thêm liên kết đến Bootstrap JS và jQuery -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

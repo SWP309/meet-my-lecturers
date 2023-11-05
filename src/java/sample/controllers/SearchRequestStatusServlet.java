@@ -1,11 +1,8 @@
 package sample.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,18 +26,22 @@ public class SearchRequestStatusServlet extends HttpServlet {
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String subjectCode = request.getParameter("txtSubjectCode");
             String txtRequestStatus = request.getParameter("txtRequestStatus");
+            String txtSemesterID = request.getParameter("txtSemesterID");
             RequestDAO requestDAO = new RequestDAO();
-            int status = 3;
+            int status = 4;
             if (txtRequestStatus.equals("Accepted")) {
                 status = 1;
             } else if (txtRequestStatus.equals("Declined")) {
                 status = 0;
             } else if (txtRequestStatus.equals("InProgress")) {
                 status = 2;
+            } else if (txtRequestStatus.equals("Overdue")) {
+                status = 3;
             }
-            if (status == 0 || status == 1 || status == 2) {
+
+            if (status != 4) {
                 if (subjectCode.isEmpty()) {
-                    requestDAO.getRequestByStatus(us.getUserID(), status);
+                    requestDAO.getRequestByStatus(us.getUserID(), status, txtSemesterID);
                     List<RequestDTO> requestByStatus = requestDAO.getRequestByStatus();
                     List<UserDTO> userByStatus = requestDAO.getUserByStatus();
                     if (requestByStatus != null) {
@@ -49,7 +50,7 @@ public class SearchRequestStatusServlet extends HttpServlet {
                         url = SUCCESS;
                     }
                 } else {
-                    requestDAO.getRequestBySubCodeAndStatus(us.getUserID(), subjectCode, status);
+                    requestDAO.getRequestBySubCodeAndStatus(us.getUserID(), subjectCode, status, txtSemesterID);
                     List<RequestDTO> requestBySubCodeAndStatus = requestDAO.getRequestBySubCodeAndStatus();
                     List<UserDTO> userBySubCodeAndStatus = requestDAO.getUserBySubCodeAndStatus();
                     if (requestBySubCodeAndStatus != null) {
@@ -60,7 +61,7 @@ public class SearchRequestStatusServlet extends HttpServlet {
                 }
             } else {
                 if (subjectCode.isEmpty()) {
-                    requestDAO.getAllRequest(us.getUserID());
+                    requestDAO.getAllRequest(us.getUserID(), txtSemesterID);
                     List<RequestDTO> requestList = requestDAO.getAllRequest();
                     List<UserDTO> user = requestDAO.getAllUser();
                     if (requestList != null) {
@@ -69,7 +70,7 @@ public class SearchRequestStatusServlet extends HttpServlet {
                         url = SUCCESS;
                     }
                 } else {
-                    requestDAO.getAllRequestBySubCode(us.getUserID(), subjectCode);
+                    requestDAO.getAllRequestBySubCode(us.getUserID(), subjectCode, txtSemesterID);
                     List<RequestDTO> requestBySubCode = requestDAO.getAllRequestBySubCode();
                     List<UserDTO> userBySubCode = requestDAO.getAllUserBySubCode();
                     if (requestBySubCode != null) {
@@ -81,7 +82,7 @@ public class SearchRequestStatusServlet extends HttpServlet {
             }
         } catch (ClassNotFoundException | SQLException ex) {
             log("Error at SearchRequestStatusServlet: " + ex.toString());
-        }  finally {
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

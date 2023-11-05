@@ -75,6 +75,10 @@
         <servlet-class>sample.controllers.SearchFreeSlotServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>SearchRequestStatusServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchRequestStatusServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CheckAttendanceBookingView</servlet-name>
         <servlet-class>sample.controllers.CheckAttendanceBookingView</servlet-class>
     </servlet>
@@ -147,16 +151,36 @@
         </multipart-config>
     </servlet>
     <servlet>
+        <servlet-name>AttendanceServlet</servlet-name>
+        <servlet-class>sample.controllers.AttendanceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AttendanceSemesServlet</servlet-name>
+        <servlet-class>sample.controllers.AttendanceSemesServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ViewStudentBookingPresenceServlet</servlet-name>
         <servlet-class>sample.controllers.ViewStudentBookingPresenceServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SearchRequestStatusServlet</servlet-name>
-        <servlet-class>sample.controllers.SearchRequestStatusServlet</servlet-class>
+        <servlet-name>ViewAllRequestStatus</servlet-name>
+        <servlet-class>sample.controllers.ViewAllRequestStatus</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchRequestForLec</servlet-name>
+        <servlet-class>sample.controllers.SearchRequestForLec</servlet-class>
+    </servlet>    
     <servlet>
         <servlet-name>ViewOptionCreateFS</servlet-name>
         <servlet-class>sample.controllers.ViewOptionCreateFS</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckStatusServlet</servlet-name>
+        <servlet-class>sample.controllers.CheckStatusServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <servlet-class>sample.controllers.ChangePasswordServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SendEMailServlet</servlet-name>
@@ -259,6 +283,10 @@
         <url-pattern>/SearchFreeSlotServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>SearchRequestStatusServlet</servlet-name>
+        <url-pattern>/SearchRequestStatusServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>CheckAttendanceBookingView</servlet-name>
         <url-pattern>/CheckAttendanceBookingView</url-pattern>
     </servlet-mapping>
@@ -291,12 +319,24 @@
         <url-pattern>/ImportStudents</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>AttendanceServlet</servlet-name>
+        <url-pattern>/AttendanceServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendanceSemesServlet</servlet-name>
+        <url-pattern>/AttendanceSemesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ViewStudentBookingPresenceServlet</servlet-name>
         <url-pattern>/ViewStudentBookingPresenceServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SearchRequestStatusServlet</servlet-name>
-        <url-pattern>/SearchRequestStatusServlet</url-pattern>
+        <servlet-name>ViewAllRequestStatus</servlet-name>
+        <url-pattern>/ViewAllRequestStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchRequestForLec</servlet-name>
+        <url-pattern>/SearchRequestForLec</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ViewOptionCreateFS</servlet-name>
@@ -305,6 +345,14 @@
     <servlet-mapping>
         <servlet-name>SendEMailServlet</servlet-name>
         <url-pattern>/SendEMailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckStatusServlet</servlet-name>
+        <url-pattern>/CheckStatusServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <url-pattern>/ChangePasswordServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

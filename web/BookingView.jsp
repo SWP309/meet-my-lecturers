@@ -9,6 +9,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+        %>
         <meta charset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
@@ -33,11 +37,6 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
 
 
-        <%
-
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-
-        %>
         <script>
             function confirmCancel(bookingID) {
                 if (confirm('Are you sure to cancel this booking')) {
@@ -65,8 +64,20 @@
                 var form = document.querySelector('.requestViewStatus form');
                 form.submit();
             }
+            function submitFormRequestStatus() {
+                var form = document.querySelector('.requestViewStatus form');
+                form.submit();
+            }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
             function submitFormHomePage() {
                 var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
                 form.submit();
             }
             var userDTO = {
@@ -137,66 +148,74 @@
         </style>
     </head>
     <body>
-        <div class="student-viewbookedslot">
-            <div class="fptu-eng-1-parent">
-                <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
-                    <form action="MainController" method="POST">
-                        <input type="hidden" name="action" value="returnHomePageStudent" />
-                    </form>
-                </div>
-                <div class="frame-parent">
-                    <div class="frame-group">
-                        <div class="frame-div bookingview" style="background-color: #b7b7b7;">
-                            <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="ViewBooking" />
-                            </form>
-                            <div class="bookedslot-wrapper">
-                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
-                                <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
-                            </div>
-                            <div class="view-booking" >View Booking</div>
-                        </div>
-                        <div class="frame-div requestViewStatus" onclick="submitFormRequestStatus()" id="booking-view-div">
-                            <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="ViewRequestStatus" />
-                            </form>
-                            <i class="material-icons">visibility</i>View Request Status
-                        </div>
-                        <div class="frame-div request" onclick="submitFormRequest()">
-                            <form action="MainController" method="POST">
-                                <input type="hidden" name="action" value="Request" />
-                            </form>
 
-                            <i class="material-icons">mail_outline</i> Request
-                        </div>
-                        <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
-                            <form action="MainController" method="POST">
-                                <input type="hidden" name="action" value="ViewAllLecturers" />
-                            </form>
-
-                            <i class="fas fa-search"></i> <p style="font-size: 16px">View Lecturer</p>
-                        </div>
-                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: 10%; text-align: center">
-                            <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="Logout" />
-                            </form>
-                            <i class="material-icons">logout</i> Logout
-                        </div>
-                    </div>
-                    <div>
-                        <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
-                             onclick="showUserInfo()" />
-                        <div id="user-info" style="display: none; position: absolute">
-                            <p id="user-id"> </p>
-                            <p id="user-name"></p>
-                            <p id="user-email"></p>
-                        </div>
-                    </div>
-
-                </div>
+        <div class="fptu-eng-1-parent">
+            <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="returnHomePageStudent" />
+                </form>
             </div>
+            <div class="frame-parent">
+                <div class="frame-group">
+                    <div class="frame-div bookingview" style="background-color: #b7b7b7;">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="ViewBooking" />
+                        </form>
+                        <div class="bookedslot-wrapper">
+                            <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
+                            <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                        </div>
+                        <div class="view-booking" >View Booking</div>
+                    </div>
+                    <div class="frame-div requestViewStatus" onclick="submitFormRequestStatus()" id="booking-view-div">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="ViewRequestStatus" />
+                        </form>
+                        <i class="material-icons">visibility</i>View Request Status
+                    </div>
+                    <div class="frame-div request" onclick="submitFormRequest()">
+                        <form action="MainController" method="POST">
+                            <input type="hidden" name="action" value="Request" />
+                        </form>
+
+                        <i class="material-icons">mail_outline</i> Request
+                    </div>
+                    <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
+                        <form action="MainController" method="POST">
+                            <input type="hidden" name="action" value="ViewAllLecturers" />
+                        </form>
+
+                        <i class="fas fa-search"></i> <p style="font-size: 16px">View Lecturer</p>
+                    </div>
+                    <div class="frame-div logout" onclick="submitFormLogout()" style="width: 10%; text-align: center">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="Logout" />
+                        </form>
+                        <i class="material-icons">logout</i> Logout
+                    </div>
+                </div>
+                <div>
+                    <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
+                         onclick="showUserInfo()" />
+                    <div id="user-info" style="display: none; position: absolute">
+                        <p id="user-id"> </p>
+                        <p id="user-name"></p>
+                        <p id="user-email"></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+            <form action="MainController" method="POST">
+                <input type="hidden" name="action" value="attendanceSemes" />
+            </form>
+
+            <i class="material-icons">history</i>
+        </div>
+        <div class="student-viewbookedslot">
             <div class="container">
-                <div class="row align-items-center justify-content-center" style="margin-top: -20%;">
+                <div class="row align-items-center justify-content-center" style="margin-top: -6%;">
                     <div>
                         <form action="MainController" method="POST" class="d-flex justify-content-center" style=" margin-top: 10%;">
                             <div class="form-group">
@@ -219,7 +238,7 @@
                 </div>
             </div>
             <!--                            LIST OF THE PAGE------------------------------------------->
-            <div class="container mt-5" style="    margin-top: -24% !important;">
+            <div class="container mt-5" style="    margin-top: -17% !important;">
                 <div class="row justify-content-center mt-5">
                     <c:if test="${requestScope.LIST_BOOKING !=null}">
                         <c:if test="${not empty requestScope.LIST_BOOKING}">
@@ -353,7 +372,7 @@
                     </div>
                 </div>
             </c:if>
-              <!--SEARCH BY SEMESTER  ------------------------------------------------------------------>
+            <!--SEARCH BY SEMESTER  ------------------------------------------------------------------>
             <c:if test="${empty param.txtStartTime and empty param.txtEndTime and empty param.txtSubjectCode and not empty param.txtSemesterID }">
                 <div class="container mt-5" style="    margin-top: -24% !important;">
                     <div class="row justify-content-center mt-5">
@@ -493,5 +512,10 @@
             <h3>
                 ${requestScope.ERROR}
             </h3> 
+            <% } else {
+                    response.sendRedirect("MainController?action=");
+                }
+
+            %>
     </body>
 </html>

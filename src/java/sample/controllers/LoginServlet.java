@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
                         response.sendRedirect("MainController?action=LecturerPage");
                     } else if ((us.getRoleID().equals("1"))) {
                         response.sendRedirect("MainController?action=AdminPage");
-                    }                
+                    }
             } else {
                 flag = false;
             }
