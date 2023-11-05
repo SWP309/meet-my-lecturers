@@ -74,6 +74,10 @@
                 var form = document.querySelector('.requestViewStatus form');
                 form.submit();
             }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -90,7 +94,6 @@
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
-
                 Swal.fire({
                     title: 'User Information',
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
@@ -101,7 +104,7 @@
     </head>
     <body>
         <div class="fptu-eng-1-parent">
-            <div class="returnHome"> 
+            <div class="returnHome" onclick="submitFormHomePage()" >
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="returnHomePageStudent" />
                 </form>
@@ -156,6 +159,13 @@
                 </div>
 
             </div>
+        </div>
+        <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+            <form action="MainController" method="POST">
+                <input type="hidden" name="action" value="attendanceSemes" />
+            </form>
+
+            <i class="material-icons">history</i>
         </div>
         <div class="student-lectures-schedule-edi">
             <div class="infor-lec">
@@ -234,15 +244,15 @@
                 </c:if>
 
             </div>
-<!--            <div class="backbutton"  onclick="submitFormBack()">
-                <form action="MainController" method="POST" style="display: none;">
-                    <input type="hidden" name="txtLecturer" value="${requestScope.TB_TIMETABLES.get(0).lecturerID}" />
-                    <input type="hidden" name="txtSemester" value="${requestScope.TB_TIMETABLES.get(0).semesterID}" />
-                    <input type="hidden" name="action" value="BackToRequest" />
-                </form>
-                <div class="back">Back</div>
-                <img class="back-icon" alt="" src="./public/request/back.svg" />
-            </div>-->
+            <!--            <div class="backbutton"  onclick="submitFormBack()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="txtLecturer" value="${requestScope.TB_TIMETABLES.get(0).lecturerID}" />
+                                <input type="hidden" name="txtSemester" value="${requestScope.TB_TIMETABLES.get(0).semesterID}" />
+                                <input type="hidden" name="action" value="BackToRequest" />
+                            </form>
+                            <div class="back">Back</div>
+                            <img class="back-icon" alt="" src="./public/request/back.svg" />
+                        </div>-->
 
         </div>
         <%} else {

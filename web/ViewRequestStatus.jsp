@@ -61,6 +61,22 @@
             td {
                 text-align: center;
             }
+            .frame-History{
+                border-radius: 20px;
+                background-color: #f27125;
+                width: 40px !important;
+                height: 40px;
+                align-items: center;
+                padding: 10px 9px;
+                box-sizing: border-box;
+                /* gap: 0px; */
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                float: right;
+                margin-top: 15px;
+                margin-right: 20px;
+            }
         </style>
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -71,7 +87,7 @@
                 var form = document.querySelector('.bookingview form');
                 form.submit();
             }
-             function submitFormHomePage() {
+            function submitFormHomePage() {
                 var form = document.querySelector('.returnHome form');
                 form.submit();
             }
@@ -91,7 +107,11 @@
                 var form = document.querySelector('.viewLecturer form');
                 form.submit();
             }
-         
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
+
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -120,7 +140,7 @@
     </head>
     <body>
         <div class="fptu-eng-1-parent">
-             <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+            <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="returnHomePageStudent" />
                 </form>
@@ -176,6 +196,13 @@
 
             </div>
         </div>
+        <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+            <form action="MainController" method="POST">
+                <input type="hidden" name="action" value="attendanceSemes" />
+            </form>
+
+            <i class="material-icons">history</i>
+        </div>
 
         <div class="container mt-5">
             <form action="MainController" method="POST">
@@ -196,8 +223,8 @@
                     </div>
                 </div>
             </form>
-                    
-                    
+
+
             <div class="row justify-content-center mt-5">
                 <c:if test="${empty param.txtSubjectCode and not empty requestScope.REQUEST_BY_STATUS}">
                     <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
@@ -398,8 +425,8 @@
             </div>
         </div>        
         <%} else {
-                                response.sendRedirect("MainController");
-                            }%>
+                response.sendRedirect("MainController");
+            }%>
         <!-- Thêm liên kết đến Bootstrap JS và jQuery -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

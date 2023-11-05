@@ -85,7 +85,7 @@
             }
         </style>
         <%
-            
+
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             if (us != null) {
         %>
@@ -110,6 +110,14 @@
                 var form = document.querySelector('.requestViewStatus form');
                 form.submit();
             }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -122,11 +130,11 @@
                 } else {
                     userInfo.style.display = "none";
                 }
-                
+
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
-                
+
                 Swal.fire({
                     title: 'User Information',
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
@@ -139,7 +147,7 @@
     <body>
         <div class="student-home">
             <div class="fptu-eng-1-parent">
-                <div class="returnHome"> 
+                <div class="returnHome"  onclick="submitFormHomePage()"> 
                     <form action="MainController" method="POST">
                         <input type="hidden" name="action" value="returnHomePageStudent" />
                     </form>
@@ -194,6 +202,13 @@
                     </div>
 
                 </div>
+            </div>
+            <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="attendanceSemes" />
+                </form>
+
+                <i class="material-icons">history</i>
             </div>
             <div class="container mt-5 create-request" style="margin-top: 8% !important;">
                 <form action="MainController" method="POST">
