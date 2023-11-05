@@ -1,3 +1,4 @@
+
 package sample.controllers;
 
 import java.io.IOException;
@@ -52,20 +53,29 @@ public class BookFSlotServlet extends HttpServlet {
             System.out.println(startTime);
             String endTime = request.getParameter("txtEndTime");
             System.out.println(endTime);
+            String txtPassword = request.getParameter("txtPassword");
+            String password = request.getParameter("password");
             BookingDTO dto = new BookingDTO();
+            dto.setStudentID(studentID);
+            dto.setFreeSlotID(freeSlotID);
+            BookingError bookingError = new BookingError();
             boolean existsInBlockList = FsDao.checkBlockList(studentID, freeSlotID);
             if (existsInBlockList) {
                 System.out.println("You have been blocked from this slot, please contact your lecturer to know reasons");
                 checkValidation = false;
                 dto.setStatus(-1);
             }
-            dto.setStudentID(studentID);
-            dto.setFreeSlotID(freeSlotID);
-            BookingError bookingError = new BookingError();
             //tranfer String to Date
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date starts = format.parse(startTime);
             Date ends = format.parse(endTime);
+            //check password
+            if (!password.isEmpty()) {
+                if (!txtPassword.equals(password)) {
+                    checkValidation = false;
+                    bookingError.setCheckPassword("- Wrong password!!!");
+                }
+            }
             //*****check duplicateBookedFSlot
             boolean checkStartDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, starts);
             boolean checkEndDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, ends);
@@ -86,10 +96,10 @@ public class BookFSlotServlet extends HttpServlet {
                 } else {
                     request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
                 }
-            }
+            } 
         } catch (SQLException | ParseException | ClassNotFoundException ex) {
             log("Error at BookFSlotServlet: " + ex.toString());
-        } finally {
+        }  finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

@@ -128,5 +128,4 @@ public class FreeSlotError {
     public void setSubjectCodeError(String subjectCodeError) {
         this.subjectCodeError = subjectCodeError;
     }
-
 }

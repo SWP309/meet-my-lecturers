@@ -15,8 +15,10 @@ import sample.bookings.BookingDAO;
 import sample.bookings.BookingDTO;
 
 public class ViewStudentBookingPresenceServlet extends HttpServlet {
+
     private final String SUCCESS = "StudentBookingPresence.jsp";
     private final String ERROR = "StudentBookingPresence.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -24,12 +26,17 @@ public class ViewStudentBookingPresenceServlet extends HttpServlet {
         try {
             BookingDAO bookingDAO = new BookingDAO();
             List<BookingDTO> listBookingPreSenceInfo = bookingDAO.bookingPresenceInformation();
-                    request.setAttribute("LIST_BOOKING_PRESENCE_INFO", listBookingPreSenceInfo);
-            List<BookingDTO> listBookingAbsenceNumber = bookingDAO.bookingAbsenceNumber();        
-            request.setAttribute("LIST_BOOKING_ABSENCE_NUMBER", listBookingAbsenceNumber);
+            List<BookingDTO> listBookingAbsenceNumber = bookingDAO.bookingAbsenceNumber();
+            if (listBookingAbsenceNumber != null) {
+                request.setAttribute("LIST_BOOKING_PRESENCE_INFO", listBookingPreSenceInfo);
+                request.setAttribute("LIST_BOOKING_ABSENCE_NUMBER", listBookingAbsenceNumber);
+                url = SUCCESS;
+            } else {
+                request.setAttribute("MESSAGE", "There is no student who books a slot without participating in class!!!");
+            }
         } catch (SQLException | ClassNotFoundException ex) {
             log("Error at ViewStudentBookingPresenceServlet: " + ex.toString());
-        }  finally {
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

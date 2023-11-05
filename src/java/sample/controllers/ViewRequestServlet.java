@@ -2,11 +2,10 @@
 package sample.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +26,10 @@ public class ViewRequestServlet extends HttpServlet {
             HttpSession session = request.getSession();
             UserDTO userDTO = (UserDTO) session.getAttribute("loginedUser");
             RequestDAO requestDAO = new RequestDAO();
+            
+            Date date = new Date();
+            requestDAO.updateStatusOutDate(date);
+            
             requestDAO.getRequest(userDTO.getUserID());
             List<RequestDTO> requests = requestDAO.getListRequests();
             List<UserDTO> users = requestDAO.getListUsers();
@@ -37,7 +40,7 @@ public class ViewRequestServlet extends HttpServlet {
             } else {
                 request.setAttribute("VIEW_REQUEST_MESSAGE", "No request!!!");
             }
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (ClassNotFoundException | SQLException | ParseException ex) {
             log("Error at ViewRequestServlet: " + ex.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
