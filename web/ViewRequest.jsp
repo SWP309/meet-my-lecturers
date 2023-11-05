@@ -292,10 +292,16 @@
                             </table>
                         </div>
                     </c:if>
-                    <c:if test="${empty requestScope.LIST_REQUESTS}">
-                        <h3 class="error-message " style= "margin-top: 10%;">${requestScope.VIEW_REQUEST_MESSAGE}</h3>
-                    </c:if>
                 </div>
+                <script>
+                    // L?y thông tin l?i t? bi?n requestScope.ERROR
+                    var errorMessage = "${requestScope.VIEW_REQUEST_MESSAGE}";
+
+                    // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+                    if (errorMessage.trim() !== "") {
+                        alert(errorMessage);
+                    }
+                </script>
 
             </div>
 

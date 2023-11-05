@@ -160,46 +160,58 @@
 
                 </div>
             </div>
-            <div class="table-timetable" style="margin-right: 21%;
-                 margin-top: 18%;
-                 margin-left: -13%;
-                 width: 92%;">
+
+
+            <div class="view-user-table" style="width: 80%; margin: 0 auto; border-radius: 20px;">
                 <c:if test="${not empty requestScope.LIST_LECTURERS}">
-
-                    <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
-                        <thead>
-                            <tr class="table-danger">
-                                <th>No.</th>
-                                <th>LecturerID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${requestScope.LIST_LECTURERS}" 
-                                       var="lecturer" varStatus="status">
-                                <tr>
-                                    <td>${status.count}</td>
-                                    <td>${lecturer.userID}</td>
-                                    <td>${lecturer.userName}</td>
-                                    <td>${lecturer.userEmail}</td>
+                    <div class="table-container">
+                        <table class="custom-table table-hover table-primary table-rounded">
+                            <thead>
+                                <tr class="table-danger">
+                                    <th>No.</th>
+                                    <th>LecturerID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
                                 </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${requestScope.LIST_LECTURERS}" 
+                                           var="lecturer" varStatus="status">
+                                    <tr>
+                                        <td>${status.count}</td>
+                                        <td>${lecturer.userID}</td>
+                                        <td>${lecturer.userName}</td>
+                                        <td>${lecturer.userEmail}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
                 </c:if>
-
-                <c:if test="${empty requestScope.LIST_LECTURERS}">
-                    <h3 style="color: red">${requestScope.MESSAGE}</h3>
-                </c:if>
-
             </div>
-            <div class="backbutton"  onclick="goBack()">
-                <div class="back"><p class="backWord" style="margin-left: 45px;">Back</p></div>
-                <img class="back-icon" alt="" src="./public/request/back.svg" />
+            <div class="footer1">
+                <div class="powered-by-fpt-container1">
+                    © Powered by
+                    <a class="fpt-university2" href="http://fpt.edu.vn/" target="_blank">
+                        <span class="fpt-university3">FPT University</span>
+                    </a>
+                    |
+                    <a class="fpt-university2" href="http://library.fpt.edu.vn/" target="_blank">
+                        <span class="fpt-university3">library</span>
+                    </a>
+                </div>
             </div>
-
         </div>
+        <script>
+            // L?y thông tin l?i t? bi?n requestScope.ERROR
+            var errorMessage = "${requestScope.MESSAGE}";
+
+            // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+            if (errorMessage.trim() !== "") {
+                alert(errorMessage);
+            }
+        </script>
+
         <%
             } else {
                 response.sendRedirect("MainController");
