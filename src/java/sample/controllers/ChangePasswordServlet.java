@@ -7,23 +7,19 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import sample.attendance.AttendanceDAO;
-import sample.attendance.AttendanceDTO;
-import sample.semester.SemesterDTO;
-import sample.semester.SemesterDAO;
+import sample.users.UserDAO;
 import sample.users.UserDTO;
 
 /**
  *
  * @author Minh Khang
  */
-public class AttendanceServlet extends HttpServlet {
+public class ChangePasswordServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,25 +35,38 @@ public class AttendanceServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
-            SemesterDAO semesterDAO = new SemesterDAO();
-            ArrayList<SemesterDTO> listSemes = (ArrayList<SemesterDTO>) semesterDAO.select();
-            request.setAttribute("semester", listSemes);
-            UserDTO userDTO = (UserDTO) session.getAttribute("loginedUser");
-            System.out.println(userDTO);
-            String semes = request.getParameter("txtsemes");
-            System.out.println(semes);
-            String studentID = userDTO.getUserID();
-            System.out.println(studentID);
-            System.out.println("AttendanceServletttttttt");
-            String url = "MainController?action=attendServlet";
-            ArrayList<AttendanceDTO> attendSlot = AttendanceDAO.getAttendanceSlot(studentID, semes);
-            System.out.println(attendSlot);
-            if (attendSlot != null) {
-                request.setAttribute("attend", attendSlot);
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            int rs;
+            String URL = "MainController?action=";
+            String userID = us.getUserID();
+            String usPass = us.getPassword();
+            String defaultPass = request.getParameter("txtdefault");
+            String newPass = request.getParameter("txtnewpass");
+            String confirmPass = request.getParameter("txtconfirmpass");
+            System.out.println(defaultPass);
+            System.out.println(newPass);
+            System.out.println(confirmPass);
+            if (usPass.equals(defaultPass)) {
+                System.out.println("qua dc default pass");
+                if (newPass.equals(confirmPass)) {
+                    rs = UserDAO.changePassword(userID, confirmPass);
+                    System.out.println("rs: " + rs);
+                    if (rs > 0) {
+                        request.setAttribute("CHANGEPASS", "Change password successfully");
+                        URL = "MainController?action=changePass";
+                    } else {
+                        request.setAttribute("FAILPASS", "Change password fail");
+                        URL = "MainController?action=changePass";
+                    }
+                } else {
+                    request.setAttribute("CONFIRMPASS", "Confirm password not correct !");
+                    URL = "MainController?action=changePass";
+                }
             } else {
-                out.print("list null");
+                request.setAttribute("DEFAULTPASS", "Incorrect default password");
+                URL = "MainController?action=changePass";
             }
-            request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher(URL).forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,4 +110,5 @@ public class AttendanceServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

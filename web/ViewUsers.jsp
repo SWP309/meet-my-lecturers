@@ -1,8 +1,14 @@
+<%@page import="sample.users.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+
+        %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
@@ -36,10 +42,11 @@
             }
         </script>
         <style>
-            .table-view {
+            .table-view { 
                 height: 100vh;
                 overflow-y: auto;
             }
+
         </style>
     </head>
     <body>
@@ -96,7 +103,7 @@
                     </div>
                 </div>
 
-                <div class="d-flex table table-responsive" style="justify-content: center;   margin-top: 6%;">
+                <div class="d-flex table-responsive" style="justify-content: center;   margin-top: 6%;">
                     <c:if test="${not empty param.txtSearchUserID and empty param.txtName and empty param.txtRoleID and not empty requestScope.USERS_BY_USERID}">
                         <div>
                             <table border="1" class="table-hover table-primary">
@@ -128,29 +135,41 @@
                                             </c:forEach>
                                         </td>
                                         <td>
-                                            <input class="in_userID" type="text" name="txtUserID" 
+                                            <input class="specific-input in_userID " type="text" name="txtUserID" 
                                                    value="${user.userID}"
                                                    readonly="">
                                         </td>
                                         <td>
-                                            <input class="in_userName" type="text" name="txtUserName" 
+                                            <input class="specific-input in_userName" type="text" name="txtUserName" 
                                                    value="${user.userName}"
                                                    required="">
                                         </td>
                                         <td>
-                                            <input class="in_email" type="text" name="txtEmail" 
+                                            <input class="specific-input in_email" type="text" name="txtEmail" 
                                                    value="${user.userEmail}"
                                                    required="">
                                         </td>
                                         <td>
-                                            <input class="in-password" type="text" name="txtPassword" 
+                                            <input class="specific-input in-password" type="text" name="txtPassword" 
                                                    value="${user.password}"
                                                    required="">
                                         </td>
                                         <td>
-                                            <input type="checkbox" name="txtStatus" 
-                                                   value="${user.userStatus}" ${user.userStatus ? 'checked' : ''}
-                                                   >
+                                            <c:if test="${user.userStatus == 1}">
+                                                <b>
+                                                    Activated
+                                                </b>
+                                            </c:if> 
+                                            <c:if test="${user.userStatus == 0}">
+                                                <b>
+                                                    Banned
+                                                </b>
+                                            </c:if> 
+                                            <c:if test="${user.userStatus == 2}">
+                                                <b>
+                                                    New
+                                                </b>
+                                            </c:if> 
                                         </td>
                                         <td>
                                             <input type="hidden" name="txtUserID" 
@@ -170,7 +189,7 @@
                     </c:if>
                     <c:if test="${not empty param.txtSearchUserID and not empty param.txtName and not empty param.txtRoleID and not empty requestScope.USERS_BY_ALL}">
                         <div>
-                           <table border="1" class="table-hover table-primary">
+                            <table border="1" class="table-hover table-primary">
                                 <thead class="table-danger">
                                     <tr>
                                         <th>No.</th>
@@ -217,9 +236,21 @@
                                                    required="">
                                         </td>
                                         <td>
-                                            <input type="checkbox" name="txtStatus" 
-                                                   value="${user.userStatus}" ${user.userStatus ? 'checked' : ''}
-                                                   >
+                                            <c:if test="${user.userStatus == 1}">
+                                                <b>
+                                                    Activated
+                                                </b>
+                                            </c:if> 
+                                            <c:if test="${user.userStatus == 0}">
+                                                <b>
+                                                    Banned
+                                                </b>
+                                            </c:if> 
+                                            <c:if test="${user.userStatus == 2}">
+                                                <b>
+                                                    New
+                                                </b>
+                                            </c:if> 
                                         </td>
                                         <td>
                                             <input type="hidden" name="txtUserID" 
@@ -292,9 +323,21 @@
                                                    required="">
                                         </td>
                                         <td>
-                                            <input type="checkbox" name="txtStatus" 
-                                                   value="${user.userStatus}" ${user.userStatus ? 'checked' : ''}
-                                                   >
+                                            <c:if test="${user.userStatus == 1}">
+                                                <b>
+                                                    Activated
+                                                </b>
+                                            </c:if> 
+                                            <c:if test="${user.userStatus == 0}">
+                                                <b>
+                                                    Banned
+                                                </b>
+                                            </c:if> 
+                                            <c:if test="${user.userStatus == 2}">
+                                                <b>
+                                                    New
+                                                </b>
+                                            </c:if> 
                                         </td>
                                         <td>
                                             <input type="hidden" name="txtUserID" 
@@ -363,9 +406,21 @@
                                                    required="">
                                         </td>
                                         <td>
-                                            <input type="checkbox" name="txtStatus" 
-                                                   value="${user.userStatus}" ${user.userStatus ? 'checked' : ''}
-                                                   >
+                                            <c:if test="${user.userStatus == 1}">
+                                                <b>
+                                                    Activated
+                                                </b>
+                                            </c:if> 
+                                            <c:if test="${user.userStatus == 0}">
+                                                <b>
+                                                    Banned
+                                                </b>
+                                            </c:if> 
+                                            <c:if test="${user.userStatus == 2}">
+                                                <b>
+                                                    New
+                                                </b>
+                                            </c:if> 
                                         </td>
                                         <td>
                                             <input type="hidden" name="txtUserID" 
@@ -434,9 +489,21 @@
                                                    required="">
                                         </td>
                                         <td>
-                                            <input type="checkbox" name="txtStatus" 
-                                                   value="${user.userStatus}" ${user.userStatus ? 'checked' : ''}
-                                                   >
+                                            <c:if test="${user.userStatus == 1}">
+                                                <b>
+                                                    Activated
+                                                </b>
+                                            </c:if> 
+                                            <c:if test="${user.userStatus == 0}">
+                                                <b>
+                                                    Banned
+                                                </b>
+                                            </c:if> 
+                                            <c:if test="${user.userStatus == 2}">
+                                                <b>
+                                                    New
+                                                </b>
+                                            </c:if> 
                                         </td>
                                         <td>
                                             <input type="hidden" name="txtUserID" 
@@ -509,9 +576,21 @@
                                                    required="">
                                         </td>
                                         <td>
-                                            <input type="checkbox" name="txtStatus" 
-                                                   value="${user.userStatus}" ${user.userStatus ? 'checked' : ''}
-                                                   >
+                                            <c:if test="${user.userStatus == 1}">
+                                                <b>
+                                                    Activated
+                                                </b>
+                                            </c:if> 
+                                            <c:if test="${user.userStatus == 0}">
+                                                <b>
+                                                    Banned
+                                                </b>
+                                            </c:if> 
+                                            <c:if test="${user.userStatus == 2}">
+                                                <b>
+                                                    New
+                                                </b>
+                                            </c:if> 
                                         </td>
                                         <td>
                                             <!--<input type="hidden" name="action" value="SearchUsers">-->
@@ -539,5 +618,9 @@
                 <img class="back-icon" alt="" src="./public/UsersView/back.svg" />
             </div>
         </div>
+        <%                                } else {
+                response.sendRedirect("MainController?action=");
+            }
+        %>
     </body>
 </html>

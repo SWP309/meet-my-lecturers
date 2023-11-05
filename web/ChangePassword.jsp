@@ -4,33 +4,87 @@
     Author     : Minh Khang
 --%>
 
+<%@page import="java.lang.String"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Thay đổi mật khẩu</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <meta charset="UTF-8">
+    <head>
+        <title>Thay đổi mật khẩu</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <meta charset="UTF-8">
+        <style>
+            .form-control{
+                border-radius: 40px;
+                width: 30%;
+            }
+            .btn{
+                border-radius: 40px;
 
-</head>
-<body>
-    <div class="container">
-        <h1 class="mt-5">Thay đổi mật khẩu</h1>
-        <form action="process_password_change.php" method="post">
-            <div class="form-group">
-                <label for="old_password">Mật khẩu cũ:</label>
-                <input type="password" class="form-control" id="old_password" name="old_password">
-            </div>
-            <div class="form-group">
-                <label for="new_password">Mật khẩu mới:</label>
-                <input type="password" class="form-control" id="new_password" name="new_password">
-            </div>
-            <div class="form-group">
-                <label for="confirm_password">Xác nhận mật khẩu mới:</label>
-                <input type="password" class="form-control" id="confirm_password" name="confirm_password">
-            </div>
-            <button type="submit" class="btn btn-primary">Thay đổi mật khẩu</button>
-        </form>
-    </div>
-</body>
+            }
+        </style>
+    </head>
+    <body>
+        <%                   
+            String CHANGEPASS = (String) request.getAttribute("CHANGEPASS");
+            String FAILPASS = (String) request.getAttribute("FAILPASS");
+            String DEFAULTPASS = (String) request.getAttribute("DEFAULTPASS");
+            String CONFIRMPASS = (String) request.getAttribute("CONFIRMPASS");
+        %>
+        <div class="container">
+            <h1 class="mt-5" style="color: #f27125">Change password</h1>
+            <%
+                if (CHANGEPASS != null) {
+            %>
+            <b style="color: red; font-size: 1rem;">
+                <%= CHANGEPASS%>
+            </b>
+            <%
+                }
+            %>
+
+            <%
+                if (FAILPASS != null) {
+            %>
+            <b style="color: red; font-size: 1rem;">
+                <%= FAILPASS%>
+            </b>
+            <%
+                }
+            %>
+
+            <form action="MainController" method="POST">
+                <div class="form-group">
+                    <label for="old_password">Default password</label>
+                    <%
+                        if (DEFAULTPASS != null) {
+                    %>
+                    <b style="color: red; font-size: 1rem;">
+                        <%= DEFAULTPASS%>
+                    </b>
+                    <%
+                        }
+                    %>
+                    <input type="password" class="form-control" id="old_password" name="txtdefault">
+                </div>
+                <div class="form-group">
+                    <label for="new_password">New password</label>
+                    <input type="password" class="form-control" id="new_password" name="txtnewpass">
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm new password</label>
+                    <%
+                        if (CONFIRMPASS != null) {
+                    %>
+                    <b style="color: red; font-size: 1rem;">
+                        <%= CONFIRMPASS%>
+                    </b>
+                    <%
+                        }
+                    %>
+                    <input type="password" class="form-control" id="confirm_password" name="txtconfirmpass">
+                </div>
+                <button type="submit" name="action" value="changePassServlet" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </body>
 </html>

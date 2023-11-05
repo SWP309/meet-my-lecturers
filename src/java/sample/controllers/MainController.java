@@ -24,13 +24,13 @@ public class MainController extends HttpServlet {
     private static final String LOGIN_BY_FEID_ACTION_CHECK = "loginFeIDAction";
 
     private static final String STUDENT_PAGE = "StudentPage";
-    private static final String STUDENT_PAGE_ACTION = "StudentHome_1.jsp";
+    private static final String STUDENT_PAGE_ACTION = "CheckStatusServlet";
     private static final String BOOKING_FREE_SLOT = "BookFreeSlot";
     private static final String BOOKING_FREE_SLOT_SERVLET = "BookFSlotServlet";
 
     private static final String LECTURER_PAGE = "LecturerPage";
     private static final String CREATE_FREE_SLOT_ACTION = "createFreeSlotAction";
-    private static final String CREATE_FREE_SLOT_PAGE = "create-freeSlot.jsp";
+    private static final String CREATE_FREE_SLOT_PAGE = "ViewOptionCreateFS";
     private static final String CREATE_FREE_SLOT = "CreateFS";
     private static final String CREATE_FREE_SLOT_SERVLET = "newfreeslot";
 
@@ -69,12 +69,24 @@ public class MainController extends HttpServlet {
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
     private static final String BACK_TO_REQUEST = "BackToRequest";
+    private static final String SEARCH_REQUEST_STATUS = "SearchRequestStatus";
+    private static final String SEARCH_REQUEST_STATUS_ACTION = "SearchRequestStatusServlet";
+
+    private static final String REQUEST_STATUS = "ViewRequestStatus";
+    private static final String REQUEST_STATUS_PAGE = "ViewRequestStatus.jsp";
 
     private static final String CREATE_REQUEST = "CreateRequest";
     private static final String REQUEST_ACTION = "CreateRequestServlet";
 
-    private static final String VIEWBOOKING = "ViewBooking";
+    private static final String VIEW_BOOKING = "ViewBooking";
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
+    private static final String VIEW_BOOKING_HISTORY = "attendanceSemes";
+    private static final String VIEW_BOOKING_HISTORY_CHECK_SEMES_ACTION = "AttendanceSemesServlet";
+    private static final String VIEW_BOOKING_HISTORY_CHECK_SEMES = "attendanceservlet";
+    private static final String VIEW_BOOKING_HISTORY_PAGE = "CheckAttend.jsp";
+    private static final String VIEW_BOOKING_HISTORY_PAGE_ACTION = "AttendanceServlet";
+    private static final String VIEW_BOOKING_HISTORY_SERVLET = "attendServlet";
+    private static final String VIEW_BOOKING_HISTORY_SERVLET_ACTION = "CheckAttend.jsp";
 
     private static final String VIEWTIMETABLE = "ViewTimetable";
     private static final String VIEW_TIMETABLE_CONTROLLER = "ViewTimetableServlet";
@@ -88,6 +100,7 @@ public class MainController extends HttpServlet {
     private static final String LOGOUT = "Logout";
     private static final String LOGOUT_ACTION = "LoginFeID.jsp";
 
+    private static final String CREATED_VIEW_FREE_SLOT_ACTION = "viewFSlotLecturer";
     private static final String CREATED_VIEW_CONTROLLER = "CreatedSlotController";
 
     private static final String CREATED_PAGE_HIDE = "HideView";
@@ -109,7 +122,7 @@ public class MainController extends HttpServlet {
 
     private static final String CHECK_ATTENDANCE_ACTION_STUDENT = "AttendanceLink";
     private static final String CHECK_ATTENDANCE_SERVLET_STUDENT = "CheckAttendanceBookingView";
-    
+
     private static final String CHECK_ATTENDANCE_ACTION_LECTURER = "AttendanceLinkLecturer";
     private static final String CHECK_ATTENDANCE_SERVLET_LECTURER = "CheckAttendanceCreateSlot";
 
@@ -118,9 +131,14 @@ public class MainController extends HttpServlet {
 
     private static final String SEARCH_FREE_SLOT_ACTION = "SearchFSlot";
     private static final String SEARCH_FREE_SLOT_SERVLET = "SearchFreeSlotServlet";
-    
+
     private static final String SEARCH_BOOKED_SLOT_ACTION = "searchBSlot";
     private static final String SEARCH_BOOKED_SLOT_SERVLET = "SearchBookedServlet";
+
+    private static final String CHANGE_PASS = "changePass";
+    private static final String CHANGE_PASS_ACTION = "ChangePassword.jsp";
+    private static final String CHANGE_PASS_PAGE_ACTION = "changePassServlet";
+    private static final String CHANGE_PASS_PAGE_SERVLET = "ChangePasswordServlet";
 
     private static final String BACK = "back";
 
@@ -148,7 +166,7 @@ public class MainController extends HttpServlet {
                 url = ADMIN_PAGE_ACTION;
             } else if (CREATE_REQUEST.equals(action)) {
                 url = REQUEST_ACTION;
-            } else if (VIEWBOOKING.equals(action)) {
+            } else if (VIEW_BOOKING.equals(action)) {
                 url = VIEW_BOOKING_CONTROLLER;
             } else if (VIEWTIMETABLE.equals(action)) {
                 url = VIEW_TIMETABLE_CONTROLLER;
@@ -228,7 +246,24 @@ public class MainController extends HttpServlet {
                 url = BOOKING_FREE_SLOT_SERVLET;
             } else if (SEARCH_BOOKED_SLOT_ACTION.equals(action)) {
                 url = SEARCH_BOOKED_SLOT_SERVLET;
+            } else if (CREATED_VIEW_FREE_SLOT_ACTION.equals(action)) {
+                url = CREATED_VIEW_CONTROLLER;
+            } else if (SEARCH_REQUEST_STATUS.equals(action)) {
+                url = SEARCH_REQUEST_STATUS_ACTION;
+            } else if (REQUEST_STATUS.equals(action)) {
+                url = REQUEST_STATUS_PAGE;
+            } else if (VIEW_BOOKING_HISTORY.equals(action)) {
+                url = VIEW_BOOKING_HISTORY_CHECK_SEMES_ACTION;
+            } else if (VIEW_BOOKING_HISTORY_CHECK_SEMES.equals(action)) {
+                url = VIEW_BOOKING_HISTORY_PAGE_ACTION;
+            } else if (VIEW_BOOKING_HISTORY_SERVLET.equals(action)) {
+                url = VIEW_BOOKING_HISTORY_SERVLET_ACTION;
+            } else if (CHANGE_PASS.equals(action)) {
+                url = CHANGE_PASS_ACTION;
+            } else if (CHANGE_PASS_PAGE_ACTION.equals(action)) {
+                url = CHANGE_PASS_PAGE_SERVLET;
             }
+            
 
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());

@@ -36,8 +36,8 @@ public class AttendanceDAO {
 "				JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n" +
 "				WHERE b.status = '2' AND b.studentID = ? AND fs.semesterID = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, "%" + studentID + "%");
-            pst.setString(2, "%" + name + "%");
+            pst.setString(1, studentID);
+            pst.setString(2, name);
             ResultSet rs = pst.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -47,8 +47,7 @@ public class AttendanceDAO {
                     String StartTime = convertTimestampToString(rs.getTimestamp("startTime"));
                     String EndTime = convertTimestampToString(rs.getTimestamp("endTime"));
                     byte status = rs.getByte("status");
-                    String StudentID = rs.getString("studentID");
-                    att = new AttendanceDTO(id, SemesterID, SubjectCode, StartTime, EndTime, status, StudentID);
+                    att = new AttendanceDTO(id, SemesterID, SubjectCode, StartTime, EndTime, status);
                     list.add(att);
                 }
             }

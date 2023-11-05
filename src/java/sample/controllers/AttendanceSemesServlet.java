@@ -40,7 +40,8 @@ public class AttendanceSemesServlet extends HttpServlet {
             SemesterDAO semesterDAO = new SemesterDAO();
             ArrayList<SemesterDTO> listSemes = (ArrayList<SemesterDTO>) semesterDAO.select();
             request.setAttribute("semester", listSemes);
-            request.getRequestDispatcher("MainController?action=attendanceservlet");
+            System.out.println(listSemes);
+            request.getRequestDispatcher("MainController?action=attendanceservlet").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
