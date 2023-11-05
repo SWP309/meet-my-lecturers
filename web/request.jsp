@@ -266,7 +266,19 @@
                         </div>
                     </div>
                 </form>
-            </div>       
+            </div>  
+            <div class="footer1">
+                <div class="powered-by-fpt-container1">
+                    © Powered by
+                    <a class="fpt-university2" href="http://fpt.edu.vn/" target="_blank">
+                        <span class="fpt-university3">FPT University</span>
+                    </a>
+                    |
+                    <a class="fpt-university2" href="http://library.fpt.edu.vn/" target="_blank">
+                        <span class="fpt-university3">library</span>
+                    </a>
+                </div>
+            </div>
 
         </div>
 
