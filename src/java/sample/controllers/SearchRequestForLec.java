@@ -1,11 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package sample.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -13,59 +9,55 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import sample.bookings.BookingDAO;
-import sample.bookings.BookingDTO;
+import sample.requests.RequestDAO;
+import sample.requests.RequestDTO;
 import sample.users.UserDTO;
 
-/**
- *
- * @author PC
- */
-public class SearchBookedServlet extends HttpServlet {
 
-    private final String SUCCESS = "BookingView.jsp";
-    private final String ERROR = "BookingView.jsp";
-
+public class SearchRequestForLec extends HttpServlet {
+    private final String SUCCESS = "ViewRequest.jsp";
+    private final String ERROR = "ViewRequest.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        System.out.println(url);
         try {
             HttpSession session = request.getSession();
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            String subjectCode = request.getParameter("txtSubjectCode");
+            UserDTO lecturer = (UserDTO) session.getAttribute("loginedUser");
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
-            String userEmail = us.getUserEmail();
-            BookingDAO searchBSlot = new BookingDAO();
+            String subjectCode = request.getParameter("txtSubjectCode");
+            String semesterID = request.getParameter("txtSemesterID");
+            RequestDAO requestDAO = new RequestDAO();
+            
             if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty()) {
-                List<BookingDTO> searchByStEt = searchBSlot.searchBSlotViewByStEt(startTime, endTime, userEmail);
+                System.out.println(startTime + " " + endTime);
+                List<RequestDTO> searchByStEt = requestDAO.searchRequestViewByStEt(startTime, endTime, lecturer.getUserID(), semesterID);
+                
                 if (searchByStEt != null) {
-                    request.setAttribute("SEARCH_BOOKED_SLOT_BY_ST_ET", searchByStEt);
+                    request.setAttribute("SEARCH_REQUEST_BY_ST_ET", searchByStEt);
                     url = SUCCESS;
                 }
             } else if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty()) {
-                List<BookingDTO> searchByAll = searchBSlot.searchBSlotViewByAll(subjectCode, startTime, endTime, userEmail);
+                System.out.println("ert");
+                List<RequestDTO> searchByAll = requestDAO.searchRequestByAll(subjectCode, startTime, endTime, lecturer.getUserID(), semesterID);
                 if (searchByAll != null) {
-                    request.setAttribute("SEARCH_BOOKED_SLOT_BY_ALL", searchByAll);
+                    request.setAttribute("SEARCH_REQUEST_BY_ALL", searchByAll);
                     url = SUCCESS;
                 }
 
             } else if (startTime.isEmpty() && endTime.isEmpty() && !subjectCode.isEmpty()) {
-                List<BookingDTO> searchBySubjectCode = searchBSlot.searchBSlotViewBySubjectCode(subjectCode, userEmail);
+                List<RequestDTO> searchBySubjectCode = requestDAO.searchRequestBySubjectCode(subjectCode, lecturer.getUserID(), semesterID);
                 if (searchBySubjectCode != null) {
-                    request.setAttribute("SEARCH_BOOKED_SLOT_BY_SUBJECT", searchBySubjectCode);
+                    request.setAttribute("SEARCH_REQUEST_BY_SUBJECT", searchBySubjectCode);
                     System.out.println(subjectCode);
-                    url = SUCCESS;
+                        url = SUCCESS;
                 }
 
             } else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty()) {
-                List<BookingDTO> searchByNull = searchBSlot.getListBooking(userEmail);
-                System.out.println(searchByNull.toString());
+                List<RequestDTO> searchByNull = requestDAO.getListCreatedSlot(lecturer.getUserID(), semesterID);
                 if (searchByNull != null) {
-                    request.setAttribute("SEARCH_BOOKED_SLOT_BY_NULL", searchByNull);
-                    System.out.println(subjectCode);
+                    request.setAttribute("SEARCH_REQUEST_BY_NULL", searchByNull);
                     url = SUCCESS;
                 }
 
@@ -73,7 +65,7 @@ public class SearchBookedServlet extends HttpServlet {
                 request.setAttribute("SEARCH_FREESLOT_MESSAGE", "The system has no freeslot that meet your requirement!!!");
             }
         } catch (SQLException ex) {
-            log("Error at SearchFSlotServlet: " + ex.toString());
+            log("Error at SearchRequestForLec: " + ex.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

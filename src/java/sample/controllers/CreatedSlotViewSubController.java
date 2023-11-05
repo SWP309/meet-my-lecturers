@@ -26,9 +26,12 @@ public class CreatedSlotViewSubController extends HttpServlet {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String email=request.getParameter(us.getUserEmail());
+            System.out.println("xin chao a");
             ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
             List<ViewCreatedSlotDTO> listCreatedSlotSub = dao.GetlistCreatedSlotSub(us.getUserEmail());
+            System.out.println(listCreatedSlotSub);
             if (listCreatedSlotSub.size() > 0) {
+                System.out.println("vao dc if");
                 request.setAttribute("LIST_CREATED_SLOT_SUB", listCreatedSlotSub);
                 url = SUCCESS;
             }

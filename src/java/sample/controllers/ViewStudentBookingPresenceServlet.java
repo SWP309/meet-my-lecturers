@@ -1,38 +1,40 @@
-
 package sample.controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.text.ParseException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sample.requests.RequestDAO;
+import sample.bookings.BookingDAO;
+import sample.bookings.BookingDTO;
 
-public class DeleteRequestServlet extends HttpServlet {
-    private final String SUCCESS = "ViewRequestServlet";
-    private final String ERROR = "ViewRequestServlet";
+public class ViewStudentBookingPresenceServlet extends HttpServlet {
+
+    private final String SUCCESS = "StudentBookingPresence.jsp";
+    private final String ERROR = "StudentBookingPresence.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String roleID = request.getParameter("txtRequestID");
-            String note = request.getParameter("txtNote");
-            if (note.isEmpty()) {
-                note = null;
-            }
-            RequestDAO requestDAO = new RequestDAO();
-            boolean checkUpdateNote = requestDAO.updateNoteRequest(note, roleID);
-            boolean checkDelete = requestDAO.deleteARequest(roleID);
-            if(checkDelete && checkUpdateNote) {
+            BookingDAO bookingDAO = new BookingDAO();
+            List<BookingDTO> listBookingPreSenceInfo = bookingDAO.bookingPresenceInformation();
+            List<BookingDTO> listBookingAbsenceNumber = bookingDAO.bookingAbsenceNumber();
+            if (listBookingAbsenceNumber != null) {
+                request.setAttribute("LIST_BOOKING_PRESENCE_INFO", listBookingPreSenceInfo);
+                request.setAttribute("LIST_BOOKING_ABSENCE_NUMBER", listBookingAbsenceNumber);
                 url = SUCCESS;
+            } else {
+                request.setAttribute("MESSAGE", "There is no student who books a slot without participating in class!!!");
             }
-        } catch (ClassNotFoundException | SQLException | ParseException ex) {
-            log("Error at DeleteRequestServlet: " + ex.toString());
+        } catch (SQLException | ClassNotFoundException ex) {
+            log("Error at ViewStudentBookingPresenceServlet: " + ex.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

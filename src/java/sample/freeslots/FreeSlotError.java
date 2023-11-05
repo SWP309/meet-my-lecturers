@@ -17,6 +17,9 @@ public class FreeSlotError {
     private String capacityError;
     private String meetLinkError;
     private String repeatedTimeError;
+    private String duplicateTimeError;
+    private String semesterIDError;
+    private String subjectCodeError;
 
     public FreeSlotError() {
         this.pastTimeError = "";
@@ -25,15 +28,21 @@ public class FreeSlotError {
         this.capacityError = "";
         this.meetLinkError = "";
         this.repeatedTimeError = "";
+        this.duplicateTimeError = "";
+        this.semesterIDError = "";
+        this.subjectCodeError = "";
     }
 
-    public FreeSlotError(String pastTimeError, String endTimeError, String durationError, String capacityError, String meetLinkError, String repeatedTimeError) {
+    public FreeSlotError(String pastTimeError, String endTimeError, String durationError, String capacityError, String meetLinkError, String repeatedTimeError, String duplicateTimeError, String semesterIDError, String subjectCodeError) {
         this.pastTimeError = pastTimeError;
         this.endTimeError = endTimeError;
         this.durationError = durationError;
         this.capacityError = capacityError;
         this.meetLinkError = meetLinkError;
         this.repeatedTimeError = repeatedTimeError;
+        this.duplicateTimeError = duplicateTimeError;
+        this.semesterIDError = semesterIDError;
+        this.subjectCodeError = subjectCodeError;
     }
 
     public String getPastTimeError() {
@@ -82,6 +91,42 @@ public class FreeSlotError {
 
     public void setRepeatedTimeError(String repeatedTimeError) {
         this.repeatedTimeError = repeatedTimeError;
+    }
+
+    public String getDuplicateTimeError() {
+        return duplicateTimeError;
+    }
+
+    public void setDuplicateTimeError(String duplicateTimeError) {
+        this.duplicateTimeError = duplicateTimeError;
+    }
+
+    /**
+     * @return the semesterIDError
+     */
+    public String getSemesterIDError() {
+        return semesterIDError;
+    }
+
+    /**
+     * @param semesterIDError the semesterIDError to set
+     */
+    public void setSemesterIDError(String semesterIDError) {
+        this.semesterIDError = semesterIDError;
+    }
+
+    /**
+     * @return the subjectCodeError
+     */
+    public String getSubjectCodeError() {
+        return subjectCodeError;
+    }
+
+    /**
+     * @param subjectCodeError the subjectCodeError to set
+     */
+    public void setSubjectCodeError(String subjectCodeError) {
+        this.subjectCodeError = subjectCodeError;
     }
 
 }

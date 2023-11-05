@@ -12,6 +12,10 @@ public class RequestDTO implements Serializable{
     private String studentID;
     private String lecturerID;
     private String semesterID;
+    private String note;
+    
+    //bien ngoai lai
+    private String studentName;
 
     public String getSemesterID() {
         return semesterID;
@@ -31,7 +35,37 @@ public class RequestDTO implements Serializable{
         this.studentID = "";
         this.lecturerID = "";
         this.semesterID = "";
+        this.note = "";
+        this.studentName = "";
     }
+
+    public RequestDTO(String requestID, int status, String subjectCode, String startTime, String endTime, String description, String studentID, String lecturerID, String semesterID, String note, String studentName) {
+        this.requestID = requestID;
+        this.status = status;
+        this.subjectCode = subjectCode;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.description = description;
+        this.studentID = studentID;
+        this.lecturerID = lecturerID;
+        this.semesterID = semesterID;
+        this.note = note;
+        this.studentName = studentName;
+    }
+
+    public RequestDTO(String requestID, int status, String subjectCode, String startTime, String endTime, String description, String studentID, String lecturerID, String semesterID, String note) {
+        this.requestID = requestID;
+        this.status = status;
+        this.subjectCode = subjectCode;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.description = description;
+        this.studentID = studentID;
+        this.lecturerID = lecturerID;
+        this.semesterID = semesterID;
+        this.note = note;
+    }
+    
 
     public RequestDTO(String requestID, int status, String subjectCode, String startTime, String endTime, String description, String studentID, String lecturerID, String semesterID) {
         this.requestID = requestID;
@@ -157,6 +191,41 @@ public class RequestDTO implements Serializable{
     public void setStatus(int status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "RequestDTO{" + "requestID=" + getRequestID() + ", status=" + getStatus() + ", subjectCode=" + getSubjectCode() + ", startTime=" + getStartTime() + ", endTime=" + getEndTime() + ", description=" + getDescription() + ", studentID=" + getStudentID() + ", lecturerID=" + getLecturerID() + ", semesterID=" + getSemesterID() + '}';
+    }
+
+    /**
+     * @return the note
+     */
+    public String getNote() {
+        return note;
+    }
+
+    /**
+     * @param note the note to set
+     */
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    /**
+     * @return the studentName
+     */
+    public String getStudentName() {
+        return studentName;
+    }
+
+    /**
+     * @param studentName the studentName to set
+     */
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+    
+    
     
     
 }
