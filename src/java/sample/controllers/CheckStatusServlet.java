@@ -38,16 +38,10 @@ public class CheckStatusServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            if (us.getUserStatus() == 0) {
+            if (us.getUserStatus() == 2) {
                 System.out.println(us.getUserStatus());
                 request.setAttribute("showConfirmation", "Do you want to change your password ?");
             }
-            UserDAO dao = new UserDAO();
-            List<Top3StudentDTO> listTop3 = dao.GetlistTop3();
-            if (listTop3 != null) {
-                request.setAttribute("LIST_TOP3", listTop3);
-            }
-
             request.getRequestDispatcher("StudentHome_1.jsp").forward(request, response);
         } catch(Exception e) {
             e.printStackTrace();

@@ -11,7 +11,7 @@
     <head>
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            if (us != null) {                        
+            if (us != null) {
         %>
         <meta charset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -72,6 +72,14 @@
                 var form = document.querySelector('.history form');
                 form.submit();
             }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -84,11 +92,11 @@
                 } else {
                     userInfo.style.display = "none";
                 }
-                
+
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
-                
+
                 Swal.fire({
                     title: 'User Information',
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
@@ -126,7 +134,7 @@
                     event.preventDefault();
                 }
             }
-            
+
             function submitFormBack() {
                 var form = document.querySelector('.backbutton form');
                 form.submit();
