@@ -1,3 +1,8 @@
+*{ 
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: sans-serif;}
 .fptu-eng-1-icon {
     position: absolute;
     top: 4px;

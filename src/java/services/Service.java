@@ -1,6 +1,7 @@
 package services;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -55,7 +56,12 @@ public class Service {
         TimetableDAO tr = new TimetableDAO();
         Calendar startTime = Service.dateToCalendar(r.getStartTime());
         String day = intToDays(startTime.get(Calendar.DAY_OF_WEEK));
-        List<TimetableDTO> list = tr.listByDate(r.getLecturerID(), day, r.getStartTime(), r.getEndTime());
+        
+        String s1 = r.getStartTime().substring(11);
+        String s2 = r.getEndTime().substring(11);
+                
+//        String start = sdfTime.format(d);
+        List<TimetableDTO> list = tr.listByDate(r.getLecturerID(), day, s1, s2);
         if (list.size() > 0) {
             return false;
         }
@@ -69,7 +75,7 @@ public class Service {
         return calendar;
     }
     
-    public static SimpleDateFormat sdfDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public static SimpleDateFormat sdfDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
     public static SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
     public static SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
     
@@ -84,11 +90,10 @@ public class Service {
 //
 //        Date date = sdfDateTime.parse(d);
 //        Date date1 = sdfDateTime.parse(d1);
-//
-//        System.out.println(date);
-//        FreeSlotsDTO f = new FreeSlotsDTO("SWP391", d, d1, "", 0, "", 0, "", true);
-////        Requests r = new Requests(1, true, "Swe", date, date1, "asdfghj", "se123", "gv0002");
-//
-//        System.out.println(ts.duplicateSlot(f));
+////        FreeSlotsDTO f = new FreeSlotsDTO("SWP391", d, d1, "", 0, "", 0, "", true, "");
+//        
+//        RequestDTO r = new RequestDTO("", 0, "", d, d1, "", "", "", "");
+////Requests(1, true, "Swe", date, date1, "asdfghj", "se123", "gv0002");
+//        System.out.println(ts.duplicateSlot(r));
 //    }
 }

@@ -54,25 +54,32 @@ public class MainController extends HttpServlet {
 
     private static final String ADMIN_PAGE = "AdminPage";
     private static final String ADMIN_PAGE_ACTION = "AdminPage.jsp";
-//    private static final String ADMIN_PAGE_CONTROLLER = "ViewSemesterServlet";
     private static final String ADMIN_PAGE_CONTROLLER = "DashBoardServlet";
-//    private static final String ADMIN_PAGE_CONTROLLER_ACTION = "DashBoard";
     private static final String ADMIN_FIND_STUDENTMAXBOOKING = "Find";//booking most slot
     private static final String ADMIN_FIND_STUDENTMAXREQUEST = "FindSMR";//send most request
     private static final String ADMIN_FIND_LECTURERMAXBOOKING = "FindCMS";//create most slot
     private static final String ADMIN_FIND_LECTURERMAXREQUEST = "FindRMR";//recieve most request
+    private static final String ADMIN_IMPORT_PAGE = "importPage";
+    private static final String ADMIN_IMPORT_PAGE_ACTION = "AdminImportPage.jsp";
+    private static final String ADMIN_IMPORTSTUDENT = "importST";
+    private static final String ADMIN_IMPORTSTUDENT_ACTION = "ImportStudents";
+    private static final String ADMIN_IMPORTTIMETABLES = "importTB";
+    private static final String ADMIN_IMPORTTIMETABLES_ACTION = "ImportTimetables";
 
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
     private static final String BACK_TO_REQUEST = "BackToRequest";
     private static final String REQUEST_STATUS = "ViewRequestStatus";
     private static final String REQUEST_STATUS_PAGE = "ViewRequestStatus.jsp";
+    private static final String ALL_REQUEST_STATUS_CONTROLLER = "ViewAllRequestStatus";
 
     private static final String CREATE_REQUEST = "CreateRequest";
     private static final String REQUEST_ACTION = "CreateRequestServlet";
 
     private static final String SEARCH_REQUEST_STATUS = "SearchRequestStatus";
     private static final String SEARCH_REQUEST_STATUS_ACTION = "SearchRequestStatusServlet";
+    private static final String SEARCH_REQUEST_FOR_LEC = "searchRequestForLec";
+    private static final String SEARCH_REQUEST_FOR_LEC_ACTION = "SearchRequestForLec";
 
     private static final String VIEWBOOKING = "ViewBooking";
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
@@ -199,6 +206,12 @@ public class MainController extends HttpServlet {
                 url = ADMIN_PAGE_CONTROLLER;
             } else if (action.equals(ADMIN_FIND_LECTURERMAXREQUEST)) {
                 url = ADMIN_PAGE_CONTROLLER;
+            } else if (action.equals(ADMIN_IMPORT_PAGE)) {
+                url = ADMIN_IMPORT_PAGE_ACTION;
+            } else if (action.equals(ADMIN_IMPORTSTUDENT)) {
+                url = ADMIN_IMPORTSTUDENT_ACTION;
+            } else if (action.equals(ADMIN_IMPORTTIMETABLES)) {
+                url = ADMIN_IMPORTTIMETABLES_ACTION;
             } else if (action.equals(ADMIN_PAGE)) {
                 url = ADMIN_PAGE_ACTION;
             } else if (ACCEPT_REQUEST.equals(action)) {
@@ -216,7 +229,7 @@ public class MainController extends HttpServlet {
             } else if (UPDATE_USERS.equals(action)) {
                 url = UPDATE_USERS_CONTROLLER;
             } else if (REQUEST_STATUS.equals(action)) {
-                url = REQUEST_STATUS_PAGE;
+                url = ALL_REQUEST_STATUS_CONTROLLER;
             } else if (SEARCH_REQUEST_STATUS.equals(action)) {
                 url = SEARCH_REQUEST_STATUS_ACTION;
             } else if (CHECK_ATTENDANCE_ACTION_STUDENT.equals(action)) {
@@ -227,6 +240,8 @@ public class MainController extends HttpServlet {
                 url = BOOKING_FREE_SLOT_SERVLET;
             } else if (SEARCH_BOOKED_SLOT_ACTION.equals(action)) {
                 url = SEARCH_BOOKED_SLOT_SERVLET;
+            } else if (SEARCH_REQUEST_FOR_LEC.equals(action)) {
+                url = SEARCH_REQUEST_FOR_LEC_ACTION;
             }
 
         } catch (Exception e) {

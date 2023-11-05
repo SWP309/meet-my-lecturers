@@ -22,11 +22,12 @@ import services.Service;
 public class CreateRequestServlet extends HttpServlet {
 
     private static final String ERROR = "request.jsp";
-    private static final String SUCCESS = "StudentHome_1.jsp";
+    private static final String SUCCESS = "ViewRequestStatus.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         String url = ERROR;
         try {
             HttpSession session = request.getSession();
@@ -98,7 +99,8 @@ public class CreateRequestServlet extends HttpServlet {
 //                        + "Please click View Timetable to check again!!!");
 //            }
 //            System.out.println("Check Timetable valid: " + checkValidate);
-            boolean checkTimetableDuplicate = Service.duplicateSlot(requestDTO);
+            Service service = new Service();
+            boolean checkTimetableDuplicate = service.duplicateSlot(requestDTO);
             if (checkTimetableDuplicate == false ) {
                 checkValidate = false;
                 requestError.setDuplicateTimetableError("- The time you entered overlaps with lecturer's timetable. "
