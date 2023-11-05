@@ -1,4 +1,5 @@
 
+<%@page import="sample.users.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,6 +11,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <!-- Include Font Awesome CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+        <!-- Material Icons CSS -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="./StudentHome_1.css" />
         <style>
             .card-body > div {
                 margin-bottom: 0.2rem;
@@ -57,43 +61,148 @@
             td {
                 text-align: center;
             }
+            .frame-History{
+                border-radius: 20px;
+                background-color: #f27125;
+                width: 40px !important;
+                height: 40px;
+                align-items: center;
+                padding: 10px 9px;
+                box-sizing: border-box;
+                /* gap: 0px; */
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                float: right;
+                margin-top: 15px;
+                margin-right: 20px;
+            }
         </style>
+        <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+        %>
+        <script>
+            function submitForm() {
+                var form = document.querySelector('.bookingview form');
+                form.submit();
+            }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitFormLogout() {
+                var form = document.querySelector('.logout form');
+                form.submit();
+            }
+            function submitFormRequest() {
+                var form = document.querySelector('.request form');
+                form.submit();
+            }
+            function submitSearchForm() {
+                var form = document.querySelector('.searchfunction form');
+                form.submit();
+            }
+            function submitFormViewLecturer() {
+                var form = document.querySelector('.viewLecturer form');
+                form.submit();
+            }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
+
+            var userDTO = {
+                userID: "<%= us.getUserID()%>",
+                userName: "<%= us.getUserName()%>",
+                userEmail: "<%= us.getUserEmail()%>"
+            };
+            function showUserInfo() {
+                var userInfo = document.getElementById("user-info");
+                if (userInfo.style.display === "none" || userInfo.style.display === "") {
+                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                } else {
+                    userInfo.style.display = "none";
+                }
+
+                var userID = userDTO.userID;
+                var userName = userDTO.userName;
+                var userEmail = userDTO.userEmail;
+
+                Swal.fire({
+                    title: 'User Information',
+                    html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
+                            + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
+                });
+            }
+
+        </script>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-light">
-            <a class="navbar-brand" href="#">
-                <img src="https://cdn.haitrieu.com/wp-content/uploads/2021/10/Logo-Dai-hoc-FPT.png" width="100" class="d-inline-block align-top" alt="Logo">
-            </a>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="cus nav-link" href="#">
-                            <i class="fas fa-calendar-alt"></i> View Booking
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="cus nav-link" href="#">
-                            <i class="fas fa-file" style="margin-right: 5px;"></i>Create Request
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="cus nav-link" href="#" >
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
-                    </li>
-                    <li class="nav-item" id="user-icon">
-                        <a class="nav-link text-black" href="#">
-                            <i class="fas fa-user"></i> User
-                        </a>
-                    </li>
-                </ul>
+        <div class="fptu-eng-1-parent">
+            <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="returnHomePageStudent" />
+                </form>
             </div>
-        </nav>
+            <div class="frame-parent">
+                <div class="frame-group">
+                    <div class="frame-div bookingview" onclick="submitForm()">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="ViewBooking" />
+                        </form>
+                        <div class="bookedslot-wrapper">
+                            <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
+                            <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                        </div>
+                        <div class="view-booking" >View Booking</div>
+                    </div>
+                    <div class="frame-div requestViewStatus" style="background-color: #b7b7b7;" id="booking-view-div">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="ViewRequestStatus" />
+                        </form>
+                        <i class="material-icons">visibility</i>View Request Status
+                    </div>
+                    <div class="frame-div request" onclick="submitFormRequest()">
+                        <form action="MainController" method="POST">
+                            <input type="hidden" name="action" value="Request" />
+                        </form>
+
+                        <i class="material-icons">mail_outline</i> Request
+                    </div>
+                    <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
+                        <form action="MainController" method="POST">
+                            <input type="hidden" name="action" value="ViewAllLecturers" />
+                        </form>
+
+                        <i class="fas fa-search"></i> <p style="font-size: 16px">View Lecturer</p>
+                    </div>
+                    <div class="frame-div logout" onclick="submitFormLogout()" style="width: 10%; text-align: center">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="Logout" />
+                        </form>
+                        <i class="material-icons">logout</i> Logout
+                    </div>
+                </div>
+                <div>
+                    <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
+                         onclick="showUserInfo()" />
+                    <div id="user-info" style="display: none; position: absolute">
+                        <p id="user-id"> </p>
+                        <p id="user-name"></p>
+                        <p id="user-email"></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+            <form action="MainController" method="POST">
+                <input type="hidden" name="action" value="attendanceSemes" />
+            </form>
+
+            <i class="material-icons">history</i>
+        </div>
 
         <div class="container mt-5">
             <form action="MainController" method="POST">
@@ -445,6 +554,9 @@
                 </c:if>
             </div>
         </div>        
+        <%} else {
+                response.sendRedirect("MainController");
+            }%>
         <!-- Thêm liên kết đến Bootstrap JS và jQuery -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

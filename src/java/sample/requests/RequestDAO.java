@@ -206,7 +206,7 @@ public class RequestDAO implements Serializable {
                 String description = rs.getNString("description");
                 RequestDTO requestDTO = new RequestDTO(requestID, 0, subjectCode,
                         starts, ends, description, studentID, userID, semesterID);
-                UserDTO userDTO = new UserDTO(studentID, userName, "", true, "", "");
+                UserDTO userDTO = new UserDTO(studentID, userName, "", 1, "", "");
                 if (this.listRequests == null) {
                     this.listRequests = new ArrayList<>();
                 }
@@ -470,7 +470,6 @@ public class RequestDAO implements Serializable {
     public List<RequestDTO> getRequestByStatus() {
         return requestByStatus;
     }
-
     private List<UserDTO> userByStatus;
 
     public List<UserDTO> getUserByStatus() {
@@ -489,6 +488,7 @@ public class RequestDAO implements Serializable {
             stm.setString(3, semesterID);
             rs = stm.executeQuery();
             while (rs.next()) {
+
                 String subjectCode = rs.getString("subjectCode");
                 String lecturerID = rs.getString("lecturerID");
                 String lecName = rs.getNString("userName");
@@ -498,8 +498,8 @@ public class RequestDAO implements Serializable {
                 String starts = dateFormat.format(startTime);
                 String ends = dateFormat.format(endTime);
                 RequestDTO requestDTO = new RequestDTO("", status, subjectCode, starts, ends, "", studentID, lecturerID, semesterID);
-                UserDTO userDTO = new UserDTO(lecturerID, lecName, "", true, "", "");
-                if (this.requestByStatus == null) {
+                UserDTO userDTO = new UserDTO(lecturerID, lecName, "", 1, "", "");
+                if(this.requestByStatus == null){
                     this.requestByStatus = new ArrayList<>();
                 }
                 this.requestByStatus.add(requestDTO);
@@ -526,7 +526,6 @@ public class RequestDAO implements Serializable {
     public List<RequestDTO> getRequestBySubCodeAndStatus() {
         return requestBySubCodeAndStatus;
     }
-
     private List<UserDTO> userBySubCodeAndStatus;
 
     public List<UserDTO> getUserBySubCodeAndStatus() {
@@ -554,7 +553,7 @@ public class RequestDAO implements Serializable {
                 String starts = dateFormat.format(startTime);
                 String ends = dateFormat.format(endTime);
                 RequestDTO requestDTO = new RequestDTO("", status, subjectCode, starts, ends, "", studentID, lecturerID, semesterID);
-                UserDTO userDTO = new UserDTO(lecturerID, lecName, "", true, "", "");
+                UserDTO userDTO = new UserDTO(lecturerID, lecName, "", 1, "", "");
                 if (this.requestBySubCodeAndStatus == null) {
                     this.requestBySubCodeAndStatus = new ArrayList<>();
                 }
@@ -582,7 +581,6 @@ public class RequestDAO implements Serializable {
     public List<RequestDTO> getAllRequest() {
         return allRequest;
     }
-
     private List<UserDTO> allUser;
 
     public List<UserDTO> getAllUser() {
@@ -610,7 +608,7 @@ public class RequestDAO implements Serializable {
                 String starts = dateFormat.format(startTime);
                 String ends = dateFormat.format(endTime);
                 RequestDTO requestDTO = new RequestDTO("", status, subjectCode, starts, ends, "", studentID, lecturerID, semesterID);
-                UserDTO userDTO = new UserDTO(lecturerID, lecName, "", true, "", "");
+                UserDTO userDTO = new UserDTO(lecturerID, lecName, "", 1, "", "");
                 if (this.allRequest == null) {
                     this.allRequest = new ArrayList<>();
                 }
@@ -666,7 +664,7 @@ public class RequestDAO implements Serializable {
                 String starts = dateFormat.format(startTime);
                 String ends = dateFormat.format(endTime);
                 RequestDTO requestDTO = new RequestDTO("", status, subjectCode, starts, ends, "", studentID, lecturerID, semesterID, note);
-                UserDTO userDTO = new UserDTO(lecturerID, lecName, "", true, "", "");
+                UserDTO userDTO = new UserDTO(lecturerID, lecName, "", 1, "", "");
                 if (this.listRequest == null) {
                     this.listRequest = new ArrayList<>();
                 }
@@ -694,7 +692,6 @@ public class RequestDAO implements Serializable {
     public List<RequestDTO> getAllRequestBySubCode() {
         return allRequestBySubCode;
     }
-
     private List<UserDTO> allUserBySubCode;
 
     public List<UserDTO> getAllUserBySubCode() {
@@ -722,7 +719,7 @@ public class RequestDAO implements Serializable {
                 String starts = dateFormat.format(startTime);
                 String ends = dateFormat.format(endTime);
                 RequestDTO requestDTO = new RequestDTO("", status, subjectCode, starts, ends, "", studentID, lecturerID, semesterID);
-                UserDTO userDTO = new UserDTO(lecturerID, lecName, "", true, "", "");
+                UserDTO userDTO = new UserDTO(lecturerID, lecName, "", 1, "", "");
                 if (this.allRequestBySubCode == null) {
                     this.allRequestBySubCode = new ArrayList<>();
                 }

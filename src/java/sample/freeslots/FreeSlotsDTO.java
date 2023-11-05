@@ -93,18 +93,11 @@ public class FreeSlotsDTO {
         this.lecturerName = lecturerName;
     }
 
-    public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, int status, String semesterID) {
-        this.subjectCode = subjectCode;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.password = password;
-        this.capacity = capacity;
-        this.meetLink = meetLink;
-        this.count = count;
-        this.lecturerID = lecturerID;
-        this.status = status;
-        this.semesterID = semesterID;
+    public FreeSlotsDTO(String ofject) {
+        this.semesterID = ofject;
+        this.subjectCode = ofject;
     }
+
 
     public String getFreeSlotID() {
         return freeSlotID;
@@ -178,6 +171,14 @@ public class FreeSlotsDTO {
         this.lecturerID = lecturerID;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     /**
      * @return the semesterID
      */
@@ -192,12 +193,6 @@ public class FreeSlotsDTO {
         this.semesterID = semesterID;
     }
 
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
-    }
 
     /**
      * @return the bookedStudent
@@ -211,13 +206,6 @@ public class FreeSlotsDTO {
      */
     public void setBookedStudent(int bookedStudent) {
         this.bookedStudent = bookedStudent;
-    }
-
-    /**
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
     }
 
     /**
@@ -241,9 +229,6 @@ public class FreeSlotsDTO {
         return block_list;
     }
 
-    /**
-     * @param block_list the block_list to set
-     */
     public void setBlock_list(String block_list) {
         this.block_list = block_list;
     }

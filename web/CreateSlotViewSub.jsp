@@ -8,6 +8,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            if (us != null) {
+                        
+        %>
         <meta charset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
@@ -51,11 +56,6 @@
         <!-- JavaScript c?a SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
 
-
-        <%
-
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-        %>
         <script>
             function confirmCancel(bookingID) {
                 if (confirm('Are you sure to cancel this booking')) {
@@ -67,12 +67,20 @@
                 var form = document.querySelector('.logout form');
                 form.submit();
             }
-            function submitFormRequest() {
-                var form = document.querySelector('.request form');
+            function submitForm() {
+                var form = document.querySelector('.viewCreateSlot form');
                 form.submit();
             }
             function submitFormHomePage() {
                 var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitFormCreate() {
+                var form = document.querySelector('.CreateFSlot form');
+                form.submit();
+            }
+            function submitFormViewRequest() {
+                var form = document.querySelector('.request-div form');
                 form.submit();
             }
             function goBack() {
@@ -90,18 +98,18 @@
                 } else {
                     userInfo.style.display = "none";
                 }
-
+                
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
-
+                
                 Swal.fire({
                     title: 'User Information',
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
-
+            
             function confirmDelete() {
                 var result = confirm("Are you sure about delete this Free Slot ?");
                 console.log(result);
@@ -117,11 +125,7 @@
                     event.preventDefault();
                 }
             }
-            function submitFormBack() {
-                var form = document.querySelector('.backbutton form')
-                form.submit();
-            }
-
+            
         </script>
         <style>
             td {
@@ -149,60 +153,71 @@
         </style>
     </head>
     <body>
-        <div class="student-viewbookedslot">
-            <div class="fptu-eng-1-parent">
-                <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
-                    <form action="MainController" method="POST">
-                        <input type="hidden" name="action" value="returnHomePageLecturer" />
-                    </form>
-                    <img
-                        class="fptu-eng-1-icon"
-                        alt=""
-                        src="public/BookingView/2021fptueng-1@2x.png"
-                        />
-                </div>
 
-                <div class="frame-parent">
-                    <div class="frame-group">
-                        <div class="frame-div request" onclick="submitFormRequest()">
-                            <form action="MainController" method="POST">
-                                <input type="hidden" name="action" value="Request" />
-                            </form>
-
-                            <i class="material-icons">mail_outline</i> Request
-                        </div>
-                        <div class="frame-div logout" onclick="submitFormLogout()">
-                            <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="Logout" />
-                            </form>
-                            <div class="logout-wrapper">
-                                <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
-                            </div>
-                            <div class="request">
-                                <p class="logout1">Logout</p>
-                            </div>
-                        </div>
-                        <div>
-                            <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
-                                 onclick="showUserInfo()" />
-                            <div id="user-info" style="display: none; position: absolute;">
-                                <p id="user-id"> </p>
-                                <p id="user-name"></p>
-                                <p id="user-email"></p>
-                            </div>
-                        </div>
-
+        <div class="fptu-eng-1-parent">
+            <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="returnHomePageLecturer" />
+                </form>
+            </div>
+            <div class="frame-parent">
+                <div class="frame-group">
+                    <div class="frame-div viewCreateSlot" onclick="submitForm()">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="viewFSlotLecturer" />
+                        </form>
+                        <i class="material-icons">visibility</i>View Create Slot
                     </div>
+                    <div class="frame-div request-div" onclick="submitFormViewRequest()">
+                        <form action="MainController" method="POST">
+                            <input type="hidden" name="action" value="ViewRequest" />
+                        </form>
+
+                        <i class="material-icons">mail_outline</i>View Request
+                    </div>
+                    <div class="frame-div hideView" style="background-color: #b7b7b7;">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="HideView" />
+                        </form>
+                        <div>
+                            <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
+                        </div>
+                    </div>
+                    <div class="frame-div logout" style="text-align: center;" onclick="submitFormLogout()">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="Logout" />
+                        </form>
+                        <div class="logout-wrapper">
+                            <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                        </div>
+                        <div class="logout">
+                            <p class="logout1">Logout</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
+                             onclick="showUserInfo()" />
+                        <div id="user-info" style="display: none; position: absolute;">
+                            <p id="user-id"> </p>
+                            <p id="user-name"></p>
+                            <p id="user-email"></p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
+        </div>
+        <div class="frame-Create CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()">
+            <form action="MainController" method="POST">
+                <input type="hidden" name="action" value="CreateFS" />
+            </form>
 
-            <div class="backbutton"  onclick="goBack()">
-                <div class="back">Back</div>
-                <img class="back-icon" alt="" src="./public/request/back.svg" />
-            </div>
+            <i class="material-icons">add</i>
+        </div>
 
-
-            <div class="container mt-5" style="    margin-top: -33% !important;">
+        <div class="student-viewbookedslot">
+            <div class="container mt-5" style="    margin-top: 9% !important;">
                 <div class="row justify-content-center mt-5">
                     <c:if test="${requestScope.LIST_CREATED_SLOT_SUB !=null}">
                         <c:if test="${not empty requestScope.LIST_CREATED_SLOT_SUB}">
@@ -241,11 +256,16 @@
             <script>
                 // L?y thông tin l?i t? bi?n requestScope.ERROR
                 var errorMessage = "${requestScope.ERROR}";
-
+                
                 // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
                 if (errorMessage.trim() !== "") {
                     alert(errorMessage);
                 }
             </script>
+            <% 
+                } else {
+                    response.sendRedirect("Maincontroller?action=");
+                }
+            %>
     </body>
 </html>

@@ -44,7 +44,7 @@ public class ViewCreatedSlotDTO {
         this.joinedMembers = joinedMembers;
         this.capacity = capacity;
     }
-
+    
     public String getSubjectCode() {
         return subjectCode;
     }

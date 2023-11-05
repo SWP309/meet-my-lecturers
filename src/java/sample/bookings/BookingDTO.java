@@ -26,7 +26,7 @@ public class BookingDTO {
     private int status;
     //Biến ngoại lai
     private int numberOfAbsenceSlot;
-
+    private String semesterID;
     public BookingDTO() {
         this.subjectCode = "";
         this.lectureName = "";
@@ -77,6 +77,25 @@ public class BookingDTO {
         this.userName = userName;
         this.bookingID = bookingID;
         this.meetLink = meetLink;
+    }
+
+    public BookingDTO(String subjectCode, String lectureName, String startTime, String endTime, String userName, String bookingID, String meetLink, String semesterID) {
+        this.subjectCode = subjectCode;
+        this.lectureName = lectureName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.userName = userName;
+        this.bookingID = bookingID;
+        this.meetLink = meetLink;
+        this.semesterID = semesterID;
+    }
+
+    public String getSemesterID() {
+        return semesterID;
+    }
+
+    public void setSemesterID(String semesterID) {
+        this.semesterID = semesterID;
     }
 
     public String getSubjectCode() {
@@ -178,7 +197,5 @@ public class BookingDTO {
     public void setNumberOfAbsenceSlot(int numberOfAbsenceSlot) {
         this.numberOfAbsenceSlot = numberOfAbsenceSlot;
     }
-
-   
 
 }

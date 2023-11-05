@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import sample.bookings.BookingDAO;
 import sample.bookings.BookingDTO;
 import sample.bookings.BookingError;
+import sample.freeslots.FreeSlotsDAO;
 import sample.users.UserDTO;
 
 /**
@@ -39,8 +40,10 @@ public class BookFSlotServlet extends HttpServlet {
         String url = ERROR;
 
         try {
+            boolean checkValidation = true;
             HttpSession session = request.getSession();
             BookingDAO dao = new BookingDAO();
+            FreeSlotsDAO FsDao = new FreeSlotsDAO();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String studentID = us.getUserID();
             System.out.println(studentID);
@@ -56,7 +59,12 @@ public class BookFSlotServlet extends HttpServlet {
             dto.setStudentID(studentID);
             dto.setFreeSlotID(freeSlotID);
             BookingError bookingError = new BookingError();
-            boolean checkValidation = true;
+            boolean existsInBlockList = FsDao.checkBlockList(studentID, freeSlotID);
+            if (existsInBlockList) {
+                System.out.println("You have been blocked from this slot, please contact your lecturer to know reasons");
+                checkValidation = false;
+                dto.setStatus(-1);
+            }
             //tranfer String to Date
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date starts = format.parse(startTime);

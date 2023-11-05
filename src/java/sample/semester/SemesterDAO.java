@@ -44,7 +44,7 @@ public class SemesterDAO {
         con.close();
         return list;
     }
-
+    
    public SemesterDTO read(String semesterID) throws SQLException, ClassNotFoundException {
         SemesterDTO semesters = null;
         Connection con = DBUtils.getConnection();

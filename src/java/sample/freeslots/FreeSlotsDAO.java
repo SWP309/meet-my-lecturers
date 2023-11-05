@@ -35,8 +35,8 @@ public class FreeSlotsDAO {
             + "AND ? BETWEEN fs.startTime AND fs.endTime\n"
             + "AND fs.status = ?";
     private final static String CREATE_FREESLOT = "INSERT INTO "
-            + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status,semesterID) "
-            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status,semesterID,block_list) "
+            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final static String CHECK_DUPLICATE_GGMEETLINK = "SELECT freeSlotID "
             + "FROM FreeSlots WHERE meetLink=?";
     private final static String SEARCH_FREESLOT_BY_SUBJECTCODE = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n" +
@@ -137,6 +137,11 @@ public class FreeSlotsDAO {
     
     private static BookingDAO bookingDAO = new BookingDAO();
 
+    private static String SEMESTER = "  SELECT DISTINCT fs.semesterID\n"
+            + "            FROM [Semesters] fs;";
+    private static String SUBJECT = "    SELECT DISTINCT fs.[subjectCode]\n"
+            + "            FROM [Subjects] fs;";
+
     public boolean createFreeSlot(FreeSlotsDTO freeSlotsDTO) throws SQLException {
         boolean checkCreate = false;
         Connection conn = null;
@@ -162,6 +167,7 @@ public class FreeSlotsDAO {
                 ps.setString(8, freeSlotsDTO.getLecturerID());
                 ps.setInt(9, freeSlotsDTO.getStatus());
                 ps.setString(10, freeSlotsDTO.getSemesterID());
+                ps.setString(11, freeSlotsDTO.getBlock_list());
                 result = ps.executeUpdate();
                 if (result > 0) {
                     checkCreate = true;
@@ -426,13 +432,15 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotBySubjectCode() {
         return freeSlotBySubjectCode;
     }
-        private String convertDateToString(Timestamp sqlTime) {
+
+    private String convertDateToString(Timestamp sqlTime) {
         // Sử dụng SimpleDateFormat để định dạng ngày giờ
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         // Sử dụng phương thức format để chuyển đổi Time thành String
         return dateFormat.format(sqlTime);
     }
+
     public void getFreeSlotBySubjectCode(String subjectCode, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -443,7 +451,7 @@ public class FreeSlotsDAO {
             stm.setString(1, subjectCode);
             stm.setString(2, studentID);
             rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String freeSlotID = rs.getString("freeSlotID");
                 String lecturerID = rs.getString("lecturerID");
                 String password = rs.getString("password");
@@ -462,13 +470,13 @@ public class FreeSlotsDAO {
                 this.freeSlotBySubjectCode.add(freeSlotsDTO);
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
-            if(stm != null){
+            if (stm != null) {
                 stm.close();
             }
-            if(con != null){
+            if (con != null) {
                 con.close();
             }
         }
@@ -479,6 +487,7 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotByLecturerID() {
         return freeSlotByLecturerID;
     }
+
     public void getFreeSlotByLecturerID(String lecturerID, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -489,9 +498,9 @@ public class FreeSlotsDAO {
             stm.setString(1, lecturerID);
             stm.setString(2, studentID);
             rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String freeSlotID = rs.getString("freeSlotID");
-                String lecname = rs.getNString("userName");                
+                String lecname = rs.getNString("userName");
                 String subjectCode = rs.getString("subjectCode");
                 String password = rs.getString("password");
                 Timestamp startTime = rs.getTimestamp("startTime");
@@ -508,13 +517,13 @@ public class FreeSlotsDAO {
                 this.freeSlotByLecturerID.add(freeSlotsDTO);
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
-            if(stm != null){
+            if (stm != null) {
                 stm.close();
             }
-            if(con != null){
+            if (con != null) {
                 con.close();
             }
         }
@@ -525,6 +534,7 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotByLecName() {
         return freeSlotByLecName;
     }
+
     public void getFreeSlotByLecName(String name, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -535,7 +545,7 @@ public class FreeSlotsDAO {
             stm.setNString(1, "%" + name + "%");
             stm.setString(2, studentID);
             rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String freeSlotID = rs.getString("freeSlotID");
                 String lecturerID = rs.getString("lecturerID");
                 String password = rs.getString("password");
@@ -555,13 +565,13 @@ public class FreeSlotsDAO {
                 this.freeSlotByLecName.add(freeSlotsDTO);
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
-            if(stm != null){
+            if (stm != null) {
                 stm.close();
             }
-            if(con != null){
+            if (con != null) {
                 con.close();
             }
         }
@@ -572,6 +582,7 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotBySemesterID() {
         return freeSlotBySemesterID;
     }
+
     public void getFreeSlotBySemesterID(String semester, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -582,7 +593,7 @@ public class FreeSlotsDAO {
             stm.setString(1, semester);
             stm.setString(2, studentID);
             rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String freeSlotID = rs.getString("freeSlotID");
                 String lecturerID = rs.getString("lecturerID");
                 String password = rs.getString("password");
@@ -601,13 +612,13 @@ public class FreeSlotsDAO {
                 this.freeSlotBySemesterID.add(freeSlotsDTO);
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
-            if(stm != null){
+            if (stm != null) {
                 stm.close();
             }
-            if(con != null){
+            if (con != null) {
                 con.close();
             }
         }
@@ -618,6 +629,7 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotBySubjectAndLecID() {
         return freeSlotBySubjectAndLecID;
     }
+
     public void getFreeSlotBySubjectAndLecID(String subjectCode, String lecturerID, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -629,7 +641,7 @@ public class FreeSlotsDAO {
             stm.setString(2, lecturerID);
             stm.setString(3, studentID);
             rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String freeSlotID = rs.getString("freeSlotID");
                 String password = rs.getString("password");
                 String lecname = rs.getNString("userName");    
@@ -647,13 +659,13 @@ public class FreeSlotsDAO {
                 this.freeSlotBySubjectAndLecID.add(freeSlotsDTO);
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
-            if(stm != null){
+            if (stm != null) {
                 stm.close();
             }
-            if(con != null){
+            if (con != null) {
                 con.close();
             }
         }
@@ -664,6 +676,7 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotBySubjectAndLecName() {
         return freeSlotBySubjectAndLecName;
     }
+
     public void getFreeSlotBySubjectAndLecName(String subjectCode, String name, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -675,7 +688,7 @@ public class FreeSlotsDAO {
             stm.setString(2, "%" + name + "%");
             stm.setString(3, studentID);
             rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String freeSlotID = rs.getString("freeSlotID");
                 String lecturerID = rs.getString("lecturerID");    
                 String password = rs.getString("password");    
@@ -694,13 +707,13 @@ public class FreeSlotsDAO {
                 this.freeSlotBySubjectAndLecName.add(freeSlotsDTO);
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
-            if(stm != null){
+            if (stm != null) {
                 stm.close();
             }
-            if(con != null){
+            if (con != null) {
                 con.close();
             }
         }
@@ -711,6 +724,7 @@ public class FreeSlotsDAO {
     public List<FreeSlotsDTO> getFreeSlotBySubjectAndSemester() {
         return freeSlotBySubjectAndSemester;
     }
+    
     public void getFreeSlotBySubjectAndSemester(String subjectCode, String semester, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -722,7 +736,7 @@ public class FreeSlotsDAO {
             stm.setString(2, semester);
             stm.setString(3, studentID);
             rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String freeSlotID = rs.getString("freeSlotID");
                 String lecturerID = rs.getString("lecturerID");    
                 String password = rs.getString("password");    
@@ -740,13 +754,13 @@ public class FreeSlotsDAO {
                 this.freeSlotBySubjectAndSemester.add(freeSlotsDTO);
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
-            if(stm != null){
+            if (stm != null) {
                 stm.close();
             }
-            if(con != null){
+            if (con != null) {
                 con.close();
             }
         }
@@ -786,13 +800,13 @@ public class FreeSlotsDAO {
                 this.freeSlotByLecIDAndSemester.add(freeSlotsDTO);
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
-            if(stm != null){
+            if (stm != null) {
                 stm.close();
             }
-            if(con != null){
+            if (con != null) {
                 con.close();
             }
         }
@@ -833,13 +847,13 @@ public class FreeSlotsDAO {
                 this.freeSlotByLecNameAndSemester.add(freeSlotsDTO);
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
-            if(stm != null){
+            if (stm != null) {
                 stm.close();
             }
-            if(con != null){
+            if (con != null) {
                 con.close();
             }
         }
@@ -866,7 +880,7 @@ public class FreeSlotsDAO {
                 String freeSlotID = rs.getString("freeSlotID"); 
                 String password = rs.getString("password"); 
 //                String lecturerID = rs.getString("lecturerID");    
-                String lecname = rs.getNString("userName");    
+                String lecname = rs.getNString("userName");
 //                String subjectCode = rs.getString("subjectCode");
                 Timestamp startTime = rs.getTimestamp("startTime");
                 String starts = convertDateToString(startTime);
@@ -881,13 +895,13 @@ public class FreeSlotsDAO {
                 this.freeSlotBySubCodeAndLecIDAndSemester.add(freeSlotsDTO);
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
-            if(stm != null){
+            if (stm != null) {
                 stm.close();
             }
-            if(con != null){
+            if (con != null) {
                 con.close();
             }
         }
@@ -929,13 +943,13 @@ public class FreeSlotsDAO {
                 this.freeSlotBySubCodeAndLecNameAndSemester.add(freeSlotsDTO);
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
-            if(stm != null){
+            if (stm != null) {
                 stm.close();
             }
-            if(con != null){
+            if (con != null) {
                 con.close();
             }
         }
@@ -963,7 +977,7 @@ public class FreeSlotsDAO {
                 String freeSlotID = rs.getString("freeSlotID"); 
                 String password = rs.getString("password"); 
 //                String lecturerID = rs.getString("lecturerID");    
-                String lecname = rs.getNString("userName");    
+                String lecname = rs.getNString("userName");
 //                String subjectCode = rs.getString("subjectCode");
                 Timestamp startTime = rs.getTimestamp("startTime");
                 String starts = convertDateToString(startTime);
@@ -978,13 +992,13 @@ public class FreeSlotsDAO {
                 this.freeSlotByAll.add(freeSlotsDTO);
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
-            if(stm != null){
+            if (stm != null) {
                 stm.close();
             }
-            if(con != null){
+            if (con != null) {
                 con.close();
             }
         }
@@ -1024,17 +1038,44 @@ public class FreeSlotsDAO {
                 this.freeSlotList.add(freeSlotsDTO);
             }
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
-            if(stm != null){
+            if (stm != null) {
                 stm.close();
             }
-            if(con != null){
+            if (con != null) {
                 con.close();
             }
         }
     }
+
+    public boolean checkTimeDuplicateInFreeSlot(String lecturerID, Date date) throws ClassNotFoundException, SQLException {
+        boolean check = true;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(CHECK_TIME_DUPLICATE_FS);
+            stm.setString(1, lecturerID);
+            stm.setTimestamp(2, new Timestamp(date.getTime()));
+            stm.setInt(3, 1);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                check = false;
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return check;
+    }
+
     public boolean checkSemesterID(String semesterID) throws SQLException {
         boolean exists = false;
         Connection conn = null;
@@ -1065,6 +1106,7 @@ public class FreeSlotsDAO {
         }
         return exists;
     }
+
     public boolean checkSubjectCode(String subjectCode) throws SQLException {
         boolean exists = false;
         Connection conn = null;
@@ -1095,31 +1137,7 @@ public class FreeSlotsDAO {
         }
         return exists;
     }
-    public boolean checkTimeDuplicateInFreeSlot(String lecturerID, Date date) throws ClassNotFoundException, SQLException {
-        boolean check = true;
-        Connection con = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        try {
-            con = DBUtils.getConnection();
-            stm = con.prepareStatement(CHECK_TIME_DUPLICATE_FS);
-            stm.setString(1, lecturerID);
-            stm.setTimestamp(2, new Timestamp(date.getTime()));
-            stm.setInt(3, 1);
-            rs = stm.executeQuery();
-            if (rs.next()) {
-                check = false;
-            }
-        } finally {
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
-        return check;
-    }
+
     public String searchFSAccept(String startTime, String lecturerID) throws ClassNotFoundException, SQLException, ParseException{
         String freeSlotID = null;
         Connection con = null;
@@ -1147,5 +1165,99 @@ public class FreeSlotsDAO {
             }
         }
         return freeSlotID;
+    }
+    
+    public boolean checkBlockList(String block_list, String freeslotID) throws SQLException {
+        boolean exists = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ps = conn.prepareStatement(CHECK_BLOCKLIST);
+                ps.setString(1, block_list);
+                ps.setString(2, freeslotID);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    exists = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return exists;
+    }
+    
+    public List<FreeSlotsDTO> GetListSemesterID() throws SQLException {
+        List<FreeSlotsDTO> listSemester = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(SEMESTER);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String semesterID = rs.getString("semesterID");
+                    listSemester.add(new FreeSlotsDTO(semesterID));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listSemester;
+    }
+
+    public List<FreeSlotsDTO> GetListSubject() throws SQLException {
+        List<FreeSlotsDTO> listSubject = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(SUBJECT);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String subjectCode = rs.getString("subjectCode");
+                    listSubject.add(new FreeSlotsDTO(subjectCode));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listSubject;
     }
 }
