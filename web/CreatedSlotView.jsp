@@ -86,6 +86,10 @@
                 var form = document.querySelector('.returnHome form');
                 form.submit();
             }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -356,7 +360,7 @@
             </div>
             <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
                 <form action="MainController" method="POST">
-                    <input type="hidden" name="action" value="CreateFS" />
+                    <input type="hidden" name="action" value="historyLec" />
                 </form>
 
                 <i class="material-icons">history</i>

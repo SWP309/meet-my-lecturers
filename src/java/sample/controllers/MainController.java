@@ -89,11 +89,20 @@ public class MainController extends HttpServlet {
     private static final String VIEW_BOOKING_CONTROLLER = "BookingController";
     private static final String VIEW_BOOKING_HISTORY = "attendanceSemes";
     private static final String VIEW_BOOKING_HISTORY_CHECK_SEMES_ACTION = "AttendanceSemesServlet";
-    private static final String VIEW_BOOKING_HISTORY_CHECK_SEMES = "attendanceservlet";
     private static final String VIEW_BOOKING_HISTORY_PAGE = "CheckAttend.jsp";
+    private static final String VIEW_BOOKING_HISTORY_CHECK_SEMES = "attendanceservlet";
     private static final String VIEW_BOOKING_HISTORY_PAGE_ACTION = "AttendanceServlet";
     private static final String VIEW_BOOKING_HISTORY_SERVLET = "attendServlet";
     private static final String VIEW_BOOKING_HISTORY_SERVLET_ACTION = "CheckAttend.jsp";
+
+    private static final String VIEW_FREESLOT_HISTORY = "historyLec";
+    private static final String VIEW_FREESLOT_HISTORY_CHECK_SEMES_ACTION = "AttendanceSemesLecServlet";
+    private static final String VIEW_FREESLOT_HISTORY_CHECK_SEMES = "attendLec";
+    private static final String VIEW_FREESLOT_HISTORY_PAGE = "CheckAttendLec.jsp";
+    private static final String VIEW_FREESLOT_HISTORY_SERVLET = "attendLecServlet";
+    private static final String VIEW_FREESLOT_HISTORY_PAGE_ACTION = "AttendanceLecServlet";
+    private static final String VIEW_FREESLOT_HISTORY_PAGE_SERVLET = "present";
+    private static final String VIEW_FREESLOT_HISTORY_SERVLET_ACTION = "CheckAttendLec.jsp";
 
     private static final String VIEWTIMETABLE = "ViewTimetable";
     private static final String VIEW_TIMETABLE_CONTROLLER = "ViewTimetableServlet";
@@ -144,7 +153,7 @@ public class MainController extends HttpServlet {
 
     private static final String SEND_EMAIL_ACTION = "sendEMailAction";
     private static final String SEND_EMAIL_SERVLET = "SendEMailServlet";
-    
+
     private static final String CHANGE_PASS = "changePass";
     private static final String CHANGE_PASS_ACTION = "ChangePassword.jsp";
     private static final String CHANGE_PASS_PAGE_ACTION = "changePassServlet";
@@ -282,8 +291,16 @@ public class MainController extends HttpServlet {
                 url = HOME_PAGE_ADMIN;
             } else if (STUDENT_PAGE_ACTION_RETURN.equals(action)) {
                 url = STUDENT_PAGE_ACTION;
-            }
-            
+            } else if (VIEW_FREESLOT_HISTORY.equals(action)) {
+                url = VIEW_FREESLOT_HISTORY_CHECK_SEMES_ACTION;
+            } else if (VIEW_FREESLOT_HISTORY_CHECK_SEMES.equals(action)) {
+                url = VIEW_FREESLOT_HISTORY_PAGE;
+            } else if (VIEW_FREESLOT_HISTORY_SERVLET.equals(action)) {
+                url = VIEW_FREESLOT_HISTORY_PAGE_ACTION;
+            } else if (VIEW_FREESLOT_HISTORY_PAGE_SERVLET.equals(action)) {
+                url = VIEW_FREESLOT_HISTORY_SERVLET_ACTION;
+            } 
+
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
         } finally {

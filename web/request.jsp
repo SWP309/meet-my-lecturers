@@ -46,7 +46,7 @@
         <!-- JavaScript c?a SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
 
-        <!-- Thêm liên k?t ??n Bootstrap CSS -->
+        <!-- ThÃªm liÃªn k?t ??n Bootstrap CSS -->
         <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -133,7 +133,7 @@
             function showUserInfo() {
                 var userInfo = document.getElementById("user-info");
                 if (userInfo.style.display === "none" || userInfo.style.display === "") {
-                    userInfo.style.display = "block"; // Hi?n th? thông tin khi ???c nh?p chu?t
+                    userInfo.style.display = "block"; // Hi?n th? thÃ´ng tin khi ???c nh?p chu?t
                 } else {
                     userInfo.style.display = "none";
                 }
@@ -209,13 +209,6 @@
                     </div>
 
                 </div>
-            </div>
-            <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
-                <form action="MainController" method="POST">
-                    <input type="hidden" name="action" value="attendanceSemes" />
-                </form>
-
-                <i class="material-icons">history</i>
             </div>
             <div class="container mt-5 create-request" style="margin-top: 8% !important;">
                 <form action="MainController" method="POST">
@@ -298,7 +291,7 @@
             </div>  
             <div class="footer1">
                 <div class="powered-by-fpt-container1">
-                    � Powered by
+                    © Powered by
                     <a class="fpt-university2" href="http://fpt.edu.vn/" target="_blank">
                         <span class="fpt-university3">FPT University</span>
                     </a>
@@ -311,7 +304,7 @@
 
         </div>
 
-        <!-- Thêm liên k?t ??n Bootstrap JS và jQuery -->
+        <!-- ThÃªm liÃªn k?t ??n Bootstrap JS vÃ  jQuery -->
         <script
             src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-KyZXEAg3QhqLMpG8r+J9pAEz6/LnYV5TOqDGIbpbzFq8qz5S7fF46kSEBzav6U7xj"
