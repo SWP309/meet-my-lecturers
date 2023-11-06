@@ -149,6 +149,9 @@ public class MainController extends HttpServlet {
     private static final String CHANGE_PASS_ACTION = "ChangePassword.jsp";
     private static final String CHANGE_PASS_PAGE_ACTION = "changePassServlet";
     private static final String CHANGE_PASS_PAGE_SERVLET = "ChangePasswordServlet";
+    
+    private static final String SEND_EMAIL_REMIND_ACTION = "SendEmailForRemindStudent";
+    private static final String SEND_EMAIL_REMIND_SERVLET = "send-email.jsp";
 
     private static final String BACK = "back";
 
@@ -282,6 +285,8 @@ public class MainController extends HttpServlet {
                 url = HOME_PAGE_ADMIN;
             } else if (STUDENT_PAGE_ACTION_RETURN.equals(action)) {
                 url = STUDENT_PAGE_ACTION;
+            } else if (SEND_EMAIL_REMIND_ACTION.equals(action)) {
+                url = SEND_EMAIL_REMIND_SERVLET;
             }
             
         } catch (Exception e) {
