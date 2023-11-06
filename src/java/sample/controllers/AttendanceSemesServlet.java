@@ -36,11 +36,9 @@ public class AttendanceSemesServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-//            List<AttendanceDTO> listItem = AttendanceDAO.getAttendanceSlot(studentID, semes);
             SemesterDAO semesterDAO = new SemesterDAO();
             ArrayList<SemesterDTO> listSemes = (ArrayList<SemesterDTO>) semesterDAO.select();
             request.setAttribute("semester", listSemes);
-            System.out.println(listSemes);
             request.getRequestDispatcher("MainController?action=attendanceservlet").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();

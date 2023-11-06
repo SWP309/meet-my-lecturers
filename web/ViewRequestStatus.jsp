@@ -196,13 +196,6 @@
 
             </div>
         </div>
-        <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
-            <form action="MainController" method="POST">
-                <input type="hidden" name="action" value="attendanceSemes" />
-            </form>
-
-            <i class="material-icons">history</i>
-        </div>
 
         <div class="container mt-5">
             <form action="MainController" method="POST">
