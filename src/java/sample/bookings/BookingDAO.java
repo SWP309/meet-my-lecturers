@@ -650,12 +650,36 @@ public class BookingDAO {
         Date date = new Date();
         String d = Service.sdfDateTime.format(date);
         Connection con = DBUtils.getConnection();
+        PreparedStatement stm = con.prepareStatement(
+                "select b.studentID, COUNT(*) AS 'Number of absent slots'\n" +
+                    "from Bookings b\n" +
+                    "join FreeSlots f on f.freeSlotID = b.freeSlotID\n" +
+                    "where b.status = 1 and f.endTime < ?\n" +
+                    "GROUP BY b.studentID\n" +
+                    "ORDER BY [Number of absent slots] desc");
+        stm.setString(1, d);
+        ResultSet rs = stm.executeQuery();
+        while (rs.next()) {
+            BookingDTO b = new BookingDTO();
+            b.setStudentID(rs.getString("studentID"));
+            b.setNumberOfAbsenceSlot(rs.getInt("Number of absent slots"));
+            list.add(b);
+        }
+        con.close();
+        return list;
+    }
+    
+    public List<BookingDTO> bookingCancelNumber() throws SQLException, ClassNotFoundException {
+        List<BookingDTO> list = new ArrayList<>();
+        Date date = new Date();
+        String d = Service.sdfDateTime.format(date);
+        Connection con = DBUtils.getConnection();
         PreparedStatement stm = con.prepareStatement("select b.studentID, COUNT(*) AS 'Number of absent slots'\n" +
-                    "                from Bookings b\n" +
-                    "                join FreeSlots f on f.freeSlotID = b.freeSlotID\n" +
-                    "                where b.status = 1 and f.endTime < ?\n" +
-                    "				GROUP BY b.studentID\n" +
-                    "				ORDER BY [Number of absent slots] desc");
+                    "from Bookings b\n" +
+                    "join FreeSlots f on f.freeSlotID = b.freeSlotID\n" +
+                    "where b.status = 0 and f.endTime < ?\n" +
+                    "GROUP BY b.studentID\n" +
+                    "ORDER BY [Number of absent slots] desc");
         stm.setString(1, d);
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {
