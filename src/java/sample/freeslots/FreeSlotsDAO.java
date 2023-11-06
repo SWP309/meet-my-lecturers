@@ -151,7 +151,7 @@ public class FreeSlotsDAO {
         try {
             conn = DBUtils.getConnection();
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date startTime = simpleDateFormat.parse(freeSlotsDTO.getStartTime());
             Date endTime = simpleDateFormat.parse(freeSlotsDTO.getEndTime());
 

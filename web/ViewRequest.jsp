@@ -113,596 +113,603 @@
             .form-group {
                 margin: 0.4rem;
                 border-radius: 35px;
-            .table-container {
-                display: flex;
-                justify-content: center;
-                margin: auto;
-                margin-top: 10%;
-            }
+                .table-container {
+                    display: flex;
+                    justify-content: center;
+                    margin: auto;
+                    margin-top: 10%;
+                }
 
-            .custom-table {
-                border-collapse: collapse;
-                width: 100%;
-            }
+                .custom-table {
+                    border-collapse: collapse;
+                    width: 100%;
+                }
 
-            .custom-table th,
-            .custom-table td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: center;
-            }
+                .custom-table th,
+                .custom-table td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: center;
+                }
 
-            .custom-table th {
-                background-color: #f2f2f2;
-                color: #333;
-            }
+                .custom-table th {
+                    background-color: #f2f2f2;
+                    color: #333;
+                }
 
-            .btn-accept {
-                background-color: #4CAF50;
-                color: white;
-                border: none;
-                padding: 6px 12px;
-                cursor: pointer;
-                font-size: 14px;
-            }
+                .btn-accept {
+                    background-color: #4CAF50;
+                    color: white;
+                    border: none;
+                    padding: 6px 12px;
+                    cursor: pointer;
+                    font-size: 14px;
+                }
 
-            .btn-decline {
-                background-color: #f44336;
-                color: white;
-                border: none;
-                padding: 6px 12px;
-                cursor: pointer;
-                font-size: 14px;
-            }
+                .btn-decline {
+                    background-color: #f44336;
+                    color: white;
+                    border: none;
+                    padding: 6px 12px;
+                    cursor: pointer;
+                    font-size: 14px;
+                }
 
-            .error-message {
-                color: red;
-                text-align: center;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="admin-viewusersedited">
-            <div class="admin-viewusers">
-                <div class="fptu-eng-1-parent">
-                    <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
-                        <form action="MainController" method="POST">
-                            <input type="hidden" name="action" value="returnHomePageLecturer" />
-                        </form>
-                    </div>
-                    <div class="frame-parent">
-                        <div class="frame-group">
-                            <div class="frame-div viewCreateSlot" onclick="submitForm()">
-                                <form action="MainController" method="POST" style="display: none;">
-                                    <input type="hidden" name="action" value="viewFSlotLecturer" />
-                                </form>
-                                <i class="material-icons">visibility</i>View Create Slot
-                            </div>
-                            <div class="frame-div request-div" style="background-color: #b7b7b7;">
-                                <form action="MainController" method="POST">
-                                    <input type="hidden" name="action" value="ViewRequest" />
-                                </form>
+                .error-message {
+                    color: red;
+                    text-align: center;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="admin-viewusersedited">
+                <div class="admin-viewusers">
+                    <div class="fptu-eng-1-parent">
+                        <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="returnHomePageLecturer" />
+                            </form>
+                        </div>
+                        <div class="frame-parent">
+                            <div class="frame-group">
+                                <div class="frame-div viewCreateSlot" onclick="submitForm()">
+                                    <form action="MainController" method="POST" style="display: none;">
+                                        <input type="hidden" name="action" value="viewFSlotLecturer" />
+                                    </form>
+                                    <i class="material-icons">visibility</i>View Create Slot
+                                </div>
+                                <div class="frame-div request-div" style="background-color: #b7b7b7;">
+                                    <form action="MainController" method="POST">
+                                        <input type="hidden" name="action" value="ViewRequest" />
+                                    </form>
 
-                                <i class="material-icons">mail_outline</i>View Request
-                            </div>
-                            <div class="frame-div hideView" onclick="submitFormHideView()">
-                                <form action="MainController" method="POST" style="display: none;">
-                                    <input type="hidden" name="action" value="HideView" />
-                                </form>
+                                    <i class="material-icons">mail_outline</i>View Request
+                                </div>
+                                <div class="frame-div hideView" onclick="submitFormHideView()">
+                                    <form action="MainController" method="POST" style="display: none;">
+                                        <input type="hidden" name="action" value="HideView" />
+                                    </form>
+                                    <div>
+                                        <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
+                                    </div>
+                                </div>
+                                <div class="frame-div logout" style="text-align: center;" onclick="submitFormLogout()">
+                                    <form action="MainController" method="POST" style="display: none;">
+                                        <input type="hidden" name="action" value="Logout" />
+                                    </form>
+                                    <div class="logout-wrapper">
+                                        <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                                    </div>
+                                    <div class="logout">
+                                        <p class="logout1">Logout</p>
+                                    </div>
+                                </div>
+
                                 <div>
-                                    <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
+                                    <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
+                                         onclick="showUserInfo()" />
+                                    <div id="user-info" style="display: none;
+                                         position: absolute;">
+                                        <p id="user-id"> </p>
+                                        <p id="user-name"></p>
+                                        <p id="user-email"></p>
+                                    </div>
                                 </div>
+
                             </div>
-                            <div class="frame-div logout" style="text-align: center;" onclick="submitFormLogout()">
-                                <form action="MainController" method="POST" style="display: none;">
-                                    <input type="hidden" name="action" value="Logout" />
+                        </div>
+                    </div>
+                    <div class="container-div" style=" display: flex;
+                         flex-direction: column;
+                        float: right;">
+                        <div class="frame-Create CreateFSlot" style="cursor: pointer;
+                            color: white" onclick="submitFormCreate()">
+                                <form action="MainController" method="POST">
+                                    <input type="hidden" name="action" value="CreateFS" />
                                 </form>
-                                <div class="logout-wrapper">
-                                    <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
-                                </div>
-                                <div class="logout">
-                                    <p class="logout1">Logout</p>
+
+                                <i class="material-icons">add</i>
+                            </div>
+                            <div class="frame-History history" style="cursor: pointer;
+                            color: white" onclick="submitFormHistory()">
+                                <form action="MainController" method="POST">
+                                    <input type="hidden" name="action" value="CreateFS" />
+                                </form>
+
+                                <i class="material-icons">history</i>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row align-items-center justify-content-center" style="margin: 80px 0 -60px 0">
+                                <div>
+                                    <form action="MainController" method="POST" class="d-flex justify-content-center">
+                                        <div class="form-group"  style="margin-left: 5px">
+                                            <input type="datetime-local" class="form-control" name="txtStartTime" value="${param.txtStartTime}">
+                                        </div>
+                                        <div class="form-group" style="margin-left: 5px">
+                                            <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}">
+                                        </div>
+                                        <div class="form-group" style="margin-left: 5px">
+                                            <select class="form-control" name="txtSubjectCode">
+                                                <option value="">All</option>
+                                                <option value="PRJ301">PRJ301</option>
+                                                <option value="PRM392">PRM392</option>
+                                                <option value="SEP490">SEP490</option>
+                                                <option value="SWD392">SWD392</option>
+                                                <option value="SWP391">SWP391</option>
+                                                <option value="SWR302">SWR302</option>
+                                                <option value="SWT301">SWT301</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" style="margin-left: 5px">
+                                            <select class="form-control" name="txtSemesterID">
+                                                <option value="FA23">FA23</option>
+                                                <option value="SU23">SU23</option>
+                                                <option value="SP23">SP23</option>
+                                                <option value="FA22">FA22</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" style="margin-left: 5px">
+                                            <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchRequestForLec">Search</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
+                        </div>
 
-                            <div>
-                                <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
-                                     onclick="showUserInfo()" />
-                                <div id="user-info" style="display: none; position: absolute;">
-                                    <p id="user-id"> </p>
-                                    <p id="user-name"></p>
-                                    <p id="user-email"></p>
-                                </div>
+                        <div class="view-user-table" style="width: 90%;
+                        margin: 0 auto;
+                        border-radius: 20px;">
+                        <c:if test="${not empty requestScope.LIST_REQUESTS}">
+                            <div style="display: flex;
+                                 justify-content: center;
+                                 margin: auto;
+                                 margin-top: 10%;">
+                                <table border="1" class=" table-hover table table-rounded" 
+                                       style="background-color: white;
+                                       border-color: black;">
+                                    <thead style="background-color: #f27125 !important;
+                                           color: white;">
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>RequestID</th>
+                                            <th>SemesterID</th>
+                                            <th>StudentID</th>
+                                            <th>Student's Name</th>
+                                            <th>Subject Code</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                            <th>Description</th>
+                                            <th>MeetLink(If accept)</th>
+                                            <th>Accept</th>
+                                            <th>Note(If decline)</th>
+                                            <th>Decline</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${requestScope.LIST_REQUESTS}" var="request" varStatus="counter">
+                                            <tr>
+                                        <form action="MainController" method="POST">
+                                            <td>${counter.count}</td>
+                                            <td>${request.requestID}</td>
+                                            <td>${request.semesterID}</td>
+                                            <td>${request.studentID}</td>
+                                            <td>
+                                                <c:set var="breakLoop" value="false" />
+                                                <c:forEach var="user" items="${requestScope.LIST_REQUESTS_USERS}">
+                                                    <c:if test="${!breakLoop and request.studentID eq user.userID}">
+                                                        ${user.userName}
+                                                        <c:set var="breakLoop" value="true" />
+                                                    </c:if>
+                                                </c:forEach>
+                                            </td>
+                                            <td>${request.subjectCode}</td>
+                                            <td>${request.startTime}</td>
+                                            <td>${request.endTime}</td>
+                                            <td>${request.description}</td>
+                                            <td>
+                                                <input type="text" name="txtLinkMeet" 
+                                                       value="${param.txtLinkMeet}" placeholder="Input MeetLink" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$">
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="txtRequestID" 
+                                                       value="${request.requestID}" readonly="">
+                                                <input type="hidden" name="txtSemesterID" 
+                                                       value="${request.semesterID}" readonly="">
+                                                <input type="hidden" name="txtStudentID" 
+                                                       value="${request.studentID}" readonly="">
+                                                <input type="hidden" name="txtSubjectCode" 
+                                                       value="${request.subjectCode}" readonly="">
+                                                <input type="hidden" name="txtStartTime" 
+                                                       value="${request.startTime}" readonly="">
+                                                <input type="hidden" name="txtEndTime" 
+                                                       value="${request.endTime}" readonly="">
+                                                <input type="hidden" name="txtLinkMeet" 
+                                                       value="${param.txtLinkMeet}" readonly="">
+                                                <button type="submit" name="action"
+                                                        value="AcceptRequest" class="btn-accept">Accept</button>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="txtNote" 
+                                                       value="${param.txtNote}" placeholder="Note for Student">
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="txtRequestID" 
+                                                       value="${request.requestID}" readonly="">
+                                                <input type="hidden" name="txtNote" 
+                                                       value="${param.txtNote}" readonly="">
+                                                <button type="submit" name="action"
+                                                        value="DeleteRequest" class="btn-decline">Decline</button>
+                                            </td>
+                                        </form>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
                             </div>
+                        </c:if>  
+                        <c:if test="${empty param.txtSubjectCode and not empty param.txtStartTime and not empty param.txtEndTime and not empty requestScope.SEARCH_REQUEST_BY_ST_ET}">
+                            <div style="display: flex;
+                                 justify-content: center;
+                                 margin: auto;
+                                 margin-top: 10%;">
+                                <table border="1" class=" table-hover table table-rounded" 
+                                       style="background-color: white;
+                                       border-color: black;">
+                                    <thead style="background-color: #f27125 !important;
+                                           color: white;">
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>RequestID</th>
+                                            <th>SemesterID</th>
+                                            <th>StudentID</th>
+                                            <th>Student's Name</th>
+                                            <th>Subject Code</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                            <th>Description</th>
+                                            <th>MeetLink(If accept)</th>
+                                            <th>Accept</th>
+                                            <th>Note(If decline)</th>
+                                            <th>Decline</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${requestScope.SEARCH_REQUEST_BY_ST_ET}" 
+                                                   var="request" varStatus="counter">
+                                            <tr>
+                                        <form action="MainController" method="POST">
+                                            <td>${counter.count}</td>
+                                            <td>${request.requestID}</td>
+                                            <td>${request.semesterID}</td>
+                                            <td>${request.studentID}</td>
+                                            <td>${request.studentName}</td>
+                                            <td>${request.subjectCode}</td>
+                                            <td>${request.startTime}</td>
+                                            <td>${request.endTime}</td>
+                                            <td>${request.description}</td>
+                                            <td>
+                                                <input type="text" name="txtLinkMeet" 
+                                                       value="${param.txtLinkMeet}" placeholder="Input MeetLink" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$">
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="txtRequestID" 
+                                                       value="${request.requestID}" readonly="">
+                                                <input type="hidden" name="txtSemesterID" 
+                                                       value="${request.semesterID}" readonly="">
+                                                <input type="hidden" name="txtStudentID" 
+                                                       value="${request.studentID}" readonly="">
+                                                <input type="hidden" name="txtSubjectCode" 
+                                                       value="${request.subjectCode}" readonly="">
+                                                <input type="hidden" name="txtStartTime" 
+                                                       value="${request.startTime}" readonly="">
+                                                <input type="hidden" name="txtEndTime" 
+                                                       value="${request.endTime}" readonly="">
+                                                <input type="hidden" name="txtLinkMeet" 
+                                                       value="${param.txtLinkMeet}" readonly="">
+                                                <button type="submit" name="action"
+                                                        value="AcceptRequest">Accept</button>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="txtNote" 
+                                                       value="${param.txtNote}" placeholder="Note for Student">
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="txtRequestID" 
+                                                       value="${request.requestID}" readonly="">
+                                                <input type="hidden" name="txtNote" 
+                                                       value="${param.txtNote}" readonly="">
+                                                <button type="submit" name="action"
+                                                        value="DeleteRequest">Decline</button>
+                                            </td>
+                                        </form>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </c:if>  
+                        <c:if test="${not empty param.txtSubjectCode and not empty param.txtStartTime and not empty param.txtEndTime and not empty requestScope.SEARCH_REQUEST_BY_ALL}">
+                            <div style="display: flex;
+                                 justify-content: center;
+                                 margin: auto;
+                                 margin-top: 10%;">
+                                <table border="1" class=" table-hover table table-rounded" 
+                                       style="background-color: white;
+                                       border-color: black;">
+                                    <thead style="background-color: #f27125 !important;
+                                           color: white;">
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>RequestID</th>
+                                            <th>SemesterID</th>
+                                            <th>StudentID</th>
+                                            <th>Student's Name</th>
+                                            <th>Subject Code</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                            <th>Description</th>
+                                            <th>MeetLink(If accept)</th>
+                                            <th>Accept</th>
+                                            <th>Note(If decline)</th>
+                                            <th>Decline</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${requestScope.SEARCH_REQUEST_BY_ALL}" 
+                                                   var="request" varStatus="counter">
+                                            <tr>
+                                        <form action="MainController" method="POST">
+                                            <td>${counter.count}</td>
+                                            <td>${request.requestID}</td>
+                                            <td>${request.semesterID}</td>
+                                            <td>${request.studentID}</td>
+                                            <td>${request.studentName}</td>
+                                            <td>${request.subjectCode}</td>
+                                            <td>${request.startTime}</td>
+                                            <td>${request.endTime}</td>
+                                            <td>${request.description}</td>
+                                            <td>
+                                                <input type="text" name="txtLinkMeet" 
+                                                       value="${param.txtLinkMeet}" placeholder="Input MeetLink" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$">
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="txtRequestID" 
+                                                       value="${request.requestID}" readonly="">
+                                                <input type="hidden" name="txtSemesterID" 
+                                                       value="${request.semesterID}" readonly="">
+                                                <input type="hidden" name="txtStudentID" 
+                                                       value="${request.studentID}" readonly="">
+                                                <input type="hidden" name="txtSubjectCode" 
+                                                       value="${request.subjectCode}" readonly="">
+                                                <input type="hidden" name="txtStartTime" 
+                                                       value="${request.startTime}" readonly="">
+                                                <input type="hidden" name="txtEndTime" 
+                                                       value="${request.endTime}" readonly="">
+                                                <input type="hidden" name="txtLinkMeet" 
+                                                       value="${param.txtLinkMeet}" readonly="">
+                                                <button type="submit" name="action"
+                                                        value="AcceptRequest">Accept</button>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="txtNote" 
+                                                       value="${param.txtNote}" placeholder="Note for Student">
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="txtRequestID" 
+                                                       value="${request.requestID}" readonly="">
+                                                <input type="hidden" name="txtNote" 
+                                                       value="${param.txtNote}" readonly="">
+                                                <button type="submit" name="action"
+                                                        value="DeleteRequest">Decline</button>
+                                            </td>
+                                        </form>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </c:if>  
+                        <c:if test="${not empty param.txtSubjectCode and empty param.txtStartTime and empty param.txtEndTime and not empty requestScope.SEARCH_REQUEST_BY_SUBJECT}">
+                            <div style="display: flex;
+                                 justify-content: center;
+                                 margin: auto;
+                                 margin-top: 10%;">
+                                <table border="1" class=" table-hover table table-rounded" 
+                                       style="background-color: white;
+                                       border-color: black;">
+                                    <thead style="background-color: #f27125 !important;
+                                           color: white;">
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>RequestID</th>
+                                            <th>SemesterID</th>
+                                            <th>StudentID</th>
+                                            <th>Student's Name</th>
+                                            <th>Subject Code</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                            <th>Description</th>
+                                            <th>MeetLink(If accept)</th>
+                                            <th>Accept</th>
+                                            <th>Note(If decline)</th>
+                                            <th>Decline</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${requestScope.SEARCH_REQUEST_BY_SUBJECT}" 
+                                                   var="request" varStatus="counter">
+                                            <tr>
+                                        <form action="MainController" method="POST">
+                                            <td>${counter.count}</td>
+                                            <td>${request.requestID}</td>
+                                            <td>${request.semesterID}</td>
+                                            <td>${request.studentID}</td>
+                                            <td>${request.studentName}</td>
+                                            <td>${request.subjectCode}</td>
+                                            <td>${request.startTime}</td>
+                                            <td>${request.endTime}</td>
+                                            <td>${request.description}</td>
+                                            <td>
+                                                <input type="text" name="txtLinkMeet" 
+                                                       value="${param.txtLinkMeet}" placeholder="Input MeetLink" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$">
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="txtRequestID" 
+                                                       value="${request.requestID}" readonly="">
+                                                <input type="hidden" name="txtSemesterID" 
+                                                       value="${request.semesterID}" readonly="">
+                                                <input type="hidden" name="txtStudentID" 
+                                                       value="${request.studentID}" readonly="">
+                                                <input type="hidden" name="txtSubjectCode" 
+                                                       value="${request.subjectCode}" readonly="">
+                                                <input type="hidden" name="txtStartTime" 
+                                                       value="${request.startTime}" readonly="">
+                                                <input type="hidden" name="txtEndTime" 
+                                                       value="${request.endTime}" readonly="">
+                                                <input type="hidden" name="txtLinkMeet" 
+                                                       value="${param.txtLinkMeet}" readonly="">
+                                                <button type="submit" name="action"
+                                                        value="AcceptRequest">Accept</button>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="txtNote" 
+                                                       value="${param.txtNote}" placeholder="Note for Student">
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="txtRequestID" 
+                                                       value="${request.requestID}" readonly="">
+                                                <input type="hidden" name="txtNote" 
+                                                       value="${param.txtNote}" readonly="">
+                                                <button type="submit" name="action"
+                                                        value="DeleteRequest">Decline</button>
+                                            </td>
+                                        </form>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </c:if>  
+                        <c:if test="${empty param.txtSubjectCode and empty param.txtStartTime and empty param.txtEndTime and not empty requestScope.SEARCH_REQUEST_BY_NULL}">
+                            <div style="display: flex;
+                                 justify-content: center;
+                                 margin: auto;
+                                 margin-top: 10%;">
+                                <table border="1" class=" table-hover table table-rounded" 
+                                       style="background-color: white;
+                                       border-color: black;">
+                                    <thead style="background-color: #f27125 !important;
+                                           color: white;">
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>RequestID</th>
+                                            <th>SemesterID</th>
+                                            <th>StudentID</th>
+                                            <th>Student's Name</th>
+                                            <th>Subject Code</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                            <th>Description</th>
+                                            <th>MeetLink(If accept)</th>
+                                            <th>Accept</th>
+                                            <th>Note(If decline)</th>
+                                            <th>Decline</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${requestScope.SEARCH_REQUEST_BY_NULL}" 
+                                                   var="request" varStatus="counter">
+                                            <tr>
+                                        <form action="MainController" method="POST">
+                                            <td>${counter.count}</td>
+                                            <td>${request.requestID}</td>
+                                            <td>${request.semesterID}</td>
+                                            <td>${request.studentID}</td>
+                                            <td>${request.studentName}</td>
+                                            <td>${request.subjectCode}</td>
+                                            <td>${request.startTime}</td>
+                                            <td>${request.endTime}</td>
+                                            <td>${request.description}</td>
+                                            <td>
+                                                <input type="text" name="txtLinkMeet" 
+                                                       value="${param.txtLinkMeet}" placeholder="Input MeetLink" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$">
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="txtRequestID" 
+                                                       value="${request.requestID}" readonly="">
+                                                <input type="hidden" name="txtSemesterID" 
+                                                       value="${request.semesterID}" readonly="">
+                                                <input type="hidden" name="txtStudentID" 
+                                                       value="${request.studentID}" readonly="">
+                                                <input type="hidden" name="txtSubjectCode" 
+                                                       value="${request.subjectCode}" readonly="">
+                                                <input type="hidden" name="txtStartTime" 
+                                                       value="${request.startTime}" readonly="">
+                                                <input type="hidden" name="txtEndTime" 
+                                                       value="${request.endTime}" readonly="">
+                                                <input type="hidden" name="txtLinkMeet" 
+                                                       value="${param.txtLinkMeet}" readonly="">
+                                                <button type="submit" name="action"
+                                                        value="AcceptRequest">Accept</button>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="txtNote" 
+                                                       value="${param.txtNote}" placeholder="Note for Student">
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="txtRequestID" 
+                                                       value="${request.requestID}" readonly="">
+                                                <input type="hidden" name="txtNote" 
+                                                       value="${param.txtNote}" readonly="">
+                                                <button type="submit" name="action"
+                                                        value="DeleteRequest">Decline</button>
+                                            </td>
+                                        </form>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </c:if>  
 
-                        </div>
                     </div>
-                </div>
-                <div class="container">
-                    <div class="row align-items-center justify-content-center" style="margin: 80px 0 -60px 0">
-                        <div>
-                            <form action="MainController" method="POST" class="d-flex justify-content-center">
-                                <div class="form-group"  style="margin-left: 5px">
-                                    <input type="datetime-local" class="form-control" name="txtStartTime" value="${param.txtStartTime}">
-                                </div>
-                                <div class="form-group" style="margin-left: 5px">
-                                    <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}">
-                                </div>
-                                <div class="form-group" style="margin-left: 5px">
-                                    <select class="form-control" name="txtSubjectCode">
-                                        <option value="">All</option>
-                                        <option value="PRJ301">PRJ301</option>
-                                        <option value="PRM392">PRM392</option>
-                                        <option value="SEP490">SEP490</option>
-                                        <option value="SWD392">SWD392</option>
-                                        <option value="SWP391">SWP391</option>
-                                        <option value="SWR302">SWR302</option>
-                                        <option value="SWT301">SWT301</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" style="margin-left: 5px">
-                                    <select class="form-control" name="txtSemesterID">
-                                        <option value="FA23">FA23</option>
-                                        <option value="SU23">SU23</option>
-                                        <option value="SP23">SP23</option>
-                                        <option value="FA22">FA22</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" style="margin-left: 5px">
-                                    <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchRequestForLec">Search</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="view-user-table" style="width: 80%; margin: 0 auto;">
-                <div class="frame-Create CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()">
-                    <form action="MainController" method="POST">
-                        <input type="hidden" name="action" value="CreateFS" />
-                    </form>
+                    <script>
+                        // L?y thông tin l?i t? bi?n requestScope.ERROR
+                        var errorMessage = "${requestScope.VIEW_REQUEST_MESSAGE}";
 
-                    <i class="material-icons">add</i>
-                </div>
-                <div class="container">
-                    <div class="row align-items-center justify-content-center" style="margin: 80px 0 -60px 0">
-                        <div>
-                            <form action="MainController" method="POST" class="d-flex justify-content-center">
-                                <div class="form-group"  style="margin-left: 5px">
-                                    <input type="datetime-local" class="form-control" name="txtStartTime" value="${param.txtStartTime}">
-                                </div>
-                                <div class="form-group" style="margin-left: 5px">
-                                    <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}">
-                                </div>
-                                <div class="form-group" style="margin-left: 5px">
-                                    <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}" placeholder="Subject Code">
-                                </div>
-                                <div class="form-group" style="margin-left: 5px">
-                                    <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchCSlot">Search</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="view-user-table" style="width: 80%; margin: 0 auto; border-radius: 20px;">
-                    <c:if test="${not empty requestScope.LIST_REQUESTS}">
-                        <div class="table-container">
-                            <table class="custom-table">
-                                <thead>
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>RequestID</th>
-                                        <th>SemesterID</th>
-                                        <th>StudentID</th>
-                                        <th>Student's Name</th>
-                                        <th>Subject Code</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
-                                        <th>Description</th>
-                                        <th>MeetLink(If accept)</th>
-                                        <th>Accept</th>
-                                        <th>Note(If decline)</th>
-                                        <th>Decline</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${requestScope.LIST_REQUESTS}" var="request" varStatus="counter">
-                                        <tr>
-                                    <form action="MainController" method="POST">
-                                        <td>${counter.count}</td>
-                                        <td>${request.requestID}</td>
-                                        <td>${request.semesterID}</td>
-                                        <td>${request.studentID}</td>
-                                        <td>
-                                            <c:set var="breakLoop" value="false" />
-                                            <c:forEach var="user" items="${requestScope.LIST_REQUESTS_USERS}">
-                                                <c:if test="${!breakLoop and request.studentID eq user.userID}">
-                                                    ${user.userName}
-                                                    <c:set var="breakLoop" value="true" />
-                                                </c:if>
-                                            </c:forEach>
-                                        </td>
-                                        <td>${request.subjectCode}</td>
-                                        <td>${request.startTime}</td>
-                                        <td>${request.endTime}</td>
-                                        <td>${request.description}</td>
-                                        <td>
-                                            <input type="text" name="txtLinkMeet" 
-                                                   value="${param.txtLinkMeet}" placeholder="Input MeetLink">
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="txtRequestID" 
-                                                   value="${request.requestID}" readonly="">
-                                            <input type="hidden" name="txtSemesterID" 
-                                                   value="${request.semesterID}" readonly="">
-                                            <input type="hidden" name="txtStudentID" 
-                                                   value="${request.studentID}" readonly="">
-                                            <input type="hidden" name="txtSubjectCode" 
-                                                   value="${request.subjectCode}" readonly="">
-                                            <input type="hidden" name="txtStartTime" 
-                                                   value="${request.startTime}" readonly="">
-                                            <input type="hidden" name="txtEndTime" 
-                                                   value="${request.endTime}" readonly="">
-                                            <input type="hidden" name="txtLinkMeet" 
-                                                   value="${param.txtLinkMeet}" readonly="">
-                                            <button type="submit" name="action"
-                                                    value="AcceptRequest" class="btn-accept">Accept</button>
-                                        </td>
-                                        <td>
-                                            <input type="text" name="txtNote" 
-                                                   value="${param.txtNote}" placeholder="Note for Student">
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="txtRequestID" 
-                                                   value="${request.requestID}" readonly="">
-                                            <input type="hidden" name="txtNote" 
-                                                   value="${param.txtNote}" readonly="">
-                                            <button type="submit" name="action"
-                                                    value="DeleteRequest" class="btn-decline">Decline</button>
-                                        </td>
-                                    </form>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                    </c:if>  
-                    <c:if test="${empty param.txtSubjectCode and not empty param.txtStartTime and not empty param.txtEndTime and not empty requestScope.SEARCH_REQUEST_BY_ST_ET}">
-                        <div style="display: flex;
-                             justify-content: center;
-                             margin: auto;
-                             margin-top: 6%;">
-                            <table border="1" class=" table-hover table table-rounded" 
-                                   style="background-color: white; border-color: black;">
-                                <thead style="background-color: #f27125 !important; color: white;">
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>RequestID</th>
-                                        <th>SemesterID</th>
-                                        <th>StudentID</th>
-                                        <th>Student's Name</th>
-                                        <th>Subject Code</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
-                                        <th>Description</th>
-                                        <th>MeetLink(If accept)</th>
-                                        <th>Accept</th>
-                                        <th>Note(If decline)</th>
-                                        <th>Decline</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${requestScope.SEARCH_REQUEST_BY_ST_ET}" 
-                                               var="request" varStatus="counter">
-                                        <tr>
-                                    <form action="MainController" method="POST">
-                                        <td>${counter.count}</td>
-                                        <td>${request.requestID}</td>
-                                        <td>${request.semesterID}</td>
-                                        <td>${request.studentID}</td>
-                                        <td>${request.studentName}</td>
-                                        <td>${request.subjectCode}</td>
-                                        <td>${request.startTime}</td>
-                                        <td>${request.endTime}</td>
-                                        <td>${request.description}</td>
-                                        <td>
-                                            <input type="text" name="txtLinkMeet" 
-                                                   value="${param.txtLinkMeet}" placeholder="Input MeetLink">
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="txtRequestID" 
-                                                   value="${request.requestID}" readonly="">
-                                            <input type="hidden" name="txtSemesterID" 
-                                                   value="${request.semesterID}" readonly="">
-                                            <input type="hidden" name="txtStudentID" 
-                                                   value="${request.studentID}" readonly="">
-                                            <input type="hidden" name="txtSubjectCode" 
-                                                   value="${request.subjectCode}" readonly="">
-                                            <input type="hidden" name="txtStartTime" 
-                                                   value="${request.startTime}" readonly="">
-                                            <input type="hidden" name="txtEndTime" 
-                                                   value="${request.endTime}" readonly="">
-                                            <input type="hidden" name="txtLinkMeet" 
-                                                   value="${param.txtLinkMeet}" readonly="">
-                                            <button type="submit" name="action"
-                                                    value="AcceptRequest">Accept</button>
-                                        </td>
-                                        <td>
-                                            <input type="text" name="txtNote" 
-                                                   value="${param.txtNote}" placeholder="Note for Student">
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="txtRequestID" 
-                                                   value="${request.requestID}" readonly="">
-                                            <input type="hidden" name="txtNote" 
-                                                   value="${param.txtNote}" readonly="">
-                                            <button type="submit" name="action"
-                                                    value="DeleteRequest">Decline</button>
-                                        </td>
-                                    </form>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                    </c:if>  
-                    <c:if test="${not empty param.txtSubjectCode and not empty param.txtStartTime and not empty param.txtEndTime and not empty requestScope.SEARCH_REQUEST_BY_ALL}">
-                        <div style="display: flex;
-                             justify-content: center;
-                             margin: auto;
-                             margin-top: 6%;">
-                            <table border="1" class=" table-hover table table-rounded" 
-                                   style="background-color: white; border-color: black;">
-                                <thead style="background-color: #f27125 !important; color: white;">
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>RequestID</th>
-                                        <th>SemesterID</th>
-                                        <th>StudentID</th>
-                                        <th>Student's Name</th>
-                                        <th>Subject Code</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
-                                        <th>Description</th>
-                                        <th>MeetLink(If accept)</th>
-                                        <th>Accept</th>
-                                        <th>Note(If decline)</th>
-                                        <th>Decline</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${requestScope.SEARCH_REQUEST_BY_ALL}" 
-                                               var="request" varStatus="counter">
-                                        <tr>
-                                    <form action="MainController" method="POST">
-                                        <td>${counter.count}</td>
-                                        <td>${request.requestID}</td>
-                                        <td>${request.semesterID}</td>
-                                        <td>${request.studentID}</td>
-                                        <td>${request.studentName}</td>
-                                        <td>${request.subjectCode}</td>
-                                        <td>${request.startTime}</td>
-                                        <td>${request.endTime}</td>
-                                        <td>${request.description}</td>
-                                        <td>
-                                            <input type="text" name="txtLinkMeet" 
-                                                   value="${param.txtLinkMeet}" placeholder="Input MeetLink">
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="txtRequestID" 
-                                                   value="${request.requestID}" readonly="">
-                                            <input type="hidden" name="txtSemesterID" 
-                                                   value="${request.semesterID}" readonly="">
-                                            <input type="hidden" name="txtStudentID" 
-                                                   value="${request.studentID}" readonly="">
-                                            <input type="hidden" name="txtSubjectCode" 
-                                                   value="${request.subjectCode}" readonly="">
-                                            <input type="hidden" name="txtStartTime" 
-                                                   value="${request.startTime}" readonly="">
-                                            <input type="hidden" name="txtEndTime" 
-                                                   value="${request.endTime}" readonly="">
-                                            <input type="hidden" name="txtLinkMeet" 
-                                                   value="${param.txtLinkMeet}" readonly="">
-                                            <button type="submit" name="action"
-                                                    value="AcceptRequest">Accept</button>
-                                        </td>
-                                        <td>
-                                            <input type="text" name="txtNote" 
-                                                   value="${param.txtNote}" placeholder="Note for Student">
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="txtRequestID" 
-                                                   value="${request.requestID}" readonly="">
-                                            <input type="hidden" name="txtNote" 
-                                                   value="${param.txtNote}" readonly="">
-                                            <button type="submit" name="action"
-                                                    value="DeleteRequest">Decline</button>
-                                        </td>
-                                    </form>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                    </c:if>  
-                    <c:if test="${not empty param.txtSubjectCode and empty param.txtStartTime and empty param.txtEndTime and not empty requestScope.SEARCH_REQUEST_BY_SUBJECT}">
-                        <div style="display: flex;
-                             justify-content: center;
-                             margin: auto;
-                             margin-top: 6%;">
-                            <table border="1" class=" table-hover table table-rounded" 
-                                   style="background-color: white; border-color: black;">
-                                <thead style="background-color: #f27125 !important; color: white;">
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>RequestID</th>
-                                        <th>SemesterID</th>
-                                        <th>StudentID</th>
-                                        <th>Student's Name</th>
-                                        <th>Subject Code</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
-                                        <th>Description</th>
-                                        <th>MeetLink(If accept)</th>
-                                        <th>Accept</th>
-                                        <th>Note(If decline)</th>
-                                        <th>Decline</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${requestScope.SEARCH_REQUEST_BY_SUBJECT}" 
-                                               var="request" varStatus="counter">
-                                        <tr>
-                                    <form action="MainController" method="POST">
-                                        <td>${counter.count}</td>
-                                        <td>${request.requestID}</td>
-                                        <td>${request.semesterID}</td>
-                                        <td>${request.studentID}</td>
-                                        <td>${request.studentName}</td>
-                                        <td>${request.subjectCode}</td>
-                                        <td>${request.startTime}</td>
-                                        <td>${request.endTime}</td>
-                                        <td>${request.description}</td>
-                                        <td>
-                                            <input type="text" name="txtLinkMeet" 
-                                                   value="${param.txtLinkMeet}" placeholder="Input MeetLink">
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="txtRequestID" 
-                                                   value="${request.requestID}" readonly="">
-                                            <input type="hidden" name="txtSemesterID" 
-                                                   value="${request.semesterID}" readonly="">
-                                            <input type="hidden" name="txtStudentID" 
-                                                   value="${request.studentID}" readonly="">
-                                            <input type="hidden" name="txtSubjectCode" 
-                                                   value="${request.subjectCode}" readonly="">
-                                            <input type="hidden" name="txtStartTime" 
-                                                   value="${request.startTime}" readonly="">
-                                            <input type="hidden" name="txtEndTime" 
-                                                   value="${request.endTime}" readonly="">
-                                            <input type="hidden" name="txtLinkMeet" 
-                                                   value="${param.txtLinkMeet}" readonly="">
-                                            <button type="submit" name="action"
-                                                    value="AcceptRequest">Accept</button>
-                                        </td>
-                                        <td>
-                                            <input type="text" name="txtNote" 
-                                                   value="${param.txtNote}" placeholder="Note for Student">
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="txtRequestID" 
-                                                   value="${request.requestID}" readonly="">
-                                            <input type="hidden" name="txtNote" 
-                                                   value="${param.txtNote}" readonly="">
-                                            <button type="submit" name="action"
-                                                    value="DeleteRequest">Decline</button>
-                                        </td>
-                                    </form>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                    </c:if>  
-                    <c:if test="${empty param.txtSubjectCode and empty param.txtStartTime and empty param.txtEndTime and not empty requestScope.SEARCH_REQUEST_BY_NULL}">
-                        <div style="display: flex;
-                             justify-content: center;
-                             margin: auto;
-                             margin-top: 6%;">
-                            <table border="1" class=" table-hover table table-rounded" 
-                                   style="background-color: white; border-color: black;">
-                                <thead style="background-color: #f27125 !important; color: white;">
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>RequestID</th>
-                                        <th>SemesterID</th>
-                                        <th>StudentID</th>
-                                        <th>Student's Name</th>
-                                        <th>Subject Code</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
-                                        <th>Description</th>
-                                        <th>MeetLink(If accept)</th>
-                                        <th>Accept</th>
-                                        <th>Note(If decline)</th>
-                                        <th>Decline</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${requestScope.SEARCH_REQUEST_BY_NULL}" 
-                                               var="request" varStatus="counter">
-                                        <tr>
-                                    <form action="MainController" method="POST">
-                                        <td>${counter.count}</td>
-                                        <td>${request.requestID}</td>
-                                        <td>${request.semesterID}</td>
-                                        <td>${request.studentID}</td>
-                                        <td>${request.studentName}</td>
-                                        <td>${request.subjectCode}</td>
-                                        <td>${request.startTime}</td>
-                                        <td>${request.endTime}</td>
-                                        <td>${request.description}</td>
-                                        <td>
-                                            <input type="text" name="txtLinkMeet" 
-                                                   value="${param.txtLinkMeet}" placeholder="Input MeetLink">
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="txtRequestID" 
-                                                   value="${request.requestID}" readonly="">
-                                            <input type="hidden" name="txtSemesterID" 
-                                                   value="${request.semesterID}" readonly="">
-                                            <input type="hidden" name="txtStudentID" 
-                                                   value="${request.studentID}" readonly="">
-                                            <input type="hidden" name="txtSubjectCode" 
-                                                   value="${request.subjectCode}" readonly="">
-                                            <input type="hidden" name="txtStartTime" 
-                                                   value="${request.startTime}" readonly="">
-                                            <input type="hidden" name="txtEndTime" 
-                                                   value="${request.endTime}" readonly="">
-                                            <input type="hidden" name="txtLinkMeet" 
-                                                   value="${param.txtLinkMeet}" readonly="">
-                                            <button type="submit" name="action"
-                                                    value="AcceptRequest">Accept</button>
-                                        </td>
-                                        <td>
-                                            <input type="text" name="txtNote" 
-                                                   value="${param.txtNote}" placeholder="Note for Student">
-                                        </td>
-                                        <td>
-                                            <input type="hidden" name="txtRequestID" 
-                                                   value="${request.requestID}" readonly="">
-                                            <input type="hidden" name="txtNote" 
-                                                   value="${param.txtNote}" readonly="">
-                                            <button type="submit" name="action"
-                                                    value="DeleteRequest">Decline</button>
-                                        </td>
-                                    </form>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                    </c:if>  
+                        // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+                        if (errorMessage.trim() !== "") {
+                            alert(errorMessage);
+                        }
+                    </script>
 
-                    <c:if test="${empty requestScope.LIST_REQUESTS}">
-                        <h3 style="color: red; text-align: center; margin-top: 200px;">${requestScope.VIEW_REQUEST_MESSAGE}</h3>
-                    </c:if>  
                 </div>
-                <script>
-                    // L?y thông tin l?i t? bi?n requestScope.ERROR
-                    var errorMessage = "${requestScope.VIEW_REQUEST_MESSAGE}";
-
-                    // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
-                    if (errorMessage.trim() !== "") {
-                        alert(errorMessage);
-                    }
-                </script>
 
             </div>
-
-        </div>
-    </body>
-    <% } else{
-response.sendRedirect("MainController?ation=");
-}
-    %>
-</html>
+        </body>
+        <% } else {
+                response.sendRedirect("MainController?ation=");
+            }
+        %>
+    </html>
