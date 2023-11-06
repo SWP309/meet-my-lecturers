@@ -394,7 +394,7 @@
 
 
             <!--  LIST OF THE PAGE -------------------------------------------------------------->
-            <div class="container mt-5" style="    margin-top: -13% !important; max-height: 500%; height: 500px">
+            <div class="container mt-5" style="    margin-top: -13% !important; max-height: 1000%; height: 1000px">
                 <div class="row justify-content-center mt-5 tableview">
                     <c:if test="${requestScope.LIST_CREATED_SLOT !=null}">
                         <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">
