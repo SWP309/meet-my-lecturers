@@ -74,7 +74,6 @@
             </div>
             <div class="logo1">
                 <div class="fptu-long-1-11">
-                    <!--<img  alt="" src="./public/LoginHome/2021fptulong-1-11@2x.png"/>-->
                 </div>
                 <div class="appointment-scheduling-applica1">
                     Appointment Scheduling Application
