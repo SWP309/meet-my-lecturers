@@ -159,6 +159,9 @@ public class MainController extends HttpServlet {
     private static final String CHANGE_PASS_PAGE_ACTION = "changePassServlet";
     private static final String CHANGE_PASS_PAGE_SERVLET = "ChangePasswordServlet";
 
+    private static final String SEND_EMAIL_REMIND_ACTION = "SendEmailForRemindStudent";
+    private static final String SEND_EMAIL_REMIND_SERVLET = "send-email.jsp";
+
     private static final String BACK = "back";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -299,7 +302,10 @@ public class MainController extends HttpServlet {
                 url = VIEW_FREESLOT_HISTORY_PAGE_ACTION;
             } else if (VIEW_FREESLOT_HISTORY_PAGE_SERVLET.equals(action)) {
                 url = VIEW_FREESLOT_HISTORY_SERVLET_ACTION;
-            } 
+
+            } else if (SEND_EMAIL_REMIND_ACTION.equals(action)) {
+                url = SEND_EMAIL_REMIND_SERVLET;
+            }
 
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());

@@ -74,6 +74,10 @@
                 var form = document.querySelector('.CreateFSlot form');
                 form.submit();
             }
+            function submitFormSendEmail() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
             function submitFormViewRequest() {
                 var form = document.querySelector('.request-div form');
                 form.submit();
@@ -358,12 +362,13 @@
 
                 <i class="material-icons">add</i>
             </div>
-            <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+            <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormSendEmail()">
                 <form action="MainController" method="POST">
-                    <input type="hidden" name="action" value="historyLec" />
+
+                    <input type="hidden" name="action" value="SendEmailForRemindStudent" />
                 </form>
 
-                <i class="material-icons">history</i>
+                <i class="material-icons">send</i>
             </div>
         </div>
 
