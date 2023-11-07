@@ -74,6 +74,10 @@
                 var form = document.querySelector('.CreateFSlot form');
                 form.submit();
             }
+            function submitFormSendEmail() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
             function submitFormViewRequest() {
                 var form = document.querySelector('.request-div form');
                 form.submit();
@@ -237,8 +241,8 @@
             }
             button[type="submit"]{
                 border: none; /* Lo?i b? vi?n */
-                background-color: white;
-                color: #007bff;
+                background-color: #007bff;
+                color: white;
             }
             .card-body > div {
                 margin-bottom: 0.2rem;
@@ -354,12 +358,12 @@
 
                 <i class="material-icons">add</i>
             </div>
-            <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+            <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormSendEmail()">
                 <form action="MainController" method="POST">
-                    <input type="hidden" name="action" value="CreateFS" />
+                    <input type="hidden" name="action" value="SendEmailForRemindStudent" />
                 </form>
 
-                <i class="material-icons">history</i>
+                <i class="material-icons">send</i>
             </div>
         </div>
 
@@ -390,7 +394,7 @@
 
 
             <!--  LIST OF THE PAGE -------------------------------------------------------------->
-            <div class="container mt-5" style="    margin-top: -13% !important; max-height: 500%; height: 500px">
+            <div class="container mt-5" style="    margin-top: -13% !important; max-height: 1000%; height: 1000px">
                 <div class="row justify-content-center mt-5 tableview">
                     <c:if test="${requestScope.LIST_CREATED_SLOT !=null}">
                         <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">

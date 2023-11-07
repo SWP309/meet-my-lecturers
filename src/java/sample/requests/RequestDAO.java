@@ -31,17 +31,17 @@ public class RequestDAO implements Serializable {
             + "FROM Requests r\n"
             + "JOIN Users u on r.studentID = u.userID\n"
             + "WHERE r.lecturerID = ? AND r.status = 2 AND r.startTime >= ? AND r.endTime <= ? AND r.semesterID = ?";
-    
+
     private final String SEARCH_REQUEST_BY_ALL_FOR_LEC = "SELECT r.semesterID, r.requestID, u.userID, u.userName, r.subjectCode, r.startTime, r.endTime, r.description \n"
             + "FROM Requests r\n"
             + "JOIN Users u on r.studentID = u.userID\n"
             + "WHERE r.lecturerID = ? AND r.status = 2 AND r.startTime >= ? AND r.endTime <= ? AND r.semesterID = ? AND r.subjectCode = ?";
-    
-    private final String SEARCH_REQUEST_BY_SUBCODE_FOR_LEC = "SELECT r.semesterID, r.requestID, u.userID, u.userName, r.subjectCode, r.startTime, r.endTime, r.description \n" +
-            "FROM Requests r\n" +
-            "JOIN Users u on r.studentID = u.userID\n" +
-            "WHERE r.lecturerID = ? AND r.status = 2 AND r.semesterID = ? AND r.subjectCode = ?";
-    
+
+    private final String SEARCH_REQUEST_BY_SUBCODE_FOR_LEC = "SELECT r.semesterID, r.requestID, u.userID, u.userName, r.subjectCode, r.startTime, r.endTime, r.description \n"
+            + "FROM Requests r\n"
+            + "JOIN Users u on r.studentID = u.userID\n"
+            + "WHERE r.lecturerID = ? AND r.status = 2 AND r.semesterID = ? AND r.subjectCode = ?";
+
     private final String SEARCH_REQUEST_BY_NULL_FOR_LEC = "SELECT r.semesterID, r.requestID, u.userID, u.userName, r.subjectCode, r.startTime, r.endTime, r.description \n"
             + "FROM Requests r\n"
             + "JOIN Users u on r.studentID = u.userID\n"
@@ -499,7 +499,7 @@ public class RequestDAO implements Serializable {
                 String ends = dateFormat.format(endTime);
                 RequestDTO requestDTO = new RequestDTO("", status, subjectCode, starts, ends, "", studentID, lecturerID, semesterID);
                 UserDTO userDTO = new UserDTO(lecturerID, lecName, "", 1, "", "");
-                if(this.requestByStatus == null){
+                if (this.requestByStatus == null) {
                     this.requestByStatus = new ArrayList<>();
                 }
                 this.requestByStatus.add(requestDTO);
@@ -770,17 +770,18 @@ public class RequestDAO implements Serializable {
                 rs = ptm.executeQuery();
                 while (rs.next()) {
                     String requestID = rs.getString("requestID");
-                String studentID = rs.getString("userID");
-                String userName = rs.getNString("userName");
-                String subjectCode = rs.getString("subjectCode");
-                Date startT = rs.getTimestamp("startTime");
-                Date endT = rs.getTimestamp("endTime");
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                String starts = dateFormat.format(startT);
-                String ends = dateFormat.format(endT);
-                String description = rs.getNString("description");
-                RequestDTO requestDTO = new RequestDTO(requestID, 0, subjectCode,
-                        starts, ends, description, studentID, userID, semesterID, userName);
+                    String studentID = rs.getString("userID");
+                    String userName = rs.getNString("userName");
+                    String subjectCode = rs.getString("subjectCode");
+                    Date startT = rs.getTimestamp("startTime");
+                    Date endT = rs.getTimestamp("endTime");
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    String starts = dateFormat.format(startT);
+                    String ends = dateFormat.format(endT);
+                    String description = rs.getNString("description");
+                    RequestDTO requestDTO = new RequestDTO(requestID, 0, subjectCode,
+                            starts, ends, description, studentID, userID, semesterID);
+                    requestDTO.setStudentName(userName);
                     searchRequestList.add(requestDTO);
                 }
             }
@@ -815,7 +816,7 @@ public class RequestDAO implements Serializable {
                 Date startTimeFS = simpleDateFormat.parse(startTime);
                 Date endTimeFS = simpleDateFormat.parse(endTime);
                 System.out.println("878463");
-                
+
                 ptm.setString(1, userID);
                 ptm.setTimestamp(2, new Timestamp(startTimeFS.getTime()));
                 ptm.setTimestamp(3, new Timestamp(endTimeFS.getTime()));
@@ -824,16 +825,17 @@ public class RequestDAO implements Serializable {
                 rs = ptm.executeQuery();
                 while (rs.next()) {
                     String requestID = rs.getString("requestID");
-                String studentID = rs.getString("userID");
-                String userName = rs.getNString("userName");
-                Date startT = rs.getDate("startTime");
-                Date endT = rs.getTimestamp("endTime");
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                String starts = dateFormat.format(startT);
-                String ends = dateFormat.format(endT);
-                String description = rs.getNString("description");
-                RequestDTO requestDTO = new RequestDTO(requestID, 0, subjectCode,
-                        starts, ends, description, studentID, userID, semesterID, userName);
+                    String studentID = rs.getString("userID");
+                    String userName = rs.getNString("userName");
+                    Date startT = rs.getDate("startTime");
+                    Date endT = rs.getTimestamp("endTime");
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    String starts = dateFormat.format(startT);
+                    String ends = dateFormat.format(endT);
+                    String description = rs.getNString("description");
+                    RequestDTO requestDTO = new RequestDTO(requestID, 0, subjectCode,
+                            starts, ends, description, studentID, userID, semesterID);
+                    requestDTO.setStudentName(userName);
                     searchRequestList.add(requestDTO);
                 }
             }
@@ -872,17 +874,18 @@ public class RequestDAO implements Serializable {
                 while (rs.next()) {
                     String requestID = rs.getString("requestID");
 //                String semesterID = rs.getString("semesterID");
-                String studentID = rs.getString("userID");
-                String userName = rs.getNString("userName");
+                    String studentID = rs.getString("userID");
+                    String userName = rs.getNString("userName");
 //                String subjectCode = rs.getString("subjectCode");
-                Date startTime = rs.getTimestamp("startTime");
-                Date endTime = rs.getTimestamp("endTime");
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                String starts = dateFormat.format(startTime);
-                String ends = dateFormat.format(endTime);
-                String description = rs.getNString("description");
-                RequestDTO requestDTO = new RequestDTO(requestID, 0, subjectCode,
-                        starts, ends, description, studentID, userID, semesterID, userName);
+                    Date startTime = rs.getTimestamp("startTime");
+                    Date endTime = rs.getTimestamp("endTime");
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    String starts = dateFormat.format(startTime);
+                    String ends = dateFormat.format(endTime);
+                    String description = rs.getNString("description");
+                    RequestDTO requestDTO = new RequestDTO(requestID, 0, subjectCode,
+                            starts, ends, description, studentID, userID, semesterID);
+                    requestDTO.setStudentName(userName);
                     searchRequestList.add(requestDTO);
                 }
             }
@@ -920,17 +923,17 @@ public class RequestDAO implements Serializable {
                 while (rs.next()) {
                     String requestID = rs.getString("requestID");
 //                String semesterID = rs.getString("semesterID");
-                String studentID = rs.getString("userID");
-                String userName = rs.getNString("userName");
-                String subjectCode = rs.getString("subjectCode");
-                Date startTime = rs.getTimestamp("startTime");
-                Date endTime = rs.getTimestamp("endTime");
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                String starts = dateFormat.format(startTime);
-                String ends = dateFormat.format(endTime);
-                String description = rs.getNString("description");
-                RequestDTO requestDTO = new RequestDTO(requestID, 0, subjectCode,
-                        starts, ends, description, studentID, userID, semesterID, userName);
+                    String studentID = rs.getString("userID");
+                    String userName = rs.getNString("userName");
+                    String subjectCode = rs.getString("subjectCode");
+                    Date startTime = rs.getTimestamp("startTime");
+                    Date endTime = rs.getTimestamp("endTime");
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    String starts = dateFormat.format(startTime);
+                    String ends = dateFormat.format(endTime);
+                    String description = rs.getNString("description");
+                    RequestDTO requestDTO = new RequestDTO(requestID, 0, subjectCode,
+                            starts, ends, description, studentID, userID, semesterID, userName);
                     searchRequestList.add(requestDTO);
                 }
             }

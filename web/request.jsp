@@ -54,7 +54,7 @@
         <!-- Include Font Awesome CSS -->
         <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">-->
         <style>
-            *{ 
+            *{
                 margin: 0;
                 padding: 0;
                 border: 0;
@@ -298,7 +298,7 @@
             </div>  
             <div class="footer1">
                 <div class="powered-by-fpt-container1">
-                    © Powered by
+                    Â© Powered by
                     <a class="fpt-university2" href="http://fpt.edu.vn/" target="_blank">
                         <span class="fpt-university3">FPT University</span>
                     </a>
