@@ -151,6 +151,52 @@ public class FreeSlotsDAO {
         try {
             conn = DBUtils.getConnection();
 
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            Date startTime = simpleDateFormat.parse(freeSlotsDTO.getStartTime());
+            Date endTime = simpleDateFormat.parse(freeSlotsDTO.getEndTime());
+
+            if (conn != null) {
+                ps = conn.prepareStatement(CREATE_FREESLOT);
+                ps.setString(1, freeSlotsDTO.getSubjectCode());
+                ps.setTimestamp(2, new Timestamp(startTime.getTime()));
+                ps.setTimestamp(3, new Timestamp(endTime.getTime()));
+                ps.setString(4, freeSlotsDTO.getPassword());
+                ps.setInt(5, freeSlotsDTO.getCapacity());
+                ps.setString(6, freeSlotsDTO.getMeetLink());
+                ps.setInt(7, freeSlotsDTO.getCount());
+                ps.setString(8, freeSlotsDTO.getLecturerID());
+                ps.setInt(9, freeSlotsDTO.getStatus());
+                ps.setString(10, freeSlotsDTO.getSemesterID());
+                ps.setString(11, freeSlotsDTO.getBlock_list());
+                result = ps.executeUpdate();
+                if (result > 0) {
+                    checkCreate = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+//            if (rs != null) {
+//                rs.close();
+//            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return checkCreate;
+    }
+    public boolean createFreeSlotBooking(FreeSlotsDTO freeSlotsDTO) throws SQLException {
+        boolean checkCreate = false;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        int result;
+//        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date startTime = simpleDateFormat.parse(freeSlotsDTO.getStartTime());
             Date endTime = simpleDateFormat.parse(freeSlotsDTO.getEndTime());
