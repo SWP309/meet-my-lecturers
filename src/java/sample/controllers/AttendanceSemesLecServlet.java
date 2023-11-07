@@ -12,18 +12,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import sample.attendance.AttendanceDAO;
-import sample.attendance.AttendanceDTO;
-import sample.semester.SemesterDTO;
 import sample.semester.SemesterDAO;
-import sample.users.UserDTO;
+import sample.semester.SemesterDTO;
 
 /**
  *
  * @author Minh Khang
  */
-public class AttendanceServlet extends HttpServlet {
+public class AttendanceSemesLecServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,21 +34,11 @@ public class AttendanceServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession();
+            /* TODO output your page here. You may use following sample code. */
             SemesterDAO semesterDAO = new SemesterDAO();
             ArrayList<SemesterDTO> listSemes = (ArrayList<SemesterDTO>) semesterDAO.select();
             request.setAttribute("semester", listSemes);
-            UserDTO userDTO = (UserDTO) session.getAttribute("loginedUser");
-            String semes = request.getParameter("txtsemes");
-            String studentID = userDTO.getUserID();
-            String url = "MainController?action=attendServlet";
-            ArrayList<AttendanceDTO> attendSlot = AttendanceDAO.getAttendanceSlot(studentID, semes);
-            if (attendSlot != null) {
-                request.setAttribute("attend", attendSlot);
-            } else {
-                out.print("list null");
-            }
-            request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher("MainController?action=attendLec").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -96,4 +82,5 @@ public class AttendanceServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

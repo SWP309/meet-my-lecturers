@@ -195,7 +195,7 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div style="cursor: pointer">
                         <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
                              onclick="showUserInfo()" />
                         <div id="user-info" style="display: none; position: absolute;">
