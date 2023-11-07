@@ -185,11 +185,7 @@
 
             </div>
         </div>
-        <h3>
-            <span class="error-message">
-                ${requestScope.ERROR}
-            </span>
-        </h3> 
+
         <script>
             // L?y thông tin l?i t? bi?n requestScope.ERROR
             var errorMessage = "${requestScope.ERROR}";
