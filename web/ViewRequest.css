@@ -156,7 +156,42 @@ td button {
     height: 597px;
 }
 
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
 
+.custom-table th,
+.custom-table td {
+    padding: 8px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.custom-table thead {
+    background-color: #f27125;
+    color: white;
+}
+
+/* Tùy chỉnh màu nền khi hover */
+.custom-table tbody tr:hover {
+    background-color: #e0e0e0;
+}
+
+/* Tùy chỉnh vị trí nút Accept và Decline */
+.custom-table .btn-accept,
+.custom-table .btn-decline {
+    display: flex;
+    justify-content: center;
+    border-radius: 15px;
+}
+.custom-table .btn-accept{
+    background-color: greenyellow;
+}
+.custom-table .btn-decline{
+    background-color: red;
+}
 
 #user-id, #user-name, #user-email {
     color: black; /* Đặt màu chữ thành màu đen */

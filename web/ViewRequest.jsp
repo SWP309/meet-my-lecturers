@@ -119,42 +119,7 @@
                     margin: auto;
                     margin-top: 10%;
                 }
-
-                .custom-table {
-                    border-collapse: collapse;
-                    width: 100%;
-                }
-
-                .custom-table th,
-                .custom-table td {
-                    border: 1px solid #ddd;
-                    padding: 8px;
-                    text-align: center;
-                }
-
-                .custom-table th {
-                    background-color: #f2f2f2;
-                    color: #333;
-                }
-
-                .btn-accept {
-                    background-color: #4CAF50;
-                    color: white;
-                    border: none;
-                    padding: 6px 12px;
-                    cursor: pointer;
-                    font-size: 14px;
-                }
-
-                .btn-decline {
-                    background-color: #f44336;
-                    color: white;
-                    border: none;
-                    padding: 6px 12px;
-                    cursor: pointer;
-                    font-size: 14px;
-                }
-
+              
                 .error-message {
                     color: red;
                     text-align: center;
@@ -221,23 +186,23 @@
                     </div>
                     <div class="container-div" style=" display: flex;
                          flex-direction: column;
-                        float: right;">
+                         float: right;">
                         <div class="frame-Create CreateFSlot" style="cursor: pointer;
-                            color: white" onclick="submitFormCreate()">
-                                <form action="MainController" method="POST">
-                                    <input type="hidden" name="action" value="CreateFS" />
-                                </form>
+                             color: white" onclick="submitFormCreate()">
+                                 <form action="MainController" method="POST">
+                                     <input type="hidden" name="action" value="CreateFS" />
+                                 </form>
 
-                                <i class="material-icons">add</i>
-                            </div>
-                            <div class="frame-History history" style="cursor: pointer;
-                            color: white" onclick="submitFormHistory()">
-                                <form action="MainController" method="POST">
-                                    <input type="hidden" name="action" value="CreateFS" />
-                                </form>
+                                 <i class="material-icons">add</i>
+                             </div>
+                             <div class="frame-History history" style="cursor: pointer;
+                             color: white" onclick="submitFormHistory()">
+                                 <form action="MainController" method="POST">
+                                     <input type="hidden" name="action" value="CreateFS" />
+                                 </form>
 
-                                <i class="material-icons">history</i>
-                            </div>
+                                 <i class="material-icons">history</i>
+                             </div>
                         </div>
                         <div class="container">
                             <div class="row align-items-center justify-content-center" style="margin: 80px 0 -60px 0">
@@ -285,11 +250,8 @@
                                  justify-content: center;
                                  margin: auto;
                                  margin-top: 10%;">
-                                <table border="1" class=" table-hover table table-rounded" 
-                                       style="background-color: white;
-                                       border-color: black;">
-                                    <thead style="background-color: #f27125 !important;
-                                           color: white;">
+                                <table class="custom-table">
+                                    <thead>
                                         <tr>
                                             <th>No.</th>
                                             <th>RequestID</th>
@@ -300,9 +262,9 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Description</th>
-                                            <th>MeetLink(If accept)</th>
+                                            <th>MeetLink (If accept)</th>
                                             <th>Accept</th>
-                                            <th>Note(If decline)</th>
+                                            <th>Note (If decline)</th>
                                             <th>Decline</th>
                                         </tr>
                                     </thead>
@@ -328,7 +290,7 @@
                                             <td>${request.endTime}</td>
                                             <td>${request.description}</td>
                                             <td>
-                                                <input type="text" name="txtLinkMeet" 
+                                                <input class="form-control" type="text" name="txtLinkMeet" 
                                                        value="${param.txtLinkMeet}" placeholder="Input MeetLink" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$">
                                             </td>
                                             <td>
@@ -350,7 +312,7 @@
                                                         value="AcceptRequest" class="btn-accept">Accept</button>
                                             </td>
                                             <td>
-                                                <input type="text" name="txtNote" 
+                                                <input class="form-control" type="text" name="txtNote" 
                                                        value="${param.txtNote}" placeholder="Note for Student">
                                             </td>
                                             <td>
@@ -373,11 +335,8 @@
                                  justify-content: center;
                                  margin: auto;
                                  margin-top: 10%;">
-                                <table border="1" class=" table-hover table table-rounded" 
-                                       style="background-color: white;
-                                       border-color: black;">
-                                    <thead style="background-color: #f27125 !important;
-                                           color: white;">
+                                <table class="custom-table">
+                                    <thead>
                                         <tr>
                                             <th>No.</th>
                                             <th>RequestID</th>
@@ -388,9 +347,9 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Description</th>
-                                            <th>MeetLink(If accept)</th>
+                                            <th>MeetLink (If accept)</th>
                                             <th>Accept</th>
-                                            <th>Note(If decline)</th>
+                                            <th>Note (If decline)</th>
                                             <th>Decline</th>
                                         </tr>
                                     </thead>
@@ -454,11 +413,8 @@
                                  justify-content: center;
                                  margin: auto;
                                  margin-top: 10%;">
-                                <table border="1" class=" table-hover table table-rounded" 
-                                       style="background-color: white;
-                                       border-color: black;">
-                                    <thead style="background-color: #f27125 !important;
-                                           color: white;">
+                                <table class="custom-table">
+                                    <thead>
                                         <tr>
                                             <th>No.</th>
                                             <th>RequestID</th>
@@ -469,9 +425,9 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Description</th>
-                                            <th>MeetLink(If accept)</th>
+                                            <th>MeetLink (If accept)</th>
                                             <th>Accept</th>
-                                            <th>Note(If decline)</th>
+                                            <th>Note (If decline)</th>
                                             <th>Decline</th>
                                         </tr>
                                     </thead>
@@ -535,11 +491,8 @@
                                  justify-content: center;
                                  margin: auto;
                                  margin-top: 10%;">
-                                <table border="1" class=" table-hover table table-rounded" 
-                                       style="background-color: white;
-                                       border-color: black;">
-                                    <thead style="background-color: #f27125 !important;
-                                           color: white;">
+                                <table class="custom-table">
+                                    <thead>
                                         <tr>
                                             <th>No.</th>
                                             <th>RequestID</th>
@@ -550,9 +503,9 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Description</th>
-                                            <th>MeetLink(If accept)</th>
+                                            <th>MeetLink (If accept)</th>
                                             <th>Accept</th>
-                                            <th>Note(If decline)</th>
+                                            <th>Note (If decline)</th>
                                             <th>Decline</th>
                                         </tr>
                                     </thead>
@@ -616,11 +569,8 @@
                                  justify-content: center;
                                  margin: auto;
                                  margin-top: 10%;">
-                                <table border="1" class=" table-hover table table-rounded" 
-                                       style="background-color: white;
-                                       border-color: black;">
-                                    <thead style="background-color: #f27125 !important;
-                                           color: white;">
+                                <table class="custom-table">
+                                    <thead>
                                         <tr>
                                             <th>No.</th>
                                             <th>RequestID</th>
@@ -631,9 +581,9 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Description</th>
-                                            <th>MeetLink(If accept)</th>
+                                            <th>MeetLink (If accept)</th>
                                             <th>Accept</th>
-                                            <th>Note(If decline)</th>
+                                            <th>Note (If decline)</th>
                                             <th>Decline</th>
                                         </tr>
                                     </thead>
