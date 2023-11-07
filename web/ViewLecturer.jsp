@@ -45,6 +45,10 @@
 
         <!-- JavaScript c?a SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+        <!--        text gg -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
         <%
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -172,13 +176,13 @@
                 <i class="material-icons">history</i>
             </div>
 
-
+            <h1 class="text-center text-custom">Table of Lecturer</h1>
             <div class="view-user-table" style="width: 80%; margin: 0 auto; border-radius: 20px;">
                 <c:if test="${not empty requestScope.LIST_LECTURERS}">
                     <div class="table-container">
                         <table class="custom-table table-hover table-primary table-rounded">
                             <thead>
-                                <tr class="table-danger">
+                                <tr>
                                     <th>No.</th>
                                     <th>LecturerID</th>
                                     <th>Name</th>

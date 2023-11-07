@@ -148,9 +148,9 @@ public class CreateFreeSlotServlet extends HttpServlet {
             String setByOption = request.getParameter("txtOption");
 
             int count = Integer.parseInt(request.getParameter("txtCount"));
-            if (count < 0) {
+            if (count < 1) {
                 flag = false;
-                freeSlotError.setRepeatedTimeError("The repeated time must be greater OR equal 0");
+                freeSlotError.setRepeatedTimeError("The repeated time must be greater OR equal 1");
             }
 
             int status = 0;
@@ -165,7 +165,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
             request.setAttribute("FREESLOT_ERROR", freeSlotError);
             if (flag) {
 
-                for (int i = 1; i <= count + 1; i++) {
+                for (int i = 1; i <= count; i++) {
                     FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status, semesterID, block_list);
                     checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
 
