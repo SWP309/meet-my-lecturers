@@ -245,8 +245,8 @@
             }
             button[type="submit"]{
                 border: none; /* Lo?i b? vi?n */
-                background-color: white;
-                color: #007bff;
+                background-color: #007bff;
+                color: white;
             }
             .card-body > div {
                 margin-bottom: 0.2rem;

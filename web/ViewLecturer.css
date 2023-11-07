@@ -1,4 +1,27 @@
+.table-rounded th,
+.table-rounded td {
+    padding: 8px;
+    border: 1px solid black;
+    text-align: center;
+}
 
+.table-rounded thead {
+    background-color: #f27125;
+    color: white;
+}
+.table-rounded{
+    width: 100%;
+    transform: scale(0.8); /* Tỉ lệ thu nhỏ bảng là 80% */
+}
+/* Tùy chỉnh màu nền khi hover */
+.table-rounded tbody tr:hover {
+    background-color: #e0e0e0;
+}
+.text-custom{
+    font-family: 'Agbalumo', 'Playfair Display', sans-serif;
+    height: 0px;
+    margin-top: 73px;
+}
 .returnHome{
     width: 120px;
     height: 50px;
@@ -81,22 +104,6 @@
     margin-top: 10%;
 }
 
-.custom-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-.custom-table th,
-.custom-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-
-.custom-table th {
-    background-color: #f2f2f2;
-    color: #333;
-}
 .fpt-university2 {
     color: inherit;
 }
