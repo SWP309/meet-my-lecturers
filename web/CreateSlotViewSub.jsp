@@ -208,12 +208,22 @@
                 </div>
             </div>
         </div>
-        <div class="frame-Create CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()">
-            <form action="MainController" method="POST">
-                <input type="hidden" name="action" value="CreateFS" />
-            </form>
+      <div class="container-div" style=" display: flex;
+             flex-direction: column; float: right;">
+            <div class="frame-Create CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()">
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="CreateFS" />
+                </form>
 
-            <i class="material-icons">add</i>
+                <i class="material-icons">add</i>
+            </div>
+            <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormSendEmail()">
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="SendEmailForRemindStudent" />
+                </form>
+
+                <i class="material-icons">send</i>
+            </div>
         </div>
 
         <div class="student-viewbookedslot">
@@ -246,12 +256,7 @@
 
                 </div>
             </div>
-
-            <h3>
-                <span class="error-message">
-                    ${requestScope.ERROR}
-                </span>
-            </h3> 
+ 
 
             <script>
                 // L?y thông tin l?i t? bi?n requestScope.ERROR

@@ -6,6 +6,8 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,6 +42,10 @@ public class SearchFreeSlotServlet extends HttpServlet {
             String name = request.getParameter("txtUserName");
             String semester = request.getParameter("txtSemesterID");
             FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
+          
+            Date date = new Date();
+            freeSlotsDAO.updateStatusOutDate(date);
+            
             if (!subjectCode.isEmpty() && lecturerID.isEmpty() && name.isEmpty() && semester.isEmpty()) {
                 freeSlotsDAO.getFreeSlotBySubjectCode(subjectCode, us.getUserID());
                 List<FreeSlotsDTO> freeSlotBySubject = freeSlotsDAO.getFreeSlotBySubjectCode();
@@ -134,8 +140,8 @@ public class SearchFreeSlotServlet extends HttpServlet {
                     request.setAttribute("SEARCH_FREESLOT_MESSAGE", "The system has no freeslot that meet your requirement!!!");
                 }
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-            log("Error at SearchFreeSlotServlet: " + ex.toString());
+        } catch (ClassNotFoundException | SQLException | ParseException ex) {
+            log("Error at ViewAllRequestStatus: " + ex.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

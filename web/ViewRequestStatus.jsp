@@ -14,6 +14,10 @@
         <!-- Material Icons CSS -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="./StudentHome_1.css" />
+        <!--        text gg -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
         <style>
             .card-body > div {
                 margin-bottom: 0.2rem;
@@ -60,6 +64,22 @@
             }
             td {
                 text-align: center;
+            }
+            .table-rounded th,
+            .table-rounded td {
+                padding: 8px;
+                border: 1px solid black;
+                text-align: center;
+            }
+
+            .table-rounded thead {
+                background-color: #f27125;
+                color: white;
+            }
+
+            /* Tùy chỉnh màu nền khi hover */
+            .table-rounded tbody tr:hover {
+                background-color: #e0e0e0;
             }
             .frame-History{
                 border-radius: 20px;
@@ -225,12 +245,12 @@
                     </div>
                 </div>
             </form>
-
+            <h1 class="text-center text-custom">Table of Lecturer</h1>
             <div class="row justify-content-center mt-5">
                 <c:if test="${empty param.txtSubjectCode and not empty requestScope.LIST_REQUEST}">
                     <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
                         <thead>
-                            <tr class="table-danger">
+                            <tr>
                                 <th>No.</th>
                                 <th>Semester</th>
                                 <th>Subject Code</th>
@@ -296,7 +316,7 @@
                 <c:if test="${empty param.txtSubjectCode and not empty requestScope.REQUEST_BY_STATUS}">
                     <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
                         <thead>
-                            <tr class="table-danger">
+                            <tr>
                                 <th>No.</th>
                                 <th>Semester</th>
                                 <th>Subject Code</th>
@@ -359,7 +379,7 @@
                 <c:if test="${not empty param.txtSubjectCode and not empty requestScope.REQUEST_BY_SUBCODE_AND_STATUS}">
                     <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
                         <thead>
-                            <tr class="table-danger">
+                            <tr>
                                 <th>No.</th>
                                 <th>Semester</th>
                                 <th>Subject Code</th>
@@ -422,7 +442,7 @@
                 <c:if test="${empty param.txtSubjectCode and not empty requestScope.ALL_REQUEST}">
                     <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
                         <thead>
-                            <tr class="table-danger">
+                            <tr>
                                 <th>No.</th>
                                 <th>Semester</th>
                                 <th>Subject Code</th>
@@ -485,7 +505,7 @@
                 <c:if test="${not empty param.txtSubjectCode and not empty requestScope.ALL_REQUEST_BY_SUBCODE}">
                     <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
                         <thead>
-                            <tr class="table-danger">
+                            <tr>
                                 <th>No.</th>
                                 <th>Semester</th>
                                 <th>Subject Code</th>
@@ -547,6 +567,18 @@
                 </c:if>
             </div>
         </div>        
+        <div class="footer1">
+            <div class="powered-by-fpt-container1">
+                © Powered by
+                <a class="fpt-university2" href="http://fpt.edu.vn/" target="_blank">
+                    <span class="fpt-university3">FPT University</span>
+                </a>
+                |
+                <a class="fpt-university2" href="http://library.fpt.edu.vn/" target="_blank">
+                    <span class="fpt-university3">library</span>
+                </a>
+            </div>
+        </div>
         <%} else {
                 response.sendRedirect("MainController");
             }%>

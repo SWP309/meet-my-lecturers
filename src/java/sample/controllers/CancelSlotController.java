@@ -50,7 +50,7 @@ public class CancelSlotController extends HttpServlet {
                     request.setAttribute("LIST_CREATED_SLOT", listCreatedSlot);
                     url = SUCCESS;
                     if (listCreatedSlot == null || listCreatedSlot.isEmpty()) {
-                        request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
+                        request.setAttribute("ERROR", "List Student is null. Do not have any things to show");
                     }
                 }
             } else {
