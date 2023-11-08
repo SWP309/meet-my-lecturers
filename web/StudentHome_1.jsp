@@ -1161,7 +1161,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
     <script>
                                 // L?y thông tin l?i t? bi?n requestScope.ERROR
-                                var errorMessage = "${requestScope.BOOKING_ERROR.duplicateBookedSlot}";
+                                var errorMessage = "${requestScope.BLOCK_ERROR}";
 
                                 // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
                                 if (errorMessage.trim() !== "") {

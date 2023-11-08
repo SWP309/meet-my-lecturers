@@ -81,7 +81,7 @@
             .table-rounded tbody tr:hover {
                 background-color: #e0e0e0;
             }
-            .frame-History{
+            .frame-choice{
                 border-radius: 20px;
                 background-color: #f27125;
                 width: 40px !important;
@@ -215,6 +215,13 @@
                 </div>
 
             </div>
+        </div>
+        <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+            <form action="MainController" method="POST">
+                <input type="hidden" name="action" value="attendanceSemes" />
+            </form>
+
+            <i class="material-icons">history</i>
         </div>
 
         <div class="container mt-5">

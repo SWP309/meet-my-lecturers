@@ -1,6 +1,7 @@
 package sample.controllers;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.freeslots.FreeSlotsDAO;
 import sample.users.UserDTO;
 import sample.viewCreatedSlot.ViewCreatedSlotDAO;
 import sample.viewCreatedSlot.ViewCreatedSlotDTO;
@@ -22,18 +24,22 @@ public class CreatedSlotController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-             try {
+        try {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
             int listCountPage = dao.CountPage(us.getUserEmail());
             request.setAttribute("COUNT_PAGE", listCountPage);
-            List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlotByCount(us.getUserEmail(),0);
-             System.out.println(us.getUserEmail());
+            List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlotByCount(us.getUserEmail(), 0);
+            System.out.println(us.getUserEmail());
+            FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
+
+            Date date = new Date();
+            freeSlotsDAO.updateStatusOutDate(date);
             if (listCreatedSlot.size() > 0) {
                 request.setAttribute("LIST_CREATED_SLOT", listCreatedSlot);
                 url = SUCCESS;
-                          }
+            }
         } catch (Exception e) {
             log("Error at SearchController: " + e.toString());
         } finally {
@@ -41,7 +47,6 @@ public class CreatedSlotController extends HttpServlet {
         }
     }
 
-  
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

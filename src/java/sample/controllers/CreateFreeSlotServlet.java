@@ -29,6 +29,7 @@ import sample.users.UserDTO;
 import sample.utils.DBUtils;
 import sample.viewCreatedSlot.ViewCreatedSlotDAO;
 import sample.viewCreatedSlot.ViewCreatedSlotDTO;
+import services.Service;
 
 /**
  *
@@ -72,56 +73,6 @@ public class CreateFreeSlotServlet extends HttpServlet {
 //                freeSlotError.setSubjectCodeError("The Subject code is wrong format OR not exist in DB.");
 //            }
 
-            String startTime = request.getParameter("txtStartTime");
-            String endTime = request.getParameter("txtEndTime");
-            //****Check input time with current time
-            //tranfer String to Date
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-            Date starts = format.parse(startTime);
-            Date ends = format.parse(endTime);
-            //get current date
-            Date currentTime = new Date();
-            // Calculate current time plus 10 minutes
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(currentTime);
-            calendar.add(Calendar.MINUTE, 10);
-            Date timeInFuture = calendar.getTime();
-            //compare input time to current time
-            if (starts.before(timeInFuture) || ends.before(timeInFuture)) {
-                flag = false;
-                freeSlotError.setPastTimeError("- The start and end times must be in the future"
-                        + " and at least 10 minutes greater than the current time!!!");
-            }
-            //****check end time greater than start time
-            if (ends.before(starts) || ends.equals(starts)) {
-                flag = false;
-                freeSlotError.setEndTimeError("- The end times must be greater than start times!!!");
-            }
-            //****check duration from start time to end time
-            // Calculate duration between startTime and endTime
-            long timeDifference = ends.getTime() - starts.getTime();
-            int minutesDifference = (int) (timeDifference / (1000 * 60));
-            if (minutesDifference > 90 || minutesDifference < 15) {
-                flag = false;
-                freeSlotError.setDurationError("- Duration of a slot must be from 15 to 90 minutes!!!");
-            }
-            //****check not allowed create slot <= 5AM or >= 11PM
-            calendar.setTime(starts);
-            calendar.setTime(ends);
-            int startHour = calendar.get(Calendar.HOUR_OF_DAY);
-            int endHour = calendar.get(Calendar.HOUR_OF_DAY);
-            if (startHour <= 5 || startHour >= 23 || endHour <= 5 || endHour >= 23) {
-                flag = false;
-                freeSlotError.setDurationError("- Not allowed create slot <= 5AM or >= 11PM!!!");
-            }
-            //****check duplicate time with created freeslot
-            boolean checkStartTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(lecturerID, starts);
-            boolean checkEndTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(lecturerID, ends);
-            if (checkStartTimeDuplicateFS == false || checkEndTimeDuplicateFS == false) {
-                flag = false;
-                freeSlotError.setDuplicateTimeError("- The time you entered overlaps with time of created FREESLOT!!! ");
-            }
-
             String password = request.getParameter("txtPassword").trim();
             if (password.isEmpty()) {
                 password = null; // Chuyển chuỗi trống thành giá trị null
@@ -161,12 +112,71 @@ public class CreateFreeSlotServlet extends HttpServlet {
             if (statusOption.equals("PRV")) {
                 status = 0;
             }
-
+            
+            String startTime = request.getParameter("txtStartTime");
+            String endTime = request.getParameter("txtEndTime");
+            //****Check input time with current time
+            //tranfer String to Date
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            Date starts = format.parse(startTime);
+            Date ends = format.parse(endTime);
+            //get current date
+            Date currentTime = new Date();
+            // Calculate current time plus 10 minutes
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(currentTime);
+            calendar.add(Calendar.MINUTE, 10);
+            Date timeInFuture = calendar.getTime();
+            //compare input time to current time
+            if (starts.before(timeInFuture) || ends.before(timeInFuture)) {
+                flag = false;
+                freeSlotError.setPastTimeError("- The start and end times must be in the future"
+                        + " and at least 10 minutes greater than the current time!!!");
+            }
+            //****check end time greater than start time
+            if (ends.before(starts) || ends.equals(starts)) {
+                flag = false;
+                freeSlotError.setEndTimeError("- The end times must be greater than start times!!!");
+            }
+            //****check duration from start time to end time
+            // Calculate duration between startTime and endTime
+            long timeDifference = ends.getTime() - starts.getTime();
+            int minutesDifference = (int) (timeDifference / (1000 * 60));
+            if (minutesDifference > 90 || minutesDifference < 15) {
+                flag = false;
+                freeSlotError.setDurationError("- Duration of a slot must be from 15 to 90 minutes!!!");
+            }
+            //****check not allowed create slot <= 5AM or >= 11PM
+//            calendar.setTime(starts);
+//            calendar.setTime(ends);
+//            int startHour = calendar.get(Calendar.HOUR_OF_DAY);
+//            int endHour = calendar.get(Calendar.HOUR_OF_DAY);
+//            if (startHour <= 5 || startHour >= 23 || endHour <= 5 || endHour >= 23) {
+//                flag = false;
+//                freeSlotError.setDurationError("- Not allowed create slot <= 5AM or >= 11PM!!!");
+//            }
+            //****check duplicate time with created freeslot
+            boolean checkStartTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(lecturerID, starts);
+            boolean checkEndTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(lecturerID, ends);
+            if (checkStartTimeDuplicateFS == false || checkEndTimeDuplicateFS == false) {
+                flag = false;
+                freeSlotError.setDuplicateTimeError("- The time you entered overlaps with time of created FREESLOT!!! ");
+            }
+            
+            FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status, semesterID, block_list);
+            
+//            //*****check duplicate timetable*****
+//            Service service = new Service();
+//            boolean checkTimetableDuplicate = service.duplicateSlot(freeSlotsDTO);
+//            if (checkTimetableDuplicate==false) {
+//                flag=false;
+//                freeSlotError.setDuplicateTimeTableError("- The time you entered overlaps your TimeTable. Please check FAP!!!");
+//            }
+            
             request.setAttribute("FREESLOT_ERROR", freeSlotError);
+            
             if (flag) {
-
                 for (int i = 1; i <= count; i++) {
-                    FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status, semesterID, block_list);
                     checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
