@@ -155,7 +155,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
                 flag = false;
                 freeSlotError.setDurationError("- Not allowed create slot <= 5AM or >= 11PM!!!");
             }
-            //****check duplicate time with created freeslot
+//            ****check duplicate time with created freeslot
             boolean checkStartTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(lecturerID, starts);
             boolean checkEndTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(lecturerID, ends);
             if (checkStartTimeDuplicateFS == false || checkEndTimeDuplicateFS == false) {

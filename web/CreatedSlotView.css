@@ -201,6 +201,9 @@ td button {
     font-family: Lexend;
 
 }
+.tableview{
+    grid-row-gap: 15px;
+}
 
 #user-id, #user-name, #user-email {
     color: black; /* Đặt màu chữ thành màu đen */
