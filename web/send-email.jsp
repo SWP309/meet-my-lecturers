@@ -127,6 +127,18 @@
                 var form = document.querySelector('.hideView form');
                 form.submit();
             }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
+            function submitFormSendEmail() {
+                var form = document.querySelector('.sendMail form');
+                form.submit();
+            }
+            function submitFormCreate() {
+                var form = document.querySelector('.CreateFSlot form');
+                form.submit();
+            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -223,6 +235,31 @@
                 </div>
             </div>
         </div>
+        <div class="container-div" style=" display: flex;
+             flex-direction: column; float: right;">
+            <div class="frame-choice CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()">
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="CreateFS" />
+                </form>
+
+                <i class="material-icons">add</i>
+            </div>
+            <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+                <form action="MainController" method="POST">
+
+                    <input type="hidden" name="action" value="historyLec" />
+                </form>
+
+                <i class="material-icons">history</i>
+            </div>
+            <div class="frame-choice sendMail" style="cursor: pointer; color: white"  onclick="submitFormSendEmail()">
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="SendEmailForRemindStudent" />
+                </form>
+
+                <i class="material-icons">send</i>
+            </div>
+        </div>
 
         <c:if test="${sessionScope.loginedUser != null && sessionScope.loginedUser.roleID == '2'}"></c:if>
             <div class="container mt-5 div-CreateFS">
@@ -236,7 +273,7 @@
                             <div class="d-flex justify-content-between"><strong>Start Time:</strong> <input type="datetime-local" class="form-control" name="txtStartTime" value="${param.txtStartTime}" required=""></div>
                             <div class="d-flex justify-content-between"><strong>End Time:</strong> <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}" required=""></div>
                             <div class="d-flex justify-content-between"><strong>Password(access code of your free slot):</strong> <input type="text" class="form-control" name="txtPassword" value="${param.txtPassword}" required=""></div>
-                            <div class="d-flex justify-content-between"><strong>Message(optional):</strong> <textarea name="txtMessage" rows="10" cols="60"></textarea></div>
+                            <div class="d-flex justify-content-between"><strong>Message(optional):</strong> <textarea style="width: 60%" name="txtMessage" rows="10" cols="60"></textarea></div>
 
                             <div class="d-flex justify-content-center btn-book">
                                 <input type="hidden" value="sendEMailAction" name="action"/>

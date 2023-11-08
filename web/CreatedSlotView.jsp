@@ -76,7 +76,7 @@
                 form.submit();
             }
             function submitFormSendEmail() {
-                var form = document.querySelector('.history form');
+                var form = document.querySelector('.sendMail form');
                 form.submit();
             }
             function submitFormViewRequest() {
@@ -95,6 +95,8 @@
                 var form = document.querySelector('.history form');
                 form.submit();
             }
+            
+           
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -362,10 +364,10 @@
 
                 <i class="material-icons">add</i>
             </div>
-            <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+                        <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
                 <form action="MainController" method="POST">
 
-                    <input type="hidden" name="action" value="SendEmailForRemindStudent" />
+                    <input type="hidden" name="action" value="historyLec" />
                 </form>
 
                 <i class="material-icons">history</i>

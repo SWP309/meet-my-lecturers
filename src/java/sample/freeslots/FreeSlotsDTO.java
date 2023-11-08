@@ -60,6 +60,12 @@ public class FreeSlotsDTO {
         this.semesterID = semesterID;
         this.block_list = block_list;
     }
+    public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String lecturerID) {
+        this.subjectCode = subjectCode;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.lecturerID = lecturerID;
+    }
 
     public FreeSlotsDTO(String freeSlotID, String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, int status, String semesterID, String lecturerName, int bookedStudent) {
         this.freeSlotID = freeSlotID;

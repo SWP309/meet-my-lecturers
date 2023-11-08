@@ -160,7 +160,7 @@
 
             </div>
         </div>
-        <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+        <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
             <form action="MainController" method="POST">
                 <input type="hidden" name="action" value="attendanceSemes" />
             </form>

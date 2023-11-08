@@ -45,7 +45,7 @@ public class SendEMailServlet extends HttpServlet {
         String url = ERROR;
 //        boolean checkSend = false;
         final String from = "meet.my.lecturers.fpt.edu@gmail.com";
-        final String password = "pxgiqlcbynyelaeu";
+        final String password = "fmpheqhatzpjndvh";
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");
         prop.put("mail.smtp.port", "587");
