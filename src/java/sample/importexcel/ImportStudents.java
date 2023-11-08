@@ -58,21 +58,38 @@ public class ImportStudents extends HttpServlet {
                             String userName = row.getCell(2).getStringCellValue();
                             String userEmail = row.getCell(3).getStringCellValue();
                             int userStatus = (int) row.getCell(4).getNumericCellValue();
-                            int roleid = (int) row.getCell(5).getNumericCellValue();
-                            String roleID = String.valueOf(roleid);
-                            int passWord = (int) row.getCell(6).getNumericCellValue();
-                            String password = String.valueOf(passWord);
-                            UserDTO existed = UserDAO.getUserByID(userID);
-                            if (existed != null) {
-                                continue;
+                            if (userStatus >= 0 && userStatus < 5) {
+                                int roleid = (int) row.getCell(5).getNumericCellValue();
+                                if (roleid >= 0 && roleid < 5) {
+                                    String roleID = String.valueOf(roleid);
+                                    int passWord = (int) (Math.random() * 1000000) % 1000 + 10000;
+                                    String password = String.valueOf(passWord);
+                                    UserDTO existed = UserDAO.getUserByID(userID);
+                                    if (existed != null) {
+                                        continue;
+                                    }
+                                    UserDTO users = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
+                                    UserDAO.ImportExcelUsers(users);
+                                    wb.close();
+                                    request.setAttribute("EXCSERVLET", "Import Successfully");
+                                    URL = "MainController?action=importPage";
+                                } else {
+                                    wb.close();
+                                    request.setAttribute("EXCSERVLET", "Error role ID at line: " + i);
+                                    URL = "MainController?action=importPage";
+                                    break;
+                                }
+                            } else {
+                                wb.close();
+                                request.setAttribute("EXCSERVLET", "Error status at line: " + i);
+                                URL = "MainController?action=importPage";
+                                break;
                             }
-                            UserDTO users = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
-                            UserDAO.ImportExcelUsers(users);
                         }
-                        wb.close();
-                        request.setAttribute("EXCSERVLET", "Import Successfully");
-                        URL = "MainController?action=importPage";
-                    } catch(IllegalStateException e){
+//                        wb.close();
+//                        request.setAttribute("EXCSERVLET", "Import Successfully");
+//                        URL = "MainController?action=importPage";
+                    } catch (IllegalStateException e) {
                         wb.close();
                         request.setAttribute("EXCSERVLET", "Wrong format data ");
                         URL = "MainController?action=importPage";
@@ -90,20 +107,38 @@ public class ImportStudents extends HttpServlet {
                             String userName = row.getCell(2).getStringCellValue();
                             String userEmail = row.getCell(3).getStringCellValue();
                             int userStatus = (int) row.getCell(4).getNumericCellValue();
-                            int roleid = (int) row.getCell(5).getNumericCellValue();
-                            String roleID = String.valueOf(roleid);
-                            int passWord = (int) row.getCell(6).getNumericCellValue();
-                            String password = String.valueOf(passWord);
-                            UserDTO existed = UserDAO.getUserByID(userID);
-                            if (existed != null) {
-                                continue;
+                            if (userStatus >= 0 && userStatus < 5) {
+                                int roleid = (int) row.getCell(5).getNumericCellValue();
+                                if (roleid >= 0 && roleid < 5) {
+                                    String roleID = String.valueOf(roleid);
+                                    int passWord = (int) (Math.random() * 1000000) % 1000 + 10000;
+                                    String password = String.valueOf(passWord);
+                                    UserDTO existed = UserDAO.getUserByID(userID);
+                                    if (existed != null) {
+                                        continue;
+                                    }
+                                    UserDTO users = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
+                                    UserDAO.ImportExcelUsers(users);
+                                    wb.close();
+                                    request.setAttribute("EXCSERVLET", "Import Successfully");
+                                    URL = "MainController?action=importPage";
+                                } else {
+                                    
+                                    wb.close();
+                                    request.setAttribute("EXCSERVLET", "Error role ID at line: " + i);
+                                    URL = "MainController?action=importPage";
+                                    break;
+                                }
+                            } else {
+                                wb.close();
+                                request.setAttribute("EXCSERVLET", "Error status at line: " + i);
+                                URL = "MainController?action=importPage";
+                                break;
                             }
-                            UserDTO users = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
-                            UserDAO.ImportExcelUsers(users);
                         }
-                        wb.close();
-                        request.setAttribute("EXCSERVLET", "Import Successfully");
-                        URL = "MainController?action=importPage";
+//                        wb.close();
+//                        request.setAttribute("EXCSERVLET", "Import Successfully");
+//                        URL = "MainController?action=importPage";
                     } catch (IllegalStateException e) {
                         wb.close();
                         request.setAttribute("EXCSERVLET", "Wrong format data");
