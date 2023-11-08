@@ -194,6 +194,10 @@
         <servlet-name>AttendanceLecServlet</servlet-name>
         <servlet-class>sample.controllers.AttendanceLecServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CountPageServlet</servlet-name>
+        <servlet-class>sample.controllers.CountPageServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -369,6 +373,10 @@
     <servlet-mapping>
         <servlet-name>AttendanceLecServlet</servlet-name>
         <url-pattern>/AttendanceLecServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CountPageServlet</servlet-name>
+        <url-pattern>/CountPageServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

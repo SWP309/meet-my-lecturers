@@ -158,6 +158,22 @@
     width: 45px;
     height: 42px;
 }
+.table-rounded th,
+.table-rounded td {
+    padding: 8px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.table-rounded thead {
+    background-color: #f27125;
+    color: white;
+}
+
+/* Tùy chỉnh màu nền khi hover */
+.table-rounded tbody tr:hover {
+    background-color: #e0e0e0;
+}
 .table-timetable-table{
     margin-top: 280px;
     margin-left: 90px;

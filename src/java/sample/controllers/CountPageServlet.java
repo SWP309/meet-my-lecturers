@@ -1,9 +1,13 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package sample.controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,8 +16,11 @@ import sample.users.UserDTO;
 import sample.viewCreatedSlot.ViewCreatedSlotDAO;
 import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
-@WebServlet(name = "CreatedSlotController", urlPatterns = {"/CreatedSlotController"})
-public class CreatedSlotController extends HttpServlet {
+/**
+ *
+ * @author PC
+ */
+public class CountPageServlet extends HttpServlet {
 
     private static final String ERROR = "CreatedSlotView.jsp";
     private static final String SUCCESS = "CreatedSlotView.jsp";
@@ -22,18 +29,27 @@ public class CreatedSlotController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-             try {
+        System.out.println(url);
+        try {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
             int listCountPage = dao.CountPage(us.getUserEmail());
             request.setAttribute("COUNT_PAGE", listCountPage);
-            List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlotByCount(us.getUserEmail(),0);
-             System.out.println(us.getUserEmail());
+            int CountPage = Integer.parseInt(request.getParameter("CountPage"));
+           
+            if (CountPage == 1 ){
+                CountPage = CountPage - 1;
+            } else {
+                CountPage = (CountPage -1) * 6 ;
+            }
+             System.out.println("countpage " + CountPage);
+            List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlotByCount(us.getUserEmail(), CountPage);
+            System.out.println(us.getUserEmail());
             if (listCreatedSlot.size() > 0) {
                 request.setAttribute("LIST_CREATED_SLOT", listCreatedSlot);
                 url = SUCCESS;
-                          }
+            }
         } catch (Exception e) {
             log("Error at SearchController: " + e.toString());
         } finally {
@@ -41,7 +57,6 @@ public class CreatedSlotController extends HttpServlet {
         }
     }
 
-  
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
