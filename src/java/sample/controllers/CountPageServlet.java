@@ -1,43 +1,57 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package sample.controllers;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sample.users.UserDAO;
+import javax.servlet.http.HttpSession;
 import sample.users.UserDTO;
+import sample.viewCreatedSlot.ViewCreatedSlotDAO;
+import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
-public class UpdateUserServlet extends HttpServlet {
-    
-    private final String SUCCESS = "ViewUsers.jsp";
-    private final String ERROR = "ViewUsers.jsp";
-    
+/**
+ *
+ * @author PC
+ */
+public class CountPageServlet extends HttpServlet {
+
+    private static final String ERROR = "CreatedSlotView.jsp";
+    private static final String SUCCESS = "CreatedSlotView.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
+        System.out.println(url);
         try {
-            String userName = request.getParameter("txtUserName");
-            String userEmail = request.getParameter("txtEmail");
-            String password = request.getParameter("txtPassword");
-            String userStatus = request.getParameter("txtStatus");
-            int check = Integer.parseInt(userStatus);
-            String userID = request.getParameter("txtUserID");
-            String searchUserID = request.getParameter("txtSearchUserID");
-            String name = request.getParameter("txtName");
-            String roleID = request.getParameter("txtRoleID");
-            UserDAO userDAO = new UserDAO();
-            UserDTO userDTO = new UserDTO(userID, userName, userEmail, check, "", password);
-            boolean checkUpdate;
-                checkUpdate = userDAO.updateAUser(userDTO);
-            if(checkUpdate) {
+            HttpSession session = request.getSession();
+            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
+            int listCountPage = dao.CountPage(us.getUserEmail());
+            request.setAttribute("COUNT_PAGE", listCountPage);
+            int CountPage = Integer.parseInt(request.getParameter("CountPage"));
+           
+            if (CountPage == 1 ){
+                CountPage = CountPage - 1;
+            } else {
+                CountPage = (CountPage -1) * 6 ;
+            }
+             System.out.println("countpage " + CountPage);
+            List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlotByCount(us.getUserEmail(), CountPage);
+            System.out.println(us.getUserEmail());
+            if (listCreatedSlot.size() > 0) {
+                request.setAttribute("LIST_CREATED_SLOT", listCreatedSlot);
                 url = SUCCESS;
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-                log("Error at UpdateUserServlet: " + ex.toString());
+        } catch (Exception e) {
+            log("Error at SearchController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

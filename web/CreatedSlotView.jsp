@@ -1,3 +1,4 @@
+<%@page import="sample.viewCreatedSlot.ViewCreatedSlotDAO"%>
 <%@page import="sample.users.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -75,7 +76,7 @@
                 form.submit();
             }
             function submitFormSendEmail() {
-                var form = document.querySelector('.history form');
+                var form = document.querySelector('.sendMail form');
                 form.submit();
             }
             function submitFormViewRequest() {
@@ -94,6 +95,8 @@
                 var form = document.querySelector('.history form');
                 form.submit();
             }
+            
+           
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -245,8 +248,8 @@
             }
             button[type="submit"]{
                 border: none; /* Lo?i b? vi?n */
-                background-color: #007bff;
-                color: white;
+                background-color: white;
+                color: #007bff;
             }
             .card-body > div {
                 margin-bottom: 0.2rem;
@@ -298,7 +301,6 @@
 
     </head>
     <body>
-
         <div class="fptu-eng-1-parent">
             <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
                 <form action="MainController" method="POST">
@@ -370,9 +372,8 @@
 
                 <i class="material-icons">history</i>
             </div>
-            <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormSendEmail()">
+            <div class="frame-choice sendMail" style="cursor: pointer; color: white"  onclick="submitFormSendEmail()">
                 <form action="MainController" method="POST">
-
                     <input type="hidden" name="action" value="SendEmailForRemindStudent" />
                 </form>
 
@@ -398,7 +399,7 @@
                                 <input type="text" class="form-control" name="txtSemesterID" value="${param.txtSemesterID}" placeholder="Input the semesterID">
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchCSlot">Search</button>
+                                <button class="btn btn-primary form-control" style="border-color: black; background: #007bff; color: white;" type="submit" name="action" value="searchCSlot">Search</button>
                             </div>
                         </form>
                     </div>
@@ -408,6 +409,10 @@
 
             <!--  LIST OF THE PAGE -------------------------------------------------------------->
             <div class="container mt-5" style="    margin-top: -13% !important; max-height: 1000%; height: 1000px">
+
+                <!--                        <div class="pagination">
+                                            <a class="d-flex justify-content-between" href="MainController?action=countPageAction&CountPage=${counter.count}">${counter.count}</a>
+                                        </div>-->
                 <div class="row justify-content-center mt-5 tableview">
                     <c:if test="${requestScope.LIST_CREATED_SLOT !=null}">
                         <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">
@@ -423,13 +428,13 @@
                                                     <span class="ml-auto">${listCreatedSlot.lectureName}</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${listCreatedSlot.startTime}" pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${listCreatedSlot.startTime}"  pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.endTime}"  pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.endTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
-<!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.meetLink}"/>-->
+    <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.meetLink}"/>-->
                                                     <a class="ml-auto specific-input" href="https://${listCreatedSlot.meetLink}" onclick="confirmCheckAttendanceLink(event, '${listCreatedSlot.freeSlotID}')"> Link Meet</a>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
@@ -473,6 +478,8 @@
                     </c:if>          
                 </div>
 
+
+
                 <!--     SEARCH BY ST AND ET ---------------------------------------------------------->
                 <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and empty param.txtSubjectCode and empty param.txtSemesterID}">
                     <div class="container mt-5" style="    margin-top: -3% !important;">
@@ -491,13 +498,13 @@
                                                             <span class="ml-auto">${searchByStEt.lectureName}</span>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                            <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEt.startTime}"   pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                            <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEt.startTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                            <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.endTime}"   pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                            <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
-<!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.meetLink}"/>-->
+    <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.meetLink}"/>-->
                                                             <a class="ml-auto specific-input" href="https://${searchByStEt.meetLink}" onclick="confirmCheckAttendanceLinkByStEt(event, '${searchByStEt.freeSlotID}')"> Link Meet</a>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
@@ -560,13 +567,13 @@
                                                                 <span class="ml-auto">${searchByAll.lectureName}</span>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByAll.startTime}"  pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByAll.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.endTime}"   pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
-<!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.meetLink}"/>-->
+    <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.meetLink}"/>-->
                                                                 <a class="ml-auto specific-input" href="https://${searchByAll.meetLink}" onclick="confirmCheckAttendanceLinkByAll(event, '${searchByAll.freeSlotID}')"> Link Meet</a>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
@@ -627,10 +634,10 @@
                                                                     <span class="ml-auto">${searchByStEtSubject.lectureName}</span>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEtSubject.startTime}"  pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEtSubject.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEtSubject.endTime}"   pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEtSubject.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
     <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEtSubject.meetLink}"/>-->
@@ -696,10 +703,10 @@
                                                                         <span class="ml-auto">${searchByStEtSemesterID.lectureName}</span>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                        <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEtSemesterID.startTime}"  pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                        <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEtSemesterID.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                        <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEtSemesterID.endTime}"   pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                        <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEtSemesterID.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
         <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEtSemesterID.meetLink}"/>-->
@@ -764,10 +771,10 @@
                                                                             <span class="ml-auto">${searchBySubjectCode.lectureName}</span>
                                                                         </div>
                                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                            <input type="text" class="ml-auto specific-input" name="startTime" value="${searchBySubjectCode.startTime}"  pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                            <input type="text" class="ml-auto specific-input" name="startTime" value="${searchBySubjectCode.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                         </div>
                                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                            <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.endTime}"   pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                            <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                         </div>
                                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b >Link Meet:</b></strong> 
         <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.meetLink}"/>-->
@@ -834,10 +841,10 @@
                                                                                 <span class="ml-auto">${searchBySemesterID.lectureName}</span>
                                                                             </div>
                                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                                <input type="text" class="ml-auto specific-input" name="startTime" value="${searchBySemesterID.startTime}"  pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                                <input type="text" class="ml-auto specific-input" name="startTime" value="${searchBySemesterID.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                             </div>
                                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                                <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySemesterID.endTime}"   pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                                <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySemesterID.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                             </div>
                                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b >Link Meet:</b></strong> 
             <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySemesterID.meetLink}"/>-->
@@ -905,10 +912,10 @@
                                                                                     <span class="ml-auto">${searchByNull.lectureName}</span>
                                                                                 </div>
                                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByNull.startTime}" pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByNull.startTime}"  pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                                 </div>
                                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.endTime}"   pattern="[0-3]{2}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.endTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                                 </div>
                                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
                                 <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.meetLink}"/>-->
@@ -956,19 +963,47 @@
 
                                                 </div>
                                             </c:if>
+                                        </div>
+                                        <c:if test="${not empty requestScope.COUNT_PAGE}">
+                                            <nav aria-label="Page navigation"style="justify-content: center;
+                                                 display: flex;
+                                                 margin-top: 80px;">
+                                                <ul class="pagination">
+                                                    <%
+                                                        ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
+                                                        int listCountPage = dao.CountPage(us.getUserEmail());
+                                                        int currentPage = request.getParameter("CountPage") != null ? Integer.parseInt(request.getParameter("CountPage")) : 1;
+                                                    %>
+                                                    <li class="page-item <%= currentPage == 1 ? "disabled" : ""%>">
+                                                        <a class="page-link" href="MainController?action=countPageAction&CountPage=<%= currentPage - 1%>">Previous</a>
+                                                    </li>
+                                                    <%
+                                                        for (int i = 1; i <= listCountPage; i++) {
+                                                    %>
+                                                    <li class="page-item <%= i == currentPage ? "active" : ""%>">
+                                                        <a class="page-link" href="MainController?action=countPageAction&CountPage=<%= i%>"><%= i%></a>
+                                                    </li>
+                                                    <%
+                                                        }
+                                                    %>
+                                                    <li class="page-item <%= currentPage == listCountPage ? "disabled" : ""%>">
+                                                        <a class="page-link" href="MainController?action=countPageAction&CountPage=<%= currentPage + 1%>">Next</a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </c:if>
 
 
 
+                                        <script>
+                                            // L?y thông tin l?i t? bi?n requestScope.ERROR
+                                            var errorMessage = "${requestScope.ERROR}";
 
-                                            <script>
-                                                // L?y thông tin l?i t? bi?n requestScope.ERROR
-                                                var errorMessage = "${requestScope.ERROR}";
-
-                                                // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
-                                                if (errorMessage.trim() !== "") {
-                                                    alert(errorMessage);
-                                                }
-                                            </script>
-                                            <% }%>
-                                            </body>
-                                            </html>
+                                            // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+                                            if (errorMessage.trim() !== "") {
+                                                alert(errorMessage);
+                                            }
+                                        </script>
+                                        <% }%>
+                                        </body>
+                                        </html>

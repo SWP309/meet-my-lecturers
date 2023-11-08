@@ -45,6 +45,18 @@
                     window.location.href = 'MainController?action=cancel&bookingID=' + bookingID;
                 }
             }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
+            function submitFormSendEmail() {
+                var form = document.querySelector('.sendMail form');
+                form.submit();
+            }
+            function submitFormCreate() {
+                var form = document.querySelector('.CreateFSlot form');
+                form.submit();
+            }
             function submitFormLogout() {
                 var form = document.querySelector('.logout form');
                 form.submit();
@@ -92,7 +104,7 @@
                     event.preventDefault();
                 }
             }
-             function submitFormHomePage() {
+            function submitFormHomePage() {
                 var form = document.querySelector('.returnHome form');
                 form.submit();
             }
@@ -139,6 +151,31 @@
                     </div>
 
 
+                </div>
+            </div>
+            <div class="container-div" style=" display: flex;
+                 flex-direction: column; float: right;">
+                <div class="frame-choice CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()">
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="CreateFS" />
+                    </form>
+
+                    <i class="material-icons">add</i>
+                </div>
+                <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+                    <form action="MainController" method="POST">
+
+                        <input type="hidden" name="action" value="historyLec" />
+                    </form>
+
+                    <i class="material-icons">history</i>
+                </div>
+                <div class="frame-choice sendMail" style="cursor: pointer; color: white"  onclick="submitFormSendEmail()">
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="SendEmailForRemindStudent" />
+                    </form>
+
+                    <i class="material-icons">send</i>
                 </div>
             </div>
 
