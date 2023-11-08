@@ -147,15 +147,15 @@ public class CreateFreeSlotServlet extends HttpServlet {
                 freeSlotError.setDurationError("- Duration of a slot must be from 15 to 90 minutes!!!");
             }
             //****check not allowed create slot <= 5AM or >= 11PM
-//            calendar.setTime(starts);
-//            calendar.setTime(ends);
-//            int startHour = calendar.get(Calendar.HOUR_OF_DAY);
-//            int endHour = calendar.get(Calendar.HOUR_OF_DAY);
-//            if (startHour <= 5 || startHour >= 23 || endHour <= 5 || endHour >= 23) {
-//                flag = false;
-//                freeSlotError.setDurationError("- Not allowed create slot <= 5AM or >= 11PM!!!");
-//            }
-            //****check duplicate time with created freeslot
+            calendar.setTime(starts);
+            calendar.setTime(ends);
+            int startHour = calendar.get(Calendar.HOUR_OF_DAY);
+            int endHour = calendar.get(Calendar.HOUR_OF_DAY);
+            if (startHour <= 5 || startHour >= 23 || endHour <= 5 || endHour >= 23) {
+                flag = false;
+                freeSlotError.setDurationError("- Not allowed create slot <= 5AM or >= 11PM!!!");
+            }
+//            ****check duplicate time with created freeslot
             boolean checkStartTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(lecturerID, starts);
             boolean checkEndTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(lecturerID, ends);
             if (checkStartTimeDuplicateFS == false || checkEndTimeDuplicateFS == false) {
