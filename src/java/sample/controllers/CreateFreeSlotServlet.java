@@ -29,6 +29,7 @@ import sample.users.UserDTO;
 import sample.utils.DBUtils;
 import sample.viewCreatedSlot.ViewCreatedSlotDAO;
 import sample.viewCreatedSlot.ViewCreatedSlotDTO;
+import services.Service;
 
 /**
  *
@@ -72,6 +73,46 @@ public class CreateFreeSlotServlet extends HttpServlet {
 //                freeSlotError.setSubjectCodeError("The Subject code is wrong format OR not exist in DB.");
 //            }
 
+            String password = request.getParameter("txtPassword").trim();
+            if (password.isEmpty()) {
+                password = null; // Chuyển chuỗi trống thành giá trị null
+            }
+
+            int capacity = Integer.parseInt(request.getParameter("txtCapacity"));
+            if (capacity < 2 || capacity > 100) {
+                flag = false;
+                freeSlotError.setCapacityError("The number of student can join this slot must be between 2-100");
+            }
+
+            String meetLink = request.getParameter("txtMeetLink");
+            boolean existsMeetLink = freeSlotsDAO.checkDuplicateGGMeet(meetLink);
+            if (existsMeetLink) {
+                flag = false;
+                freeSlotError.setMeetLinkError("The gg meet link is duplicated.");
+            }
+
+            String block_list = request.getParameter("txtBan").trim();
+            if (block_list.isEmpty()) {
+                block_list = null; // Chuyển chuỗi trống thành giá trị null
+            }
+
+            String setByOption = request.getParameter("txtOption");
+
+            int count = Integer.parseInt(request.getParameter("txtCount"));
+            if (count < 1) {
+                flag = false;
+                freeSlotError.setRepeatedTimeError("The repeated time must be greater OR equal 1");
+            }
+
+            int status = 0;
+            String statusOption = request.getParameter("txtStatusOption");
+            if (statusOption.equals("PUB")) {
+                status = 1;
+            }
+            if (statusOption.equals("PRV")) {
+                status = 0;
+            }
+            
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
             //****Check input time with current time
@@ -121,52 +162,21 @@ public class CreateFreeSlotServlet extends HttpServlet {
                 flag = false;
                 freeSlotError.setDuplicateTimeError("- The time you entered overlaps with time of created FREESLOT!!! ");
             }
-
-            String password = request.getParameter("txtPassword").trim();
-            if (password.isEmpty()) {
-                password = null; // Chuyển chuỗi trống thành giá trị null
-            }
-
-            int capacity = Integer.parseInt(request.getParameter("txtCapacity"));
-            if (capacity < 2 || capacity > 100) {
-                flag = false;
-                freeSlotError.setCapacityError("The number of student can join this slot must be between 2-100");
-            }
-
-            String meetLink = request.getParameter("txtMeetLink");
-            boolean existsMeetLink = freeSlotsDAO.checkDuplicateGGMeet(meetLink);
-            if (existsMeetLink) {
-                flag = false;
-                freeSlotError.setMeetLinkError("The gg meet link is duplicated.");
-            }
-
-            String block_list = request.getParameter("txtBan").trim();
-            if (block_list.isEmpty()) {
-                block_list = null; // Chuyển chuỗi trống thành giá trị null
-            }
-
-            String setByOption = request.getParameter("txtOption");
-
-            int count = Integer.parseInt(request.getParameter("txtCount"));
-            if (count < 1) {
-                flag = false;
-                freeSlotError.setRepeatedTimeError("The repeated time must be greater OR equal 1");
-            }
-
-            int status = 0;
-            String statusOption = request.getParameter("txtStatusOption");
-            if (statusOption.equals("PUB")) {
-                status = 1;
-            }
-            if (statusOption.equals("PRV")) {
-                status = 0;
-            }
-
+            
+            FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status, semesterID, block_list);
+            
+//            //*****check duplicate timetable*****
+//            Service service = new Service();
+//            boolean checkTimetableDuplicate = service.duplicateSlot(freeSlotsDTO);
+//            if (checkTimetableDuplicate==false) {
+//                flag=false;
+//                freeSlotError.setDuplicateTimeTableError("- The time you entered overlaps your TimeTable. Please check FAP!!!");
+//            }
+            
             request.setAttribute("FREESLOT_ERROR", freeSlotError);
+            
             if (flag) {
-
                 for (int i = 1; i <= count; i++) {
-                    FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status, semesterID, block_list);
                     checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
