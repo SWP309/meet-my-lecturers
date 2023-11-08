@@ -24,14 +24,42 @@ import sample.utils.DBUtils;
  */
 public class ViewCreatedSlotDAO {
 
-    private static String CREATED_SLOT_VIEW = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID ,fs.semesterID,fs.meetLink, bo.[Number of students], fs.capacity\n"
-            + "           FROM FreeSlots fs\n"
-            + "          JOIN Users u1 ON fs.lecturerID = u1.userID\n"
-            + "           LEFT JOIN (SELECT freeSlotID, COUNT(*) AS 'Number of students'\n"
-            + "              FROM Bookings b\n"
-            + "              WHERE b.status = 1\n"
-            + "              GROUP BY b.freeSlotID) bo ON fs.freeSlotID = bo.freeSlotID\n"
-            + "           WHERE fs.status='1' AND u1.userEmail = ?";
+    private static String CREATED_SLOT_VIEW_COUNT_PAGE = "SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID, fs.semesterID, fs.meetLink, bo.[Number of students], fs.capacity\n"
+            + "FROM FreeSlots fs\n"
+            + "JOIN Users u1 ON fs.lecturerID = u1.userID\n"
+            + "LEFT JOIN (\n"
+            + "    SELECT freeSlotID, COUNT(*) AS 'Number of students'\n"
+            + "    FROM Bookings b\n"
+            + "    WHERE b.status = 1\n"
+            + "    GROUP BY b.freeSlotID\n"
+            + ") bo ON fs.freeSlotID = bo.freeSlotID\n"
+            + "WHERE fs.status='1' and u1.userEmail = ?\n"
+            + "ORDER BY fs.freeSlotID -- Add an order by clause for consistency\n"
+            + "OFFSET ? ROW\n"
+            + "FETCH NEXT 6 ROWS ONLY;";
+
+    private static String CREATED_SLOT_VIEW = "	SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID, fs.semesterID, fs.meetLink, bo.[Number of students], fs.capacity\n"
+            + "FROM FreeSlots fs\n"
+            + "JOIN Users u1 ON fs.lecturerID = u1.userID\n"
+            + "LEFT JOIN (\n"
+            + "    SELECT freeSlotID, COUNT(*) AS 'Number of students'\n"
+            + "    FROM Bookings b\n"
+            + "    WHERE b.status = 1\n"
+            + "    GROUP BY b.freeSlotID\n"
+            + ") bo ON fs.freeSlotID = bo.freeSlotID\n"
+            + "WHERE fs.status='1' and u1.userEmail = ?\n"
+            + "ORDER BY fs.freeSlotID\n";
+
+    private static String COUNT_PAGE = "SELECT CEILING(CAST(COUNT(*) AS float) / 5) AS page_count -- Change the divisor to the desired number of items per page\n"
+            + "	FROM FreeSlots fs\n"
+            + "	JOIN Users u1 ON fs.lecturerID = u1.userID\n"
+            + "	LEFT JOIN (\n"
+            + "		SELECT freeSlotID, COUNT(*) AS 'Number of students'\n"
+            + "		FROM Bookings b\n"
+            + "		WHERE b.status = 1\n"
+            + "		GROUP BY b.freeSlotID\n"
+            + "	) bo ON fs.freeSlotID = bo.freeSlotID\n"
+            + "	WHERE fs.status='1' and u1.userEmail = ? ";
     private static String CREATED_SLOT_VIEW_SUB = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID ,fs.semesterID,fs.meetLink, bo.[Number of students], fs.capacity\n"
             + "           FROM FreeSlots fs\n"
             + "          JOIN Users u1 ON fs.lecturerID = u1.userID\n"
@@ -109,6 +137,17 @@ public class ViewCreatedSlotDAO {
             + "              GROUP BY b.freeSlotID) bo ON fs.freeSlotID = bo.freeSlotID\n"
             + "		  where  fs.status='1' and fs.semesterID = ? and u1.userEmail = ?";
     private static String CHECK_ATTENDANCE_CREATE_SLOT = "UPDATE FreeSlots SET status = 2 WHERE freeSlotID = ?";
+    private static String CHECK_TIME_DUPLICATE_FS = " SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID, fs.semesterID, fs.meetLink, bo.[Number of students], fs.capacity\n"
+            + "            FROM FreeSlots fs\n"
+            + "            JOIN Users u1 ON fs.lecturerID = u1.userID\n"
+            + "            LEFT JOIN (\n"
+            + "                SELECT freeSlotID, COUNT(*) AS 'Number of students'\n"
+            + "                FROM Bookings b\n"
+            + "                WHERE b.status = 1\n"
+            + "                GROUP BY b.freeSlotID\n"
+            + "            ) bo ON fs.freeSlotID = bo.freeSlotID\n"
+            + "            WHERE fs.status='1' and u1.userEmail = ?  AND ? BETWEEN fs.startTime AND fs.endTime\n"
+            + "            ORDER BY fs.freeSlotID";
 
     private static String convertDateToString(Timestamp sqlTime) {
         // Sử dụng SimpleDateFormat để định dạng ngày giờ
@@ -116,6 +155,31 @@ public class ViewCreatedSlotDAO {
 
         // Sử dụng phương thức format để chuyển đổi Time thành String
         return dateFormat.format(sqlTime);
+    }
+
+    public boolean checkTimeDuplicateInFreeSlot(String userEmail, Date date) throws ClassNotFoundException, SQLException {
+        boolean check = true;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(CHECK_TIME_DUPLICATE_FS);
+            stm.setString(1, userEmail);
+            stm.setTimestamp(2, new Timestamp(date.getTime()));
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                check = false;
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return check;
     }
 
     public boolean checkAttendance(String freeSlotID) throws SQLException {
@@ -154,6 +218,49 @@ public class ViewCreatedSlotDAO {
             // Hoặc ném ngoại lệ để thông báo về lỗi định dạng không hợp lệ
             throw new ParseException("Lỗi định dạng ngày giờ không hợp lệ: " + e.getMessage(), e.getErrorOffset());
         }
+    }
+
+    public List<ViewCreatedSlotDTO> GetlistCreatedSlotByCount(String userEmail, int countpage) throws SQLException {
+        List<ViewCreatedSlotDTO> listCreatedSlotSub = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(CREATED_SLOT_VIEW_COUNT_PAGE);
+                ptm.setString(1, userEmail);
+                ptm.setInt(2, countpage);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String subjectCode = rs.getString("subjectCode");
+                    String lectureName = rs.getString("lectureName");
+                    Timestamp startTime = rs.getTimestamp("startTime");
+                    String startTimeStr = convertDateToString(startTime);
+                    Timestamp endTime = rs.getTimestamp("endTime");
+                    String endTimeStr = convertDateToString(endTime);
+                    String freeSlotID = rs.getString("freeSlotID");
+                    String semesterID = rs.getString("semesterID");
+                    String meetLink = rs.getString("meetLink");
+                    int joinedMembers = rs.getInt("Number of students");
+                    int capacity = rs.getInt("capacity");
+                    listCreatedSlotSub.add(new ViewCreatedSlotDTO(subjectCode, lectureName, startTimeStr, endTimeStr, freeSlotID, semesterID, meetLink, joinedMembers, capacity));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listCreatedSlotSub;
     }
 
     public List<ViewCreatedSlotDTO> GetlistCreatedSlot(String userEmail) throws SQLException {
@@ -198,7 +305,37 @@ public class ViewCreatedSlotDAO {
         return listCreatedSlotSub;
     }
 
+    public int CountPage(String userEmail) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        int pagecount = 0;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(COUNT_PAGE);
+                ptm.setString(1, userEmail);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    pagecount = rs.getInt("page_count");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
 
+        return pagecount;
+    }
 
     public List<ViewCreatedSlotDTO> GetlistCreatedSlotSub(String userEmail) throws SQLException {
         List<ViewCreatedSlotDTO> listCreatedSlot = new ArrayList<>();

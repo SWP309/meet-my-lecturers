@@ -177,11 +177,12 @@
 
 
             </div>
-            <div class="table-timetable" style="margin-top: 19%; padding: 40px;">
+            <div class="table-timetable" style="margin-top: 19%; padding: 40px;  display: flex;
+                 justify-content: center;">
                 <c:if test="${not empty requestScope.TB_TIMETABLES}">
-                    <table border="1" class="table table-hover table-rounded">
+                    <table border="1" class="table-hover table-rounded">
                         <thead style="font-size: 20px;">
-                            <tr  class="table table-warning">
+                            <tr>
                                 <th>No.</th>
                                 <th>Slot ID</th>
                                 <th>Subject Code</th>

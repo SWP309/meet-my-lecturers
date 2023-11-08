@@ -12,8 +12,8 @@ import sample.users.UserDTO;
 
 public class UpdateUserServlet extends HttpServlet {
     
-    private final String SUCCESS = "SearchUserServlet";
-    private final String ERROR = "SearchUserServlet";
+    private final String SUCCESS = "ViewUsers.jsp";
+    private final String ERROR = "ViewUsers.jsp";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -118,7 +118,10 @@ public class MainController extends HttpServlet {
 
     private static final String CREATED_VIEW_FREE_SLOT_ACTION = "viewFSlotLecturer";
     private static final String CREATED_VIEW_CONTROLLER = "CreatedSlotController";
-
+    
+    private static final String COUNT_PAGE = "countPageAction";
+    private static final String COUNT_PAGE_SERVLET = "CountPageServlet";
+    
     private static final String CREATED_PAGE_HIDE = "HideView";
     private static final String CREATED_CONTROLLER_VIEW_SUB = "CreatedSlotViewSubController";
 
@@ -302,9 +305,10 @@ public class MainController extends HttpServlet {
                 url = VIEW_FREESLOT_HISTORY_PAGE_ACTION;
             } else if (VIEW_FREESLOT_HISTORY_PAGE_SERVLET.equals(action)) {
                 url = VIEW_FREESLOT_HISTORY_SERVLET_ACTION;
-
             } else if (SEND_EMAIL_REMIND_ACTION.equals(action)) {
                 url = SEND_EMAIL_REMIND_SERVLET;
+            }  else if (COUNT_PAGE.equals(action)) {
+                url = COUNT_PAGE_SERVLET;
             }
 
         } catch (Exception e) {

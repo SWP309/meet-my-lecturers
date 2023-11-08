@@ -26,7 +26,9 @@ public class CreatedSlotController extends HttpServlet {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
-            List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlot(us.getUserEmail());
+            int listCountPage = dao.CountPage(us.getUserEmail());
+            request.setAttribute("COUNT_PAGE", listCountPage);
+            List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlotByCount(us.getUserEmail(),0);
              System.out.println(us.getUserEmail());
             if (listCreatedSlot.size() > 0) {
                 request.setAttribute("LIST_CREATED_SLOT", listCreatedSlot);
