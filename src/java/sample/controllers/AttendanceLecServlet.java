@@ -15,15 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import sample.attendance.AttendanceDAO;
 import sample.attendance.AttendanceDTO;
-import sample.semester.SemesterDTO;
 import sample.semester.SemesterDAO;
+import sample.semester.SemesterDTO;
 import sample.users.UserDTO;
 
 /**
  *
  * @author Minh Khang
  */
-public class AttendanceServlet extends HttpServlet {
+public class AttendanceLecServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,9 +44,9 @@ public class AttendanceServlet extends HttpServlet {
             request.setAttribute("semester", listSemes);
             UserDTO userDTO = (UserDTO) session.getAttribute("loginedUser");
             String semes = request.getParameter("txtsemes");
-            String studentID = userDTO.getUserID();
-            String url = "MainController?action=attendServlet";
-            ArrayList<AttendanceDTO> attendSlot = AttendanceDAO.getAttendanceSlot(studentID, semes);
+            String lecID = userDTO.getUserID();
+            String url = "MainController?action=present";
+            ArrayList<AttendanceDTO> attendSlot = AttendanceDAO.getAttendanceLecSlot(lecID, semes);
             if (attendSlot != null) {
                 request.setAttribute("attend", attendSlot);
             } else {
@@ -96,4 +96,5 @@ public class AttendanceServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

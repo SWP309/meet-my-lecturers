@@ -5,7 +5,6 @@ package sample.importexcel;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -104,24 +103,7 @@ public class ImportTimetables extends HttpServlet {
                     InputStream inp = filePart.getInputStream();
                     XSSFWorkbook wb = new XSSFWorkbook(inp);
                     XSSFSheet sheet = wb.getSheetAt(0);
-
-                    for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                        Row row = sheet.getRow(i);
-
-                        String subjectCode = row.getCell(1).getStringCellValue();
-                        String slotID = row.getCell(2).getStringCellValue();
-                        String lecturerID = row.getCell(3).getStringCellValue();
-                        String semesterID = row.getCell(4).getStringCellValue();
-
-                        if ((!lecID.equalsIgnoreCase(lecturerID) && !semesterID.equalsIgnoreCase(semesID))
-                                || (!lecID.equalsIgnoreCase(lecturerID)) || (!semesterID.equalsIgnoreCase(semesID))) {
-                            flag = false;
-                            request.setAttribute("TIMESERVLET", "Error data in Excel: Data must be correct with the given");
-                            URL = "MainController?action=importPage";
-                        }
-                    }
-                    if (flag) {
-                        tb.removeTimetable(lecID, semesID);
+                    try {
                         for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                             Row row = sheet.getRow(i);
 
@@ -130,19 +112,41 @@ public class ImportTimetables extends HttpServlet {
                             String lecturerID = row.getCell(3).getStringCellValue();
                             String semesterID = row.getCell(4).getStringCellValue();
 
-                            TimetableDTO time = new TimetableDTO(subjectCode, slotID, lecturerID, semesterID);
-                            TimetableDTO check = tb.getTimtables(subjectCode, slotID, lecturerID, semesterID);
-                            if (check == null) {
-                                request.setAttribute("TIMESERVLET", "Import Successfully");
-                                TimetableDAO.ImportExcelTimetables(time);
-                            } else {
-                                request.setAttribute("TIMESERVLET", "Duplicate data defected");
+                            if ((!lecID.equalsIgnoreCase(lecturerID) && !semesterID.equalsIgnoreCase(semesID))
+                                    || (!lecID.equalsIgnoreCase(lecturerID)) || (!semesterID.equalsIgnoreCase(semesID))) {
+                                flag = false;
+                                request.setAttribute("TIMESERVLET", "Error data in Excel: Data must be correct with the given");
+                                URL = "MainController?action=importPage";
                             }
                         }
-                    }
-                    wb.close();
+                        if (flag) {
+                            tb.removeTimetable(lecID, semesID);
+                            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                                Row row = sheet.getRow(i);
 
-                    URL = "MainController?action=importPage";
+                                String subjectCode = row.getCell(1).getStringCellValue();
+                                String slotID = row.getCell(2).getStringCellValue();
+                                String lecturerID = row.getCell(3).getStringCellValue();
+                                String semesterID = row.getCell(4).getStringCellValue();
+
+                                TimetableDTO time = new TimetableDTO(subjectCode, slotID, lecturerID, semesterID);
+                                TimetableDTO check = tb.getTimtables(subjectCode, slotID, lecturerID, semesterID);
+                                if (check == null) {
+                                    request.setAttribute("TIMESERVLET", "Import Successfully");
+                                    TimetableDAO.ImportExcelTimetables(time);
+                                } else {
+                                    request.setAttribute("TIMESERVLET", "Duplicate data defected");
+                                }
+                            }
+                        }
+                        wb.close();
+
+                        URL = "MainController?action=importPage";
+                    } catch (IllegalStateException e) {
+                        wb.close();
+                        request.setAttribute("TIMESERVLET", "Error: Wrong format data");
+                        URL = "MainController?action=importPage";
+                    }
 
                 } else {
                     request.setAttribute("TIMESERVLET", "Error: Incorrect file format");

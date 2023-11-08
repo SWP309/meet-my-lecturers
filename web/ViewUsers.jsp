@@ -244,6 +244,8 @@
                                                    value="${user.userID}" readonly="">
                                             <input type="hidden" name="txtSearchUserID" 
                                                    value="${param.txtSearchUserID}" readonly="">
+                                            <input type="hidden" name="txtStatus" 
+                                                   value="${user.userStatus}" readonly="">
                                             <button type="submit" name="action"
                                                     value="UpdateUsers">Update</button>
                                         </td>
@@ -331,6 +333,8 @@
                                                    value="${param.txtName}" readonly="">
                                             <input type="hidden" name="txtRoleID" 
                                                    value="${param.txtRoleID}" readonly="">
+                                                   <input type="hidden" name="txtStatus" 
+                                                   value="${user.userStatus}" readonly="">
                                             <button type="submit" name="action"
                                                     value="UpdateUsers">Update</button>
                                         </td>
@@ -414,6 +418,8 @@
                                                    value="${user.userID}" readonly="">
                                             <input type="hidden" name="txtRoleID" 
                                                    value="${param.txtRoleID}" readonly="">
+                                                   <input type="hidden" name="txtStatus" 
+                                                   value="${user.userStatus}" readonly="">
                                             <button type="submit" name="action"
                                                     value="UpdateUsers">Update</button>
                                         </td>
@@ -497,6 +503,8 @@
                                                    value="${user.userID}" readonly="">
                                             <input type="hidden" name="txtName" 
                                                    value="${param.txtName}" readonly="">
+                                                   <input type="hidden" name="txtStatus" 
+                                                   value="${user.userStatus}" readonly="">
                                             <button type="submit" name="action"
                                                     value="UpdateUsers">Update</button>
                                         </td>
@@ -582,6 +590,8 @@
                                                    value="${param.txtName}" readonly="">
                                             <input type="hidden" name="txtRoleID" 
                                                    value="${param.txtRoleID}" readonly="">
+                                                   <input type="hidden" name="txtStatus" 
+                                                   value="${user.userStatus}" readonly="">
                                             <button type="submit" name="action"
                                                     value="UpdateUsers">Update</button>
                                         </td>
@@ -666,6 +676,8 @@
                                             <!--<input type="hidden" name="action" value="SearchUsers">-->
                                             <input type="hidden" name="txtUserID" 
                                                    value="${user.userID}" readonly="">
+                                            <input type="hidden" name="txtStatus" 
+                                                   value="${user.userStatus}" readonly="">
                                             <button class="btn-accept" type="submit" name="action"
                                                     value="UpdateUsers">Update</button>
                                         </td>

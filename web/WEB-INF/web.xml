@@ -169,7 +169,7 @@
     <servlet>
         <servlet-name>SearchRequestForLec</servlet-name>
         <servlet-class>sample.controllers.SearchRequestForLec</servlet-class>
-    </servlet>    
+    </servlet>
     <servlet>
         <servlet-name>ViewOptionCreateFS</servlet-name>
         <servlet-class>sample.controllers.ViewOptionCreateFS</servlet-class>
@@ -185,6 +185,14 @@
     <servlet>
         <servlet-name>SendEMailServlet</servlet-name>
         <servlet-class>sample.controllers.SendEMailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AttendanceSemesLecServlet</servlet-name>
+        <servlet-class>sample.controllers.AttendanceSemesLecServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AttendanceLecServlet</servlet-name>
+        <servlet-class>sample.controllers.AttendanceLecServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
@@ -353,6 +361,14 @@
     <servlet-mapping>
         <servlet-name>ChangePasswordServlet</servlet-name>
         <url-pattern>/ChangePasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendanceSemesLecServlet</servlet-name>
+        <url-pattern>/AttendanceSemesLecServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendanceLecServlet</servlet-name>
+        <url-pattern>/AttendanceLecServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
