@@ -144,6 +144,18 @@ public class FreeSlotsDAO {
             + "            FROM [Semesters] fs;";
     private static String SUBJECT = "    SELECT DISTINCT fs.[subjectCode]\n"
             + "            FROM [Subjects] fs;";
+//    private static String GET_UPCOMING_FSLOT = "SELECT *\n"
+//            + "FROM FreeSlots\n"
+//            + "WHERE startTime >= CURRENT_TIMESTAMP\n"
+//            + "AND startTime <= DATEADD(MINUTE, 10, CURRENT_TIMESTAMP)\n"
+//            + "AND lecturerID = ?\n"
+//            + "AND freeSlotID = ?";
+    private static String GET_UPCOMING_FSLOT = "SELECT *\n"
+            + "FROM FreeSlots\n"
+            + "WHERE startTime >= CURRENT_TIMESTAMP\n"
+            + "AND startTime <= DATEADD(MINUTE, 10, CURRENT_TIMESTAMP)";
+    private static String GET_LECTURERID_FROM_FSLOT = "SELECT lecturerID FROM FreeSlots WHERE freeSlotID = ?";
+    private static String GET_EMAIL_FROM_LECTURERID = "SELECT userEmail FROM Users WHERE userID = ?";
 
     public boolean updateStatusOutDate(Date currentTime) throws ClassNotFoundException, SQLException, ParseException {
         boolean checkUpdate = false;
@@ -1339,5 +1351,115 @@ public class FreeSlotsDAO {
             }
         }
         return listSubject;
+    }
+
+    public List<FreeSlotsDTO> getUpcomingFSlots() throws SQLException {
+        List<FreeSlotsDTO> upcomingFSlots = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            FreeSlotsDTO fsdto = new FreeSlotsDTO();
+
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_UPCOMING_FSLOT);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    fsdto.setFreeSlotID(rs.getString("freeSlotID"));
+                    fsdto.setSubjectCode(rs.getString("subjectCode"));
+                    fsdto.setStartTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(rs.getTimestamp("startTime")));
+                    fsdto.setEndTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(rs.getTimestamp("endTime")));
+                    fsdto.setPassword(rs.getString("password"));
+                    fsdto.setCapacity(rs.getInt("capacity"));
+                    fsdto.setMeetLink(rs.getString("meetLink"));
+                    fsdto.setCount(rs.getInt("count"));
+                    fsdto.setLecturerID(rs.getString("lecturerID"));
+                    fsdto.setStatus(rs.getInt("status"));
+                    fsdto.setSemesterID(rs.getString("semesterID"));
+                    fsdto.setBlock_list(rs.getString("block_list"));
+
+                    upcomingFSlots.add(fsdto);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error retrieving upcoming slots: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return upcomingFSlots;
+    }
+
+    public String getLecturerIDByFSlotID(String freeSlotID) throws SQLException {
+        String lecturerID = null;
+
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_LECTURERID_FROM_FSLOT);
+                ptm.setString(1, freeSlotID);
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    lecturerID = rs.getString("lecturerID");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return lecturerID;
+    }
+    
+    public String getEmailByLecturerID(String lecturerID) throws SQLException {
+        String lecturer_email = null;
+
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_EMAIL_FROM_LECTURERID);
+                ptm.setString(1, lecturerID);
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    lecturer_email = rs.getString("userEmail");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return lecturer_email;
     }
 }
