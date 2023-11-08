@@ -1,5 +1,6 @@
 package sample.importexcel;
 
+import sample.mail.EmailDAO;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,7 +43,11 @@ public class ImportStudents extends HttpServlet {
 
             Part filePart = request.getPart("txtexcel");
             String fileName = filePart.getSubmittedFileName();
-            String URL = "";
+            String URL = "MainController?action=importPage";
+            String subject = "Password";
+            int existingUserCounter = 0;
+            int MAX_EXISTING_USER_CHECKS; // Set a threshold based on your needs
+            boolean flag = true;
 
             if (fileName != null) {
 
@@ -50,9 +55,12 @@ public class ImportStudents extends HttpServlet {
                     InputStream inp = filePart.getInputStream();
                     HSSFWorkbook wb = new HSSFWorkbook(new POIFSFileSystem(inp));
                     HSSFSheet sheet = wb.getSheetAt(0);
+                    MAX_EXISTING_USER_CHECKS = sheet.getLastRowNum();
                     try {
+                        
                         for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                             Row row = sheet.getRow(i);
+                            
 
                             String userID = row.getCell(1).getStringCellValue();
                             String userName = row.getCell(2).getStringCellValue();
@@ -66,29 +74,57 @@ public class ImportStudents extends HttpServlet {
                                     String password = String.valueOf(passWord);
                                     UserDTO existed = UserDAO.getUserByID(userID);
                                     if (existed != null) {
+                                        existingUserCounter+=1;
+                                        if (existingUserCounter >= MAX_EXISTING_USER_CHECKS) {
+                                            flag = false;
+                                            request.setAttribute("EXCSERVLET","Import fail, the data are existed in database");
+                                            break;
+                                        }
                                         continue;
                                     }
+                                    existingUserCounter = 0;
                                     UserDTO users = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
                                     UserDAO.ImportExcelUsers(users);
-                                    wb.close();
-                                    request.setAttribute("EXCSERVLET", "Import Successfully");
-                                    URL = "MainController?action=importPage";
+                                    String content = String.format("<!DOCTYPE html>%n"
+                                            + "<html>%n"
+                                            + "<head>%n"
+                                            + "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">%n"
+                                            + "</head>%n"
+                                            + "<body style=\"background-color: #f2f2f2;\">%n"
+                                            + "    <div style=\"background-color: #0078d4; color: white; padding: 10px;\">%n"
+                                            + "        <h1>%s</h1>%n"
+                                            + "    </div>%n"
+                                            + "    <div style=\"padding: 10px;\">%n"
+                                            + "        <p>Hello,</p>%n"
+                                            + "        <p>%s</p>%n"
+                                            + "        <p>Cảm ơn bạn đã đọc email này.</p>%n"
+                                            + "    </div>%n"
+                                            + "    <div style=\"background-color: #f2f2f2; padding: 10px;\">%n"
+                                            + "        <p>Đây là phần chân trang của email.</p>%n"
+                                            + "        <p>Liên hệ: example@example.com</p>%n"
+                                            + "    </div>%n"
+                                            + "</body>%n"
+                                            + "</html>",
+                                            userEmail, password);
+                                    EmailDAO.sendMail(userEmail, subject, content);
+                                    
                                 } else {
                                     wb.close();
                                     request.setAttribute("EXCSERVLET", "Error role ID at line: " + i);
-                                    URL = "MainController?action=importPage";
+                                    flag = false;
                                     break;
                                 }
                             } else {
                                 wb.close();
                                 request.setAttribute("EXCSERVLET", "Error status at line: " + i);
-                                URL = "MainController?action=importPage";
+                                flag = false;
                                 break;
                             }
                         }
-//                        wb.close();
-//                        request.setAttribute("EXCSERVLET", "Import Successfully");
-//                        URL = "MainController?action=importPage";
+                        if(flag){
+                            wb.close();
+                            request.setAttribute("EXCSERVLET", "Import Successfully");
+                        }
                     } catch (IllegalStateException e) {
                         wb.close();
                         request.setAttribute("EXCSERVLET", "Wrong format data ");
@@ -99,9 +135,11 @@ public class ImportStudents extends HttpServlet {
                     InputStream inp = filePart.getInputStream();
                     XSSFWorkbook wb = new XSSFWorkbook(inp);
                     XSSFSheet sheet = wb.getSheetAt(0);
+                    MAX_EXISTING_USER_CHECKS = sheet.getLastRowNum();
                     try {
                         for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                             Row row = sheet.getRow(i);
+                            
 
                             String userID = row.getCell(1).getStringCellValue();
                             String userName = row.getCell(2).getStringCellValue();
@@ -115,26 +153,56 @@ public class ImportStudents extends HttpServlet {
                                     String password = String.valueOf(passWord);
                                     UserDTO existed = UserDAO.getUserByID(userID);
                                     if (existed != null) {
+                                        existingUserCounter+=1;
+                                        if (existingUserCounter >= MAX_EXISTING_USER_CHECKS) {
+                                            flag = false;
+                                            request.setAttribute("EXCSERVLET","Import fail, the data are existed in database");
+                                            break;
+                                        }
                                         continue;
                                     }
+                                    existingUserCounter = 0;
                                     UserDTO users = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
                                     UserDAO.ImportExcelUsers(users);
-                                    wb.close();
-                                    request.setAttribute("EXCSERVLET", "Import Successfully");
-                                    URL = "MainController?action=importPage";
-                                } else {
+                                    String content = String.format("<!DOCTYPE html>%n"
+                                            + "<html>%n"
+                                            + "<head>%n"
+                                            + "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">%n"
+                                            + "</head>%n"
+                                            + "<body style=\"background-color: #f2f2f2;\">%n"
+                                            + "    <div style=\"background-color: #0078d4; color: white; padding: 10px;\">%n"
+                                            + "        <h1>%s</h1>%n"
+                                            + "    </div>%n"
+                                            + "    <div style=\"padding: 10px;\">%n"
+                                            + "        <p>Hello,</p>%n"
+                                            + "        <p>%s</p>%n"
+                                            + "        <p>Cảm ơn bạn đã đọc email này.</p>%n"
+                                            + "    </div>%n"
+                                            + "    <div style=\"background-color: #f2f2f2; padding: 10px;\">%n"
+                                            + "        <p>Đây là phần chân trang của email.</p>%n"
+                                            + "        <p>Liên hệ: example@example.com</p>%n"
+                                            + "    </div>%n"
+                                            + "</body>%n"
+                                            + "</html>",
+                                            userEmail, password);
+                                    EmailDAO.sendMail(userEmail, subject, content);
                                     
+                                } else {
                                     wb.close();
                                     request.setAttribute("EXCSERVLET", "Error role ID at line: " + i);
-                                    URL = "MainController?action=importPage";
+                                    flag = false;
                                     break;
                                 }
                             } else {
                                 wb.close();
                                 request.setAttribute("EXCSERVLET", "Error status at line: " + i);
-                                URL = "MainController?action=importPage";
+                                flag = false;
                                 break;
                             }
+                        }
+                        if(flag){
+                            wb.close();
+                            request.setAttribute("EXCSERVLET", "Import Successfully");
                         }
 //                        wb.close();
 //                        request.setAttribute("EXCSERVLET", "Import Successfully");
