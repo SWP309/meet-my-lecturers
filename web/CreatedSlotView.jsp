@@ -355,14 +355,22 @@
         </div>
         <div class="container-div" style=" display: flex;
              flex-direction: column; float: right;">
-            <div class="frame-Create CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()">
+            <div class="frame-choice CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()">
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="CreateFS" />
                 </form>
 
                 <i class="material-icons">add</i>
             </div>
-            <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormSendEmail()">
+                        <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+                <form action="MainController" method="POST">
+
+                    <input type="hidden" name="action" value="historyLec" />
+                </form>
+
+                <i class="material-icons">history</i>
+            </div>
+            <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormSendEmail()">
                 <form action="MainController" method="POST">
 
                     <input type="hidden" name="action" value="SendEmailForRemindStudent" />
