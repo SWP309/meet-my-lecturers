@@ -168,6 +168,13 @@
 
                 </div>
             </div>
+            <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="attendanceSemes" />
+                </form>
+
+                <i class="material-icons">history</i>
+            </div>
 
             <h1 class="text-center text-custom">Table of Lecturer</h1>
             <div class="view-user-table" style="width: 80%; margin: 0 auto; border-radius: 20px;">
