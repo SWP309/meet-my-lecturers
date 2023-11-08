@@ -43,15 +43,10 @@ public class AttendanceServlet extends HttpServlet {
             ArrayList<SemesterDTO> listSemes = (ArrayList<SemesterDTO>) semesterDAO.select();
             request.setAttribute("semester", listSemes);
             UserDTO userDTO = (UserDTO) session.getAttribute("loginedUser");
-            System.out.println(userDTO);
             String semes = request.getParameter("txtsemes");
-            System.out.println(semes);
             String studentID = userDTO.getUserID();
-            System.out.println(studentID);
-            System.out.println("AttendanceServletttttttt");
             String url = "MainController?action=attendServlet";
             ArrayList<AttendanceDTO> attendSlot = AttendanceDAO.getAttendanceSlot(studentID, semes);
-            System.out.println(attendSlot);
             if (attendSlot != null) {
                 request.setAttribute("attend", attendSlot);
             } else {
