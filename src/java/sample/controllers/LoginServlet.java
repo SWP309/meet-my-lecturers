@@ -40,7 +40,8 @@ public class LoginServlet extends HttpServlet {
             String email = dto.getEmail();
             UserDTO us = UserDAO.getUserByMail(email);
             boolean flag = false;
-            if (us != null) {                
+            if (us != null) {
+                if (us.getUserStatus() != 0) {
                     flag = true;
                     HttpSession session = request.getSession();
                     session.setAttribute("loginedUser", us);
@@ -51,14 +52,15 @@ public class LoginServlet extends HttpServlet {
                     } else if ((us.getRoleID().equals("1"))) {
                         response.sendRedirect("MainController?action=AdminPage");
                     }
+                } else {
+                    String msg = "Your account has been banned";
+                    request.setAttribute("Error", msg);
+                }
             } else {
-                flag = false;
-            }
-            if (!flag) {
                 String msg = "Your email is not granted access to the system";
                 request.setAttribute("Error", msg);
-                request.getRequestDispatcher("MainController?action=").forward(request, response);
             }
+                request.getRequestDispatcher("MainController?action=").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
