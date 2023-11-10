@@ -95,7 +95,7 @@ public class BookFSlotServlet extends HttpServlet {
                         request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
                     }
                 } else {
-                    request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
+                    request.setAttribute("ERROR", "Can not book the slot cause of Error in code");
                 }
             } 
         } catch (SQLException | ParseException | ClassNotFoundException ex) {
