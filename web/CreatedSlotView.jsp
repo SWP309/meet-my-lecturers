@@ -95,8 +95,8 @@
                 var form = document.querySelector('.history form');
                 form.submit();
             }
-            
-           
+
+
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -296,6 +296,7 @@
                     color: #333!important;
                 }
             }
+         
         </style>
 
 
@@ -335,7 +336,7 @@
                             <input type="hidden" name="action" value="Logout" />
                         </form>
                         <div class="logout-wrapper">
-                            <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                            <i class="material-icons">logout</i>
                         </div>
                         <div class="logout">
                             <p class="logout1">Logout</p>
@@ -364,7 +365,7 @@
 
                 <i class="material-icons">add</i>
             </div>
-                        <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+            <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
                 <form action="MainController" method="POST">
 
                     <input type="hidden" name="action" value="historyLec" />
@@ -399,7 +400,7 @@
                                 <input type="text" class="form-control" name="txtSemesterID" value="${param.txtSemesterID}" placeholder="Input the semesterID">
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-primary form-control" style="border-color: black; background: #007bff; color: white;" type="submit" name="action" value="searchCSlot">Search</button>
+                                <button class="btn btn-primary form-control Search-custom" style="border-color: black; background: #0d6efd; color: white;" type="submit" name="action" value="searchCSlot">Search</button>
                             </div>
                         </form>
                     </div>

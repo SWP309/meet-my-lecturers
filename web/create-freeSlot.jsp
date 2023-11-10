@@ -139,11 +139,11 @@
                 } else {
                     userInfo.style.display = "none";
                 }
-                
+
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
-                
+
                 Swal.fire({
                     title: 'User Information',
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
@@ -158,7 +158,7 @@
                 var form = document.querySelector('.request-div form');
                 form.submit();
             }
-            
+
         </script>
 
         <script>
@@ -203,7 +203,7 @@
                             <input type="hidden" name="action" value="Logout" />
                         </form>
                         <div class="logout-wrapper">
-                            <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                            <i class="material-icons">logout</i>
                         </div>
                         <div class="logout">
                             <p class="logout1">Logout</p>
