@@ -74,6 +74,8 @@ public class AcceptRequestServlet extends HttpServlet {
             boolean checkBooking = bookingDAO.BookFSlot(bookingDTO);
             if(checkAccept && checkCreateFS && checkBooking) {
                 url = SUCCESS;
+            } else{
+                request.setAttribute("VIEW_REQUEST_MESSAGE", "Can not Accept this request !!!");
             }
         } catch (ClassNotFoundException | SQLException | ParseException ex) {
             log("Error at AcceptRequestServlet: " + ex);

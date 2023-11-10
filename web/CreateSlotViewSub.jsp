@@ -196,7 +196,7 @@
                             <input type="hidden" name="action" value="Logout" />
                         </form>
                         <div class="logout-wrapper">
-                            <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                            <i class="material-icons">logout</i>
                         </div>
                         <div class="logout">
                             <p class="logout1">Logout</p>

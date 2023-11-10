@@ -58,7 +58,7 @@ public class UpdateFSlotController extends HttpServlet {
             System.out.println(checkEndTimeDuplicateFS);
             if (checkStartTimeDuplicateFS == false || checkEndTimeDuplicateFS == false) {
                 flag = false;
-                request.setAttribute("ERROR","- The time you entered overlaps with time of created FREESLOT!!! ");
+                request.setAttribute("ERROR"," The time you entered overlaps with time of created FREESLOT!!! ");
             }
             if (flag) {
                 if (endDate.after(startDate) && (endDate.getTime() - startDate.getTime()) >= 15 * 60 * 1000) {

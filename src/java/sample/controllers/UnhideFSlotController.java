@@ -52,6 +52,8 @@ public class UnhideFSlotController extends HttpServlet {
                     if (listCreatedSlot == null || listCreatedSlot.isEmpty()) {
                         request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
                     }
+                } else{
+                    request.setAttribute("ERROR", "Can UnHide this Slot because the function is error at Code !!!");
                 }
             } else {
                 request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");

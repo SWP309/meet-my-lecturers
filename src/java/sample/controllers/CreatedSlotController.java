@@ -39,6 +39,8 @@ public class CreatedSlotController extends HttpServlet {
             if (listCreatedSlot.size() > 0) {
                 request.setAttribute("LIST_CREATED_SLOT", listCreatedSlot);
                 url = SUCCESS;
+            } else {
+                request.setAttribute("ERROR", "Do not have any slots !!");
             }
         } catch (Exception e) {
             log("Error at SearchController: " + e.toString());
