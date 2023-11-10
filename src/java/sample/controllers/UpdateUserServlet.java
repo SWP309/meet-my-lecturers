@@ -35,6 +35,8 @@ public class UpdateUserServlet extends HttpServlet {
                 checkUpdate = userDAO.updateAUser(userDTO);
             if(checkUpdate) {
                 url = SUCCESS;
+            } else{
+                request.setAttribute("ERROR", "Can not update because of code !!!");
             }
         } catch (ClassNotFoundException | SQLException ex) {
                 log("Error at UpdateUserServlet: " + ex.toString());

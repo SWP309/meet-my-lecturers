@@ -111,7 +111,10 @@ public class CreateRequestServlet extends HttpServlet {
                 boolean checkCreated = requestDAO.createARequest(requestDTO);
                 if (checkCreated) {
                     url = SUCCESS;
+                }else {
+                    request.setAttribute("REQUEST_ERROR", "Can not send request because of Error of code !!!");
                 }
+                
             }
         } catch (SQLException | ClassNotFoundException | ParseException ex) {
             log("Error at CreateRequestServlet" + ex.toString());
