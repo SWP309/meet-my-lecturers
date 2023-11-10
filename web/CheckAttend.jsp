@@ -162,18 +162,6 @@
             .div {
                 position: relative;
             }
-            .frame-div {
-                cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
-                border-radius: 12px;
-                background-color: #f27125;
-                width: 213px;
-                height: 43px;
-                /*align-items: flex-start;*/
-                padding: 10px 9px;
-                box-sizing: border-box;
-                gap: 8px;
-                justify-content: center;
-            }
             .frame-group {
                 gap: 3px;
                 flex-wrap: wrap;
@@ -273,8 +261,8 @@
                             <input type="hidden" name="action" value="ViewBooking" />
                         </form>
                         <div class="bookedslot-wrapper">
-                            <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
                             <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                            <i class="material-icons">event</i>
                         </div>
                         <div class="view-booking" >View Booking</div>
                     </div>
