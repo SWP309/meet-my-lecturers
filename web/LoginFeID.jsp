@@ -58,12 +58,21 @@
                             <div class="error-appear-here1">
                                 <%
                                     String msg = (String) request.getAttribute("Error");
+                                    String ban = (String) request.getAttribute("ban");
                                     if (msg != null) {
                                 %>
-                                <h2 id="123" style="color:red"><%=    msg%></h2>
+                                <h2 style="color:red; line-height: 30px; font-size: 12px"><%=    msg%></h2>
                                 <%
                                     }
-                                %></div>
+                                %>
+                                <%
+                                    if (ban != null) {
+                                %>
+                                <h2 style="color:red; line-height: 30px; font-size: 12px"><%=    ban%></h2>
+                                <h2 id="contact" style="color:red; font-size: 12px">Contact <u>student services department</u> for help</h2>
+                                        <%
+                                            }
+                                        %></div>
                             <div class="or">Or</div>
                             <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/meet-my-lecturers/LoginGoogleHandler&response_type=code&client_id=79561996257-0ctstd2ursldvmmufi3vpq6k6rp4ftrg.apps.googleusercontent.com&approval_prompt=force">
                                 <img class="google-icon1" alt="" src="./public/LoginHome/google1.svg" />
@@ -103,8 +112,8 @@
 
             checkWindowSize(); // Kiểm tra kích thước ban đầu
             window.addEventListener('resize', checkWindowSize); // Theo dõi sự kiện resize
-            
+
         </script>
-        
+
     </body>
 </html>
