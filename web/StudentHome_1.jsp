@@ -250,8 +250,9 @@
                                 <input type="hidden" name="action" value="ViewBooking" />
                             </form>
                             <div class="bookedslot-wrapper">
-                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
-                                <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                                <!--                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
+-->                           <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                                <i class="material-icons">event</i>
                             </div>
                             <div class="view-booking" >View Booking</div>
                         </div>
@@ -429,12 +430,12 @@
                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
                                                 </span></div>
-                                        </c:if>
-                                        <c:if test="${freeslot.password == null}">
+                                            </c:if>
+                                            <c:if test="${freeslot.password == null}">
                                             <div style="margin-bottom: 16px" style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <b>None</b>
                                                 </span></div>
-                                        </c:if>
+                                            </c:if>
                                         <div class="d-flex justify-content-between">
                                             <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
                                                 <input type="hidden" name="txtFSlotID" 
@@ -485,12 +486,12 @@
                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
                                                 </span></div>
-                                        </c:if>
-                                        <c:if test="${freeslot.password == null}">
+                                            </c:if>
+                                            <c:if test="${freeslot.password == null}">
                                             <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <b>None</b>
                                                 </span></div>
-                                        </c:if>
+                                            </c:if>
                                         <div class="d-flex justify-content-between">
                                             <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
                                                 <input type="hidden" name="txtFSlotID" 
@@ -540,12 +541,12 @@
                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
                                                 </span></div>
-                                        </c:if>
-                                        <c:if test="${freeslot.password == null}">
+                                            </c:if>
+                                            <c:if test="${freeslot.password == null}">
                                             <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <b>None</b>
                                                 </span></div>
-                                        </c:if>
+                                            </c:if>
                                         <div class="d-flex justify-content-between">
                                             <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
                                                 <input type="hidden" name="txtFSlotID" 
@@ -595,12 +596,12 @@
                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
                                                 </span></div>
-                                        </c:if>
-                                        <c:if test="${freeslot.password == null}">
+                                            </c:if>
+                                            <c:if test="${freeslot.password == null}">
                                             <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <b>None</b>
                                                 </span></div>
-                                        </c:if>
+                                            </c:if>
                                         <div class="d-flex justify-content-between">
                                             <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
 
@@ -651,12 +652,12 @@
                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
                                                 </span></div>
-                                        </c:if>
-                                        <c:if test="${freeslot.password == null}">
+                                            </c:if>
+                                            <c:if test="${freeslot.password == null}">
                                             <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <b>None</b>
                                                 </span></div>
-                                        </c:if>
+                                            </c:if>
                                         <div class="d-flex justify-content-between">
                                             <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
                                                 <input type="hidden" name="txtFSlotID" 
@@ -709,12 +710,12 @@
                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
                                                 </span></div>
-                                        </c:if>
-                                        <c:if test="${freeslot.password == null}">
+                                            </c:if>
+                                            <c:if test="${freeslot.password == null}">
                                             <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <b>None</b>
                                                 </span></div>
-                                        </c:if>
+                                            </c:if>
                                         <div class="d-flex justify-content-between">
                                             <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
                                                 <input type="hidden" name="txtFSlotID" 
@@ -766,12 +767,12 @@
                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
                                                 </span></div>
-                                        </c:if>
-                                        <c:if test="${freeslot.password == null}">
+                                            </c:if>
+                                            <c:if test="${freeslot.password == null}">
                                             <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <b>None</b>
                                                 </span></div>
-                                        </c:if>
+                                            </c:if>
                                         <div class="d-flex justify-content-between">
                                             <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
 
@@ -824,12 +825,12 @@
                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
                                                 </span></div>
-                                        </c:if>
-                                        <c:if test="${freeslot.password == null}">
+                                            </c:if>
+                                            <c:if test="${freeslot.password == null}">
                                             <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <b>None</b>
                                                 </span></div>
-                                        </c:if>
+                                            </c:if>
                                         <div class="d-flex justify-content-between">
                                             <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
                                                 <input type="hidden" name="txtFSlotID" 
@@ -881,12 +882,12 @@
                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
                                                 </span></div>
-                                        </c:if>
-                                        <c:if test="${freeslot.password == null}">
+                                            </c:if>
+                                            <c:if test="${freeslot.password == null}">
                                             <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <b>None</b>
                                                 </span></div>
-                                        </c:if>
+                                            </c:if>
                                         <div class="d-flex justify-content-between">
                                             <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
                                                 <input type="hidden" name="txtFSlotID" 
@@ -938,12 +939,12 @@
                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
                                                 </span></div>
-                                        </c:if>
-                                        <c:if test="${freeslot.password == null}">
+                                            </c:if>
+                                            <c:if test="${freeslot.password == null}">
                                             <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <b>None</b>
                                                 </span></div>
-                                        </c:if>
+                                            </c:if>
                                         <div class="d-flex justify-content-between">
                                             <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
                                                 <input type="hidden" name="txtFSlotID" 
@@ -997,12 +998,12 @@
                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
                                                 </span></div>
-                                        </c:if>
-                                        <c:if test="${freeslot.password == null}">
+                                            </c:if>
+                                            <c:if test="${freeslot.password == null}">
                                             <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <b>None</b>
                                                 </span></div>
-                                        </c:if>
+                                            </c:if>
                                         <div class="d-flex justify-content-between">
                                             <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
                                                 <input type="hidden" name="txtFSlotID" 
@@ -1056,12 +1057,12 @@
                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
                                                 </span></div>
-                                        </c:if>
-                                        <c:if test="${freeslot.password == null}">
+                                            </c:if>
+                                            <c:if test="${freeslot.password == null}">
                                             <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <b>None</b>
                                                 </span></div>
-                                        </c:if>
+                                            </c:if>
                                         <div class="d-flex justify-content-between">
                                             <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
                                                 <input type="hidden" name="txtFSlotID"  value="${freeslot.freeSlotID}" readonly="">
@@ -1106,12 +1107,12 @@
                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
                                                 </span></div>
-                                        </c:if>
-                                        <c:if test="${freeslot.password == null}">
+                                            </c:if>
+                                            <c:if test="${freeslot.password == null}">
                                             <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
                                                     <b>None</b>
                                                 </span></div>
-                                        </c:if>
+                                            </c:if>
                                         <div class="d-flex justify-content-between">
                                             <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
                                                 <input type="hidden" name="txtFSlotID"  value="${freeslot.freeSlotID}" readonly="">
