@@ -37,10 +37,10 @@ public class ViewAllRequestStatus extends HttpServlet {
             RequestDAO requestDAO = new RequestDAO();
             Date date = new Date();
             requestDAO.updateStatusOutDate(date);
-//            System.out.println("updateOutDate " + check);
 
             requestDAO.getListRequest(studentID);
             List<RequestDTO> listRequest = requestDAO.getListRequest();
+
             List<UserDTO> listUser = requestDAO.getListUser();
             if (listRequest != null) {
                 request.setAttribute("LIST_REQUEST", listRequest);

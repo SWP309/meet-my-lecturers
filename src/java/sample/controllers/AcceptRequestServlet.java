@@ -23,8 +23,10 @@ import sample.requests.RequestDAO;
 import sample.users.UserDTO;
 
 public class AcceptRequestServlet extends HttpServlet {
+
     private final String SUCCESS = "ViewRequestServlet";
     private final String ERROR = "ViewRequestServlet";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -38,7 +40,6 @@ public class AcceptRequestServlet extends HttpServlet {
             String subjectCode = request.getParameter("txtSubjectCode");
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
-            
 //            //tranfer String to Date
 //            DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 //            Date starts = format.parse(startTime);
@@ -57,23 +58,91 @@ public class AcceptRequestServlet extends HttpServlet {
 //                freeSlotError.setPastTimeError("- The start and end times must be in the future"
 //                        + " and at least 2 hours greater than the current time!!!");
 //            }
-            
+
             String studentID = request.getParameter("txtStudentID");
             String semesterID = request.getParameter("txtSemesterID");
             String meetLink = request.getParameter("txtLinkMeet");
             RequestDAO requestDAO = new RequestDAO();
-            boolean checkAccept = requestDAO.acceptARequest(requestID);
-            
-            FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, "", 1, meetLink, 1, lecturerID, 1, semesterID, "");
+
             FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
+            FreeSlotError freeSlotError = new FreeSlotError();
+            boolean flag = true;
+            //****Check input link meet
+            if (meetLink == null || meetLink.isEmpty()) {
+                flag = false;
+                freeSlotError.setMeetLinkError("- Must input link meet before accept.");
+            }
+
+            //****Check input time with current time
+            //tranfer String to Date
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+            Date starts = format.parse(startTime);
+            Date ends = format.parse(endTime);
+            //get current date
+            Date currentTime = new Date();
+            // Calculate current time plus 10 minutes
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(currentTime);
+            calendar.add(Calendar.MINUTE, 10);
+            Date timeInFuture = calendar.getTime();
+            //compare input time to current time
+            if (starts.before(timeInFuture) || ends.before(timeInFuture)) {
+                flag = false;
+                freeSlotError.setPastTimeError("- The start and end times must be in the future"
+                        + " and at least 10 minutes greater than the current time!!!");
+            }
+            //****check end time greater than start time
+            if (ends.before(starts) || ends.equals(starts)) {
+                flag = false;
+                freeSlotError.setEndTimeError("- The end times must be greater than start times!!!");
+            }
+            //****check duration from start time to end time
+            // Calculate duration between startTime and endTime
+            long timeDifference = ends.getTime() - starts.getTime();
+            int minutesDifference = (int) (timeDifference / (1000 * 60));
+            if (minutesDifference > 90 || minutesDifference < 15) {
+                flag = false;
+                freeSlotError.setDurationError("- Duration of a slot must be from 15 to 90 minutes!!!");
+            }
+            //****check not allowed create slot <= 5AM or >= 11PM
+            calendar.setTime(starts);
+            calendar.setTime(ends);
+            int startHour = calendar.get(Calendar.HOUR_OF_DAY);
+            int endHour = calendar.get(Calendar.HOUR_OF_DAY);
+            if (startHour <= 5 || startHour >= 23 || endHour <= 5 || endHour >= 23) {
+                flag = false;
+                freeSlotError.setDurationError("- Not allowed create slot <= 5AM or >= 11PM!!!");
+            }
+            //****check duplicate time with created freeslot
+            boolean checkStartTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(lecturerID, starts);
+            boolean checkEndTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(lecturerID, ends);
+            if (checkStartTimeDuplicateFS == false || checkEndTimeDuplicateFS == false) {
+                flag = false;
+                freeSlotError.setDuplicateTimeError("- The time you entered overlaps with time of created FREESLOT!!! ");
+            }
+
+            String password = request.getParameter("txtPassword").trim();
+            if (password.isEmpty()) {
+                password = null; // Chuyển chuỗi trống thành giá trị null
+            }
+
+            int capacity = Integer.parseInt(request.getParameter("txtCapacity"));
+            if (capacity < 2 || capacity > 100) {
+                flag = false;
+                freeSlotError.setCapacityError("The number of student can join this slot must be between 2-100");
+            }
+            FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, null, 1, meetLink, 1, lecturerID, 1, semesterID, "");
+            //update status -> accept
+            boolean checkAccept = requestDAO.acceptARequest(requestID);
+            //create FSlot
             checkCreateFS = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
-            
+
             BookingDTO bookingDTO = new BookingDTO();
             bookingDTO.setStudentID(studentID);
             bookingDTO.setFreeSlotID(freeSlotsDAO.searchFSAccept(startTime, lecturerID));
             BookingDAO bookingDAO = new BookingDAO();
             boolean checkBooking = bookingDAO.BookFSlot(bookingDTO);
-            if(checkAccept && checkCreateFS && checkBooking) {
+            if (checkAccept && checkCreateFS && checkBooking) {
                 url = SUCCESS;
             }
         } catch (ClassNotFoundException | SQLException | ParseException ex) {

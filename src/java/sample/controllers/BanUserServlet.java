@@ -1,51 +1,41 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sample.controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sample.semester.SemesterDAO;
-import sample.semester.SemesterDTO;
-import sample.subjects.SubjectDAO;
-import sample.subjects.SubjectDTO;
-
 import sample.users.UserDAO;
-import sample.users.UserDTO;
 
-public class ViewLecturerServlet extends HttpServlet {
-
-    private final String ERROR = "request.jsp";
-    private final String SUCCESS = "request.jsp";
+/**
+ *
+ * @author CHIBAO
+ */
+public class BanUserServlet extends HttpServlet {
+    private final String SUCCESS = "DashBoardServlet";
+    private final String ERROR = "DashBoardServlet";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
+            System.out.println("Ban User");
+            String userID = request.getParameter("txtStudentID");
             UserDAO userDAO = new UserDAO();
-            userDAO.getListLecturers();
-            List<UserDTO> lecturers = userDAO.getLecturers();
-            SemesterDAO semesterDAO = new SemesterDAO();
-            semesterDAO.getListSemesters();
-            List<SemesterDTO> semesters = semesterDAO.getSemesters();
-            SubjectDAO subjectDAO = new SubjectDAO();
-            subjectDAO.getListSubjects();
-            List<SubjectDTO> subjects = subjectDAO.getSubjects();
-            if (lecturers != null) {
-                request.setAttribute("LIST_LECTURERS", lecturers); 
-                request.setAttribute("LIST_SEMESTERS", semesters);
-                request.setAttribute("LIST_SUBJECTS", subjects);
-                url = SUCCESS;
-            } else {
-                request.setAttribute("MESSAGE", "System has no Lecturer!!!");
-            }
+            userDAO.banUser(userID);
+            url = SUCCESS;
         } catch (ClassNotFoundException | SQLException ex) {
-            log("Error at ViewLecturerServlet: " + ex.toString());
-        }  finally {
+            log("Error at BanUserServlet: " + ex.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

@@ -7,50 +7,61 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.bookings.BookingDAO;
+import sample.bookings.BookingDTO;
 import sample.dashboard.UserMaxSlotDTO;
 import sample.dashboard.UserMaxRequestDTO;
 import sample.users.UserDAO;
 import sample.users.UserDTO;
 
-/**
- *
- * @author Minh Khang
- */
 public class DashBoardServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            String semester = request.getParameter("txtsemester");
+        try {
+//            String semester = request.getParameter("txtsemester");
+            String semester = "FA23";
             if (semester != null) {
-                UserMaxSlotDTO stmb = UserDAO.getStudentMaxBook(semester);
-                UserMaxRequestDTO stmr = UserDAO.getStudentMaxRequest(semester);
-                UserMaxSlotDTO ltmb = UserDAO.getLecturerMaxSlot(semester);
-                UserMaxRequestDTO lmr = UserDAO.getLecturerMaxRequest(semester);
+                Date date = new Date();
+                BookingDAO bookingDAO = new BookingDAO();
+                //Top 5 Lec created max slot and number
+                List<UserDTO> lecMaxFSNum = UserDAO.getLecturerMaxFSNumber(date);
+                List<UserDTO> lecMaxReqNum = UserDAO.getLecturerMaxRequestNumber(date);
+                List<BookingDTO> stuMaxAbsentNum = bookingDAO.bookingAbsenceNumber();
+                List<BookingDTO> stuMaxCancelNum = bookingDAO.bookingCancelNumber();
                 boolean flag = false;
-                request.setAttribute("UserMaxSlot", stmb);
-                request.setAttribute("UserMaxRequest", stmr);
-                request.setAttribute("LecturerMaxSlot", ltmb);
-                request.setAttribute("LecturerMaxRequest", lmr);
-                System.out.println(semester);
-                if(semester.equals("")){
-                    request.setAttribute("MSG", "Null semester");
+
+                //da doi ten so voi ban dau LecturerMaxSlot
+                
+                if (lecMaxFSNum.isEmpty()) {
+                    request.setAttribute("MAX_FS_MESSAGE", "No data about Top 5 Lecturer that created max FreeSlot!!!");
+                } else {
+                    request.setAttribute("Top5LecCreatedMaxSlot", lecMaxFSNum);
                 }
+                if (lecMaxFSNum.isEmpty()) {
+                    request.setAttribute("MAX_REQUEST_MESSAGE", "No data about Top 5 Lecturer that received max Request!!!");
+                } else {
+                    request.setAttribute("Top5LecReceivedMaxRequest", lecMaxReqNum);
+                }
+                if (stuMaxAbsentNum.isEmpty()) {
+                    request.setAttribute("MAX_ABSENT_MESSAGE", "No data about Top 5 Max Absent Student!!!");
+                } else {
+                    request.setAttribute("Top5StuMaxAbsentNum", stuMaxAbsentNum);
+                }
+                if (stuMaxCancelNum.isEmpty()) {
+                    request.setAttribute("MAX_CANCEL_MESSAGE", "No data about Top 5 Max Cancel Student!!!");
+                } else {
+                    request.setAttribute("Top5StuMaxCancelNum", stuMaxCancelNum);
+                }
+                
                 request.getRequestDispatcher("AdminPage.jsp").forward(request, response);
             } else {
                 System.out.println("Semester == null");

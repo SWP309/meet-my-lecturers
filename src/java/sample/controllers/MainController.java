@@ -13,7 +13,7 @@ public class MainController extends HttpServlet {
     private static final String HOME_ACTION_STUDENT = "returnHomePageStudent";
     private static final String HOME_PAGE_STUDENT = "StudentHome_1.jsp";
     private static final String HOME_ACTION_ADMIN = "returnHomePageAdmin";
-    private static final String HOME_PAGE_ADMIN = "AdminPage.jsp";
+    private static final String HOME_PAGE_ADMIN = "DashBoardServlet";
 
     private static final String LOGIN_BY_GOOGLE = "login";
     private static final String LOGIN_BY_GOOGLE_ACTION = "LoginServlet";
@@ -54,7 +54,7 @@ public class MainController extends HttpServlet {
     private static final String REQUEST_VIEW_CONTROLLER = "ViewRequestServlet";
 
     private static final String ADMIN_PAGE = "AdminPage";
-    private static final String ADMIN_PAGE_ACTION = "AdminPage.jsp";
+    private static final String ADMIN_PAGE_ACTION = "DashBoardServlet";
     private static final String ADMIN_PAGE_CONTROLLER = "DashBoardServlet";
     private static final String ADMIN_FIND_STUDENTMAXBOOKING = "Find";//booking most slot
     private static final String ADMIN_FIND_STUDENTMAXREQUEST = "FindSMR";//send most request
@@ -67,7 +67,7 @@ public class MainController extends HttpServlet {
     private static final String ADMIN_IMPORTTIMETABLES = "importTB";
     private static final String ADMIN_IMPORTTIMETABLES_ACTION = "ImportTimetables";
 
-    private static final String REQUEST_PAGE = "request.jsp";
+    private static final String REQUEST_PAGE = "ViewLecturerServlet";
     private static final String REQUEST = "Request";
     private static final String BACK_TO_REQUEST = "BackToRequest";
 
@@ -96,7 +96,9 @@ public class MainController extends HttpServlet {
     private static final String VIEW_BOOKING_HISTORY_SERVLET_ACTION = "CheckAttend.jsp";
 
     private static final String VIEWTIMETABLE = "ViewTimetable";
+    private static final String VIEWTIMETABLE_FOR_LEC = "ViewTimetableForLec";
     private static final String VIEW_TIMETABLE_CONTROLLER = "ViewTimetableServlet";
+    private static final String VIEW_TIMETABLE_FOR_LEC_CONTROLLER = "ViewTimetableForLec";
 
     private static final String VIEW_LECTURER = "ViewAllLecturers";
     private static final String VIEW_LECTURER_CONTROLLER = "ViewLecturerServlet";
@@ -142,10 +144,22 @@ public class MainController extends HttpServlet {
     private static final String SEARCH_BOOKED_SLOT_ACTION = "searchBSlot";
     private static final String SEARCH_BOOKED_SLOT_SERVLET = "SearchBookedServlet";
 
+    private static final String SEND_EMAIL_ACTION = "sendEMailAction";
+    private static final String SEND_EMAIL_SERVLET = "SendEMailServlet";
+    
     private static final String CHANGE_PASS = "changePass";
     private static final String CHANGE_PASS_ACTION = "ChangePassword.jsp";
     private static final String CHANGE_PASS_PAGE_ACTION = "changePassServlet";
     private static final String CHANGE_PASS_PAGE_SERVLET = "ChangePasswordServlet";
+    
+    private static final String SEND_EMAIL_REMIND_ACTION = "SendEmailForRemindStudent";
+    private static final String SEND_EMAIL_REMIND_SERVLET = "send-email.jsp";
+    
+    private static final String SEARCH_STATISTICS = "SearchStatistics";
+    private static final String SEARCH_DASHBOARD_SERVLET = "SearchDashBoardServlet";
+    private static final String BAN_USER = "BanUser";
+    private static final String BAN_USER_CONTROLLER = "BanUserServlet";
+    
 
     private static final String BACK = "back";
 
@@ -263,6 +277,8 @@ public class MainController extends HttpServlet {
                 url = SEARCH_REQUEST_STATUS_ACTION;
             } else if (REQUEST_STATUS.equals(action)) {
                 url = REQUEST_STATUS_PAGE;
+            } else if (SEND_EMAIL_ACTION.equals(action)) {
+                url = SEND_EMAIL_SERVLET;
             } else if (VIEW_BOOKING_HISTORY.equals(action)) {
                 url = VIEW_BOOKING_HISTORY_CHECK_SEMES_ACTION;
             } else if (VIEW_BOOKING_HISTORY_CHECK_SEMES.equals(action)) {
@@ -277,9 +293,17 @@ public class MainController extends HttpServlet {
                 url = HOME_PAGE_ADMIN;
             } else if (STUDENT_PAGE_ACTION_RETURN.equals(action)) {
                 url = STUDENT_PAGE_ACTION;
+            } else if (SEND_EMAIL_REMIND_ACTION.equals(action)) {
+                url = SEND_EMAIL_REMIND_SERVLET;
+            } else if (SEARCH_STATISTICS.equals(action)) {
+                url = SEARCH_DASHBOARD_SERVLET;
+            } else if (VIEWTIMETABLE_FOR_LEC.equals(action)) {
+                url = VIEW_TIMETABLE_FOR_LEC_CONTROLLER;
+            } else if (BAN_USER.equals(action)) {
+                url = BAN_USER_CONTROLLER;
             }
             
-
+            
         } catch (Exception e) {
             log("Error at MainController: " + e.toString());
         } finally {

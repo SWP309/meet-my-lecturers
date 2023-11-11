@@ -169,7 +169,7 @@
     <servlet>
         <servlet-name>SearchRequestForLec</servlet-name>
         <servlet-class>sample.controllers.SearchRequestForLec</servlet-class>
-    </servlet>    
+    </servlet>
     <servlet>
         <servlet-name>ViewOptionCreateFS</servlet-name>
         <servlet-class>sample.controllers.ViewOptionCreateFS</servlet-class>
@@ -181,6 +181,22 @@
     <servlet>
         <servlet-name>ChangePasswordServlet</servlet-name>
         <servlet-class>sample.controllers.ChangePasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SendEMailServlet</servlet-name>
+        <servlet-class>sample.controllers.SendEMailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchDashBoardServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchDashBoardServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewTimetableForLec</servlet-name>
+        <servlet-class>sample.controllers.ViewTimetableForLec</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BanUserServlet</servlet-name>
+        <servlet-class>sample.controllers.BanUserServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
@@ -339,12 +355,28 @@
         <url-pattern>/ViewOptionCreateFS</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>SendEMailServlet</servlet-name>
+        <url-pattern>/SendEMailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>CheckStatusServlet</servlet-name>
         <url-pattern>/CheckStatusServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChangePasswordServlet</servlet-name>
         <url-pattern>/ChangePasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchDashBoardServlet</servlet-name>
+        <url-pattern>/SearchDashBoardServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewTimetableForLec</servlet-name>
+        <url-pattern>/ViewTimetableForLec</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BanUserServlet</servlet-name>
+        <url-pattern>/BanUserServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

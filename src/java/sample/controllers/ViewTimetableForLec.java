@@ -3,53 +3,59 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sample.semester.SemesterDAO;
-import sample.semester.SemesterDTO;
-import sample.subjects.SubjectDAO;
+import javax.servlet.http.HttpSession;
+import sample.slots.SlotDTO;
 import sample.subjects.SubjectDTO;
-
-import sample.users.UserDAO;
+import sample.timetables.TimetableDAO;
+import sample.timetables.TimetableDTO;
 import sample.users.UserDTO;
 
-public class ViewLecturerServlet extends HttpServlet {
+public class ViewTimetableForLec extends HttpServlet {
 
-    private final String ERROR = "request.jsp";
-    private final String SUCCESS = "request.jsp";
+    public final String ERROR = "CreatedSlotView.jsp";
+    public final String SUCCESS = "ViewTimetableForLec.jsp"; 
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            UserDAO userDAO = new UserDAO();
-            userDAO.getListLecturers();
-            List<UserDTO> lecturers = userDAO.getLecturers();
-            SemesterDAO semesterDAO = new SemesterDAO();
-            semesterDAO.getListSemesters();
-            List<SemesterDTO> semesters = semesterDAO.getSemesters();
-            SubjectDAO subjectDAO = new SubjectDAO();
-            subjectDAO.getListSubjects();
-            List<SubjectDTO> subjects = subjectDAO.getSubjects();
-            if (lecturers != null) {
-                request.setAttribute("LIST_LECTURERS", lecturers); 
-                request.setAttribute("LIST_SEMESTERS", semesters);
-                request.setAttribute("LIST_SUBJECTS", subjects);
+            HttpSession session = request.getSession();
+            UserDTO userDTO = (UserDTO) session.getAttribute("loginedUser");
+            String lecturerID = userDTO.getUserID();
+            TimetableDAO timetableDAO = new TimetableDAO();
+            timetableDAO.getListTimetables(lecturerID);
+            List<TimetableDTO> timetables = timetableDAO.getTimetables();
+            for (TimetableDTO timetable : timetables) {
+                System.out.println("Timetable List: ");
+                System.out.println(timetable.getLecturerID());
+            }
+            List<SubjectDTO> subjects = timetableDAO.getSubjects();
+            for (SubjectDTO subject : subjects) {
+                System.out.println("");
+            }
+            List<SlotDTO> slots = timetableDAO.getSlots();
+            if (timetables != null) {
+                System.out.println(timetables.toString());
+                request.setAttribute("TB_TIMETABLES", timetables); 
+                request.setAttribute("TB_SUBJECTS", subjects);
+                request.setAttribute("TB_SLOTS", slots);
                 url = SUCCESS;
             } else {
-                request.setAttribute("MESSAGE", "System has no Lecturer!!!");
+                request.setAttribute("TB_MESSAGE", "No line matched!!Please try checking again LecturerID at View All Lecturer at the top!!");
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-            log("Error at ViewLecturerServlet: " + ex.toString());
-        }  finally {
+        } catch (ClassNotFoundException | SQLException | ParseException ex) {
+            log("Error at ViewTimetableForLec: " + ex.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

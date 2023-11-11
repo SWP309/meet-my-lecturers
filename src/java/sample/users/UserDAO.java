@@ -5,7 +5,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import sample.roles.RoleDTO;
 import sample.dashboard.UserMaxRequestDTO;
@@ -27,6 +32,24 @@ public class UserDAO implements Serializable {
             + "FROM Users u\n"
             + "JOIN Roles r ON u.roleID = r.roleID \n"
             + "WHERE u.roleID = ?";
+
+    private static final String SEARCH_LECTURER_MAX_FS_NUMBER = "select top 5 fs.lecturerID, count(*) as 'NumberCreatedSlot'\n"
+            + "                    from FreeSlots fs\n"
+            + "                    where fs.semesterID = ( SELECT s.semesterID\n"
+            + "											FROM Semesters s\n"
+            + "											WHERE ? BETWEEN s.startDay AND s.endDay)\n"
+            + "                    AND fs.status = 1\n"
+            + "					group by fs.lecturerID\n"
+            + "					order by [NumberCreatedSlot] desc";
+
+    private static final String SEARCH_LECTURER_MAX_REQUEST_NUMBER = "select top 5 r.lecturerID, COUNT(*) as 'NumberOfRequestRec'\n" +
+"                    from Requests r\n" +
+"                    where r.semesterID = ( SELECT s.semesterID\n" +
+"			FROM Semesters s\n" +
+"			WHERE ? BETWEEN s.startDay AND s.endDay)\n" +
+"			AND r.status = 1\n" +
+"                    group by r.lecturerID\n" +
+"                    order by [NumberOfRequestRec] desc";
 
     private final String SEARCH_USERS_BY_USERID = "SELECT r.roleID, r.roleName, u.userID, u.userName, u.userEmail, u.password, u.userStatus\n"
             + "            FROM Users u\n"
@@ -59,12 +82,17 @@ public class UserDAO implements Serializable {
             + "      ,password = ?\n"
             + " WHERE userID = ?";
 
+    private final String BAN_USER = "UPDATE Users\n"
+            + "SET userStatus = 0\n"
+            + "WHERE userID = ?";
+
     private List<UserDTO> lecturers;
 
     public List<UserDTO> getLecturers() {
         return lecturers;
     }
-        public List<Top3StudentDTO> GetlistTop3() throws SQLException {
+
+    public List<Top3StudentDTO> GetlistTop3() throws SQLException {
         List<Top3StudentDTO> listTop3 = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -441,6 +469,29 @@ public class UserDAO implements Serializable {
         }
         return checkUpdate;
     }
+    public boolean banUser(String userID) throws ClassNotFoundException, SQLException {
+        boolean checkUpdate = false;
+        Connection con = null;
+        PreparedStatement stm = null;
+        int result;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(BAN_USER);
+            stm.setString(1, userID);
+            result = stm.executeUpdate();
+            if (result > 0) {
+                checkUpdate = true;
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return checkUpdate;
+    }
 
     private List<UserDTO> usersByUserID;
 
@@ -616,64 +667,80 @@ public class UserDAO implements Serializable {
         return st;
     }
 
-    public static UserMaxSlotDTO getLecturerMaxSlot(String semester) throws Exception {
-        UserMaxSlotDTO st = null;
-        Connection cn = DBUtils.getConnection();
-        if (cn != null) {
-            String sql = "select top 1 fs.lecturerID, count(*) as 'NumberCreatedSlot'\n"
-                    + "from FreeSlots fs\n"
-                    + "where fs.startTime >= (select s.startDay\n"
-                    + "from Semesters s\n"
-                    + "where s.semesterID = ?) \n"
-                    + "and fs.endTime <= (select s.endDay\n"
-                    + "from Semesters s\n"
-                    + "where s.semesterID = ?) \n"
-                    + "group by fs.lecturerID\n"
-                    + "order by [NumberCreatedSlot] desc";
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, semester);
-            pst.setString(2, semester);
-            ResultSet rs = pst.executeQuery();
-            if (rs != null) {
+    public static List<UserDTO> getLecturerMaxFSNumber(Date currentDate) throws SQLException, ClassNotFoundException {
+        List<UserDTO> listUser = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(SEARCH_LECTURER_MAX_FS_NUMBER);
+                ptm.setTimestamp(1, new Timestamp(currentDate.getTime()));
+                rs = ptm.executeQuery();
                 while (rs.next()) {
-                    String id = rs.getString("lecturerID").trim();
-                    int numberRequest = rs.getInt("NumberCreatedSlot");
-                    st = new UserMaxSlotDTO(id, numberRequest);
+                    String lecturerID = rs.getString("lecturerID");
+                    int createdSlot = rs.getInt("NumberCreatedSlot");
+                    UserDTO userDTO = new UserDTO();
+                    userDTO.setUserID(lecturerID);
+                    userDTO.setCreatedSlot(createdSlot);
+                    listUser.add(userDTO);
                 }
-            } else {
-
-                System.out.println("rs bang null getLecturerMaxSlot(String semester)");
             }
-            cn.close();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
-        return st;
+        return listUser;
     }
-
-    public static UserMaxRequestDTO getLecturerMaxRequest(String semester) throws Exception {
-        UserMaxRequestDTO st = null;
-        Connection cn = DBUtils.getConnection();
-        if (cn != null) {
-            String sql = "select top 1 r.lecturerID, COUNT(*) as 'NumberOfRequestRev'\n"
-                    + "from Requests r\n"
-                    + "where r.semesterID = ?\n"
-                    + "group by r.lecturerID\n"
-                    + "order by [NumberOfRequestRev] desc";
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, semester);
-            ResultSet rs = pst.executeQuery();
-            if (rs != null) {
+    
+    public static List<UserDTO> getLecturerMaxRequestNumber(Date currentDate) throws SQLException, ClassNotFoundException, ParseException {
+        List<UserDTO> listUser = new ArrayList<>();
+        System.out.println("UserDAO getLecturerMaxRequestNumber");
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                System.out.println(currentDate);
+                
+                ptm = conn.prepareStatement(SEARCH_LECTURER_MAX_REQUEST_NUMBER);
+                String start = services.Service.sdfDateTime.format(currentDate);
+                ptm.setTimestamp(1, new Timestamp(services.Service.sdfDateTime.parse(start).getTime()));
+                System.out.println("980");
+                rs = ptm.executeQuery();
+                System.out.println("hjk");
                 while (rs.next()) {
-                    String id = rs.getString("lecturerID").trim();
-                    int numberRequest = rs.getInt("NumberOfRequestRev");
-                    st = new UserMaxRequestDTO(id, numberRequest);
+                    String lecturerID = rs.getString("lecturerID");
+                    int receivedRequest = rs.getInt("NumberOfRequestRec");
+                    UserDTO userDTO = new UserDTO();
+                    userDTO.setUserID(lecturerID);
+                    userDTO.setReceivedRequest(receivedRequest);
+                    listUser.add(userDTO);
+                    System.out.println(userDTO.toString());
                 }
-            } else {
-
-                System.out.println("rs bang null getLecturerMaxRequest(String semester)");
+                System.out.println("dfghdfh");
             }
-            cn.close();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
-        return st;
+        return listUser;
     }
 
     public static int ImportExcelUsers(UserDTO users) throws ClassNotFoundException, SQLException {

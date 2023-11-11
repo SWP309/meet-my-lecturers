@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,25 +56,25 @@ public class BookingDAO {
             + "            JOIN Users u ON b.studentID = u.userID\n"
             + "            JOIN Users u1 ON fs.lecturerID = u1.userID\n"
             + "		  where  fs.subjectCode = ? and u.userEmail = ?";
-    
-    private static String SEARCH_NUMBER_OF_BOOKED_STUDENT = "SELECT freeSlotID, COUNT(*) AS 'Number of students'\n" +
-"                         FROM Bookings b\n" +
-"                         WHERE b.status = 1 AND b.freeSlotID = ?\n" +
-"                         GROUP BY b.freeSlotID";
-    
-    private static String CHECK_TIME_DUPLICATE_BOOKED_FS = "SELECT fs.freeSlotID\n" +
-                            "FROM FreeSlots fs\n" +
-                            "JOIN (  SELECT b.freeSlotID\n" +
-                            "		FROM Bookings b\n" +
-                            "		WHERE b.status = 1 \n" +
-                            "		AND b.studentID = ?) bo ON fs.freeSlotID = bo.freeSlotID\n" +
-                            "WHERE ? BETWEEN fs.startTime AND fs.endTime";
 
-    private static String CHECK_TIME_DUPLICATE_REQUEST = "SELECT r.requestID\n" +
-                            "FROM Requests r\n" +
-                            "WHERE r.status = 1 \n" +
-                            "AND ? BETWEEN r.startTime AND r.endTime\n" +
-                            "AND r.studentID = ?";
+    private static String SEARCH_NUMBER_OF_BOOKED_STUDENT = "SELECT freeSlotID, COUNT(*) AS 'Number of students'\n"
+            + "                         FROM Bookings b\n"
+            + "                         WHERE b.status = 1 AND b.freeSlotID = ?\n"
+            + "                         GROUP BY b.freeSlotID";
+
+    private static String CHECK_TIME_DUPLICATE_BOOKED_FS = "SELECT fs.freeSlotID\n"
+            + "FROM FreeSlots fs\n"
+            + "JOIN (  SELECT b.freeSlotID\n"
+            + "		FROM Bookings b\n"
+            + "		WHERE b.status = 1 \n"
+            + "		AND b.studentID = ?) bo ON fs.freeSlotID = bo.freeSlotID\n"
+            + "WHERE ? BETWEEN fs.startTime AND fs.endTime";
+
+    private static String CHECK_TIME_DUPLICATE_REQUEST = "SELECT r.requestID\n"
+            + "FROM Requests r\n"
+            + "WHERE r.status = 1 \n"
+            + "AND ? BETWEEN r.startTime AND r.endTime\n"
+            + "AND r.studentID = ?";
     private static String SEARCH_BOOKED_SLOT_BY_ST_ET = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime,u.userName, b.bookingID,fs.meetLink, fs.semesterID\n"
             + "          FROM Bookings b\n"
             + "           JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
@@ -86,7 +87,7 @@ public class BookingDAO {
             + "            JOIN Users u ON b.studentID = u.userID\n"
             + "            JOIN Users u1 ON fs.lecturerID = u1.userID\n"
             + "		  where  b.status='1' and fs.subjectCode = ? and u.userEmail = ?";
-     private static String SEARCH_BOOKED_SLOT_BY_SEMESTER = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime,u.userName, b.bookingID,fs.meetLink, fs.semesterID\n"
+    private static String SEARCH_BOOKED_SLOT_BY_SEMESTER = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime,u.userName, b.bookingID,fs.meetLink, fs.semesterID\n"
             + "          FROM Bookings b\n"
             + "           JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
             + "            JOIN Users u ON b.studentID = u.userID\n"
@@ -98,6 +99,23 @@ public class BookingDAO {
             + "            JOIN Users u ON b.studentID = u.userID\n"
             + "            JOIN Users u1 ON fs.lecturerID = u1.userID\n"
             + "		  where  b.status='1' and u.userEmail = ? and fs.semesterID = ?";
+
+    private static String SEARCH_STUDENT_MAX_ABSENT_IN4 = "SELECT b.bookingID, fs.lecturerID, fs.subjectCode, fs.startTime, fs.endTime, fs.semesterID, u.userName\n"
+            + "            FROM Bookings b\n"
+            + "            JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
+            + "			JOIN Users u ON fs.lecturerID = u.userID\n"
+            + "            WHERE b.studentID = ? AND b.status = 1 AND fs.endTime < ?\n"
+            + "            AND fs.semesterID = ( SELECT s.semesterID\n"
+            + "           		     FROM Semesters s\n"
+            + "            		     WHERE ? BETWEEN s.startDay AND s.endDay)";
+
+    private static String SEARCH_STUDENT_MAX_CANCEL_IN4 = "SELECT b.bookingID, fs.lecturerID, u.userName, fs.subjectCode, fs.startTime, fs.endTime, fs.semesterID\n"
+            + "FROM Bookings b\n"
+            + "JOIN FreeSlots fs ON b.freeSlotID = fs.freeSlotID\n"
+            + "JOIN Users u ON fs.lecturerID = u.userID\n"
+            + "WHERE b.studentID = ? AND b.status = 0 AND fs.semesterID = ( SELECT s.semesterID\n"
+            + "											FROM Semesters s\n"
+            + "											WHERE ? BETWEEN s.startDay AND s.endDay)";
 
     private static String convertDateToString(Timestamp sqlTime) {
         // Sử dụng SimpleDateFormat để định dạng ngày giờ
@@ -147,7 +165,8 @@ public class BookingDAO {
         }
         return listBooking;
     }
-    public List<BookingDTO> searchBSlotViewByNull(String userEmail , String semesterID) throws SQLException {
+
+    public List<BookingDTO> searchBSlotViewByNull(String userEmail, String semesterID) throws SQLException {
         List<BookingDTO> listBooking = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -189,7 +208,7 @@ public class BookingDAO {
         return listBooking;
     }
 
-    public List<BookingDTO> searchBSlotViewByAll(String subjectCode, String startTime, String endTime, String userEmail,String semesterID) throws SQLException {
+    public List<BookingDTO> searchBSlotViewByAll(String subjectCode, String startTime, String endTime, String userEmail, String semesterID) throws SQLException {
         List<BookingDTO> searchBSlot = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -236,7 +255,8 @@ public class BookingDAO {
         }
         return searchBSlot;
     }
-     public List<BookingDTO> searchBSlotViewByStEtSubjectCode(String subjectCode, String startTime, String endTime, String userEmail) throws SQLException {
+
+    public List<BookingDTO> searchBSlotViewByStEtSubjectCode(String subjectCode, String startTime, String endTime, String userEmail) throws SQLException {
         List<BookingDTO> searchBSlot = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -282,7 +302,8 @@ public class BookingDAO {
         }
         return searchBSlot;
     }
-      public List<BookingDTO> searchBSlotViewByStEtSemesterID(String semesterID, String startTime, String endTime, String userEmail) throws SQLException {
+
+    public List<BookingDTO> searchBSlotViewByStEtSemesterID(String semesterID, String startTime, String endTime, String userEmail) throws SQLException {
         List<BookingDTO> searchBSlot = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -416,6 +437,7 @@ public class BookingDAO {
         }
         return searchBSlot;
     }
+
     public List<BookingDTO> searchBSlotViewBySemester(String semesterID, String userEmail) throws SQLException {
         List<BookingDTO> searchBSlot = new ArrayList<>();
         Connection conn = null;
@@ -527,7 +549,7 @@ public class BookingDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            
+
             if (ptm != null) {
                 ptm.close();
             }
@@ -618,7 +640,7 @@ public class BookingDAO {
         }
         return check;
     }
-    
+
     public List<BookingDTO> bookingPresenceInformation() throws SQLException, ClassNotFoundException {
         List<BookingDTO> list = new ArrayList<>();
         Date date = new Date();
@@ -645,19 +667,24 @@ public class BookingDAO {
         return list;
     }
 
-    public List<BookingDTO> bookingAbsenceNumber() throws SQLException, ClassNotFoundException {
+    public List<BookingDTO> bookingAbsenceNumber() throws SQLException, ClassNotFoundException, ParseException {
         List<BookingDTO> list = new ArrayList<>();
         Date date = new Date();
-        String d = Service.sdfDateTime.format(date);
+//        String d = Service.sdfDateTime.format(date);
         Connection con = DBUtils.getConnection();
         PreparedStatement stm = con.prepareStatement(
-                "select b.studentID, COUNT(*) AS 'Number of absent slots'\n" +
-                    "from Bookings b\n" +
-                    "join FreeSlots f on f.freeSlotID = b.freeSlotID\n" +
-                    "where b.status = 1 and f.endTime < ?\n" +
-                    "GROUP BY b.studentID\n" +
-                    "ORDER BY [Number of absent slots] desc");
-        stm.setString(1, d);
+                "select top 5 b.studentID, COUNT(*) AS 'Number of absent slots'\n"
+                + "                                    from Bookings b\n"
+                + "                                    join FreeSlots f on f.freeSlotID = b.freeSlotID\n"
+                + "									join Users u ON b.studentID = u.userID\n"
+                + "                                    where b.status = 1 and f.endTime < ? AND u.userStatus = 1 AND f.semesterID = ( SELECT s.semesterID\n"
+                + "                											FROM Semesters s\n"
+                + "                											WHERE ? BETWEEN s.startDay AND s.endDay)\n"
+                + "                                    GROUP BY b.studentID\n"
+                + "                                    ORDER BY [Number of absent slots] desc");
+        String start = services.Service.sdfDateTime.format(date);
+        stm.setTimestamp(1, new Timestamp(services.Service.sdfDateTime.parse(start).getTime()));
+        stm.setTimestamp(2, new Timestamp(services.Service.sdfDateTime.parse(start).getTime()));
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {
             BookingDTO b = new BookingDTO();
@@ -668,27 +695,130 @@ public class BookingDAO {
         con.close();
         return list;
     }
-    
-    public List<BookingDTO> bookingCancelNumber() throws SQLException, ClassNotFoundException {
+
+    public List<BookingDTO> bookingCancelNumber() throws SQLException, ClassNotFoundException, ParseException {
         List<BookingDTO> list = new ArrayList<>();
         Date date = new Date();
-        String d = Service.sdfDateTime.format(date);
+//        String d = Service.sdfDateTime.format(date);
         Connection con = DBUtils.getConnection();
-        PreparedStatement stm = con.prepareStatement("select b.studentID, COUNT(*) AS 'Number of absent slots'\n" +
-                    "from Bookings b\n" +
-                    "join FreeSlots f on f.freeSlotID = b.freeSlotID\n" +
-                    "where b.status = 0 and f.endTime < ?\n" +
-                    "GROUP BY b.studentID\n" +
-                    "ORDER BY [Number of absent slots] desc");
-        stm.setString(1, d);
+        PreparedStatement stm = con.prepareStatement("select top 5 b.studentID, COUNT(*) AS 'Number of cancel slots'\n"
+                + "                                    from Bookings b\n"
+                + "                                    join FreeSlots f on f.freeSlotID = b.freeSlotID\n"
+                + "									JOIN Users u ON b.studentID = u.userID\n"
+                + "                                    where b.status = 0 AND u.userStatus = 1 AND f.semesterID = ( SELECT s.semesterID\n"
+                + "                											FROM Semesters s\n"
+                + "                											WHERE ? BETWEEN s.startDay AND s.endDay)\n"
+                + "                                   GROUP BY b.studentID\n"
+                + "                                    ORDER BY [Number of cancel slots] desc");
+        String start = services.Service.sdfDateTime.format(date);
+        stm.setTimestamp(1, new Timestamp(services.Service.sdfDateTime.parse(start).getTime()));
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {
             BookingDTO b = new BookingDTO();
             b.setStudentID(rs.getString("studentID"));
-            b.setNumberOfAbsenceSlot(rs.getInt("Number of absent slots"));
+            b.setNumberOfCancelSlot(rs.getInt("Number of cancel slots"));
             list.add(b);
         }
         con.close();
         return list;
+    }
+
+    public List<BookingDTO> getStudentMaxAbsentIn4(String studentID) throws SQLException, ClassNotFoundException {
+        List<BookingDTO> listStudent = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                Date currentDate = new Date();
+                ptm = conn.prepareStatement(SEARCH_STUDENT_MAX_ABSENT_IN4);
+                ptm.setString(1, studentID);
+                ptm.setTimestamp(2, new Timestamp(currentDate.getTime()));
+                ptm.setTimestamp(3, new Timestamp(currentDate.getTime()));
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String bookingID = rs.getString("bookingID");
+                    String lecturerID = rs.getString("lecturerID");
+                    String lecturerName = rs.getNString("userName");
+                    String subjectCode = rs.getString("subjectCode");
+                    Timestamp startTime = rs.getTimestamp("startTime");
+                    String starts = convertDateToString(startTime);
+                    Timestamp endTime = rs.getTimestamp("endTime");
+                    String ends = convertDateToString(endTime);
+                    String semesterID = rs.getString("semesterID");
+                    BookingDTO bookingDTO = new BookingDTO();
+                    bookingDTO.setBookingID(bookingID);
+                    bookingDTO.setStudentID(studentID);
+                    bookingDTO.setLecturerID(lecturerID);
+                    bookingDTO.setLectureName(lecturerName);
+                    bookingDTO.setSubjectCode(subjectCode);
+                    bookingDTO.setStartTime(starts);
+                    bookingDTO.setEndTime(ends);
+                    bookingDTO.setSemesterID(semesterID);
+                    listStudent.add(bookingDTO);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listStudent;
+    }
+
+    public List<BookingDTO> getStudentMaxCancelIn4(String studentID) throws SQLException, ClassNotFoundException {
+        List<BookingDTO> listStudent = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                Date currentDate = new Date();
+                ptm = conn.prepareStatement(SEARCH_STUDENT_MAX_CANCEL_IN4);
+                ptm.setString(1, studentID);
+                ptm.setTimestamp(2, new Timestamp(currentDate.getTime()));
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String bookingID = rs.getString("bookingID");
+                    String lecturerID = rs.getString("lecturerID");
+                    String lecturerName = rs.getNString("userName");
+                    String subjectCode = rs.getString("subjectCode");
+                    Timestamp startTime = rs.getTimestamp("startTime");
+                    String starts = convertDateToString(startTime);
+                    Timestamp endTime = rs.getTimestamp("endTime");
+                    String ends = convertDateToString(endTime);
+                    String semesterID = rs.getString("semesterID");
+                    BookingDTO bookingDTO = new BookingDTO();
+                    bookingDTO.setBookingID(bookingID);
+                    bookingDTO.setLecturerID(lecturerID);
+                    bookingDTO.setStudentID(studentID);
+                    bookingDTO.setLectureName(lecturerName);
+                    bookingDTO.setSubjectCode(subjectCode);
+                    bookingDTO.setStartTime(starts);
+                    bookingDTO.setEndTime(ends);
+                    bookingDTO.setSemesterID(semesterID);
+                    listStudent.add(bookingDTO);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listStudent;
     }
 }

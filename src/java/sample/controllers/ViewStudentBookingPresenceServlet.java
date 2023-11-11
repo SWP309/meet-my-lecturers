@@ -4,6 +4,7 @@ package sample.controllers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +35,7 @@ public class ViewStudentBookingPresenceServlet extends HttpServlet {
             } else {
                 request.setAttribute("MESSAGE", "There is no student who books a slot without participating in class!!!");
             }
-        } catch (SQLException | ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException | ParseException ex) {
             log("Error at ViewStudentBookingPresenceServlet: " + ex.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

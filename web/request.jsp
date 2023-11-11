@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="sample.users.UserDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -184,13 +185,6 @@
 
                             <i class="material-icons">mail_outline</i> Request
                         </div>
-                        <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
-                            <form action="MainController" method="POST">
-                                <input type="hidden" name="action" value="ViewAllLecturers" />
-                            </form>
-
-                            <i class="fas fa-search"></i> <p style="font-size: 16px">View Lecturer</p>
-                        </div>
                         <div class="frame-div logout" onclick="submitFormLogout()" style="width: 10%; text-align: center">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
@@ -224,31 +218,32 @@
                     <div class="form-group row">
                         <label for="txtSemester" class="col-md-2 col-form-label"><strong>Semester:</strong></label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" id="txtSemester" name="txtSemester" value="${param.txtSemester}" placeholder="(ex:FA23)" required=""
-                                   pattern="^(SP|SU|FA|)[0-9]{2}$">
+                            <select class="form-control" name="txtSemester">
+                                <c:forEach items="${LIST_SEMESTERS}" var="semester">
+                                    <option value="${semester.semesterID}">${semester.semesterID} - ${semester.semesterName}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="txtLecturer" class="col-md-2 col-form-label"><strong>Lecturer:</strong></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control"  id="txtLecturer"  name="txtLecturer" value="${param.txtLecturer}" placeholder="GVxxxx" required=""
-                                   pattern="^GV[0-9]{4}$">
+                            <select class="form-control" name="txtLecturer">
+                                <c:forEach items="${LIST_LECTURERS}" var="lecturer">
+                                    <option value="${lecturer.userID}">${lecturer.userID} - ${lecturer.userName}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                         <button class="btn btn-primary col-sm-2" type="submit" name="action" value="ViewTimetable">View Timetable</button>
-
                     </div>
 
                     <div class="form-group row">
                         <label for="txtSubjectCode" class="col-md-2 col-form-label"><strong>Subject code:</strong></label>
                         <div class="col-md-10">
                             <select class="form-control" name="txtSubjectCode">
-                                <option value="PRJ301">PRJ301</option>
-                                <option value="PRM392">PRM392</option>
-                                <option value="SEP490">SEP490</option>
-                                <option value="SWD392">SWD392</option>
-                                <option value="SWP391">SWP391</option>
-                                <option value="SWR302">SWR302</option>
-                                <option value="SWT301">SWT301</option>
+                                <c:forEach items="${LIST_SUBJECTS}" var="subject">
+                                    <option value="${subject.subjectCode}">${subject.subjectCode} - ${subject.subjectName}</option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
@@ -298,13 +293,13 @@
             </div>  
             <div class="footer1">
                 <div class="powered-by-fpt-container1">
-                    © Powered by
+                    ï¿½ Powered by
                     <a class="fpt-university2" href="http://fpt.edu.vn/" target="_blank">
                         <span class="fpt-university3">FPT University</span>
                     </a>
                     |
                     <a class="fpt-university2" href="http://library.fpt.edu.vn/" target="_blank">
-                        <span class="fpt-university3">library</span>
+                        <span class="fpt-university3">Library</span>
                     </a>
                 </div>
             </div>

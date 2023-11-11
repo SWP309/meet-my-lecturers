@@ -10,6 +10,9 @@ public class UserDTO implements Serializable{
     private int userStatus;
     private String roleID;
     private String password;
+    //bien ngoai lai
+    private int createdSlot;
+    private int receivedRequest;
 
     public UserDTO() {
         this.userID = "";
@@ -18,6 +21,8 @@ public class UserDTO implements Serializable{
         this.userStatus = 1;
         this.roleID = "";
         this.password = "";
+        this.createdSlot = 0;
+        this.receivedRequest = 0;
     }
 
     public UserDTO(String userID, String userName, String userEmail, int userStatus, String roleID, String password) {
@@ -112,11 +117,44 @@ public class UserDTO implements Serializable{
     public boolean equals(Object obj) {
         if (obj instanceof UserDTO) {
             UserDTO another = (UserDTO) obj;
-            if (this.roleID.equals(another.roleID)) {
+            if (this.getRoleID().equals(another.getRoleID())) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * @return the createdSlot
+     */
+    public int getCreatedSlot() {
+        return createdSlot;
+    }
+
+    /**
+     * @param createdSlot the createdSlot to set
+     */
+    public void setCreatedSlot(int createdSlot) {
+        this.createdSlot = createdSlot;
+    }
+
+    /**
+     * @return the receivedRequest
+     */
+    public int getReceivedRequest() {
+        return receivedRequest;
+    }
+
+    /**
+     * @param receivedRequest the receivedRequest to set
+     */
+    public void setReceivedRequest(int receivedRequest) {
+        this.receivedRequest = receivedRequest;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" + "userID=" + userID + ", userName=" + userName + ", userEmail=" + userEmail + ", userStatus=" + userStatus + ", roleID=" + roleID + ", password=" + password + ", createdSlot=" + createdSlot + ", receivedRequest=" + receivedRequest + '}';
     }
 
 }
