@@ -5,9 +5,6 @@
  */
 package sample.attendance;
 
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
-import static org.apache.poi.hssf.usermodel.HeaderFooter.date;
-
 /**
  *
  * @author Minh Khang

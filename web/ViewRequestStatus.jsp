@@ -241,10 +241,11 @@
                                 <th>No.</th>
                                 <th>Semester</th>
                                 <th>Subject Code</th>
-                                <th>LecturerID</th>
+                                <th>Lecturer ID</th>
                                 <th>Name</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
+                                <th>Description</th>
                                 <th>Status</th>
                                 <th>Note</th>
                             </tr>
@@ -268,6 +269,7 @@
                                     </td>
                                     <td>${request.startTime}</td>
                                     <td>${request.endTime}</td>
+                                    <td>${request.description}</td>
                                     <td>
                                         <c:if test="${request.status == 1}">
                                             <b style="color: green">Accepted</b>
@@ -307,10 +309,11 @@
                                 <th>No.</th>
                                 <th>Semester</th>
                                 <th>Subject Code</th>
-                                <th>LecturerID</th>
+                                <th>Lecturer ID</th>
                                 <th>Name</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
+                                <th>Description</th>
                                 <th>Status</th>
                                 <th>Note</th>
                             </tr>
@@ -334,6 +337,7 @@
                                     </td>
                                     <td>${request.startTime}</td>
                                     <td>${request.endTime}</td>
+                                    <td>${request.description}</td>
                                     <td>
                                         <c:if test="${request.status == 1}">
                                             <b style="color: green">Accepted</b>
@@ -370,10 +374,11 @@
                                 <th>No.</th>
                                 <th>Semester</th>
                                 <th>Subject Code</th>
-                                <th>LecturerID</th>
+                                <th>Lecturer ID</th>
                                 <th>Name</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
+                                <th>Description</th>
                                 <th>Status</th>
                                 <th>Note</th>
                             </tr>
@@ -397,6 +402,7 @@
                                     </td>
                                     <td>${request.startTime}</td>
                                     <td>${request.endTime}</td>
+                                    <td>${request.description}</td>
                                     <td>
                                         <c:if test="${request.status == 1}">
                                             <b style="color: green">Accepted</b>
@@ -437,6 +443,7 @@
                                 <th>Name</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
+                                <th>Description</th>
                                 <th>Status</th>
                                 <th>Note</th>
                             </tr>
@@ -460,6 +467,7 @@
                                     </td>
                                     <td>${request.startTime}</td>
                                     <td>${request.endTime}</td>
+                                    <td>${request.description}</td>
                                     <td>
                                         <c:if test="${request.status == 1}">
                                             <b style="color: green">Accepted</b>
@@ -496,10 +504,11 @@
                                 <th>No.</th>
                                 <th>Semester</th>
                                 <th>Subject Code</th>
-                                <th>LecturerID</th>
+                                <th>Lecturer ID</th>
                                 <th>Name</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
+                                <th>Description</th>
                                 <th>Status</th>
                                 <th>Note</th>
                             </tr>
@@ -523,6 +532,7 @@
                                     </td>
                                     <td>${request.startTime}</td>
                                     <td>${request.endTime}</td>
+                                    <td>${request.description}</td>
                                     <td>
                                         <c:if test="${request.status == 1}">
                                             <b style="color: green">Accepted</b>

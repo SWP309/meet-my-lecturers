@@ -233,4 +233,9 @@ public class FreeSlotsDTO {
         this.block_list = block_list;
     }
 
+    @Override
+    public String toString() {
+        return "FreeSlotsDTO{" + "freeSlotID=" + freeSlotID + ", subjectCode=" + subjectCode + ", startTime=" + startTime + ", endTime=" + endTime + ", password=" + password + ", capacity=" + capacity + ", meetLink=" + meetLink + ", count=" + count + ", lecturerID=" + lecturerID + ", status=" + status + ", semesterID=" + semesterID + ", lecturerName=" + lecturerName + ", studentID=" + studentID + ", bookedStudent=" + bookedStudent + ", block_list=" + block_list + '}';
+    }
+
 }

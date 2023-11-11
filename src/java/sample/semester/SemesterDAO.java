@@ -21,6 +21,9 @@ import sample.utils.DBUtils;
  * @author Dell
  */
 public class SemesterDAO {
+    
+    private final String SEARCH_SEMESTERS = "SELECT s.semesterID, s.semesterName\n" +
+                                "FROM Semesters s";
 
     public List<SemesterDTO> select() throws SQLException, ClassNotFoundException {
 
@@ -97,6 +100,44 @@ PreparedStatement stm = con.prepareStatement("update Semesters set semesterName 
         int count = stm.executeUpdate();
         con.close();
     }
+
+        private List<SemesterDTO> semesters;
+
+    public List<SemesterDTO> getSemesters() {
+        return semesters;
+    }
+
+    public void getListSemesters() throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_SEMESTERS);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String semesterID = rs.getString("semesterID");
+                String semesterName = rs.getString("semesterName");
+                SemesterDTO semesterDTO = new SemesterDTO(semesterID, semesterName, null, null);
+                if (this.semesters == null) {
+                    this.semesters = new ArrayList<>();
+                }
+                this.semesters.add(semesterDTO);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+    
+    
 
     
 }

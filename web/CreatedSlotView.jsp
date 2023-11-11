@@ -74,8 +74,16 @@
                 var form = document.querySelector('.CreateFSlot form');
                 form.submit();
             }
+            function submitFormSendEmail() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
             function submitFormViewRequest() {
                 var form = document.querySelector('.request-div form');
+                form.submit();
+            }
+            function submitFormViewTimetableForLec() {
+                var form = document.querySelector('.timetable-lec form');
                 form.submit();
             }
             function submitFormHideView() {
@@ -312,6 +320,13 @@
 
                         <i class="material-icons">mail_outline</i>View Request
                     </div>
+                    <div class="frame-div timetable-lec" onclick="submitFormViewTimetableForLec()">
+                        <form action="MainController" method="POST">
+                            <input type="hidden" name="action" value="ViewTimetableForLec" />
+                        </form>
+
+                        <i class="material-icons">mail_outline</i>View Timetable
+                    </div>
                     <div class="frame-div hideView" onclick="submitFormHideView()">
                         <form action="MainController" method="POST" style="display: none;">
                             <input type="hidden" name="action" value="HideView" />
@@ -354,12 +369,12 @@
 
                 <i class="material-icons">add</i>
             </div>
-            <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+            <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormSendEmail()">
                 <form action="MainController" method="POST">
-                    <input type="hidden" name="action" value="CreateFS" />
+                    <input type="hidden" name="action" value="SendEmailForRemindStudent" />
                 </form>
 
-                <i class="material-icons">history</i>
+                <i class="material-icons">send</i>
             </div>
         </div>
 
@@ -390,7 +405,7 @@
 
 
             <!--  LIST OF THE PAGE -------------------------------------------------------------->
-            <div class="container mt-5" style="    margin-top: -13% !important; max-height: 500%; height: 500px">
+            <div class="container mt-5" style="    margin-top: -13% !important; max-height: 1000%; height: 1000px">
                 <div class="row justify-content-center mt-5 tableview">
                     <c:if test="${requestScope.LIST_CREATED_SLOT !=null}">
                         <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">
