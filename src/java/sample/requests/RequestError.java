@@ -9,6 +9,7 @@ public class RequestError {
     private String duplicateFreeSlotError;
     private String duplicateTimetableError;
     private String limitTimeAtNight;
+    private String semesterTimeError;
 
     public RequestError() {
         this.currentDateError = "";
@@ -18,9 +19,10 @@ public class RequestError {
         this.duplicateFreeSlotError = "";
         this.duplicateTimetableError = "";
         this.limitTimeAtNight = "";
+        this.semesterTimeError = "";
     }
 
-    public RequestError(String currentDateError, String endTimeError, String durationError, String duplicateRequestError, String duplicateFreeSlotError, String duplicateTimetableError, String limitTimeAtNight) {
+    public RequestError(String currentDateError, String endTimeError, String durationError, String duplicateRequestError, String duplicateFreeSlotError, String duplicateTimetableError, String limitTimeAtNight, String semesterTimeError) {
         this.currentDateError = currentDateError;
         this.endTimeError = endTimeError;
         this.durationError = durationError;
@@ -28,6 +30,7 @@ public class RequestError {
         this.duplicateFreeSlotError = duplicateFreeSlotError;
         this.duplicateTimetableError = duplicateTimetableError;
         this.limitTimeAtNight = limitTimeAtNight;
+        this.semesterTimeError = semesterTimeError;
     }
 
 
@@ -127,6 +130,14 @@ public class RequestError {
      */
     public void setLimitTimeAtNight(String limitTimeAtNight) {
         this.limitTimeAtNight = limitTimeAtNight;
+    }
+
+    public String getSemesterTimeError() {
+        return semesterTimeError;
+    }
+
+    public void setSemesterTimeError(String semesterTimeError) {
+        this.semesterTimeError = semesterTimeError;
     }
     
 }

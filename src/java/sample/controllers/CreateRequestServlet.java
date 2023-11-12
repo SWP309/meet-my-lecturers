@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.freeslots.FreeSlotsDAO;
 import sample.requests.RequestDAO;
 import sample.requests.RequestDTO;
 import sample.requests.RequestError;
@@ -32,6 +33,7 @@ public class CreateRequestServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            FreeSlotsDAO freeSlotsDAO=new FreeSlotsDAO();
             String lecturer = request.getParameter("txtLecturer");
             String subjectCode = request.getParameter("txtSubjectCode");
             String startTime = request.getParameter("txtStartTime");
@@ -99,6 +101,17 @@ public class CreateRequestServlet extends HttpServlet {
 //                        + "Please click View Timetable to check again!!!");
 //            }
 //            System.out.println("Check Timetable valid: " + checkValidate);
+
+            // ****check time valid with Semester 
+            String checkStartTimeInSemester = freeSlotsDAO.getSemesterID(starts);
+            String checkEndTimeInSemester = freeSlotsDAO.getSemesterID(ends);
+            System.out.println(checkStartTimeInSemester);
+            System.out.println(checkEndTimeInSemester);
+            if (!checkStartTimeInSemester.equals(semesterID) || !checkEndTimeInSemester.equals(semesterID) || checkEndTimeInSemester.equals("") || checkStartTimeInSemester.equals("")) {
+                checkValidate = false;
+                requestError.setSemesterTimeError("- The time you entered NOT MATCH with this Semester");
+            }
+            
             Service service = new Service();
             boolean checkTimetableDuplicate = service.duplicateSlot(requestDTO);
             if (checkTimetableDuplicate == false ) {

@@ -166,7 +166,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
             // ****check time valid with Semester 
             String checkStartTimeInSemester = freeSlotsDAO.getSemesterID(starts);
             String checkEndTimeInSemester = freeSlotsDAO.getSemesterID(ends);
-            if (!checkStartTimeInSemester.equals(semesterID) || !checkEndTimeInSemester.equals(semesterID)) {
+            if (!checkStartTimeInSemester.equals(semesterID) || !checkEndTimeInSemester.equals(semesterID) || checkStartTimeInSemester.equals("") || checkEndTimeInSemester.equals("")) {
                 flag = false;
                 freeSlotError.setSemesterTimeError("- The time you entered NOT MATCH with this Semester");
             }
