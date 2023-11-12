@@ -31,6 +31,8 @@ public class BookingController extends HttpServlet {
             if (listBooking.size() > 0) {
                 request.setAttribute("LIST_BOOKING", listBooking);
                 url = SUCCESS;
+            } else {
+                request.setAttribute("ERROR", "LIST of booking view is null !!!");
             }
         } catch (Exception e) {
             log("Error at BookingController: " + e.toString());

@@ -19,6 +19,7 @@
 
         <!-- SweetAlert2 JS -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <title>File Upload</title>
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -88,8 +89,7 @@
                             <input type="hidden" name="action" value="ViewUsers" />
                         </form>
                         <div class="bookedslot-wrapper">
-                            <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
-                            <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                             <i class="material-icons">event</i>
                         </div>
                         <div class="view-booking" >Search Users</div>
                     </div>
@@ -107,7 +107,7 @@
                             <input type="hidden" name="action" value="Logout" />
                         </form>
                         <div class="logout-wrapper">
-                            <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                             <i class="material-icons">logout</i>
                         </div>
                         <div class="request">
                             <p class="logout1">Logout</p>

@@ -95,7 +95,7 @@
                             <input type="hidden" name="action" value="ViewUsers" />
                         </form>
                         <div class="bookedslot-wrapper">
-                            <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
+                            <i class="material-icons">event</i>
                             <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
                         </div>
                         <div class="view-booking" >Search Users</div>
@@ -115,7 +115,7 @@
                             <input type="hidden" name="action" value="Logout" />
                         </form>
                         <div class="logout-wrapper">
-                            <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                            <i class="material-icons">logout</i>
                         </div>
                         <div class="request">
                             <p class="logout1">Logout</p>

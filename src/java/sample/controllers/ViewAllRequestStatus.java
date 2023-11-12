@@ -46,6 +46,8 @@ public class ViewAllRequestStatus extends HttpServlet {
                 request.setAttribute("LIST_REQUEST", listRequest);
                 request.setAttribute("LIST_USER", listUser);
                 url = SUCCESS;
+            }else {
+                request.setAttribute("ERROR", "Dont have any request !!!");
             }
         } catch (ClassNotFoundException | SQLException | ParseException ex) {
             log("Error at ViewAllRequestStatus: " + ex.toString());

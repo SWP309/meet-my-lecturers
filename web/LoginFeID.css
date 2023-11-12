@@ -257,13 +257,14 @@
 .error-appear-here1 {
     position: absolute;
     top: 530px;
-    left: 101px;
+    align-items: center;
     font-family: Lexend;
     color: red;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
     width: 315px;
     height: 48px;
-    left: 150px;
+    left: 100px;
 }
 @media (max-width: 1300px) {
   body {

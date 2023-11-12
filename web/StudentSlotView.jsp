@@ -49,8 +49,32 @@
                 var form = document.querySelector('.logout form');
                 form.submit();
             }
-            function submitFormRequest() {
-                var form = document.querySelector('.request form');
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
+            function submitFormSendEmail() {
+                var form = document.querySelector('.sendMail form');
+                form.submit();
+            }
+            function submitFormCreate() {
+                var form = document.querySelector('.CreateFSlot form');
+                form.submit();
+            }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitFormViewRequest() {
+                var form = document.querySelector('.request-div form');
+                form.submit();
+            }
+            function submitFormHideView() {
+                var form = document.querySelector('.hideView form');
+                form.submit();
+            }
+            function submitForm() {
+                var form = document.querySelector('.viewCreateSlot form');
                 form.submit();
             }
             var userDTO = {
@@ -92,7 +116,7 @@
                     event.preventDefault();
                 }
             }
-             function submitFormHomePage() {
+            function submitFormHomePage() {
                 var form = document.querySelector('.returnHome form');
                 form.submit();
             }
@@ -109,41 +133,81 @@
                 </div>
                 <div class="frame-parent">
                     <div class="frame-group">
-                        <div class="frame-div request" onclick="submitFormRequest()">
+                        <div class="frame-div viewCreateSlot" onclick="submitForm()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="viewFSlotLecturer" />
+                            </form>
+                            <i class="material-icons">visibility</i>View Create Slot
+                        </div>
+                        <div class="frame-div request-div" style="background-color: #b7b7b7;">
                             <form action="MainController" method="POST">
-                                <input type="hidden" name="action" value="Request" />
+                                <input type="hidden" name="action" value="ViewRequest" />
                             </form>
 
-                            <i class="material-icons">mail_outline</i> Request
+                            <i class="material-icons">mail_outline</i>View Request
                         </div>
-                        <div class="frame-div logout" onclick="submitFormLogout()">
+                        <div class="frame-div hideView" onclick="submitFormHideView()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="HideView" />
+                            </form>
+                            <div>
+                                <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
+                            </div>
+                        </div>
+                        <div class="frame-div logout" style="text-align: center;" onclick="submitFormLogout()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
                             <div class="logout-wrapper">
-                                <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                                <i class="material-icons">logout</i>
                             </div>
-                            <div class="request">
+                            <div class="logout">
                                 <p class="logout1">Logout</p>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
-                             onclick="showUserInfo()" />
-                        <div id="user-info" style="display: none; position: absolute">
-                            <p id="user-id"> </p>
-                            <p id="user-name"></p>
-                            <p id="user-email"></p>
+
+                        <div>
+                            <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
+                                 onclick="showUserInfo()" />
+                            <div id="user-info" style="display: none;
+                                 position: absolute;">
+                                <p id="user-id"> </p>
+                                <p id="user-name"></p>
+                                <p id="user-email"></p>
+                            </div>
                         </div>
+
                     </div>
+                </div>
+            </div>
+            <div class="container-div" style=" display: flex;
+                 flex-direction: column; float: right;">
+                <div class="frame-choice CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()">
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="CreateFS" />
+                    </form>
 
+                    <i class="material-icons">add</i>
+                </div>
+                <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+                    <form action="MainController" method="POST">
 
+                        <input type="hidden" name="action" value="historyLec" />
+                    </form>
+
+                    <i class="material-icons">history</i>
+                </div>
+                <div class="frame-choice sendMail" style="cursor: pointer; color: white"  onclick="submitFormSendEmail()">
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="SendEmailForRemindStudent" />
+                    </form>
+
+                    <i class="material-icons">send</i>
                 </div>
             </div>
 
 
-            <div class="boxoftable">
+            <div class="boxoftable"style=" margin-top: -30%;">
                 <c:if test="${requestScope.LIST_STUDENT !=null}">
                     <c:if test="${not empty requestScope.LIST_STUDENT}">
                         <table class="table table-hover table-primary table-rounded">
