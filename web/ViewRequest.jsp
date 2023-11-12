@@ -46,8 +46,10 @@
 
         <!-- JavaScript c?a SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
-
-
+        <!--        text gg -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
         <%
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -171,7 +173,7 @@
                                         <input type="hidden" name="action" value="Logout" />
                                     </form>
                                     <div class="logout-wrapper">
-                                        <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                                        <i class="material-icons">logout</i>
                                     </div>
                                     <div class="logout">
                                         <p class="logout1">Logout</p>
@@ -194,32 +196,32 @@
                     </div>
                     <div class="container-div" style=" display: flex;
                          flex-direction: column;
-                        float: right;">
+                         float: right;">
                         <div class="frame-choice CreateFSlot" style="cursor: pointer;
-                            color: white" onclick="submitFormCreate()">
-                                <form action="MainController" method="POST">
-                                    <input type="hidden" name="action" value="CreateFS" />
-                                </form>
+                             color: white" onclick="submitFormCreate()">
+                                 <form action="MainController" method="POST">
+                                     <input type="hidden" name="action" value="CreateFS" />
+                                 </form>
 
-                                <i class="material-icons">add</i>
-                            </div>
-                            <div class="frame-choice history" style="cursor: pointer;
-                            color: white" onclick="submitFormHistory()">
-                                <form action="MainController" method="POST">
+                                 <i class="material-icons">add</i>
+                             </div>
+                             <div class="frame-choice history" style="cursor: pointer;
+                             color: white" onclick="submitFormHistory()">
+                                 <form action="MainController" method="POST">
 
-                                    <input type="hidden" name="action" value="historyLec" />
-                                </form>
+                                     <input type="hidden" name="action" value="historyLec" />
+                                 </form>
 
-                                <i class="material-icons">history</i>
-                            </div>
-                            <div class="frame-choice sendMail" style="cursor: pointer;
-                            color: white"  onclick="submitFormSendEmail()">
-                                <form action="MainController" method="POST">
-                                    <input type="hidden" name="action" value="SendEmailForRemindStudent" />
-                                </form>
+                                 <i class="material-icons">history</i>
+                             </div>
+                             <div class="frame-choice sendMail" style="cursor: pointer;
+                             color: white"  onclick="submitFormSendEmail()">
+                                 <form action="MainController" method="POST">
+                                     <input type="hidden" name="action" value="SendEmailForRemindStudent" />
+                                 </form>
 
-                                <i class="material-icons">send</i>
-                            </div>
+                                 <i class="material-icons">send</i>
+                             </div>
                         </div>
                         <div class="container-div" style=" display: flex;
                         flex-direction: column;
@@ -241,6 +243,7 @@
                                  <i class="material-icons">history</i>
                              </div>
                         </div>
+                    <h1 class="text-center textDashBoard" style="margin-top: 20px;">Request table</h1>
                         <div class="container">
                             <div class="row align-items-center justify-content-center" style="margin: 80px 0 -60px 0">
                                 <div>

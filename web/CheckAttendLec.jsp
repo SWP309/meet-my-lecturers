@@ -115,75 +115,7 @@
                 border-radius: 40px;
                 width: 30%;
             }
-            .returnHome{
-                /*position: absolute;*/
-                width: 120px;
-                height: 50px;
-                background-repeat: no-repeat;
-                background-size: 100%;
-                background-image: url("public/BookingView/2021fptueng-1@2x.png");
-            }
-            .frame-group, .frame-div{
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-            }
-            .logout{
-                width: 170px !important;
-            }
-            .frame-item {
-                margin-left: 44px;
-                cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
-                position: relative;
-                width: 45px;
-                height: 42px;
-            }
-            .frame-parent {
-                display: flex;
-                flex-direction: row;
-            }
-            .fptu-eng-1-parent {
-                position: relative;
-                background-color: rgba(0, 0, 0, 0.125);
-                border-top: 1px solid #000;
-                border-bottom: 1px solid #000;
-                box-sizing: border-box;
-                width: 100%;
-                min-height: 68px;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                /*padding: 35px 40px;*/
-                padding-left: 35px;
-                font-size: 17px;
-                color: #fff;
 
-                flex-wrap: wrap;
-            }
-            #user-id, #user-name, #user-email {
-                color: black; /* Đặt màu chữ thành màu đen */
-            }
-            .div {
-                position: relative;
-            }
-            .frame-div {
-                cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
-                border-radius: 12px;
-                background-color: #f27125;
-                width: 213px;
-                height: 43px;
-                /*align-items: flex-start;*/
-                padding: 10px 9px;
-                box-sizing: border-box;
-                gap: 8px;
-                justify-content: center;
-            }
-            .frame-group {
-                gap: 3px;
-                flex-wrap: wrap;
-            }
-         
         </style>
         <script>
 
@@ -362,7 +294,7 @@
             </div>
             <div class="frame-parent">
                 <div class="frame-group">
-                    <div class="frame-div viewCreateSlot" onclick="submitForm()" style="background-color: #b7b7b7;">
+                    <div class="frame-div viewCreateSlot" onclick="submitForm()">
                         <form action="MainController" method="POST" style="display: none;">
                             <input type="hidden" name="action" value="viewFSlotLecturer" />
                         </form>
@@ -388,7 +320,7 @@
                             <input type="hidden" name="action" value="Logout" />
                         </form>
                         <div class="logout-wrapper">
-                            <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                            <i class="material-icons">logout</i>
                         </div>
                         <div class="logout">
                             <p class="logout1">Logout</p>

@@ -39,16 +39,24 @@ td button {
 .table-rounded th, .table-rounded td {
     border-radius: 0;
 }
+.frame-div:hover{
+    background-color: #f27125;
+    color: black;
+}
+
+
 .frame-div {
     cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
     border-radius: 12px;
-    background-color: #f27125;
-    width: 159px;
+    /*background-color: #f27125;*/
+    width: 213px;
     height: 43px;
     /*align-items: flex-start;*/
     padding: 10px 9px;
     box-sizing: border-box;
     gap: 8px;
+    justify-content: center;
+    color: #f27125;
 }
 
 .frame-group, .frame-div{

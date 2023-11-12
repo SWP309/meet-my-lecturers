@@ -172,8 +172,8 @@
                             <input type="hidden" name="action" value="ViewBooking" />
                         </form>
                         <div class="bookedslot-wrapper">
-                            <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
                             <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                            <i class="material-icons">event</i>
                         </div>
                         <div class="view-booking" >View Booking</div>
                     </div>

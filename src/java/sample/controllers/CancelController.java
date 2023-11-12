@@ -42,7 +42,7 @@ public class CancelController extends HttpServlet {
                     }
                 }
             } else {
-                request.setAttribute("ERROR", "List of Booking is null. Do not have any things to show");
+                request.setAttribute("ERROR", "Can not cancel because error in code");
             }
         } catch (Exception e) {
             log("Error at UpdateController: " + e.toString());
