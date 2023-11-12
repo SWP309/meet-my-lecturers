@@ -1466,7 +1466,7 @@ public class FreeSlotsDAO {
         return lecturer_email;
     }
     public String getSemesterID(Date time) throws SQLException{
-        String semesterID=null;
+        String semesterID="";//Để tránh gặp lỗi NullPointerException khi ng dùng nhập time mà trong DB ko có
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
