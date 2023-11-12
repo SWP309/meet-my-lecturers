@@ -21,6 +21,7 @@ public class FreeSlotError {
     private String semesterIDError;
     private String subjectCodeError;
     private String duplicateTimeTableError;
+    private String semesterTimeError;
 
     public FreeSlotError() {
         this.pastTimeError = "";
@@ -33,9 +34,10 @@ public class FreeSlotError {
         this.semesterIDError = "";
         this.subjectCodeError = "";
         this.duplicateTimeTableError = "";
+        this.semesterTimeError = "";
     }
 
-    public FreeSlotError(String pastTimeError, String endTimeError, String durationError, String capacityError, String meetLinkError, String repeatedTimeError, String duplicateTimeError, String semesterIDError, String subjectCodeError, String duplicateTimeTableError) {
+    public FreeSlotError(String pastTimeError, String endTimeError, String durationError, String capacityError, String meetLinkError, String repeatedTimeError, String duplicateTimeError, String semesterIDError, String subjectCodeError, String duplicateTimeTableError, String semesterTimeError) {
         this.pastTimeError = pastTimeError;
         this.endTimeError = endTimeError;
         this.durationError = durationError;
@@ -46,6 +48,7 @@ public class FreeSlotError {
         this.semesterIDError = semesterIDError;
         this.subjectCodeError = subjectCodeError;
         this.duplicateTimeTableError = duplicateTimeTableError;
+        this.semesterTimeError = semesterTimeError;
     }
     
     public String getPastTimeError() {
@@ -138,6 +141,14 @@ public class FreeSlotError {
 
     public void setDuplicateTimeTableError(String duplicateTimeTableError) {
         this.duplicateTimeTableError = duplicateTimeTableError;
+    }
+
+    public String getSemesterTimeError() {
+        return semesterTimeError;
+    }
+
+    public void setSemesterTimeError(String semesterTimeError) {
+        this.semesterTimeError = semesterTimeError;
     }
     
 }
