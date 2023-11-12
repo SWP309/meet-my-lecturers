@@ -1,47 +1,62 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package sample.controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import sample.bookings.BookingDAO;
-import sample.bookings.BookingDTO;
 import sample.users.UserDTO;
+import sample.viewCreatedSlot.ViewCreatedSlotDAO;
+import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
-@WebServlet(name = "BookingController", urlPatterns = {"/BookingController"})
-public class BookingController extends HttpServlet {
+/**
+ *
+ * @author PC
+ */
+public class CountPageServlet extends HttpServlet {
 
-    private static final String ERROR = "BookingView.jsp";
-    private static final String SUCCESS = "BookingView.jsp";
+    private static final String ERROR = "CreatedSlotView.jsp";
+    private static final String SUCCESS = "CreatedSlotView.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
+        System.out.println(url);
         try {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            String email=request.getParameter(us.getUserEmail());
-            BookingDAO dao = new BookingDAO();
-            List<BookingDTO> listBooking = dao.getListBooking(us.getUserEmail());
-            if (listBooking.size() > 0) {
-                request.setAttribute("LIST_BOOKING", listBooking);
-                url = SUCCESS;
+            ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
+            int listCountPage = dao.CountPage(us.getUserEmail());
+            request.setAttribute("COUNT_PAGE", listCountPage);
+            int CountPage = Integer.parseInt(request.getParameter("CountPage"));
+           
+            if (CountPage == 1 ){
+                CountPage = CountPage - 1;
             } else {
-                request.setAttribute("ERROR", "LIST of booking view is null !!!");
+                CountPage = (CountPage -1) * 6 ;
+            }
+             System.out.println("countpage " + CountPage);
+            List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlotByCount(us.getUserEmail(), CountPage);
+            System.out.println(us.getUserEmail());
+            if (listCreatedSlot.size() > 0) {
+                request.setAttribute("LIST_CREATED_SLOT", listCreatedSlot);
+                url = SUCCESS;
             }
         } catch (Exception e) {
-            log("Error at BookingController: " + e.toString());
+            log("Error at SearchController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
-  
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

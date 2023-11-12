@@ -11,7 +11,7 @@
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             if (us != null) {
-                        
+
         %>
         <meta charset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -75,6 +75,14 @@
                 var form = document.querySelector('.returnHome form');
                 form.submit();
             }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
+            function submitFormSendEmail() {
+                var form = document.querySelector('.sendMail form');
+                form.submit();
+            }
             function submitFormCreate() {
                 var form = document.querySelector('.CreateFSlot form');
                 form.submit();
@@ -98,18 +106,18 @@
                 } else {
                     userInfo.style.display = "none";
                 }
-                
+
                 var userID = userDTO.userID;
                 var userName = userDTO.userName;
                 var userEmail = userDTO.userEmail;
-                
+
                 Swal.fire({
                     title: 'User Information',
                     html: '<b style="color: red;">User ID: </b>' + userID + '<br><b style="color: red;">User Name: </b>'
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
-            
+
             function confirmDelete() {
                 var result = confirm("Are you sure about delete this Free Slot ?");
                 console.log(result);
@@ -125,7 +133,7 @@
                     event.preventDefault();
                 }
             }
-            
+
         </script>
         <style>
             td {
@@ -188,7 +196,7 @@
                             <input type="hidden" name="action" value="Logout" />
                         </form>
                         <div class="logout-wrapper">
-                            <img class="logout-icon" alt="" src="./public/StudentHome/logout.svg" />
+                            <i class="material-icons">logout</i>
                         </div>
                         <div class="logout">
                             <p class="logout1">Logout</p>
@@ -208,16 +216,24 @@
                 </div>
             </div>
         </div>
-      <div class="container-div" style=" display: flex;
+        <div class="container-div" style=" display: flex;
              flex-direction: column; float: right;">
-            <div class="frame-Create CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()">
+            <div class="frame-choice CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()">
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="CreateFS" />
                 </form>
 
                 <i class="material-icons">add</i>
             </div>
-            <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormSendEmail()">
+            <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+                <form action="MainController" method="POST">
+
+                    <input type="hidden" name="action" value="historyLec" />
+                </form>
+
+                <i class="material-icons">history</i>
+            </div>
+            <div class="frame-choice sendMail" style="cursor: pointer; color: white"  onclick="submitFormSendEmail()">
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="SendEmailForRemindStudent" />
                 </form>
@@ -256,18 +272,18 @@
 
                 </div>
             </div>
- 
+
 
             <script>
                 // L?y thông tin l?i t? bi?n requestScope.ERROR
                 var errorMessage = "${requestScope.ERROR}";
-                
+
                 // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
                 if (errorMessage.trim() !== "") {
                     alert(errorMessage);
                 }
             </script>
-            <% 
+            <%
                 } else {
                     response.sendRedirect("Maincontroller?action=");
                 }

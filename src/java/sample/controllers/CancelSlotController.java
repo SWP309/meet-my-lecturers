@@ -46,13 +46,16 @@ public class CancelSlotController extends HttpServlet {
                 boolean CheckHide = dao.Hide(freeSlotID);
                 System.out.println(CheckHide);
                 if (CheckHide) {
-                   List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                    List<ViewCreatedSlotDTO> listCreatedSlot = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
                     request.setAttribute("LIST_CREATED_SLOT", listCreatedSlot);
                     url = SUCCESS;
                     if (listCreatedSlot == null || listCreatedSlot.isEmpty()) {
-                        request.setAttribute("ERROR", "List Student is null. Do not have any things to show");
+                        request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
                     }
+                } else {
+                    request.setAttribute("ERROR", "Can Hide this Slot because the function is error at Code !!!");
                 }
+
             } else {
                 request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
             }

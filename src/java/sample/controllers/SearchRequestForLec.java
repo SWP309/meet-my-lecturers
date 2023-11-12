@@ -62,7 +62,7 @@ public class SearchRequestForLec extends HttpServlet {
                 }
 
             } else {
-                request.setAttribute("SEARCH_FREESLOT_MESSAGE", "The system has no freeslot that meet your requirement!!!");
+                request.setAttribute("SEARCH_FREESLOT_MESSAGE", "The system has no request that meet your requirement!!!");
             }
         } catch (SQLException ex) {
             log("Error at SearchRequestForLec: " + ex.toString());

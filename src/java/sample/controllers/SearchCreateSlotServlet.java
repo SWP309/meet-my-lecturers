@@ -6,12 +6,15 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.freeslots.FreeSlotsDAO;
 import sample.users.UserDTO;
 import sample.viewCreatedSlot.ViewCreatedSlotDAO;
 import sample.viewCreatedSlot.ViewCreatedSlotDTO;
@@ -37,6 +40,9 @@ public class SearchCreateSlotServlet extends HttpServlet {
             String endTime = request.getParameter("txtEndTime");
             String semesterID = request.getParameter("txtSemesterID");
             String userEmail = us.getUserEmail();
+            ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
+            int listCountPage = dao.CountPage(us.getUserEmail());
+            request.setAttribute("COUNT_PAGE", listCountPage);
             ViewCreatedSlotDAO searchFSlot = new ViewCreatedSlotDAO();
             if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty() && semesterID.isEmpty()) {
                 List<ViewCreatedSlotDTO> searchByStEt = searchFSlot.searchFSlotViewByStEt(startTime, endTime, userEmail);
@@ -60,7 +66,7 @@ public class SearchCreateSlotServlet extends HttpServlet {
                 }
 
             } else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty() && semesterID.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchByNull = searchFSlot.GetlistCreatedSlot(us.getUserEmail());
+                List<ViewCreatedSlotDTO> searchByNull = searchFSlot.GetlistCreatedSlotByCount(us.getUserEmail(), 0);
                 System.out.println(us.getUserEmail());
                 if (searchByNull != null) {
                     request.setAttribute("SEARCH_FREE_SLOT_BY_NULL", searchByNull);
@@ -83,7 +89,7 @@ public class SearchCreateSlotServlet extends HttpServlet {
                     url = SUCCESS;
                 }
 
-            }else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty() && !semesterID.isEmpty()) {
+            } else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty() && !semesterID.isEmpty()) {
                 List<ViewCreatedSlotDTO> searchBySemesterID = searchFSlot.searchFSlotViewBySemesterID(semesterID, userEmail);
                 System.out.println(us.getUserEmail());
                 if (searchBySemesterID != null) {

@@ -116,8 +116,8 @@
                             <input type="hidden" name="action" value="ViewBooking" />
                         </form>
                         <div class="bookedslot-wrapper">
-                            <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
                             <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                            <i class="material-icons">event</i>
                         </div>
                         <div class="view-booking" >View Booking</div>
                     </div>
@@ -160,7 +160,7 @@
 
             </div>
         </div>
-        <div class="frame-History history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+        <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
             <form action="MainController" method="POST">
                 <input type="hidden" name="action" value="attendanceSemes" />
             </form>
@@ -177,11 +177,12 @@
 
 
             </div>
-            <div class="table-timetable" style="margin-top: 19%; padding: 40px;">
+            <div class="table-timetable" style="margin-top: 19%; padding: 40px;  display: flex;
+                 justify-content: center;">
                 <c:if test="${not empty requestScope.TB_TIMETABLES}">
-                    <table border="1" class="table table-hover table-rounded">
+                    <table border="1" class="table-hover table-rounded">
                         <thead style="font-size: 20px;">
-                            <tr  class="table table-warning">
+                            <tr>
                                 <th>No.</th>
                                 <th>Slot ID</th>
                                 <th>Subject Code</th>

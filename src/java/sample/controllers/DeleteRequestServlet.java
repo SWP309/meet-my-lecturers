@@ -30,6 +30,8 @@ public class DeleteRequestServlet extends HttpServlet {
             boolean checkDelete = requestDAO.deleteARequest(roleID);
             if(checkDelete && checkUpdateNote) {
                 url = SUCCESS;
+            } else{
+               request.setAttribute("VIEW_REQUEST_MESSAGE", "Can not Decline this request !!!");
             }
         } catch (ClassNotFoundException | SQLException | ParseException ex) {
             log("Error at DeleteRequestServlet: " + ex.toString());

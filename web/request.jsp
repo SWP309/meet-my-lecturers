@@ -28,8 +28,8 @@
         <!-- Icon -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-        <!-- Font Awesome -->
-        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">-->
+<!--         Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <!-- CSS c?a SweetAlert -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
@@ -166,8 +166,8 @@
                                 <input type="hidden" name="action" value="ViewRequestStatus" />
                             </form>
                             <div class="bookedslot-wrapper">
-                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
                                 <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                                <i class="material-icons">event</i>
                             </div>
                             <div class="view-booking" >View Request Status</div>
                         </div>
@@ -209,6 +209,13 @@
                     </div>
 
                 </div>
+            </div>
+            <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="attendanceSemes" />
+                </form>
+
+                <i class="material-icons">history</i>
             </div>
             <div class="container mt-5 create-request" style="margin-top: 8% !important;">
                 <form action="MainController" method="POST">
