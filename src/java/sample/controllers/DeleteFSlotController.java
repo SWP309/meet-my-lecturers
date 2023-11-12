@@ -51,7 +51,7 @@ public class DeleteFSlotController extends HttpServlet {
                     }
                 }
             } else {
-                request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
+                request.setAttribute("ERROR", "Delete false !!!");
             }
         } catch (Exception e) {
             log("Error at UpdateController: " + e.toString());
