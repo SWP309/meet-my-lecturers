@@ -127,6 +127,21 @@
                 var form = document.querySelector('.hideView form');
                 form.submit();
             }
+            function resetForm() {
+                document.getElementsByName("txtStartTime").value="";
+                document.getElementsByName("txtEndTime").value="";
+                document.getElementsByName("txtCapacity").value="";
+                document.getElementsByName("txtPassword").value="";
+                document.getElementsByName("txtMeetLink").value="";
+                document.getElementsByName("txtBan").value="";
+                document.getElementsByName("txtCount").value="";
+                // Remove the error message from the request scope
+                request.removeAttribute("FREESLOT_ERROR");
+
+                // Update the UI to hide or clear the error message element
+                document.getElementByName("FREESLOT_ERROR").style.display = "none";
+                document.getElementByName("FREESLOT_ERROR").textContent = "";
+            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -265,6 +280,9 @@
                                 <c:if test="${not empty requestScope.FREESLOT_ERROR.duplicateTimeTableError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.duplicateTimeTableError}</h6>
                                 </c:if>
+                                <c:if test="${not empty requestScope.FREESLOT_ERROR.semesterTimeError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.semesterTimeError}</h6>
+                                </c:if>
                                 <div class="d-flex justify-content-between"><strong>Capacity:</strong> <input type="number" class="form-control" name="txtCapacity" value="${param.txtCapacity}" placeholder="need at least 2 student" required=""></div>
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.capacityError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.capacityError}</h6>
@@ -302,6 +320,7 @@
 
                                 <div class="d-flex justify-content-center btn-book">
                                     <input type="hidden" value="createFreeSlotAction" name="action"/>
+                                    <input type="reset" class="btn-decline" value="Reset" onclick="resetForm()">
                                     <input type="submit" class="btn btn-primary" value="Create">
                                 </div>
                                 <input type="hidden" id="hiddenSemesterID" name="hiddenSemesterID">
@@ -315,6 +334,12 @@
                                 <input type="hidden" value="${param.txtOption}">
                                 <input type="hidden" value="${param.txtStatusOption}">
                             </form>
+                            <div class="d-flex justify-content-center btn-book">
+                                <form action="MainController" method="POST">
+                                    <input type="hidden" name="action" value="returnHomePageLecturer" />
+                                    <input type="submit" class="btn" value="Cancel" style="background-color: red; color: white;">
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

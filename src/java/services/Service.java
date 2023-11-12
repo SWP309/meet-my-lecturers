@@ -61,8 +61,13 @@ public class Service {
     public static boolean duplicateSlot(FreeSlotsDTO f) throws SQLException, ParseException, ClassNotFoundException {
         TimetableDAO tr = new TimetableDAO();
         Calendar startTime = Service.dateToCalendar(f.getStartTime());
+//        System.out.println(startTime);
         String day = intToDays(startTime.get(Calendar.DAY_OF_WEEK));
+//        System.out.println(day);
         List<TimetableDTO> list = tr.listByDate(f.getLecturerID(), day, f.getStartTime(), f.getEndTime());
+//        for (TimetableDTO timetableDTO : list) {
+//            System.out.println(timetableDTO.getLecturerID());
+//        }
         if (list.size() > 0) {
             return false;
         }
