@@ -173,12 +173,6 @@
 
         </script>
 
-        <script>
-            function updateHiddenField(selectElement, hiddenFieldId) {
-                var selectedValue = selectElement.value;
-                document.getElementById(hiddenFieldId).value = selectedValue;
-            }
-        </script>
     </head>
     <body>
         <div class="fptu-eng-1-parent">
@@ -268,19 +262,23 @@
                         <div class="card-body">
                             <form action="MainController" method="POST">
 
-                                <div class="d-flex justify-content-between"><strong>Recipient:</strong> <input type="text" class="form-control" name="txtRecipient" value="${param.txtRecipient}" required=""></div>
-                            <div class="d-flex justify-content-between"><strong>Subject Code:</strong> <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}" required=""></div>
+                                <div class="d-flex justify-content-between"><strong>Recipient:</strong> <input type="email" class="form-control" name="txtRecipient" value="${param.txtRecipient}" placeholder="ex: example@fpt.edu.vn | example@gmail.com,....." multiple required=""></div>
+                            <div class="d-flex justify-content-between"><strong>Subject Code:</strong> <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}" placeholder="ex: SWP391" required="" pattern="^[A-Z]{3}[0-9]{3}$"></div>
                             <div class="d-flex justify-content-between"><strong>Start Time:</strong> <input type="datetime-local" class="form-control" name="txtStartTime" value="${param.txtStartTime}" required=""></div>
                             <div class="d-flex justify-content-between"><strong>End Time:</strong> <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}" required=""></div>
-                            <div class="d-flex justify-content-between"><strong>Password(access code of your free slot):</strong> <input type="text" class="form-control" name="txtPassword" value="${param.txtPassword}" required=""></div>
+                                <c:if test="${not empty requestScope.FREESLOT_ERROR.endTimeError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.endTimeError}</h6>
+                                </c:if>
+                                <c:if test="${not empty requestScope.FREESLOT_ERROR.durationError}">
+                                    <h6> ${requestScope.FREESLOT_ERROR.durationError}</h6>
+                                </c:if>
+                            <div class="d-flex justify-content-between"><strong>Access code of your free slot(optional):</strong> <input type="text" class="form-control" name="txtPassword" value="${param.txtPassword}"></div>
                             <div class="d-flex justify-content-between"><strong>Message(optional):</strong> <textarea style="width: 60%" name="txtMessage" rows="10" cols="60"></textarea></div>
 
                             <div class="d-flex justify-content-center btn-book">
                                 <input type="hidden" value="sendEMailAction" name="action"/>
                                 <input type="submit" class="btn btn-primary" value="Send email">
                             </div>
-
-                            <input type="hidden" value="${param.txtPassword}">
                         </form>
                     </div>
                 </div>
