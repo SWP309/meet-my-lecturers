@@ -136,7 +136,7 @@ public class Service {
         
         // Compose email content
         String subject = "Upcoming Free Slot Reminder ==> "+"for Subject : "+subjectCode;
-        String body = "Dear "+lecturer_email+"\n"+"This is a reminder that your scheduled free slot is approaching. Your slot details are as follows:\n\nSlot ID: " + freeSlotID + "\nStart Time: " + startTime + "\n\nPlease arrive on time for your Free slot.\n\nRegards,\nThe Meet-My-Lecturer FPT-EDU Free Slot Management System\n"+"meet.my.lecturers.fpt.edu@gmail.com";
+        String body = "Dear Lecturer : "+lecturer_email+"\n"+"This is a reminder that your scheduled free slot is approaching. Your slot details are as follows:\n\nSlot ID: " + freeSlotID + "\nStart Time: " + startTime + "\n\nPlease arrive on time for your Free slot.\n\nRegards,\nThe Meet-My-Lecturer FPT-EDU Free Slot Management System\n"+"meet.my.lecturers.fpt.edu@gmail.com";
         
         Message msg = new MimeMessage(session);
         msg.setFrom(new InternetAddress(from));
@@ -173,7 +173,8 @@ public class Service {
 
     public static void scheduleFreeSlotReminders() {
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new FreeSlotReminderTask(), 0, CHECK_INTERVAL_MINUTES * 60 * 1000); // Execute task every 1 minutes
+        timer.scheduleAtFixedRate(new FreeSlotReminderTask(), 0, CHECK_INTERVAL_MINUTES * 60 * 1000); // Execute task every 1 minutes // 0 is executed immediately
+        System.out.println("FreeSlotReminderTask Service is running .........");
     }
     public static void main(String[] args) {
         scheduleFreeSlotReminders();

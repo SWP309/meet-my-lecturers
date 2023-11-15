@@ -79,9 +79,9 @@ public class CreateFreeSlotServlet extends HttpServlet {
             }
 
             int capacity = Integer.parseInt(request.getParameter("txtCapacity"));
-            if (capacity < 2 || capacity > 100) {
+            if (capacity < 1 || capacity > 100) {
                 flag = false;
-                freeSlotError.setCapacityError("The number of student can join this slot must be between 2-100");
+                freeSlotError.setCapacityError("The number of student can join this slot must be between 1-100");
             }
 
             String meetLink = request.getParameter("txtMeetLink");
