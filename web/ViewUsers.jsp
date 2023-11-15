@@ -183,6 +183,7 @@
                                 <th>Password</th>
                                 <th>Status</th>
                                 <th>Update</th>
+                                <th>Ban</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -247,6 +248,11 @@
                                     <button type="submit" name="action"
                                             value="UpdateUsers">Update</button>
                                 </td>
+                                <td>
+                                    <div style="background-color: red; padding: 5px 9px;">
+                                        <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
+                                    </div>
+                                </td>
                             </form>
                             </tr>
                         </c:forEach>
@@ -268,6 +274,7 @@
                                 <th>Password</th>
                                 <th>Status</th>
                                 <th>Update</th>
+                                <th>Ban</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -336,6 +343,11 @@
                                     <button type="submit" name="action"
                                             value="UpdateUsers">Update</button>
                                 </td>
+                                <td>
+                                    <div style="background-color: red; padding: 5px 9px;">
+                                        <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
+                                    </div>
+                                </td>
                             </form>
                             </tr>
                         </c:forEach>
@@ -357,6 +369,7 @@
                                 <th>Password</th>
                                 <th>Status</th>
                                 <th>Update</th>
+                                <th>Ban</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -421,6 +434,11 @@
                                     <button type="submit" name="action"
                                             value="UpdateUsers">Update</button>
                                 </td>
+                                <td>
+                                    <div style="background-color: red; padding: 5px 9px;">
+                                        <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
+                                    </div>
+                                </td>
                             </form>
                             </tr>
                         </c:forEach>
@@ -442,6 +460,7 @@
                                 <th>Password</th>
                                 <th>Status</th>
                                 <th>Update</th>
+                                <th>Ban</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -506,6 +525,11 @@
                                     <button type="submit" name="action"
                                             value="UpdateUsers">Update</button>
                                 </td>
+                                <td>
+                                    <div style="background-color: red; padding: 5px 9px;">
+                                        <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
+                                    </div>
+                                </td>
                             </form>
                             </tr>
                         </c:forEach>
@@ -527,6 +551,7 @@
                                 <th>Password</th>
                                 <th>Status</th>
                                 <th>Update</th>
+                                <th>Ban</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -593,6 +618,11 @@
                                     <button type="submit" name="action"
                                             value="UpdateUsers">Update</button>
                                 </td>
+                                <td>
+                                    <div style="background-color: red; padding: 5px 9px;">
+                                        <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
+                                    </div>
+                                </td>
                             </form>
                             </tr>
                         </c:forEach>
@@ -615,6 +645,7 @@
                                 <th>Password</th>
                                 <th>Status</th>
                                 <th>Update</th>
+                                <th>Ban</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -679,6 +710,11 @@
                                     <button class="btn-accept" type="submit" name="action"
                                             value="UpdateUsers">Update</button>
                                 </td>
+                                <td>
+                                    <div style="background-color: red; padding: 5px 9px;">
+                                        <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
+                                    </div>
+                                </td>
                             </form>
                             </tr>
                         </c:forEach>
@@ -697,7 +733,15 @@
                         <div class="back">Back</div>
                         <img class="back-icon" alt="" src="./public/UsersView/back.svg" />
                     </div>-->
+        <script>
+            // L?y thông tin l?i t? bi?n requestScope.ERROR
+            var errorMessage = "${requestScope.VIEW_USERS_MESSAGE}";
 
+            // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+            if (errorMessage.trim() !== "") {
+                alert(errorMessage);
+            }
+        </script>
         <%                                } else {
                 response.sendRedirect("MainController?action=");
             }

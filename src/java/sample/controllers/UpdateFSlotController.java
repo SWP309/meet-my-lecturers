@@ -53,14 +53,14 @@ public class UpdateFSlotController extends HttpServlet {
             Date endDate = simpleDateFormat.parse(endTime);
             System.out.println(startDate);
             System.out.println(endDate);
-            boolean checkStartTimeDuplicateFS = dao.checkTimeDuplicateInFreeSlot(us.getUserEmail(), startDate);
-            boolean checkEndTimeDuplicateFS = dao.checkTimeDuplicateInFreeSlot(us.getUserEmail(), endDate);
-            System.out.println(checkEndTimeDuplicateFS);
-            if (checkStartTimeDuplicateFS == false || checkEndTimeDuplicateFS == false) {
-                flag = false;
-                request.setAttribute("ERROR"," The time you entered overlaps with time of created FREESLOT!!! ");
-            }
-            if (flag) {
+//            boolean checkStartTimeDuplicateFS = dao.checkTimeDuplicateInFreeSlot(us.getUserEmail(), startDate);
+//            boolean checkEndTimeDuplicateFS = dao.checkTimeDuplicateInFreeSlot(us.getUserEmail(), endDate);
+//            System.out.println(checkEndTimeDuplicateFS);
+//            if (checkStartTimeDuplicateFS == false || checkEndTimeDuplicateFS == false) {
+//                flag = false;
+//                request.setAttribute("ERROR"," The time you entered overlaps with time of created FREESLOT!!! ");
+//            }
+//            if (flag) {
                 if (endDate.after(startDate) && (endDate.getTime() - startDate.getTime()) >= 15 * 60 * 1000) {
                     ViewCreatedSlotDTO dto = new ViewCreatedSlotDTO();
                     dto.setStartTime(startTime);
@@ -80,7 +80,7 @@ public class UpdateFSlotController extends HttpServlet {
                                 request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
                             }
                         }
-                    }
+//                    }
                 } else {
                     request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
 
