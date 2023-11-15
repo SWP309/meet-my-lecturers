@@ -509,9 +509,15 @@
                 </div>
             </c:if>
 
-            <h3>
-                ${requestScope.ERROR}
-            </h3> 
+            <script>                // L?y thông tin l?i t? bi?n requestScope.ERROR
+                var errorMessage = "${requestScope.ERROR}";
+
+                // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+                if (errorMessage.trim() !== "") {
+                    alert(errorMessage);
+                }
+            </script>
+
             <% } else {
                     response.sendRedirect("MainController?action=");
                 }

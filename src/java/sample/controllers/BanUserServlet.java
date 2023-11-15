@@ -1,42 +1,40 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sample.bookings.BookingDAO;
-import sample.bookings.BookingDTO;
+import sample.users.UserDAO;
 
-public class ViewStudentBookingPresenceServlet extends HttpServlet {
-
-    private final String SUCCESS = "StudentBookingPresence.jsp";
-    private final String ERROR = "StudentBookingPresence.jsp";
-
+/**
+ *
+ * @author CHIBAO
+ */
+public class BanUserServlet extends HttpServlet {
+    private final String SUCCESS = "ViewUsers.jsp";
+    private final String ERROR = "ViewUsers.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            BookingDAO bookingDAO = new BookingDAO();
-            List<BookingDTO> listBookingPreSenceInfo = bookingDAO.bookingPresenceInformation();
-            List<BookingDTO> listBookingAbsenceNumber = bookingDAO.bookingAbsenceNumber();
-            if (listBookingAbsenceNumber != null) {
-                request.setAttribute("LIST_BOOKING_PRESENCE_INFO", listBookingPreSenceInfo);
-                request.setAttribute("LIST_BOOKING_ABSENCE_NUMBER", listBookingAbsenceNumber);
-                url = SUCCESS;
-            } else {
-                request.setAttribute("MESSAGE", "There is no student who books a slot without participating in class!!!");
-            }
-        } catch (SQLException | ClassNotFoundException | ParseException ex) {
-            log("Error at ViewStudentBookingPresenceServlet: " + ex.toString());
+            System.out.println("Ban User");
+            String userID = request.getParameter("txtUserID");
+            UserDAO userDAO = new UserDAO();
+            userDAO.banUser(userID);
+            url = SUCCESS;
+        } catch (ClassNotFoundException | SQLException ex) {
+            log("Error at BanUserServlet: " + ex.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
