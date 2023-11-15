@@ -81,6 +81,8 @@ public class SearchUserServlet extends HttpServlet {
                 } else {
                     request.setAttribute("VIEW_USERS_MESSAGE", "The system has no users!!!");
                 }
+            } else {
+                  request.setAttribute("VIEW_USERS_MESSAGE", "Just search by one condition !!!");
             }
         } catch (ClassNotFoundException | SQLException ex) {
             log("Error at SearchUserServlet: " + ex.toString());

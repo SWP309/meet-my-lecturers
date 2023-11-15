@@ -198,6 +198,14 @@
         <servlet-name>CountPageServlet</servlet-name>
         <servlet-class>sample.controllers.CountPageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchDashBoardServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchDashBoardServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BanUserServlet</servlet-name>
+        <servlet-class>sample.controllers.BanUserServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -377,6 +385,14 @@
     <servlet-mapping>
         <servlet-name>CountPageServlet</servlet-name>
         <url-pattern>/CountPageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchDashBoardServlet</servlet-name>
+        <url-pattern>/SearchDashBoardServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BanUserServlet</servlet-name>
+        <url-pattern>/BanUserServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

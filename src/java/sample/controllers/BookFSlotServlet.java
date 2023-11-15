@@ -62,7 +62,7 @@ public class BookFSlotServlet extends HttpServlet {
             boolean existsInBlockList = FsDao.checkBlockList(studentID, freeSlotID);
             if (existsInBlockList) {
                 checkValidation = false;
-                request.setAttribute("BLOCK_ERROR", "You have been BLOCKED from this slot, please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
+                request.setAttribute("ERROR", "You have been BLOCKED from this slot, please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
                 System.out.println("You have been blocked from this slot, please contact your lecturer to know reasons");
                 dto.setStatus(-1);
             }
@@ -84,7 +84,7 @@ public class BookFSlotServlet extends HttpServlet {
                 checkValidation = false;
                 bookingError.setDuplicateBookedSlot("- This slot was duplicated with another booked slot!!!");
             }
-            request.setAttribute("BOOKING_ERROR", bookingError);
+            request.setAttribute("ERROR", bookingError);
             if (checkValidation) {
                 boolean checkUpdate = dao.BookFSlot(dto);
                 List<BookingDTO> listbooking = dao.getListBooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
