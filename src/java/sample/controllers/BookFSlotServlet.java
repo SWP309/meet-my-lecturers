@@ -64,6 +64,7 @@ public class BookFSlotServlet extends HttpServlet {
                 checkValidation = false;
                 request.setAttribute("ERROR", "You have been BLOCKED from this slot, please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
                 System.out.println("You have been blocked from this slot, please contact your lecturer to know reasons");
+                bookingError.setOverCapacity("You have been BLOCKED from this slot, please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
                 dto.setStatus(-1);
             }
             //tranfer String to Date
@@ -93,17 +94,17 @@ public class BookFSlotServlet extends HttpServlet {
                 if (checkTimeDuplicateInBookedCancel == false || checkTimeDuplicateInBookedCancel == false) {
                     dao.DeleteStatusBookedCancel(freeSlotID);
                 }
-                    boolean checkUpdate = dao.BookFSlot(dto);
-                    List<BookingDTO> listbooking = dao.getListBooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
-                    request.setAttribute("LIST_CREATED_SLOT", listbooking);
-                    if (checkUpdate) {
-                        url = SUCCESS;
-                        if (listbooking == null || listbooking.isEmpty()) {
-                            request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
-                        }
-                    } else {
-                        request.setAttribute("ERROR", "Can not book the slot cause of Error in code");
+                boolean checkUpdate = dao.BookFSlot(dto);
+                List<BookingDTO> listbooking = dao.getListBooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                request.setAttribute("LIST_CREATED_SLOT", listbooking);
+                if (checkUpdate) {
+                    url = SUCCESS;
+                    if (listbooking == null || listbooking.isEmpty()) {
+                        request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
                     }
+                } else {
+                    request.setAttribute("ERROR", "Can not book the slot cause of Error in code");
+                }
             }
         } catch (SQLException | ParseException | ClassNotFoundException ex) {
             log("Error at BookFSlotServlet: " + ex.toString());

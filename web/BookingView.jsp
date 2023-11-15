@@ -149,8 +149,8 @@
     </head>
     <body>
         <script>
-            // L?y thông tin l?i t? bi?n LIST_ERROR
-            var errorMessage = "${request.getAttribute('LIST_ERROR')}";
+            // L?y thông tin l?i t? bi?n requestScope.ERROR
+            var errorMessage = "${requestScope.ERROR}";
 
             // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
             if (errorMessage.trim() !== "") {
