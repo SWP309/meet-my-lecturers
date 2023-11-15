@@ -23,8 +23,8 @@ import sample.viewCreatedSlot.ViewCreatedSlotDTO;
  */
 public class ViewStudentSlotController extends HttpServlet {
 
-    private static final String ERROR = "StudentSlotView.jsp";
-    private static final String SUCCESS = "StudentSlotView.jsp";
+    private static final String ERROR = "create-freeSlot.jsp";
+    private static final String SUCCESS = "create-freeSlot.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
