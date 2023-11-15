@@ -148,6 +148,15 @@
         </style>
     </head>
     <body>
+        <script>
+            // L?y thông tin l?i t? bi?n requestScope.ERROR
+            var errorMessage = "${requestScope.ERROR}";
+
+            // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+            if (errorMessage.trim() !== "") {
+                alert(errorMessage);
+            }
+        </script>
 
         <div class="fptu-eng-1-parent">
             <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
@@ -165,7 +174,7 @@
                             <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
                             <i class="material-icons">event</i>
                         </div>
-                        <div class="view-booking" >View Booking</div>
+                        <div class="view-booking" >View Booked Slots</div>
                     </div>
                     <div class="frame-div requestViewStatus" onclick="submitFormRequestStatus()" id="booking-view-div">
                         <form action="MainController" method="POST" style="display: none;">
@@ -238,6 +247,7 @@
                 </div>
             </div>
             <!--                            LIST OF THE PAGE------------------------------------------->
+
             <div class="container mt-5" style=" max-height: 500%; height: 1000px;   margin-top: -17% !important;">
                 <div class="row justify-content-center mt-5">
                     <c:if test="${requestScope.LIST_BOOKING !=null}">
@@ -509,14 +519,7 @@
                 </div>
             </c:if>
 
-            <script>                // L?y thông tin l?i t? bi?n requestScope.ERROR
-                var errorMessage = "${requestScope.ERROR}";
 
-                // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
-                if (errorMessage.trim() !== "") {
-                    alert(errorMessage);
-                }
-            </script>
 
             <% } else {
                     response.sendRedirect("MainController?action=");

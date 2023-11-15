@@ -16,6 +16,8 @@ public class MainController extends HttpServlet {
     private static final String HOME_PAGE_ADMIN = "AdminPage.jsp";
     private static final String BAN_USER_ACTION = "BanUser";
     private static final String BAN_USER_SERVLET = "BanUserServlet";
+    private static final String UNBAN_USER_ACTION = "UnbanUser";
+    private static final String UNBAN_USER_SERVLET = "UnBanUserServlet";
 
     private static final String LOGIN_BY_GOOGLE = "login";
     private static final String LOGIN_BY_GOOGLE_ACTION = "LoginServlet";
@@ -313,6 +315,8 @@ public class MainController extends HttpServlet {
                 url = COUNT_PAGE_SERVLET;
             } else if (BAN_USER_ACTION.equals(action)) {
                 url = BAN_USER_SERVLET;
+            } else if (UNBAN_USER_ACTION.equals(action)) {
+                url = UNBAN_USER_SERVLET;
             }
 
         } catch (Exception e) {

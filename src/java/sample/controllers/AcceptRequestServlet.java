@@ -33,6 +33,7 @@ public class AcceptRequestServlet extends HttpServlet {
         String url = ERROR;
         try {
             boolean checkCreateFS = true;
+            boolean checkMeetlink = true;
             HttpSession session = request.getSession();
             UserDTO lecturer = (UserDTO) session.getAttribute("loginedUser");
             String lecturerID = lecturer.getUserID();
@@ -62,6 +63,7 @@ public class AcceptRequestServlet extends HttpServlet {
             String studentID = request.getParameter("txtStudentID");
             String semesterID = request.getParameter("txtSemesterID");
             String meetLink = request.getParameter("txtLinkMeet");
+
             RequestDAO requestDAO = new RequestDAO();
             if (meetLink.isEmpty()) {
                 request.setAttribute("VIEW_REQUEST_MESSAGE", "Can not Accept this request !!!");
@@ -86,6 +88,7 @@ public class AcceptRequestServlet extends HttpServlet {
                     request.getRequestDispatcher(url).forward(request, response);
                 }
             }
+
 
         } catch (ClassNotFoundException | SQLException | ParseException ex) {
             log("Error at AcceptRequestServlet: " + ex);

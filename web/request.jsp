@@ -169,7 +169,7 @@
                                 <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
                                 <i class="material-icons">event</i>
                             </div>
-                            <div class="view-booking" >View Request Status</div>
+                            <div class="view-booking" >View Booked Slots</div>
                         </div>
                         <div class="frame-div requestViewStatus" style=" cursor: pointer" onclick="submitFormRequestStatus()">
                             <form action="MainController" method="POST" style="display: none;">
