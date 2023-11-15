@@ -79,9 +79,9 @@ public class CreateFreeSlotServlet extends HttpServlet {
             }
 
             int capacity = Integer.parseInt(request.getParameter("txtCapacity"));
-            if (capacity < 2 || capacity > 100) {
+            if (capacity < 1 || capacity > 100) {
                 flag = false;
-                freeSlotError.setCapacityError("The number of student can join this slot must be between 2-100");
+                freeSlotError.setCapacityError("The number of student can join this slot must be between 1-100");
             }
 
             String meetLink = request.getParameter("txtMeetLink");
@@ -112,7 +112,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
             if (statusOption.equals("PRV")) {
                 status = 0;
             }
-            
+
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
             //****Check input time with current time
@@ -162,19 +162,27 @@ public class CreateFreeSlotServlet extends HttpServlet {
                 flag = false;
                 freeSlotError.setDuplicateTimeError("- The time you entered overlaps with time of created FREESLOT!!! ");
             }
-            
+
+            // ****check time valid with Semester 
+            String checkStartTimeInSemester = freeSlotsDAO.getSemesterID(starts);
+            String checkEndTimeInSemester = freeSlotsDAO.getSemesterID(ends);
+            if (!checkStartTimeInSemester.equals(semesterID) || !checkEndTimeInSemester.equals(semesterID) || checkStartTimeInSemester.equals("") || checkEndTimeInSemester.equals("")) {
+                flag = false;
+                freeSlotError.setSemesterTimeError("- The time you entered NOT MATCH with this Semester");
+            }
+
             FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status, semesterID, block_list);
-            
+
 //            //*****check duplicate timetable*****
 //            Service service = new Service();
 //            boolean checkTimetableDuplicate = service.duplicateSlot(freeSlotsDTO);
+//            System.out.println(checkTimetableDuplicate);
 //            if (checkTimetableDuplicate==false) {
 //                flag=false;
 //                freeSlotError.setDuplicateTimeTableError("- The time you entered overlaps your TimeTable. Please check FAP!!!");
 //            }
-            
             request.setAttribute("FREESLOT_ERROR", freeSlotError);
-            
+
             if (flag) {
                 for (int i = 1; i <= count; i++) {
                     checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);

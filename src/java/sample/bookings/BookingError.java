@@ -6,19 +6,22 @@ public class BookingError {
     private String duplicateAcceptedRequest;
     private String overCapacity;
     private String checkPassword;
+    private String inBlockList;
 
     public BookingError() {
         this.duplicateBookedSlot = "";
         this.duplicateAcceptedRequest = "";
         this.overCapacity = "";
         this.checkPassword = "";
+        this.inBlockList = "";
     }
 
-    public BookingError(String duplicateBookedSlot, String duplicateAcceptedRequest, String overCapacity, String checkPassword) {
+    public BookingError(String duplicateBookedSlot, String duplicateAcceptedRequest, String overCapacity, String checkPassword, String inBlockList) {
         this.duplicateBookedSlot = duplicateBookedSlot;
         this.duplicateAcceptedRequest = duplicateAcceptedRequest;
         this.overCapacity = overCapacity;
         this.checkPassword = checkPassword;
+        this.inBlockList = inBlockList;
     }
     
     /**
@@ -75,6 +78,14 @@ public class BookingError {
      */
     public void setCheckPassword(String checkPassword) {
         this.checkPassword = checkPassword;
+    }
+
+    public String getInBlockList() {
+        return inBlockList;
+    }
+
+    public void setInBlockList(String inBlockList) {
+        this.inBlockList = inBlockList;
     }
     
 }

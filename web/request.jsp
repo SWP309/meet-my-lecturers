@@ -272,6 +272,9 @@
                         <c:if test="${not empty requestScope.REQUEST_ERROR.durationError}">
                             <h6> ${requestScope.REQUEST_ERROR.durationError}</h6>
                         </c:if>
+                        <c:if test="${not empty requestScope.REQUEST_ERROR.semesterTimeError}">
+                            <h6> ${requestScope.REQUEST_ERROR.semesterTimeError}</h6>
+                        </c:if>
                     </div>
                     <div class="form-group row">
                         <label for="txtDescription" class="col-md-2 col-form-label"><strong>Description:</strong></label>

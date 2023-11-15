@@ -61,8 +61,13 @@ public class Service {
     public static boolean duplicateSlot(FreeSlotsDTO f) throws SQLException, ParseException, ClassNotFoundException {
         TimetableDAO tr = new TimetableDAO();
         Calendar startTime = Service.dateToCalendar(f.getStartTime());
+//        System.out.println(startTime);
         String day = intToDays(startTime.get(Calendar.DAY_OF_WEEK));
+//        System.out.println(day);
         List<TimetableDTO> list = tr.listByDate(f.getLecturerID(), day, f.getStartTime(), f.getEndTime());
+//        for (TimetableDTO timetableDTO : list) {
+//            System.out.println(timetableDTO.getLecturerID());
+//        }
         if (list.size() > 0) {
             return false;
         }
@@ -131,7 +136,7 @@ public class Service {
         
         // Compose email content
         String subject = "Upcoming Free Slot Reminder ==> "+"for Subject : "+subjectCode;
-        String body = "Dear "+lecturer_email+"\n"+"This is a reminder that your scheduled free slot is approaching. Your slot details are as follows:\n\nSlot ID: " + freeSlotID + "\nStart Time: " + startTime + "\n\nPlease arrive on time for your Free slot.\n\nRegards,\nThe Meet-My-Lecturer FPT-EDU Free Slot Management System\n"+"meet.my.lecturers.fpt.edu@gmail.com";
+        String body = "Dear Lecturer : "+lecturer_email+"\n"+"This is a reminder that your scheduled free slot is approaching. Your slot details are as follows:\n\nSlot ID: " + freeSlotID + "\nStart Time: " + startTime + "\n\nPlease arrive on time for your Free slot.\n\nRegards,\nThe Meet-My-Lecturer FPT-EDU Free Slot Management System\n"+"meet.my.lecturers.fpt.edu@gmail.com";
         
         Message msg = new MimeMessage(session);
         msg.setFrom(new InternetAddress(from));
@@ -168,7 +173,8 @@ public class Service {
 
     public static void scheduleFreeSlotReminders() {
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new FreeSlotReminderTask(), 0, CHECK_INTERVAL_MINUTES * 60 * 1000); // Execute task every 1 minutes
+        timer.scheduleAtFixedRate(new FreeSlotReminderTask(), 0, CHECK_INTERVAL_MINUTES * 60 * 1000); // Execute task every 1 minutes // 0 is executed immediately
+        System.out.println("FreeSlotReminderTask Service is running .........");
     }
     public static void main(String[] args) {
         scheduleFreeSlotReminders();
