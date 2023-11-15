@@ -73,7 +73,7 @@ public class BookingDAO {
             + "FROM FreeSlots fs\n"
             + "JOIN (  SELECT b.freeSlotID\n"
             + "		FROM Bookings b\n"
-            + "		WHERE \n"
+            + "		WHERE b.status = 0 and \n"
             + "		 b.studentID = ?) bo ON fs.freeSlotID = bo.freeSlotID\n"
             + "WHERE ? BETWEEN fs.startTime AND fs.endTime";
     private static String DELETE_BOOKED_STATUS = "DELETE Bookings where freeSlotID = ?";

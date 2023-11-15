@@ -1162,11 +1162,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
     <script>
                                 // L?y thông tin l?i t? bi?n requestScope.ERROR
-                                var errorMessage = "${requestScope.BLOCK_ERROR}";
-
+                                var errorMessage1 = "${requestScope.LIST_ERROR.checkPassword}";
+                                var errorMessage2 = "${requestScope.LIST_ERROR.overCapacity}";
+                                var errorMessage3 = "${requestScope.LIST_ERROR.duplicateAcceptedRequest}";
+                                var errorMessage4 = "${requestScope.LIST_ERROR.duplicateBookedSlot}";
+                                var errorMessage5 = "${requestScope.ERROR}";
                                 // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
-                                if (errorMessage.trim() !== "") {
-                                    alert(errorMessage);
+                                if (errorMessage1.trim() !== "" || errorMessage2.trim() !== "" || errorMessage3.trim() !== "" || errorMessage4.trim() !== "" || errorMessage5.trim() !== "") {
+                                    alert(errorMessage1);
+                                    alert(errorMessage2);
+                                    alert(errorMessage3);
+                                    alert(errorMessage4);
+                                    alert(errorMessage5);
                                 }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
