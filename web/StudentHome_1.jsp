@@ -1149,6 +1149,9 @@
             <c:if test="${not empty requestScope.BOOKING_ERROR.checkPassword}">
                 <h3 style="color: red">${requestScope.BOOKING_ERROR.checkPassword}</h3>
             </c:if>
+            <c:if test="${not empty requestScope.BOOKING_ERROR.inBlockList}">
+                <h3 style="color: red">${requestScope.BOOKING_ERROR.inBlockList}</h3>
+            </c:if>
         </div>
 
     </div>
@@ -1162,7 +1165,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
     <script>
                                 // L?y thông tin l?i t? bi?n requestScope.ERROR
-                                var errorMessage = "${requestScope.BLOCK_ERROR}";
+                                var errorMessage = "${requestScope.ERROR}";
 
                                 // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
                                 if (errorMessage.trim() !== "") {

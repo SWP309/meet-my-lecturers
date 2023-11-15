@@ -156,6 +156,9 @@ public class FreeSlotsDAO {
             + "AND startTime <= DATEADD(MINUTE, 10, CURRENT_TIMESTAMP)";
     private static String GET_LECTURERID_FROM_FSLOT = "SELECT lecturerID FROM FreeSlots WHERE freeSlotID = ?";
     private static String GET_EMAIL_FROM_LECTURERID = "SELECT userEmail FROM Users WHERE userID = ?";
+    private static String GET_SEMESTERID = "SELECT s.semesterID\n" +
+                                           "FROM Semesters s\n" +
+                                           "WHERE ? BETWEEN s.startDay AND s.endDay";
 
     public boolean updateStatusOutDate(Date currentTime) throws ClassNotFoundException, SQLException, ParseException {
         boolean checkUpdate = false;
@@ -1461,5 +1464,35 @@ public class FreeSlotsDAO {
             }
         }
         return lecturer_email;
+    }
+    public String getSemesterID(Date time) throws SQLException{
+        String semesterID="";//Để tránh gặp lỗi NullPointerException khi ng dùng nhập time mà trong DB ko có
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_SEMESTERID);
+                ptm.setTimestamp(1, new Timestamp(time.getTime()));
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    semesterID = rs.getString("semesterID");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return semesterID;
     }
 }
