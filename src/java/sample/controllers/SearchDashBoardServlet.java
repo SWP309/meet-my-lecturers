@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package sample.controllers;
 
@@ -12,19 +11,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import sample.bookings.BookingDAO;
 import sample.bookings.BookingDTO;
-import sample.dashboard.UserMaxSlotDTO;
 import sample.dashboard.UserMaxRequestDTO;
+import sample.dashboard.UserMaxSlotDTO;
 import sample.users.UserDAO;
-import sample.users.UserDTO;
 
 /**
  *
- * @author Minh Khang
+ * @author PC
  */
-public class DashBoardServlet extends HttpServlet {
+public class SearchDashBoardServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,17 +37,18 @@ public class DashBoardServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String semester = request.getParameter("txtsemester");
+            String studentID = request.getParameter("txtStudentID");
             if (semester != null) {
                 BookingDAO bookingDAO = new BookingDAO();
                 UserMaxSlotDTO stmb = UserDAO.getStudentMaxBook(semester);
                 UserMaxRequestDTO stmr = UserDAO.getStudentMaxRequest(semester);
                 UserMaxSlotDTO ltmb = UserDAO.getLecturerMaxSlot(semester);
                 UserMaxRequestDTO lmr = UserDAO.getLecturerMaxRequest(semester);
-                BookingDTO stuMaxAbsentNum = bookingDAO.bookingAbsenceNumberBySemester(semester);
-                BookingDTO stuMaxCancelNum = bookingDAO.bookingCancelNumberBySemester(semester);
+                List<BookingDTO> studentAbsentInfo = bookingDAO.getStudentMaxAbsentIn4(studentID);
+                List<BookingDTO> studentCancelInfo = bookingDAO.getStudentMaxCancelIn4(studentID);
                 boolean flag = false;
-                request.setAttribute("Top5StuMaxAbsentNum", stuMaxAbsentNum);
-                request.setAttribute("Top5StuMaxCancelNum", stuMaxCancelNum);
+                request.setAttribute("StudentMaxCancel",studentCancelInfo);
+                request.setAttribute("StudentMaxAbsent",studentAbsentInfo);
                 request.setAttribute("UserMaxSlot", stmb);
                 request.setAttribute("UserMaxRequest", stmr);
                 request.setAttribute("LecturerMaxSlot", ltmb);
