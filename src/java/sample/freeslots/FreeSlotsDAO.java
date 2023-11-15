@@ -405,7 +405,9 @@ public class FreeSlotsDAO {
 
     private Timestamp convertStringToTimestamp(String dateString) throws ParseException {
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            System.out.println("Vao dc convert");
+            System.out.println(dateString);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             java.util.Date parsedDate = dateFormat.parse(dateString);
             return new java.sql.Timestamp(parsedDate.getTime());
         } catch (ParseException e) {
