@@ -55,161 +55,176 @@ public class ImportStudents extends HttpServlet {
                     InputStream inp = filePart.getInputStream();
                     HSSFWorkbook wb = new HSSFWorkbook(new POIFSFileSystem(inp));
                     HSSFSheet sheet = wb.getSheetAt(0);
+                    String sheetName = wb.getSheetName(0);
                     MAX_EXISTING_USER_CHECKS = sheet.getLastRowNum();
-                    try {
-                        
-                        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                            Row row = sheet.getRow(i);
-                            
+                    if (sheetName.equals("ImportUserMMLT")) {
+                        try {
 
-                            String userID = row.getCell(1).getStringCellValue();
-                            String userName = row.getCell(2).getStringCellValue();
-                            String userEmail = row.getCell(3).getStringCellValue();
-                            int userStatus = (int) row.getCell(4).getNumericCellValue();
-                            if (userStatus >= 0 && userStatus < 5) {
-                                int roleid = (int) row.getCell(5).getNumericCellValue();
-                                if (roleid >= 0 && roleid < 5) {
-                                    String roleID = String.valueOf(roleid);
-                                    int passWord = (int) (Math.random() * 1000000) % 1000 + 10000;
-                                    String password = String.valueOf(passWord);
-                                    UserDTO existed = UserDAO.getUserByID(userID);
-                                    if (existed != null) {
-                                        existingUserCounter+=1;
-                                        if (existingUserCounter >= MAX_EXISTING_USER_CHECKS) {
-                                            flag = false;
-                                            request.setAttribute("EXCSERVLET","Import fail, the data are existed in database");
-                                            break;
+                            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                                Row row = sheet.getRow(i);
+
+                                String userID = row.getCell(1).getStringCellValue();
+                                String userName = row.getCell(2).getStringCellValue();
+                                String userEmail = row.getCell(3).getStringCellValue();
+                                int userStatus = (int) row.getCell(4).getNumericCellValue();
+                                if (userStatus >= 0 && userStatus < 5) {
+                                    int roleid = (int) row.getCell(5).getNumericCellValue();
+                                    if (roleid >= 0 && roleid < 5) {
+                                        String roleID = String.valueOf(roleid);
+                                        int passWord = (int) (Math.random() * 1000000) % 1000 + 10000;
+                                        String password = String.valueOf(passWord);
+                                        UserDTO existed = UserDAO.getUserByID(userID);
+                                        if (existed != null) {
+                                            existingUserCounter += 1;
+                                            if (existingUserCounter >= MAX_EXISTING_USER_CHECKS) {
+                                                flag = false;
+                                                request.setAttribute("EXCSERVLET", "Import fail, the data are existed in database");
+                                                break;
+                                            }
+                                            continue;
                                         }
-                                        continue;
+                                        existingUserCounter = 0;
+                                        UserDTO users = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
+                                        UserDAO.ImportExcelUsers(users);
+                                        String content = String.format("<!DOCTYPE html>%n"
+                                                + "<html>%n"
+                                                + "<head>%n"
+                                                + "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">%n"
+                                                + "</head>%n"
+                                                + "<body style=\"background-color: #f2f2f2;\">%n"
+                                                + "    <div style=\"background-color: #0078d4; color: white; padding: 10px;\">%n"
+                                                + "        <h1>%s</h1>%n"
+                                                + "    </div>%n"
+                                                + "    <div style=\"padding: 10px;\">%n"
+                                                + "        <p>Hello,</p>%n"
+                                                + "        <p>%s</p>%n"
+                                                + "        <p>Cảm ơn bạn đã đọc email này.</p>%n"
+                                                + "    </div>%n"
+                                                + "    <div style=\"background-color: #f2f2f2; padding: 10px;\">%n"
+                                                + "        <p>Đây là phần chân trang của email.</p>%n"
+                                                + "        <p>Liên hệ: example@example.com</p>%n"
+                                                + "    </div>%n"
+                                                + "</body>%n"
+                                                + "</html>",
+                                                userEmail, password);
+                                        EmailDAO.sendMail(userEmail, subject, content);
+
+                                    } else {
+                                        wb.close();
+                                        request.setAttribute("EXCSERVLET", "Error role ID at line: " + i);
+                                        flag = false;
+                                        break;
                                     }
-                                    existingUserCounter = 0;
-                                    UserDTO users = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
-                                    UserDAO.ImportExcelUsers(users);
-                                    String content = String.format("<!DOCTYPE html>%n"
-                                            + "<html>%n"
-                                            + "<head>%n"
-                                            + "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">%n"
-                                            + "</head>%n"
-                                            + "<body style=\"background-color: #f2f2f2;\">%n"
-                                            + "    <div style=\"background-color: #0078d4; color: white; padding: 10px;\">%n"
-                                            + "        <h1>%s</h1>%n"
-                                            + "    </div>%n"
-                                            + "    <div style=\"padding: 10px;\">%n"
-                                            + "        <p>Hello,</p>%n"
-                                            + "        <p>%s</p>%n"
-                                            + "        <p>Cảm ơn bạn đã đọc email này.</p>%n"
-                                            + "    </div>%n"
-                                            + "    <div style=\"background-color: #f2f2f2; padding: 10px;\">%n"
-                                            + "        <p>Đây là phần chân trang của email.</p>%n"
-                                            + "        <p>Liên hệ: example@example.com</p>%n"
-                                            + "    </div>%n"
-                                            + "</body>%n"
-                                            + "</html>",
-                                            userEmail, password);
-                                    EmailDAO.sendMail(userEmail, subject, content);
-                                    
                                 } else {
                                     wb.close();
-                                    request.setAttribute("EXCSERVLET", "Error role ID at line: " + i);
+                                    request.setAttribute("EXCSERVLET", "Error status at line: " + i);
                                     flag = false;
                                     break;
                                 }
-                            } else {
-                                wb.close();
-                                request.setAttribute("EXCSERVLET", "Error status at line: " + i);
-                                flag = false;
-                                break;
                             }
-                        }
-                        if(flag){
+                            if (flag) {
+                                wb.close();
+                                request.setAttribute("EXCSERVLET", "Import Successfully");
+                            }
+                        } catch (IllegalStateException e) {
                             wb.close();
-                            request.setAttribute("EXCSERVLET", "Import Successfully");
+                            request.setAttribute("EXCSERVLET", "Wrong format data ");
+                            URL = "MainController?action=importPage";
+                        } catch (NullPointerException e) {
+                            wb.close();
+                            request.setAttribute("EXCSERVLET", "Wrong format data ");
+                            URL = "MainController?action=importPage";
                         }
-                    } catch (IllegalStateException e) {
-                        wb.close();
-                        request.setAttribute("EXCSERVLET", "Wrong format data ");
-                        URL = "MainController?action=importPage";
                     }
                 } else if (fileName.endsWith(".xlsx")) {
 
                     InputStream inp = filePart.getInputStream();
                     XSSFWorkbook wb = new XSSFWorkbook(inp);
                     XSSFSheet sheet = wb.getSheetAt(0);
+                    String sheetName = wb.getSheetName(0);
                     MAX_EXISTING_USER_CHECKS = sheet.getLastRowNum();
-                    try {
-                        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                            Row row = sheet.getRow(i);
-                            
+                    if (sheetName.equals("ImportUserMMLT")) {
+                        try {
+                            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                                Row row = sheet.getRow(i);
 
-                            String userID = row.getCell(1).getStringCellValue();
-                            String userName = row.getCell(2).getStringCellValue();
-                            String userEmail = row.getCell(3).getStringCellValue();
-                            int userStatus = (int) row.getCell(4).getNumericCellValue();
-                            if (userStatus >= 0 && userStatus < 5) {
-                                int roleid = (int) row.getCell(5).getNumericCellValue();
-                                if (roleid >= 0 && roleid < 5) {
-                                    String roleID = String.valueOf(roleid);
-                                    int passWord = (int) (Math.random() * 1000000) % 1000 + 10000;
-                                    String password = String.valueOf(passWord);
-                                    UserDTO existed = UserDAO.getUserByID(userID);
-                                    if (existed != null) {
-                                        existingUserCounter+=1;
-                                        if (existingUserCounter >= MAX_EXISTING_USER_CHECKS) {
-                                            flag = false;
-                                            request.setAttribute("EXCSERVLET","Import fail, the data are existed in database");
-                                            break;
+                                String userID = row.getCell(1).getStringCellValue();
+                                String userName = row.getCell(2).getStringCellValue();
+                                String userEmail = row.getCell(3).getStringCellValue();
+                                int userStatus = (int) row.getCell(4).getNumericCellValue();
+                                if (userStatus >= 0 && userStatus < 5) {
+                                    int roleid = (int) row.getCell(5).getNumericCellValue();
+                                    if (roleid >= 0 && roleid < 5) {
+                                        String roleID = String.valueOf(roleid);
+                                        int passWord = (int) (Math.random() * 1000000) % 1000 + 10000;
+                                        String password = String.valueOf(passWord);
+                                        UserDTO existed = UserDAO.getUserByID(userID);
+                                        if (existed != null) {
+                                            existingUserCounter += 1;
+                                            if (existingUserCounter >= MAX_EXISTING_USER_CHECKS) {
+                                                flag = false;
+                                                request.setAttribute("EXCSERVLET", "Import fail, the data are existed in database");
+                                                break;
+                                            }
+                                            continue;
                                         }
-                                        continue;
+                                        existingUserCounter = 0;
+                                        UserDTO users = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
+                                        UserDAO.ImportExcelUsers(users);
+                                        String content = String.format("<!DOCTYPE html>%n"
+                                                + "<html>%n"
+                                                + "<head>%n"
+                                                + "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">%n"
+                                                + "</head>%n"
+                                                + "<body style=\"background-color: #f2f2f2;\">%n"
+                                                + "    <div style=\"background-color: #0078d4; color: white; padding: 10px;\">%n"
+                                                + "        <h1>%s</h1>%n"
+                                                + "    </div>%n"
+                                                + "    <div style=\"padding: 10px;\">%n"
+                                                + "        <p>Hello,</p>%n"
+                                                + "        <p>%s</p>%n"
+                                                + "        <p>Cảm ơn bạn đã đọc email này.</p>%n"
+                                                + "    </div>%n"
+                                                + "    <div style=\"background-color: #f2f2f2; padding: 10px;\">%n"
+                                                + "        <p>Đây là phần chân trang của email.</p>%n"
+                                                + "        <p>Liên hệ: example@example.com</p>%n"
+                                                + "    </div>%n"
+                                                + "</body>%n"
+                                                + "</html>",
+                                                userEmail, password);
+                                        EmailDAO.sendMail(userEmail, subject, content);
+
+                                    } else {
+                                        wb.close();
+                                        request.setAttribute("EXCSERVLET", "Error role ID at line: " + i);
+                                        flag = false;
+                                        break;
                                     }
-                                    existingUserCounter = 0;
-                                    UserDTO users = new UserDTO(userID, userName, userEmail, userStatus, roleID, password);
-                                    UserDAO.ImportExcelUsers(users);
-                                    String content = String.format("<!DOCTYPE html>%n"
-                                            + "<html>%n"
-                                            + "<head>%n"
-                                            + "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">%n"
-                                            + "</head>%n"
-                                            + "<body style=\"background-color: #f2f2f2;\">%n"
-                                            + "    <div style=\"background-color: #0078d4; color: white; padding: 10px;\">%n"
-                                            + "        <h1>%s</h1>%n"
-                                            + "    </div>%n"
-                                            + "    <div style=\"padding: 10px;\">%n"
-                                            + "        <p>Hello,</p>%n"
-                                            + "        <p>%s</p>%n"
-                                            + "        <p>Cảm ơn bạn đã đọc email này.</p>%n"
-                                            + "    </div>%n"
-                                            + "    <div style=\"background-color: #f2f2f2; padding: 10px;\">%n"
-                                            + "        <p>Đây là phần chân trang của email.</p>%n"
-                                            + "        <p>Liên hệ: example@example.com</p>%n"
-                                            + "    </div>%n"
-                                            + "</body>%n"
-                                            + "</html>",
-                                            userEmail, password);
-                                    EmailDAO.sendMail(userEmail, subject, content);
-                                    
                                 } else {
                                     wb.close();
-                                    request.setAttribute("EXCSERVLET", "Error role ID at line: " + i);
+                                    request.setAttribute("EXCSERVLET", "Error status at line: " + i);
                                     flag = false;
                                     break;
                                 }
-                            } else {
-                                wb.close();
-                                request.setAttribute("EXCSERVLET", "Error status at line: " + i);
-                                flag = false;
-                                break;
                             }
-                        }
-                        if(flag){
-                            wb.close();
-                            request.setAttribute("EXCSERVLET", "Import Successfully");
-                        }
+                            if (flag) {
+                                wb.close();
+                                request.setAttribute("EXCSERVLET", "Import Successfully");
+                            }
 //                        wb.close();
 //                        request.setAttribute("EXCSERVLET", "Import Successfully");
 //                        URL = "MainController?action=importPage";
-                    } catch (IllegalStateException e) {
-                        wb.close();
-                        request.setAttribute("EXCSERVLET", "Wrong format data");
+                        } catch (IllegalStateException e) {
+                            wb.close();
+                            request.setAttribute("EXCSERVLET", "Wrong format data");
+                            URL = "MainController?action=importPage";
+                        } catch (NullPointerException e) {
+                            wb.close();
+                            request.setAttribute("EXCSERVLET", "Wrong format data");
+                            URL = "MainController?action=importPage";
+                        }
+                    } else {
+                        request.setAttribute("EXCSERVLET", "Error: Incorrect sheet name");
                         URL = "MainController?action=importPage";
                     }
                 } else {

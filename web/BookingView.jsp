@@ -174,7 +174,7 @@
                             <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
                             <i class="material-icons">event</i>
                         </div>
-                        <div class="view-booking" >View Booking</div>
+                        <div class="view-booking" >View Booked Slots</div>
                     </div>
                     <div class="frame-div requestViewStatus" onclick="submitFormRequestStatus()" id="booking-view-div">
                         <form action="MainController" method="POST" style="display: none;">
@@ -247,9 +247,8 @@
                 </div>
             </div>
             <!--                            LIST OF THE PAGE------------------------------------------->
-            <div class="container mt-5" style="margin-top: -17% !important;
-                 max-height: 500%;
-                 height: 1000px;">
+
+            <div class="container mt-5" style=" max-height: 500%; height: 1000px;   margin-top: -17% !important;">
                 <div class="row justify-content-center mt-5">
                     <c:if test="${requestScope.LIST_BOOKING !=null}">
                         <c:if test="${not empty requestScope.LIST_BOOKING}">
@@ -295,7 +294,7 @@
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's Name:</b></strong> <span class="ml-auto">${searchByAll.lectureName}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${searchByAll.startTime}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${searchByAll.endTime}</span></div>
-                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" href="https://${searchByAll.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByAll.bookingID}')"> Link Meet</a></span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link"  href="https://${searchByAll.meetLink}" target="_blank" onclick="confirmCheckAttendanceLink(event, '${searchByAll.bookingID}')"> Link Meet</a></span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchByAll.semesterID}</span></div>
                                                     <div class="d-flex justify-content-between btn-book">
                                                         <!--                                             Added d-flex justify-content-between to create a flex container -->
@@ -329,7 +328,7 @@
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's Name:</b></strong> <span class="ml-auto">${searchByStEt.lectureName}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${searchByStEt.startTime}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${searchByStEt.endTime}</span></div>
-                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" href="https://${searchByStEt.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByStEt.bookingID}')"> Link Meet</a></span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" target="_blank" href="https://${searchByStEt.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByStEt.bookingID}')"> Link Meet</a></span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchByStEt.semesterID}</span></div>
                                                     <div class="d-flex justify-content-between btn-book">
                                                         <!--                                             Added d-flex justify-content-between to create a flex container -->
@@ -363,7 +362,7 @@
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's Name:</b></strong> <span class="ml-auto">${searchBySubjectCode.lectureName}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${searchBySubjectCode.startTime}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${searchBySubjectCode.endTime}</span></div>
-                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" href="https://${searchBySubjectCode.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchBySubjectCode.bookingID}')"> Link Meet</a></span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" target="_blank" href="https://${searchBySubjectCode.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchBySubjectCode.bookingID}')"> Link Meet</a></span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchBySubjectCode.semesterID}</span></div>
                                                     <div class="d-flex justify-content-between btn-book">
                                                         <!--                                             Added d-flex justify-content-between to create a flex container -->
@@ -397,7 +396,7 @@
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's Name:</b></strong> <span class="ml-auto">${searchBySemesterID.lectureName}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${searchBySemesterID.startTime}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${searchBySemesterID.endTime}</span></div>
-                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" href="https://${searchBySemesterID.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchBySemesterID.bookingID}')"> Link Meet</a></span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" target="_blank" href="https://${searchBySemesterID.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchBySemesterID.bookingID}')"> Link Meet</a></span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchBySemesterID.semesterID}</span></div>
                                                     <div class="d-flex justify-content-between btn-book">
                                                         <!--                                             Added d-flex justify-content-between to create a flex container -->
@@ -431,7 +430,7 @@
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's Name:</b></strong> <span class="ml-auto">${searchByNull.lectureName}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${searchByNull.startTime}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${searchByNull.endTime}</span></div>
-                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" href="https://${searchByNull.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByNull.bookingID}')"> Link Meet</a></span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" target="_blank" href="https://${searchByNull.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByNull.bookingID}')"> Link Meet</a></span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchByNull.semesterID}</span></div>
                                                     <div class="d-flex justify-content-between btn-book">
                                                         <!--                                             Added d-flex justify-content-between to create a flex container -->
@@ -465,7 +464,7 @@
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's Name:</b></strong> <span class="ml-auto">${searchByStEtSubject.lectureName}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${searchByStEtSubject.startTime}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${searchByStEtSubject.endTime}</span></div>
-                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" href="https://${searchByStEtSubject.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByStEtSubject.bookingID}')"> Link Meet</a></span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" target="_blank" href="https://${searchByStEtSubject.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByStEtSubject.bookingID}')"> Link Meet</a></span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchByStEtSubject.semesterID}</span></div>
                                                     <div class="d-flex justify-content-between btn-book">
                                                         <!--                                             Added d-flex justify-content-between to create a flex container -->
@@ -499,7 +498,7 @@
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's Name:</b></strong> <span class="ml-auto">${searchByStEtSemesterID.lectureName}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${searchByStEtSemesterID.startTime}</span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${searchByStEtSemesterID.endTime}</span></div>
-                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" href="https://${searchByStEtSemesterID.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByStEtSemesterID.bookingID}')"> Link Meet</a></span></div>
+                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link" target="_blank" href="https://${searchByStEtSemesterID.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByStEtSemesterID.bookingID}')"> Link Meet</a></span></div>
                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchByStEtSemesterID.semesterID}</span></div>
                                                     <div class="d-flex justify-content-between btn-book">
                                                         <!--                                             Added d-flex justify-content-between to create a flex container -->

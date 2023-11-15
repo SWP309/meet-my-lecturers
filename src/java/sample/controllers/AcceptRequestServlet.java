@@ -63,13 +63,12 @@ public class AcceptRequestServlet extends HttpServlet {
             String studentID = request.getParameter("txtStudentID");
             String semesterID = request.getParameter("txtSemesterID");
             String meetLink = request.getParameter("txtLinkMeet");
-            System.out.println(meetLink);
-            if (meetLink.equals("")) {
-                checkMeetlink = false;
+
+            RequestDAO requestDAO = new RequestDAO();
+            if (meetLink.isEmpty()) {
                 request.setAttribute("VIEW_REQUEST_MESSAGE", "Can not Accept this request !!!");
-            }
-            if (checkMeetlink = true) {
-                RequestDAO requestDAO = new RequestDAO();
+                request.getRequestDispatcher(url).forward(request, response);
+            } else {
                 boolean checkAccept = requestDAO.acceptARequest(requestID);
 
                 FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, null, 1, meetLink, 1, lecturerID, 1, semesterID, null);
@@ -83,16 +82,17 @@ public class AcceptRequestServlet extends HttpServlet {
                 boolean checkBooking = bookingDAO.BookFSlot(bookingDTO);
                 if (checkAccept && checkCreateFS && checkBooking) {
                     url = SUCCESS;
+                    request.getRequestDispatcher(url).forward(request, response);
                 } else {
-                    request.setAttribute("VIEW_REQUEST_MESSAGE", "Can not Accept this request !!!");
+                    request.setAttribute("VIEW_REQUEST_MESSAGE", "Can not Accept this request !!! ");
+                    request.getRequestDispatcher(url).forward(request, response);
                 }
             }
+
 
         } catch (ClassNotFoundException | SQLException | ParseException ex) {
             log("Error at AcceptRequestServlet: " + ex);
             ex.printStackTrace();
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

@@ -98,6 +98,7 @@
                     <a class="fpt-university2" href="http://library.fpt.edu.vn/" target="_blank">
                         <span class="fpt-university3">library</span>
                     </a>
+                    <span class="fpt-university2" >| Contact us: mml-mailer@example.com</span>
                 </div>
             </div>
         </div>

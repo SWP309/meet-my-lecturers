@@ -80,23 +80,15 @@ public class SendEMailServlet extends HttpServlet {
             msg.setFrom(new InternetAddress(from));
             msg.addRecipients(Message.RecipientType.TO, addresses.toArray(new InternetAddress[0]));
             msg.setSubject("Thong tin cua mon hoc : " + subjectCode + " vao luc : " + startTime + " va ket thuc luc : " + endTime);
-//            msg.setText("Ma truy cap Fslot cua ban : " + fslotPassword + "\n"
-//                    + " FSlot nay la cua : " + lecturerName + "   Email : " + lecturerEmail + "\n" + message);
-            msg.setText(message);
 
-            BodyPart messageBodyPart = new MimeBodyPart();
-            // Fill the message
-            messageBodyPart.setContent("<html><body><b><h1>Thong tin cua mon hoc : </h1></b></body></html>" + subjectCode + "<html><body><b><h3>vao luc : </h3></b></body></html>" + startTime + "<html><body><b><h3> va ket thuc luc : </h3></b></body></html>" + endTime + "<html><body><b><h1>Ma truy cap Fslot cua ban : </h1></b></body></html>" + fslotPassword + "<html><body><b><h2>FSlot nay la cua : </h2></b></body></html>" + lecturerName + "<html><body><b><h2>Email : </h2></b></body></html>" + lecturerEmail + "<html><body><img src=\"https://camo.githubusercontent.com/f3369035e14e2d3c9f8b1f10c8a48c102a84136fefcabc6c85fd6623abdc57ac/68747470733a2f2f692e696d6775722e636f6d2f7044694166544f2e706e67\" alt=\"This is an image of a cat.\" /></body></html>", "text/html");
-//            messageBodyPart.setContent("<html><body><b><h3>vao luc : </h3></b></body></html>" + startTime, "text/html");
-//            messageBodyPart.setContent("<html><body><b><h3> va ket thuc luc : </h3></b></body></html>" + endTime, "text/html");
-//            messageBodyPart.setContent("<html><body><b><h1>Ma truy cap Fslot cua ban : </h1></b></body></html>" + fslotPassword, "text/html");
-//            messageBodyPart.setContent("<html><body><b><h2>FSlot nay la cua : </h2></b></body></html>" + lecturerName, "text/html");
-//            messageBodyPart.setContent("<html><body><b><h2>Email : </h2></b></body></html>" + lecturerEmail, "text/html");
-
-            // Create a multipar message
+            // Create a multipart message
             Multipart multipart = new MimeMultipart();
-            // Set text message part
+            
+            //first body part of the multipart
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent("<html><body><b><h1>Thong tin cua mon hoc : </h1></b></body></html>" + subjectCode + "<html><body><b><h3>vao luc : </h3></b></body></html>" + startTime + "<html><body><b><h3> va ket thuc luc : </h3></b></body></html>" + endTime + "<html><body><b><h1>Ma truy cap Fslot cua ban : </h1></b></body></html>" + fslotPassword + "<html><body><b><h4>===============================================================================<html><body><b><h4>" + message + "<html><body><b><h4>===============================================================================<html><body><b><h4>" + "<html><body><b><h2>FSlot nay la cua : </h2></b></body></html>" + lecturerName + "<html><body><b><h2>Email : </h2></b></body></html>" + lecturerEmail + "<html><body><img src=\"https://camo.githubusercontent.com/f3369035e14e2d3c9f8b1f10c8a48c102a84136fefcabc6c85fd6623abdc57ac/68747470733a2f2f692e696d6775722e636f6d2f7044694166544f2e706e67\" alt=\"This is an image of a cat.\" /></body></html>", "text/html");
             multipart.addBodyPart(messageBodyPart);
+                        
             msg.setContent(multipart);
             Transport.send(msg);
             url = SUCCESS;

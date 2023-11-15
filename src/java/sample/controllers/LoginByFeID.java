@@ -38,7 +38,9 @@ public class LoginByFeID extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String email = request.getParameter("txtemail");
+            System.out.println(email);
             String password = request.getParameter("txtpassword");
+            System.out.println(password);
             UserDTO us = UserDAO.getUser(email);
             boolean flag = true;
 

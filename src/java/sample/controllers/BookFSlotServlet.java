@@ -62,9 +62,7 @@ public class BookFSlotServlet extends HttpServlet {
             System.out.println(existsInBlockList);
             if (existsInBlockList) {
                 checkValidation = false;
-                request.setAttribute("ERROR", "You have been BLOCKED from this slot, please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
-                System.out.println("You have been blocked from this slot, please contact your lecturer to know reasons");
-                bookingError.setOverCapacity("You have been BLOCKED from this slot, please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
+                bookingError.setInBlockList("- You have been BLOCKED from this slot, please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
                 dto.setStatus(-1);
             }
             //tranfer String to Date
@@ -89,7 +87,8 @@ public class BookFSlotServlet extends HttpServlet {
                 System.out.println("Bi duplicate");
             }
             boolean checkTimeDuplicateInBookedCancel = dao.checkTimeDuplicateInBookedCancel(studentID, start);
-            request.setAttribute("LIST_ERROR", bookingError);
+            request.setAttribute("BOOKING_ERROR", bookingError);
+
             if (checkValidation) {
                 if (checkTimeDuplicateInBookedCancel == false || checkTimeDuplicateInBookedCancel == false) {
                     dao.DeleteStatusBookedCancel(freeSlotID);

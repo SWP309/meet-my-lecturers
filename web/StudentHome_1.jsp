@@ -251,10 +251,10 @@
                             </form>
                             <div class="bookedslot-wrapper">
                                 <!--                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
--->                           <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                                -->                           <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
                                 <i class="material-icons">event</i>
                             </div>
-                            <div class="view-booking" >View Booking</div>
+                            <div class="view-booking" >View Booked Slots</div>
                         </div>
                         <div class="frame-div requestViewStatus" style=" cursor: pointer" onclick="submitFormRequestStatus()" id="booking-view-div">
                             <form action="MainController" method="POST" style="display: none;">
@@ -330,8 +330,8 @@
                                     <button class="" data-slide="0"><span class="show-for-sr">First slide details.</span></button>
                                     <button data-slide="1" class=""><span class="show-for-sr">Second slide details.</span></button>
                                     <button data-slide="2" class=""><span class="show-for-sr">Third slide details.</span></button>
-                                    <button data-slide="3" class=""><span class="show-for-sr">Third slide details.</span></button>
-                                    <button data-slide="4" class="is-active"><span class="show-for-sr">Fourth slide details.</span><span class="show-for-sr">Current Slide</span></button>
+                                    <button data-slide="3" class=""><span class="show-for-sr">Fourth slide details.</span></button>
+                                    <button data-slide="4" class="is-active"><span class="show-for-sr">Fifth slide details.</span><span class="show-for-sr">Current Slide</span></button>
                                 </nav>
                             </div>
                         </div>
@@ -1143,12 +1143,6 @@
                 </c:if>
 
             </div>
-            <c:if test="${not empty requestScope.BOOKING_ERROR.duplicateBookedSlot}">
-                <h3 style="color: red">${requestScope.BOOKING_ERROR.duplicateBookedSlot}</h3>
-            </c:if>
-            <c:if test="${not empty requestScope.BOOKING_ERROR.checkPassword}">
-                <h3 style="color: red">${requestScope.BOOKING_ERROR.checkPassword}</h3>
-            </c:if>
         </div>
 
     </div>
@@ -1162,19 +1156,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
     <script>
                                 // L?y thông tin l?i t? bi?n requestScope.ERROR
-                                var errorMessage1 = "${requestScope.LIST_ERROR.checkPassword}";
-                                var errorMessage2 = "${requestScope.LIST_ERROR.overCapacity}";
-                                var errorMessage3 = "${requestScope.LIST_ERROR.duplicateAcceptedRequest}";
-                                var errorMessage4 = "${requestScope.LIST_ERROR.duplicateBookedSlot}";
-                                var errorMessage5 = "${requestScope.ERROR}";
+                                var errorMessage1 = "${requestScope.BOOKING_ERROR.duplicateBookedSlot}";
+                                var errorMessage2 = "${requestScope.BOOKING_ERROR.checkPassword}";
+                                var errorMessage3 = "${requestScope.BOOKING_ERROR.inBlockList}";
+                                var errorMessage4 = "${requestScope.SEARCH_FREESLOT_MESSAGE}";
+                                var errorMessage = "${requestScope.ERROR}";
+
                                 // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
-                                if (errorMessage1.trim() !== "" || errorMessage2.trim() !== "" || errorMessage3.trim() !== "" || errorMessage4.trim() !== "" || errorMessage5.trim() !== "") {
-                                    alert(errorMessage1);
-                                    alert(errorMessage2);
-                                    alert(errorMessage3);
-                                    alert(errorMessage4);
-                                    alert(errorMessage5);
+                                if (errorMessage.trim() !== "") {
+                                    alert(errorMessage);
                                 }
+                                if (errorMessage1.trim() !== "") {
+                                    alert(errorMessage1);
+                                }
+                                if (errorMessage2.trim() !== "") {
+                                    alert(errorMessage2);
+                                }
+                                if (errorMessage3.trim() !== "") {
+                                    alert(errorMessage3);
+                                }
+                                if (errorMessage4.trim() !== "") {
+                                    alert(errorMessage4);
+                                }
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script>
