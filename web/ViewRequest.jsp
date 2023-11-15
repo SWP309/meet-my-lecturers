@@ -331,7 +331,7 @@
                                             <td>${request.description}</td>
                                             <td>
                                                 <input class="form-control" type="text" name="txtLinkMeet" 
-                                                       value="${param.txtLinkMeet}" placeholder="Input MeetLink" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$">
+                                                       value="${param.txtLinkMeet}" placeholder="E.g: meet.google.com/hgi-fyrr-npm" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$">
                                             </td>
                                             <td>
                                                 <input type="hidden" name="txtRequestID" 

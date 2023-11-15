@@ -55,12 +55,14 @@ public class LoginServlet extends HttpServlet {
                 } else {
                     String msg = "Your account has been banned";
                     request.setAttribute("Error", msg);
+                    request.getRequestDispatcher("MainController?action=").forward(request, response);
                 }
             } else {
                 String msg = "Your email is not granted access to the system";
                 request.setAttribute("Error", msg);
-            }
                 request.getRequestDispatcher("MainController?action=").forward(request, response);
+            }
+//                request.getRequestDispatcher("MainController?action=").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

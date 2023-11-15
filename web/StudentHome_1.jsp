@@ -330,8 +330,8 @@
                                     <button class="" data-slide="0"><span class="show-for-sr">First slide details.</span></button>
                                     <button data-slide="1" class=""><span class="show-for-sr">Second slide details.</span></button>
                                     <button data-slide="2" class=""><span class="show-for-sr">Third slide details.</span></button>
-                                    <button data-slide="3" class=""><span class="show-for-sr">Third slide details.</span></button>
-                                    <button data-slide="4" class="is-active"><span class="show-for-sr">Fourth slide details.</span><span class="show-for-sr">Current Slide</span></button>
+                                    <button data-slide="3" class=""><span class="show-for-sr">Fourth slide details.</span></button>
+                                    <button data-slide="4" class="is-active"><span class="show-for-sr">Fifth slide details.</span><span class="show-for-sr">Current Slide</span></button>
                                 </nav>
                             </div>
                         </div>

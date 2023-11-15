@@ -98,6 +98,7 @@
                     <a class="fpt-university2" href="http://library.fpt.edu.vn/" target="_blank">
                         <span class="fpt-university3">library</span>
                     </a>
+                    <span class="fpt-university2" >| Contact us: meet.my.lecturers.fpt.edu@gmail.com</span>
                 </div>
             </div>
         </div>
