@@ -251,10 +251,10 @@
                             </form>
                             <div class="bookedslot-wrapper">
                                 <!--                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
--->                           <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
+                                -->                           <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
                                 <i class="material-icons">event</i>
                             </div>
-                            <div class="view-booking" >View Booking</div>
+                            <div class="view-booking" >View Booked Slots</div>
                         </div>
                         <div class="frame-div requestViewStatus" style=" cursor: pointer" onclick="submitFormRequestStatus()" id="booking-view-div">
                             <form action="MainController" method="POST" style="display: none;">
@@ -1143,15 +1143,6 @@
                 </c:if>
 
             </div>
-            <c:if test="${not empty requestScope.BOOKING_ERROR.duplicateBookedSlot}">
-                <h3 style="color: red">${requestScope.BOOKING_ERROR.duplicateBookedSlot}</h3>
-            </c:if>
-            <c:if test="${not empty requestScope.BOOKING_ERROR.checkPassword}">
-                <h3 style="color: red">${requestScope.BOOKING_ERROR.checkPassword}</h3>
-            </c:if>
-            <c:if test="${not empty requestScope.BOOKING_ERROR.inBlockList}">
-                <h3 style="color: red">${requestScope.BOOKING_ERROR.inBlockList}</h3>
-            </c:if>
         </div>
 
     </div>
@@ -1165,12 +1156,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
     <script>
                                 // L?y thông tin l?i t? bi?n requestScope.ERROR
+                                var errorMessage1 = "${requestScope.BOOKING_ERROR.duplicateBookedSlot}";
+                                var errorMessage2 = "${requestScope.BOOKING_ERROR.checkPassword}";
+                                var errorMessage3 = "${requestScope.BOOKING_ERROR.inBlockList}";
+                                var errorMessage4 = "${requestScope.SEARCH_FREESLOT_MESSAGE}";
                                 var errorMessage = "${requestScope.ERROR}";
 
                                 // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
                                 if (errorMessage.trim() !== "") {
                                     alert(errorMessage);
                                 }
+                                if (errorMessage1.trim() !== "") {
+                                    alert(errorMessage1);
+                                }
+                                if (errorMessage2.trim() !== "") {
+                                    alert(errorMessage2);
+                                }
+                                if (errorMessage3.trim() !== "") {
+                                    alert(errorMessage3);
+                                }
+                                if (errorMessage4.trim() !== "") {
+                                    alert(errorMessage4);
+                                }
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script>

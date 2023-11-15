@@ -245,13 +245,20 @@
                                            value="${param.txtSearchUserID}" readonly="">
                                     <input type="hidden" name="txtStatus" 
                                            value="${user.userStatus}" readonly="">
-                                    <button type="submit" name="action"
+                                    <button class="btn-accept" type="submit" name="action"
                                             value="UpdateUsers">Update</button>
                                 </td>
                                 <td>
-                                    <div style="background-color: red; padding: 5px 9px;">
-                                        <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
-                                    </div>
+                                    <c:if test="${user.userStatus == 1 || user.userStatus == 2}">
+                                        <div style="background-color: red; padding: 5px 9px;">
+                                            <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${user.userStatus == 0}">
+                                        <div style="background-color: #cccc00; padding: 5px 9px;">
+                                            <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=UnbanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Unban</a>
+                                        </div>
+                                    </c:if>
                                 </td>
                             </form>
                             </tr>
@@ -334,19 +341,22 @@
                                            value="${user.userID}" readonly="">
                                     <input type="hidden" name="txtSearchUserID" 
                                            value="${param.txtSearchUserID}" readonly="">
-                                    <input type="hidden" name="txtName" 
-                                           value="${param.txtName}" readonly="">
-                                    <input type="hidden" name="txtRoleID" 
-                                           value="${param.txtRoleID}" readonly="">
                                     <input type="hidden" name="txtStatus" 
                                            value="${user.userStatus}" readonly="">
-                                    <button type="submit" name="action"
+                                    <button class="btn-accept" type="submit" name="action"
                                             value="UpdateUsers">Update</button>
                                 </td>
                                 <td>
-                                    <div style="background-color: red; padding: 5px 9px;">
-                                        <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
-                                    </div>
+                                    <c:if test="${user.userStatus == 1 || user.userStatus == 2}">
+                                        <div style="background-color: red; padding: 5px 9px;">
+                                            <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${user.userStatus == 0}">
+                                        <div style="background-color: #cccc00; padding: 5px 9px;">
+                                            <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=UnbanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Unban</a>
+                                        </div>
+                                    </c:if>
                                 </td>
                             </form>
                             </tr>
@@ -427,17 +437,24 @@
                                 <td>
                                     <input type="hidden" name="txtUserID" 
                                            value="${user.userID}" readonly="">
-                                    <input type="hidden" name="txtRoleID" 
-                                           value="${param.txtRoleID}" readonly="">
+                                    <input type="hidden" name="txtSearchUserID" 
+                                           value="${param.txtSearchUserID}" readonly="">
                                     <input type="hidden" name="txtStatus" 
                                            value="${user.userStatus}" readonly="">
-                                    <button type="submit" name="action"
+                                    <button class="btn-accept" type="submit" name="action"
                                             value="UpdateUsers">Update</button>
                                 </td>
                                 <td>
-                                    <div style="background-color: red; padding: 5px 9px;">
-                                        <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
-                                    </div>
+                                    <c:if test="${user.userStatus == 1 || user.userStatus == 2}">
+                                        <div style="background-color: red; padding: 5px 9px;">
+                                            <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${user.userStatus == 0}">
+                                        <div style="background-color: #cccc00; padding: 5px 9px;">
+                                            <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=UnbanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Unban</a>
+                                        </div>
+                                    </c:if>
                                 </td>
                             </form>
                             </tr>
@@ -518,17 +535,24 @@
                                 <td>
                                     <input type="hidden" name="txtUserID" 
                                            value="${user.userID}" readonly="">
-                                    <input type="hidden" name="txtName" 
-                                           value="${param.txtName}" readonly="">
+                                    <input type="hidden" name="txtSearchUserID" 
+                                           value="${param.txtSearchUserID}" readonly="">
                                     <input type="hidden" name="txtStatus" 
                                            value="${user.userStatus}" readonly="">
-                                    <button type="submit" name="action"
+                                    <button class="btn-accept" type="submit" name="action"
                                             value="UpdateUsers">Update</button>
                                 </td>
                                 <td>
-                                    <div style="background-color: red; padding: 5px 9px;">
-                                        <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
-                                    </div>
+                                    <c:if test="${user.userStatus == 1 || user.userStatus == 2}">
+                                        <div style="background-color: red; padding: 5px 9px;">
+                                            <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${user.userStatus == 0}">
+                                        <div style="background-color: #cccc00; padding: 5px 9px;">
+                                            <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=UnbanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Unban</a>
+                                        </div>
+                                    </c:if>
                                 </td>
                             </form>
                             </tr>
@@ -609,19 +633,24 @@
                                 <td>
                                     <input type="hidden" name="txtUserID" 
                                            value="${user.userID}" readonly="">
-                                    <input type="hidden" name="txtName" 
-                                           value="${param.txtName}" readonly="">
-                                    <input type="hidden" name="txtRoleID" 
-                                           value="${param.txtRoleID}" readonly="">
+                                    <input type="hidden" name="txtSearchUserID" 
+                                           value="${param.txtSearchUserID}" readonly="">
                                     <input type="hidden" name="txtStatus" 
                                            value="${user.userStatus}" readonly="">
-                                    <button type="submit" name="action"
+                                    <button class="btn-accept" type="submit" name="action"
                                             value="UpdateUsers">Update</button>
                                 </td>
                                 <td>
-                                    <div style="background-color: red; padding: 5px 9px;">
-                                        <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
-                                    </div>
+                                    <c:if test="${user.userStatus == 1 || user.userStatus == 2}">
+                                        <div style="background-color: red; padding: 5px 9px;">
+                                            <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${user.userStatus == 0}">
+                                        <div style="background-color: #cccc00; padding: 5px 9px;">
+                                            <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=UnbanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Unban</a>
+                                        </div>
+                                    </c:if>
                                 </td>
                             </form>
                             </tr>
@@ -702,18 +731,26 @@
                                     </c:if> 
                                 </td>
                                 <td>
-                                    <!--<input type="hidden" name="action" value="SearchUsers">-->
                                     <input type="hidden" name="txtUserID" 
                                            value="${user.userID}" readonly="">
+                                    <input type="hidden" name="txtSearchUserID" 
+                                           value="${param.txtSearchUserID}" readonly="">
                                     <input type="hidden" name="txtStatus" 
                                            value="${user.userStatus}" readonly="">
                                     <button class="btn-accept" type="submit" name="action"
                                             value="UpdateUsers">Update</button>
                                 </td>
                                 <td>
-                                    <div style="background-color: red; padding: 5px 9px;">
-                                        <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
-                                    </div>
+                                    <c:if test="${user.userStatus == 1 || user.userStatus == 2}">
+                                        <div style="background-color: red; padding: 5px 9px;">
+                                            <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=BanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Ban</a>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${user.userStatus == 0}">
+                                        <div style="background-color: #cccc00; padding: 5px 9px;">
+                                            <a style="color: white; text-decoration: none; display: flex;" href="MainController?action=UnbanUser&txtUserID=${user.userID}"><i class="material-icons">cancel</i>Unban</a>
+                                        </div>
+                                    </c:if>
                                 </td>
                             </form>
                             </tr>

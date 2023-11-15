@@ -69,7 +69,14 @@ public class BookingDAO {
             + "		WHERE b.status = 1 \n"
             + "		AND b.studentID = ?) bo ON fs.freeSlotID = bo.freeSlotID\n"
             + "WHERE ? BETWEEN fs.startTime AND fs.endTime";
-
+    private static String CHECK_TIME_DUPLICATE_CANCEL = "SELECT fs.freeSlotID\n"
+            + "FROM FreeSlots fs\n"
+            + "JOIN (  SELECT b.freeSlotID\n"
+            + "		FROM Bookings b\n"
+            + "		WHERE b.status = 0 and \n"
+            + "		 b.studentID = ?) bo ON fs.freeSlotID = bo.freeSlotID\n"
+            + "WHERE ? BETWEEN fs.startTime AND fs.endTime";
+    private static String DELETE_BOOKED_STATUS = "DELETE Bookings where freeSlotID = ?";
     private static String CHECK_TIME_DUPLICATE_REQUEST = "SELECT r.requestID\n"
             + "FROM Requests r\n"
             + "WHERE r.status = 1 \n"
@@ -708,6 +715,30 @@ public class BookingDAO {
         }
         return checkDelete;
     }
+      public boolean DeleteStatusBookedCancel(String freeSlotID) throws SQLException {
+        boolean checkDelete = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(DELETE_BOOKED_STATUS);
+                ptm.setString(1, freeSlotID);
+                checkDelete = ptm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return checkDelete;
+    }
 
     public boolean BookFSlot(BookingDTO bookingDTO) throws SQLException {
         boolean checkUpdate = false;
@@ -803,6 +834,30 @@ public class BookingDAO {
         try {
             con = DBUtils.getConnection();
             stm = con.prepareStatement(CHECK_TIME_DUPLICATE_BOOKED_FS);
+            stm.setString(1, studentID);
+            stm.setTimestamp(2, new Timestamp(starts.getTime()));
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                check = false;
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return check;
+    }
+    public boolean checkTimeDuplicateInBookedCancel(String studentID, Date starts) throws ClassNotFoundException, SQLException {
+        boolean check = true;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(CHECK_TIME_DUPLICATE_CANCEL);
             stm.setString(1, studentID);
             stm.setTimestamp(2, new Timestamp(starts.getTime()));
             rs = stm.executeQuery();
