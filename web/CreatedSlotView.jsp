@@ -436,7 +436,7 @@
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
     <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.meetLink}"/>-->
-                                                    <a class="ml-auto specific-input" href="https://${listCreatedSlot.meetLink}" onclick="confirmCheckAttendanceLink(event, '${listCreatedSlot.freeSlotID}')"> Link Meet</a>
+                                                    <a class="ml-auto specific-input" href="https://${listCreatedSlot.meetLink}" onclick="confirmCheckAttendanceLink(event, '${listCreatedSlot.freeSlotID}')" target="_blank"> Link Meet</a>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
                                                     <span class="ml-auto specific-input">${listCreatedSlot.semesterID}</span>
@@ -506,7 +506,7 @@
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
     <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.meetLink}"/>-->
-                                                            <a class="ml-auto specific-input" href="https://${searchByStEt.meetLink}" onclick="confirmCheckAttendanceLinkByStEt(event, '${searchByStEt.freeSlotID}')"> Link Meet</a>
+                                                            <a class="ml-auto specific-input" href="https://${searchByStEt.meetLink}" target="_blank" onclick="confirmCheckAttendanceLinkByStEt(event, '${searchByStEt.freeSlotID}')"> Link Meet</a>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
                                                             <span class="ml-auto specific-input">${searchByStEt.semesterID}</span>
@@ -575,7 +575,7 @@
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
     <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.meetLink}"/>-->
-                                                                <a class="ml-auto specific-input" href="https://${searchByAll.meetLink}" onclick="confirmCheckAttendanceLinkByAll(event, '${searchByAll.freeSlotID}')"> Link Meet</a>
+                                                                <a class="ml-auto specific-input" href="https://${searchByAll.meetLink}" target="_blank" onclick="confirmCheckAttendanceLinkByAll(event, '${searchByAll.freeSlotID}')"> Link Meet</a>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
                                                                 <span class="ml-auto specific-input">${searchByAll.semesterID}</span>
@@ -642,7 +642,7 @@
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
     <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEtSubject.meetLink}"/>-->
-                                                                    <a class="ml-auto specific-input" href="https://${searchByStEtSubject.meetLink}" onclick="confirmCheckAttendanceLinkByAll(event, '${searchByStEtSubject.freeSlotID}')"> Link Meet</a>
+                                                                    <a class="ml-auto specific-input" href="https://${searchByStEtSubject.meetLink}" target="_blank" onclick="confirmCheckAttendanceLinkByAll(event, '${searchByStEtSubject.freeSlotID}')"> Link Meet</a>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
                                                                     <span class="ml-auto specific-input">${searchByStEtSubject.semesterID}</span>
@@ -711,7 +711,7 @@
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
         <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEtSemesterID.meetLink}"/>-->
-                                                                        <a class="ml-auto specific-input" href="https://${searchByStEtSemesterID.meetLink}" onclick="confirmCheckAttendanceLinkByAll(event, '${searchByStEtSemesterID.freeSlotID}')"> Link Meet</a>
+                                                                        <a class="ml-auto specific-input" href="https://${searchByStEtSemesterID.meetLink}" target="_blank" onclick="confirmCheckAttendanceLinkByAll(event, '${searchByStEtSemesterID.freeSlotID}')"> Link Meet</a>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
                                                                         <span class="ml-auto specific-input">${searchByStEtSemesterID.semesterID}</span>
@@ -779,7 +779,7 @@
                                                                         </div>
                                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b >Link Meet:</b></strong> 
         <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.meetLink}"/>-->
-                                                                            <a class="ml-auto specific-input" href="https://${searchBySubjectCode.meetLink}" onclick="confirmCheckAttendanceLinkBySubjectCode(event, '${searchBySubjectCode.freeSlotID}')"> Link Meet</a>
+                                                                            <a class="ml-auto specific-input" href="https://${searchBySubjectCode.meetLink}" target="_blank" onclick="confirmCheckAttendanceLinkBySubjectCode(event, '${searchBySubjectCode.freeSlotID}')"> Link Meet</a>
                                                                         </div>
                                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
                                                                             <span class="ml-auto specific-input">${searchBySubjectCode.semesterID}</span>
@@ -849,7 +849,7 @@
                                                                             </div>
                                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b >Link Meet:</b></strong> 
             <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySemesterID.meetLink}"/>-->
-                                                                                <a class="ml-auto specific-input" href="https://${searchBySemesterID.meetLink}" onclick="confirmCheckAttendanceLinkBySubjectCode(event, '${searchBySemesterID.freeSlotID}')"> Link Meet</a>
+                                                                                <a class="ml-auto specific-input" href="https://${searchBySemesterID.meetLink}" target="_blank" onclick="confirmCheckAttendanceLinkBySubjectCode(event, '${searchBySemesterID.freeSlotID}')"> Link Meet</a>
                                                                             </div>
                                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
                                                                                 <span class="ml-auto specific-input">${searchBySemesterID.semesterID}</span>
@@ -920,7 +920,7 @@
                                                                                 </div>
                                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
                                 <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.meetLink}"/>-->
-                                                                                    <a class="ml-auto specific-input" href="https://${searchByNull.meetLink}" onclick="confirmCheckAttendanceLink(event, '${searchByNull.freeSlotID}')"> Link Meet</a>
+                                                                                    <a class="ml-auto specific-input" href="https://${searchByNull.meetLink}" target="_blank" onclick="confirmCheckAttendanceLink(event, '${searchByNull.freeSlotID}')"> Link Meet</a>
                                                                                 </div>
                                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
                                                                                     <span class="ml-auto specific-input">${searchByNull.semesterID}</span>

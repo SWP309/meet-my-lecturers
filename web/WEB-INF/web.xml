@@ -206,6 +206,10 @@
         <servlet-name>BanUserServlet</servlet-name>
         <servlet-class>sample.controllers.BanUserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UnBanUserServlet</servlet-name>
+        <servlet-class>sample.controllers.UnBanUserServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -393,6 +397,10 @@
     <servlet-mapping>
         <servlet-name>BanUserServlet</servlet-name>
         <url-pattern>/BanUserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UnBanUserServlet</servlet-name>
+        <url-pattern>/UnBanUserServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
