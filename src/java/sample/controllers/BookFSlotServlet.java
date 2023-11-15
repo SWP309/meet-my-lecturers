@@ -62,7 +62,7 @@ public class BookFSlotServlet extends HttpServlet {
             boolean existsInBlockList = FsDao.checkBlockList(studentID, freeSlotID);
             if (existsInBlockList) {
                 checkValidation = false;
-                request.setAttribute("BLOCK_ERROR", "You have been BLOCKED from this slot, please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
+                bookingError.setInBlockList("- You have been BLOCKED from this slot, please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
                 System.out.println("You have been blocked from this slot, please contact your lecturer to know reasons");
                 dto.setStatus(-1);
             }

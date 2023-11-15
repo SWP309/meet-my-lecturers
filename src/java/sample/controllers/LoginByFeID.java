@@ -40,7 +40,7 @@ public class LoginByFeID extends HttpServlet {
             String email = request.getParameter("txtemail");
             String password = request.getParameter("txtpassword");
             UserDTO us = UserDAO.getUser(email);
-            boolean flag = false;
+            boolean flag = true;
 
             if (us != null) {
                 if (us.getPassword().equals(password)) {
@@ -58,16 +58,25 @@ public class LoginByFeID extends HttpServlet {
                     } else {
                         String msg = "Your account has been banned";
                         request.setAttribute("ban", msg);
+                        flag = false;
+//                        request.getRequestDispatcher("MainController?action=").forward(request, response);
                     }
                 } else {
                     String msg = "Invalid userid or password";
                     request.setAttribute("Error", msg);
+                    flag = false;
+//                    request.getRequestDispatcher("MainController?action=").forward(request, response);
                 }
             } else {
                 String msg = "Invalid userid or password";
                 request.setAttribute("Error", msg);
+                flag = false;
+//                request.getRequestDispatcher("MainController?action=").forward(request, response);
             }
+            if(!flag){
+                
             request.getRequestDispatcher("MainController?action=").forward(request, response);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

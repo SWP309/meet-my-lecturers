@@ -7,11 +7,14 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.bookings.BookingDAO;
+import sample.bookings.BookingDTO;
 import sample.dashboard.UserMaxSlotDTO;
 import sample.dashboard.UserMaxRequestDTO;
 import sample.users.UserDAO;
@@ -38,17 +41,22 @@ public class DashBoardServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String semester = request.getParameter("txtsemester");
             if (semester != null) {
+                BookingDAO bookingDAO = new BookingDAO();
                 UserMaxSlotDTO stmb = UserDAO.getStudentMaxBook(semester);
                 UserMaxRequestDTO stmr = UserDAO.getStudentMaxRequest(semester);
                 UserMaxSlotDTO ltmb = UserDAO.getLecturerMaxSlot(semester);
                 UserMaxRequestDTO lmr = UserDAO.getLecturerMaxRequest(semester);
+                BookingDTO stuMaxAbsentNum = bookingDAO.bookingAbsenceNumberBySemester(semester);
+                BookingDTO stuMaxCancelNum = bookingDAO.bookingCancelNumberBySemester(semester);
                 boolean flag = false;
+                request.setAttribute("Top5StuMaxAbsentNum", stuMaxAbsentNum);
+                request.setAttribute("Top5StuMaxCancelNum", stuMaxCancelNum);
                 request.setAttribute("UserMaxSlot", stmb);
                 request.setAttribute("UserMaxRequest", stmr);
                 request.setAttribute("LecturerMaxSlot", ltmb);
                 request.setAttribute("LecturerMaxRequest", lmr);
                 System.out.println(semester);
-                if(semester.equals("")){
+                if (semester.equals("")) {
                     request.setAttribute("MSG", "Null semester");
                 }
                 request.getRequestDispatcher("AdminPage.jsp").forward(request, response);
