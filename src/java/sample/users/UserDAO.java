@@ -58,13 +58,41 @@ public class UserDAO implements Serializable {
             + "      ,userStatus = ?\n"
             + "      ,password = ?\n"
             + " WHERE userID = ?";
+    private final String BAN_USER = "UPDATE Users\n"
+            + "SET userStatus = 0\n"
+            + "WHERE userID = ?";
 
     private List<UserDTO> lecturers;
+
+    public boolean banUser(String userID) throws ClassNotFoundException, SQLException {
+        boolean checkUpdate = false;
+        Connection con = null;
+        PreparedStatement stm = null;
+        int result;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(BAN_USER);
+            stm.setString(1, userID);
+            result = stm.executeUpdate();
+            if (result > 0) {
+                checkUpdate = true;
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return checkUpdate;
+    }
 
     public List<UserDTO> getLecturers() {
         return lecturers;
     }
-        public List<Top3StudentDTO> GetlistTop3() throws SQLException {
+
+    public List<Top3StudentDTO> GetlistTop3() throws SQLException {
         List<Top3StudentDTO> listTop3 = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
