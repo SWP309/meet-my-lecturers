@@ -283,11 +283,11 @@
                                 <c:if test="${not empty requestScope.FREESLOT_ERROR.semesterTimeError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.semesterTimeError}</h6>
                                 </c:if>
-                                <div class="d-flex justify-content-between"><strong>Capacity:</strong> <input type="number" class="form-control" name="txtCapacity" value="${param.txtCapacity}" placeholder="need at least 2 student" required=""></div>
+                                <div class="d-flex justify-content-between"><strong>Capacity:</strong> <input type="number" class="form-control" name="txtCapacity" value="${param.txtCapacity}" placeholder="need at least 1 student" required=""></div>
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.capacityError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.capacityError}</h6>
                                 </c:if>
-                                <div class="d-flex justify-content-between"><strong>Password(optional):</strong> <input type="password" class="form-control" name="txtPassword" value="${param.txtPassword}"></div>
+                                <div class="d-flex justify-content-between"><strong>Password of this Free Slot(optional):</strong> <input type="text" class="form-control" name="txtPassword" value="${param.txtPassword}"></div>
                                 <div class="d-flex justify-content-between"><strong>Meet Link:</strong> <input type="text" class="form-control"  name="txtMeetLink" value="${param.txtMeetLink}" placeholder="ex:meet.google.com/...etc" required="" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$"></div>
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.meetLinkError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.meetLinkError}</h6>
@@ -311,7 +311,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="role" class="col-form-label"><strong><b style="color: red">TIMES:</b></strong></label>
-                                        <input type="number" class="form-control" name="txtCount" required="" value="${param.txtCount}">
+                                        <input type="number" class="form-control" name="txtCount" placeholder="Greater OR Equal 1" required="" value="${param.txtCount}">
                                         <c:if test="${not empty requestScope.FREESLOT_ERROR.repeatedTimeError}">
                                             <h6> ${requestScope.FREESLOT_ERROR.repeatedTimeError}</h6>
                                         </c:if>
