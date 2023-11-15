@@ -80,6 +80,7 @@ public class BookFSlotServlet extends HttpServlet {
             //*****check duplicateBookedFSlot
             boolean checkStartDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, starts);
             boolean checkEndDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, ends);
+            System.out.println(checkStartDuplicateBookedFS);
             if (checkStartDuplicateBookedFS == false || checkEndDuplicateBookedFS == false) {
                 checkValidation = false;
                 bookingError.setDuplicateBookedSlot("- This slot was duplicated with another booked slot!!!");

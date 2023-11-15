@@ -23,8 +23,10 @@ import sample.requests.RequestDAO;
 import sample.users.UserDTO;
 
 public class AcceptRequestServlet extends HttpServlet {
+
     private final String SUCCESS = "ViewRequestServlet";
     private final String ERROR = "ViewRequestServlet";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -37,7 +39,7 @@ public class AcceptRequestServlet extends HttpServlet {
             String requestID = request.getParameter("txtRequestID");
             String subjectCode = request.getParameter("txtSubjectCode");
             String startTime = request.getParameter("txtStartTime");
-            String endTime = request.getParameter("txtEndTime");            
+            String endTime = request.getParameter("txtEndTime");
 //            //tranfer String to Date
 //            DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 //            Date starts = format.parse(startTime);
@@ -56,31 +58,38 @@ public class AcceptRequestServlet extends HttpServlet {
 //                freeSlotError.setPastTimeError("- The start and end times must be in the future"
 //                        + " and at least 2 hours greater than the current time!!!");
 //            }
-            
+
             String studentID = request.getParameter("txtStudentID");
             String semesterID = request.getParameter("txtSemesterID");
             String meetLink = request.getParameter("txtLinkMeet");
             RequestDAO requestDAO = new RequestDAO();
-            boolean checkAccept = requestDAO.acceptARequest(requestID);
-            
-            FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, null, 1, meetLink, 1, lecturerID, 1, semesterID, null);
-            FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
-            checkCreateFS = freeSlotsDAO.createFreeSlotBooking(freeSlotsDTO);
-            
-            BookingDTO bookingDTO = new BookingDTO();
-            bookingDTO.setStudentID(studentID);
-            bookingDTO.setFreeSlotID(freeSlotsDAO.searchFSAccept(startTime, lecturerID));
-            BookingDAO bookingDAO = new BookingDAO();
-            boolean checkBooking = bookingDAO.BookFSlot(bookingDTO);
-            if(checkAccept && checkCreateFS && checkBooking) {
-                url = SUCCESS;
-            } else{
+            if (meetLink.isEmpty()) {
                 request.setAttribute("VIEW_REQUEST_MESSAGE", "Can not Accept this request !!!");
+                request.getRequestDispatcher(url).forward(request, response);
+            } else {
+                boolean checkAccept = requestDAO.acceptARequest(requestID);
+
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, null, 1, meetLink, 1, lecturerID, 1, semesterID, null);
+                FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
+                checkCreateFS = freeSlotsDAO.createFreeSlotBooking(freeSlotsDTO);
+
+                BookingDTO bookingDTO = new BookingDTO();
+                bookingDTO.setStudentID(studentID);
+                bookingDTO.setFreeSlotID(freeSlotsDAO.searchFSAccept(startTime, lecturerID));
+                BookingDAO bookingDAO = new BookingDAO();
+                boolean checkBooking = bookingDAO.BookFSlot(bookingDTO);
+                if (checkAccept && checkCreateFS && checkBooking) {
+                    url = SUCCESS;
+                    request.getRequestDispatcher(url).forward(request, response);
+                } else {
+                    request.setAttribute("VIEW_REQUEST_MESSAGE", "Can not Accept this request !!! ");
+                    request.getRequestDispatcher(url).forward(request, response);
+                }
             }
+
         } catch (ClassNotFoundException | SQLException | ParseException ex) {
             log("Error at AcceptRequestServlet: " + ex);
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            ex.printStackTrace();
         }
     }
 
