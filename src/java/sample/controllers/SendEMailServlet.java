@@ -7,7 +7,12 @@ package sample.controllers;
 
 import static java.awt.SystemColor.text;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -28,6 +33,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.freeslots.FreeSlotError;
 import sample.users.UserDTO;
 
 /**
@@ -40,10 +46,11 @@ public class SendEMailServlet extends HttpServlet {
     private static final String SUCCESS = "CreatedSlotController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, AddressException {
+            throws ServletException, IOException, AddressException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
 //        boolean checkSend = false;
+        boolean flag = true;
         final String from = "meet.my.lecturers.fpt.edu@gmail.com";
         final String password = "fmpheqhatzpjndvh";
         Properties prop = new Properties();
@@ -58,7 +65,7 @@ public class SendEMailServlet extends HttpServlet {
         });
 
         String recipientList = request.getParameter("txtRecipient");
-        String[] recipients = recipientList.split(";");
+        String[] recipients = recipientList.split(",");
         List<InternetAddress> addresses = new ArrayList<>();
         for (String recipient : recipients) {
             addresses.add(new InternetAddress(recipient));
@@ -66,33 +73,55 @@ public class SendEMailServlet extends HttpServlet {
 
         HttpSession sessionn = request.getSession();
         UserDTO us = (UserDTO) sessionn.getAttribute("loginedUser");
+        FreeSlotError freeSlotError = new FreeSlotError();
         String lecturerName = us.getUserName();
         String lecturerEmail = us.getUserEmail();
 
         String subjectCode = request.getParameter("txtSubjectCode");
         String startTime = request.getParameter("txtStartTime");
         String endTime = request.getParameter("txtEndTime");
+
+        //tranfer String to Date
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        Date starts = format.parse(startTime);
+        Date ends = format.parse(endTime);
+        //****check end time greater than start time
+        if (ends.before(starts) || ends.equals(starts)) {
+            flag = false;
+            freeSlotError.setEndTimeError("- The end times must be greater than start times!!!");
+        }
+        //****check duration from start time to end time
+        // Calculate duration between startTime and endTime
+        long timeDifference = ends.getTime() - starts.getTime();
+        int minutesDifference = (int) (timeDifference / (1000 * 60));
+        if (minutesDifference > 90 || minutesDifference < 15) {
+            flag = false;
+            freeSlotError.setDurationError("- Duration of a slot must be from 15 to 90 minutes!!!");
+        }
+        request.setAttribute("FREESLOT_ERROR", freeSlotError);
+        
         String fslotPassword = request.getParameter("txtPassword");
         String message = request.getParameter("txtMessage");
 
         try {
-            Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(from));
-            msg.addRecipients(Message.RecipientType.TO, addresses.toArray(new InternetAddress[0]));
-            msg.setSubject("Thong tin cua mon hoc : " + subjectCode + " vao luc : " + startTime + " va ket thuc luc : " + endTime);
+            if (flag) {
+                Message msg = new MimeMessage(session);
+                msg.setFrom(new InternetAddress(from));
+                msg.addRecipients(Message.RecipientType.TO, addresses.toArray(new InternetAddress[0]));
+                msg.setSubject("Thong tin cua mon hoc : " + subjectCode + " vao luc : " + startTime + " va ket thuc luc : " + endTime);
 
-            // Create a multipart message
-            Multipart multipart = new MimeMultipart();
-            
-            //first body part of the multipart
-            BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setContent("<html><body><b><h1>Thong tin cua mon hoc : </h1></b></body></html>" + subjectCode + "<html><body><b><h3>vao luc : </h3></b></body></html>" + startTime + "<html><body><b><h3> va ket thuc luc : </h3></b></body></html>" + endTime + "<html><body><b><h1>Ma truy cap Fslot cua ban : </h1></b></body></html>" + fslotPassword + "<html><body><b><h4>===============================================================================<html><body><b><h4>" + message + "<html><body><b><h4>===============================================================================<html><body><b><h4>" + "<html><body><b><h2>FSlot nay la cua : </h2></b></body></html>" + lecturerName + "<html><body><b><h2>Email : </h2></b></body></html>" + lecturerEmail + "<html><body><img src=\"https://camo.githubusercontent.com/f3369035e14e2d3c9f8b1f10c8a48c102a84136fefcabc6c85fd6623abdc57ac/68747470733a2f2f692e696d6775722e636f6d2f7044694166544f2e706e67\" alt=\"This is an image of a cat.\" /></body></html>", "text/html");
-            multipart.addBodyPart(messageBodyPart);
-                        
-            msg.setContent(multipart);
-            Transport.send(msg);
-            url = SUCCESS;
+                // Create a multipart message
+                Multipart multipart = new MimeMultipart();
 
+                //first body part of the multipart
+                BodyPart messageBodyPart = new MimeBodyPart();
+                messageBodyPart.setContent("<html><body><b><h1>Thong tin cua mon hoc : </h1></b></body></html>" + subjectCode + "<html><body><b><h3>vao luc : </h3></b></body></html>" + startTime + "<html><body><b><h3> va ket thuc luc : </h3></b></body></html>" + endTime + "<html><body><b><h1>Ma truy cap Fslot cua ban : </h1></b></body></html>" + fslotPassword + "<html><body><b><h4>===============================================================================<html><body><b><h4>" + message + "<html><body><b><h4>===============================================================================<html><body><b><h4>" + "<html><body><b><h2>FSlot nay la cua : </h2></b></body></html>" + lecturerName + "<html><body><b><h2>Email : </h2></b></body></html>" + lecturerEmail + "<html><body><img src=\"https://camo.githubusercontent.com/f3369035e14e2d3c9f8b1f10c8a48c102a84136fefcabc6c85fd6623abdc57ac/68747470733a2f2f692e696d6775722e636f6d2f7044694166544f2e706e67\" alt=\"This is an image of a cat.\" /></body></html>", "text/html");
+                multipart.addBodyPart(messageBodyPart);
+
+                msg.setContent(multipart);
+                Transport.send(msg);
+                url = SUCCESS;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -116,6 +145,8 @@ public class SendEMailServlet extends HttpServlet {
             processRequest(request, response);
         } catch (AddressException ex) {
             Logger.getLogger(SendEMailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(SendEMailServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -133,6 +164,8 @@ public class SendEMailServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (AddressException ex) {
+            Logger.getLogger(SendEMailServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(SendEMailServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
