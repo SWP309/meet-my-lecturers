@@ -1,4 +1,3 @@
-
 package sample.controllers;
 
 import java.io.IOException;
@@ -60,6 +59,7 @@ public class BookFSlotServlet extends HttpServlet {
             dto.setFreeSlotID(freeSlotID);
             BookingError bookingError = new BookingError();
             boolean existsInBlockList = FsDao.checkBlockList(studentID, freeSlotID);
+            System.out.println(existsInBlockList);
             if (existsInBlockList) {
                 checkValidation = false;
                 request.setAttribute("ERROR", "You have been BLOCKED from this slot, please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
@@ -68,39 +68,46 @@ public class BookFSlotServlet extends HttpServlet {
             }
             //tranfer String to Date
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            Date starts = format.parse(startTime);
+            Date start = format.parse(startTime);
             Date ends = format.parse(endTime);
             //check password
             if (!password.isEmpty()) {
                 if (!txtPassword.equals(password)) {
                     checkValidation = false;
                     bookingError.setCheckPassword("- Wrong password!!!");
+                    System.out.println("sai dong 78");
                 }
             }
             //*****check duplicateBookedFSlot
-            boolean checkStartDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, starts);
+            boolean checkStartDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, start);
             boolean checkEndDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, ends);
+            System.out.println(checkStartDuplicateBookedFS);
             if (checkStartDuplicateBookedFS == false || checkEndDuplicateBookedFS == false) {
                 checkValidation = false;
                 bookingError.setDuplicateBookedSlot("- This slot was duplicated with another booked slot!!!");
+                System.out.println("Bi duplicate");
             }
-            request.setAttribute("ERROR", bookingError);
+            boolean checkTimeDuplicateInBookedCancel = dao.checkTimeDuplicateInBookedCancel(studentID, start);
+            request.setAttribute("LIST_ERROR", bookingError);
             if (checkValidation) {
-                boolean checkUpdate = dao.BookFSlot(dto);
-                List<BookingDTO> listbooking = dao.getListBooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
-                request.setAttribute("LIST_CREATED_SLOT", listbooking);
-                if (checkUpdate) {
-                    url = SUCCESS;
-                    if (listbooking == null || listbooking.isEmpty()) {
-                        request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
-                    }
-                } else {
-                    request.setAttribute("ERROR", "Can not book the slot cause of Error in code");
+                if (checkTimeDuplicateInBookedCancel == false || checkTimeDuplicateInBookedCancel == false) {
+                    dao.DeleteStatusBookedCancel(freeSlotID);
                 }
-            } 
+                    boolean checkUpdate = dao.BookFSlot(dto);
+                    List<BookingDTO> listbooking = dao.getListBooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                    request.setAttribute("LIST_CREATED_SLOT", listbooking);
+                    if (checkUpdate) {
+                        url = SUCCESS;
+                        if (listbooking == null || listbooking.isEmpty()) {
+                            request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
+                        }
+                    } else {
+                        request.setAttribute("ERROR", "Can not book the slot cause of Error in code");
+                    }
+            }
         } catch (SQLException | ParseException | ClassNotFoundException ex) {
             log("Error at BookFSlotServlet: " + ex.toString());
-        }  finally {
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

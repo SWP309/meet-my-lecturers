@@ -148,6 +148,15 @@
         </style>
     </head>
     <body>
+        <script>
+            // L?y thông tin l?i t? bi?n LIST_ERROR
+            var errorMessage = "${request.getAttribute('LIST_ERROR')}";
+
+            // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+            if (errorMessage.trim() !== "") {
+                alert(errorMessage);
+            }
+        </script>
 
         <div class="fptu-eng-1-parent">
             <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
@@ -238,7 +247,9 @@
                 </div>
             </div>
             <!--                            LIST OF THE PAGE------------------------------------------->
-            <div class="container mt-5" style="    margin-top: -17% !important;">
+            <div class="container mt-5" style="margin-top: -17% !important;
+                 max-height: 500%;
+                 height: 1000px;">
                 <div class="row justify-content-center mt-5">
                     <c:if test="${requestScope.LIST_BOOKING !=null}">
                         <c:if test="${not empty requestScope.LIST_BOOKING}">
@@ -509,14 +520,7 @@
                 </div>
             </c:if>
 
-            <script>                // L?y thông tin l?i t? bi?n requestScope.ERROR
-                var errorMessage = "${requestScope.ERROR}";
 
-                // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
-                if (errorMessage.trim() !== "") {
-                    alert(errorMessage);
-                }
-            </script>
 
             <% } else {
                     response.sendRedirect("MainController?action=");
