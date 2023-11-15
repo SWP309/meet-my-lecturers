@@ -4,6 +4,7 @@
     Author     : Minh Khang
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="sample.users.UserDTO"%>
 <%@page import="sample.dashboard.UserMaxSlotDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -202,7 +203,34 @@
                     </div>
                 </div>
             </div>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title">Sinh viên <span style="color: red" >SINH VIÊN ABSENT NHIỀU SLOT NHẤT</span></h5>                              
+                            </div> 
+                            <p class="mt-2">Số lượt absent: <b style="color: red">${requestScope.Top5StuMaxAbsentNum.numberOfAbsenceSlot}</b></p>
+                            <p class="mt-2">MSSV: <b style="color: red">${requestScope.Top5StuMaxAbsentNum.studentID}</b></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title">Sinh viên GỬI <span style="color: red" >SINH VIÊN CANCEL NHIỀU SLOT NHẤT</span></h5>
+
+                            </div>
+                            <p class="mt-2">Số lượt cancel: <b style="color: red">${requestScope.Top5StuMaxCancelNum.numberOfCancelSlot}</b></p>
+                            <p class="mt-2">MSSV: <b style="color: red">${requestScope.Top5StuMaxCancelNum.studentID}</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

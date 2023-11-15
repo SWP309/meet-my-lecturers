@@ -14,6 +14,8 @@ public class MainController extends HttpServlet {
     private static final String HOME_PAGE_STUDENT = "StudentHome_1.jsp";
     private static final String HOME_ACTION_ADMIN = "returnHomePageAdmin";
     private static final String HOME_PAGE_ADMIN = "AdminPage.jsp";
+    private static final String BAN_USER_ACTION = "BanUser";
+    private static final String BAN_USER_SERVLET = "BanUserServlet";
 
     private static final String LOGIN_BY_GOOGLE = "login";
     private static final String LOGIN_BY_GOOGLE_ACTION = "LoginServlet";
@@ -309,6 +311,8 @@ public class MainController extends HttpServlet {
                 url = SEND_EMAIL_REMIND_SERVLET;
             }  else if (COUNT_PAGE.equals(action)) {
                 url = COUNT_PAGE_SERVLET;
+            } else if (BAN_USER_ACTION.equals(action)) {
+                url = BAN_USER_SERVLET;
             }
 
         } catch (Exception e) {
