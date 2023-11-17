@@ -11,11 +11,25 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,14 +56,16 @@ public class CreateFreeSlotServlet extends HttpServlet {
     private static final String SUCCESS = "CreatedSlotController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException {
+            throws ServletException, IOException, ClassNotFoundException, AddressException, MessagingException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         boolean flag = true;
         boolean checkCreated = false;
         try {
-            HttpSession session = request.getSession();
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            HttpSession httpsession = request.getSession();
+            UserDTO us = (UserDTO) httpsession.getAttribute("loginedUser");
+            String lecturerName = us.getUserName();
+            String lecturerEmail = us.getUserEmail();
             FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
             FreeSlotError freeSlotError = new FreeSlotError();
             String lecturerID = us.getUserID();
@@ -76,6 +92,11 @@ public class CreateFreeSlotServlet extends HttpServlet {
             String password = request.getParameter("txtPassword").trim();
             if (password.isEmpty()) {
                 password = null; // Chuyển chuỗi trống thành giá trị null
+            }
+
+            String recipientList = request.getParameter("txtRecipient").trim();
+            if (recipientList.isEmpty()) {
+                recipientList = null;
             }
 
             int capacity = Integer.parseInt(request.getParameter("txtCapacity"));
@@ -195,6 +216,44 @@ public class CreateFreeSlotServlet extends HttpServlet {
             if (flag) {
                 for (int i = 1; i <= count; i++) {
                     checkCreated = freeSlotsDAO.createFreeSlot(freeSlotsDTO);
+                    if (checkCreated) {
+                        final String from = "meet.my.lecturers.fpt.edu@gmail.com";
+                        final String mailpassword = "fmpheqhatzpjndvh";
+                        Properties prop = new Properties();
+                        prop.put("mail.smtp.host", "smtp.gmail.com");
+                        prop.put("mail.smtp.port", "587");
+                        prop.put("mail.smtp.auth", "true");
+                        prop.put("mail.smtp.starttls.enable", "true");//TLS
+                        Session session = Session.getInstance(prop, new javax.mail.Authenticator() {
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication(from, mailpassword);
+                            }
+                        });
+
+                        if (recipientList != null) {
+                            String[] recipients = recipientList.split(",");
+                            List<InternetAddress> addresses = new ArrayList<>();
+                            for (String recipient : recipients) {
+                                addresses.add(new InternetAddress(recipient));
+                            }
+
+                            Message msg = new MimeMessage(session);
+                            msg.setFrom(new InternetAddress(from));
+                            msg.addRecipients(Message.RecipientType.TO, addresses.toArray(new InternetAddress[0]));
+                            msg.setSubject("Thong tin cua mon hoc : " + subjectCode + " vao luc : " + startTime + " va ket thuc luc : " + endTime);
+
+                            // Create a multipart message
+                            Multipart multipart = new MimeMultipart();
+
+                            //first body part of the multipart
+                            BodyPart messageBodyPart = new MimeBodyPart();
+                            messageBodyPart.setContent("<html><body><b><h1>Thong tin cua mon hoc : </h1></b></body></html>" + subjectCode + "<html><body><b><h3>vao luc : </h3></b></body></html>" + startTime + "<html><body><b><h3> va ket thuc luc : </h3></b></body></html>" + endTime + "<html><body><b><h1>Ma truy cap Fslot cua ban : </h1></b></body></html>" + password + "<html><body><b><h2>FSlot nay la cua : </h2></b></body></html>" + lecturerName + "<html><body><b><h2>Email : </h2></b></body></html>" + lecturerEmail + "<html><body><img src=\"https://camo.githubusercontent.com/f3369035e14e2d3c9f8b1f10c8a48c102a84136fefcabc6c85fd6623abdc57ac/68747470733a2f2f692e696d6775722e636f6d2f7044694166544f2e706e67\" alt=\"This is an image of a cat.\" /></body></html>", "text/html");
+                            multipart.addBodyPart(messageBodyPart);
+
+                            msg.setContent(multipart);
+                            Transport.send(msg);
+                        }
+                    }
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
                     Date sTime = simpleDateFormat.parse(freeSlotsDTO.getStartTime());
@@ -247,6 +306,10 @@ public class CreateFreeSlotServlet extends HttpServlet {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(CreateFreeSlotServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (AddressException ex) {
+            Logger.getLogger(CreateFreeSlotServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
+            Logger.getLogger(CreateFreeSlotServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -264,6 +327,10 @@ public class CreateFreeSlotServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CreateFreeSlotServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (AddressException ex) {
+            Logger.getLogger(CreateFreeSlotServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
             Logger.getLogger(CreateFreeSlotServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
