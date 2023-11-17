@@ -163,6 +163,25 @@
                     event.preventDefault();
                 }
             }
+            /* When the user clicks on the button, 
+             toggle between hiding and showing the dropdown content */
+            function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+            }
+
+// Close the dropdown if the user clicks outside of it
+            window.onclick = function (event) {
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            }
 
         </script>
         <style>
@@ -233,28 +252,40 @@
                     display: none;
                 }
             }
+
         </style>
     </head>
     <body>
-        <div class="student-home">
-            <div class="fptu-eng-1-parent">
-                <div class="returnHome"> 
-                    <form action="MainController" method="POST">
-                        <input type="hidden" name="action" value="returnHomePageStudent" />
-                    </form>
+
+        <div class="fptu-eng-1-parent">
+            <div class="returnHome"> 
+                <form action="MainController" method="POST">
+                    <input type="hidden" name="action" value="returnHomePageStudent" />
+                </form>
+            </div>
+            <div class="frame-parent">
+
+                <div>
+                    <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
+                         onclick="showUserInfo()" />
+                    <div id="user-info" style="display: none; position: absolute">
+                        <p id="user-id"> </p>
+                        <p id="user-name"></p>
+                        <p id="user-email"></p>
+                    </div>
                 </div>
-                <div class="frame-parent">
-                    <div class="frame-group">
+                <div class="dropdown">
+                    <button onclick="myFunction()" class="dropbtn"> 
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div id="myDropdown" class="dropdown-content" style="right: 0px;
+                         flex-direction: column;
+                         ">
                         <div class="frame-div bookingview" onclick="submitForm()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="ViewBooking" />
                             </form>
-                            <div class="bookedslot-wrapper">
-                                <!--                                <img class="bookedslot-icon" alt="" src="./public/StudentHome/bookedslot.svg" />
-                                -->                           <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
-                                <i class="material-icons">event</i>
-                            </div>
-                            <div class="view-booking" >View Booked Slots</div>
+                            <i class="material-icons">event</i>View Booked Slots
                         </div>
                         <div class="frame-div requestViewStatus" style=" cursor: pointer" onclick="submitFormRequestStatus()" id="booking-view-div">
                             <form action="MainController" method="POST" style="display: none;">
@@ -274,29 +305,22 @@
                                 <input type="hidden" name="action" value="ViewAllLecturers" />
                             </form>
 
-                            <i class="fas fa-search"></i> <p style="font-size: 16px">View Lecturer</p>
+                            <i class="fas fa-search"></i>View Lecturer
                         </div>
-                        <div class="frame-div logout" onclick="submitFormLogout()" style="width: 10%; text-align: center">
+                        <div class="frame-div logout" onclick="submitFormLogout()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="Logout" />
                             </form>
                             <i class="material-icons">logout</i> Logout
                         </div>
                     </div>
-                    <div>
-                        <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
-                             onclick="showUserInfo()" />
-                        <div id="user-info" style="display: none; position: absolute">
-                            <p id="user-id"> </p>
-                            <p id="user-name"></p>
-                            <p id="user-email"></p>
-                        </div>
-                    </div>
-
                 </div>
+
+
             </div>
+        </div>
 
-
+        <div class="student-home">
             <div class="container-fluid ar-content">
                 <div class="container">
                     <div class="row">
@@ -498,6 +522,8 @@
                                                        value="${freeslot.freeSlotID}" readonly="">
                                                 <input type="hidden" name="txtStartTime" 
                                                        value="${freeslot.startTime}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" 
+                                                       value="${freeslot.lecturerID}" readonly="">
                                                 <input type="hidden" name="txtEndTime" 
                                                        value="${freeslot.endTime}" readonly="">
                                                 <input type="hidden" name="intCapacity" 
@@ -555,6 +581,8 @@
                                                        value="${freeslot.startTime}" readonly="">
                                                 <input type="hidden" name="txtEndTime" 
                                                        value="${freeslot.endTime}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" 
+                                                       value="${freeslot.lecturerID}" readonly="">
                                                 <input type="hidden" name="intCapacity" 
                                                        value="${freeslot.capacity}" readonly="">
                                                 <input type="hidden" name="txtUserName" 
@@ -611,6 +639,8 @@
                                                        value="${freeslot.startTime}" readonly="">
                                                 <input type="hidden" name="txtEndTime" 
                                                        value="${freeslot.endTime}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" 
+                                                       value="${freeslot.lecturerID}" readonly="">
                                                 <input type="hidden" name="intCapacity" 
                                                        value="${freeslot.capacity}" readonly="">
                                                 <input type="hidden" name="txtSemesterID" 
@@ -666,6 +696,8 @@
                                                        value="${freeslot.startTime}" readonly="">
                                                 <input type="hidden" name="txtEndTime" 
                                                        value="${freeslot.endTime}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" 
+                                                       value="${freeslot.lecturerID}" readonly="">
                                                 <input type="hidden" name="intCapacity" 
                                                        value="${freeslot.capacity}" readonly="">
                                                 <input type="hidden" name="txtSubjectCode" 
@@ -724,6 +756,8 @@
                                                        value="${freeslot.startTime}" readonly="">
                                                 <input type="hidden" name="txtEndTime" 
                                                        value="${freeslot.endTime}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" 
+                                                       value="${freeslot.lecturerID}" readonly="">
                                                 <input type="hidden" name="intCapacity" 
                                                        value="${freeslot.capacity}" readonly="">
                                                 <input type="hidden" name="txtSubjectCode" 
@@ -782,6 +816,8 @@
                                                        value="${freeslot.startTime}" readonly="">
                                                 <input type="hidden" name="txtEndTime" 
                                                        value="${freeslot.endTime}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" 
+                                                       value="${freeslot.lecturerID}" readonly="">
                                                 <input type="hidden" name="intCapacity" 
                                                        value="${freeslot.capacity}" readonly="">
                                                 <input type="hidden" name="txtSubjectCode" 
@@ -839,6 +875,8 @@
                                                        value="${freeslot.startTime}" readonly="">
                                                 <input type="hidden" name="txtEndTime" 
                                                        value="${freeslot.endTime}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" 
+                                                       value="${freeslot.lecturerID}" readonly="">
                                                 <input type="hidden" name="intCapacity" 
                                                        value="${freeslot.capacity}" readonly="">
                                                 <input type="hidden" name="txtUserID" 
@@ -896,6 +934,8 @@
                                                        value="${freeslot.startTime}" readonly="">
                                                 <input type="hidden" name="txtEndTime" 
                                                        value="${freeslot.endTime}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" 
+                                                       value="${freeslot.lecturerID}" readonly="">
                                                 <input type="hidden" name="intCapacity" 
                                                        value="${freeslot.capacity}" readonly="">
                                                 <input type="hidden" name="txtUserName" 
@@ -955,6 +995,8 @@
                                                        value="${freeslot.endTime}" readonly="">
                                                 <input type="hidden" name="intCapacity" 
                                                        value="${freeslot.capacity}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" 
+                                                       value="${freeslot.lecturerID}" readonly="">
                                                 <input type="hidden" name="txtSubjectCode" 
                                                        value="${param.txtSubjectCode}" readonly="">
                                                 <input type="hidden" name="txtUserID" 
@@ -1014,6 +1056,8 @@
                                                        value="${freeslot.endTime}" readonly="">
                                                 <input type="hidden" name="intCapacity" 
                                                        value="${freeslot.capacity}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" 
+                                                       value="${freeslot.lecturerID}" readonly="">
                                                 <input type="hidden" name="txtSubjectCode" 
                                                        value="${param.txtSubjectCode}" readonly="">
                                                 <input type="hidden" name="txtUserName" 
@@ -1068,6 +1112,7 @@
                                                 <input type="hidden" name="txtFSlotID"  value="${freeslot.freeSlotID}" readonly="">
                                                 <input type="hidden" name="txtStartTime"  value="${freeslot.startTime}" readonly="">
                                                 <input type="hidden" name="txtEndTime"   value="${freeslot.endTime}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" value="${freeslot.lecturerID}" readonly="">
                                                 <input type="hidden" name="intCapacity"   value="${freeslot.capacity}" readonly="">
                                                 <input type="hidden" name="txtUserID"  value="${param.txtUserID}" readonly="">
                                                 <input type="hidden" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px">
@@ -1118,6 +1163,7 @@
                                                 <input type="hidden" name="txtFSlotID"  value="${freeslot.freeSlotID}" readonly="">
                                                 <input type="hidden" name="txtStartTime"  value="${freeslot.startTime}" readonly="">
                                                 <input type="hidden" name="txtEndTime"   value="${freeslot.endTime}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" value="${freeslot.lecturerID}" readonly="">
                                                 <input type="hidden" name="intCapacity"   value="${freeslot.capacity}" readonly="">
                                                 <input type="hidden" name="txtUserID"  value="${param.txtUserID}" readonly="">
                                                 <input type="hidden" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px">
@@ -1144,7 +1190,38 @@
 
             </div>
         </div>
-
+        <div id="customAlert" style="display: none;">
+            <div id="alertContent">
+                <!-- N?i dung c?nh báo s? ???c thêm vào ?ây -->
+            </div>
+            <button class="closeButton">X</button>
+        </div>
+        <style>
+            #customAlert {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #fff;
+                border-radius: 4px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                padding: 20px;
+                font-family: Arial, sans-serif;
+                font-size: 14px;
+                text-align: center;
+                z-index: 9999;
+            }
+            .closeButton {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
+            }
+            #alertContent {
+                /* Các thu?c tính cho n?i dung c?nh báo */
+            }
+        </style>
     </div>
     <!-- Thêm liên k?t ??n Bootstrap JS và jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI" crossorigin="anonymous"></script>
@@ -1155,34 +1232,41 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
     <script>
-                                // L?y thông tin l?i t? bi?n requestScope.ERROR
                                 var errorMessage1 = "${requestScope.BOOKING_ERROR.duplicateBookedSlot}";
                                 var errorMessage2 = "${requestScope.BOOKING_ERROR.checkPassword}";
                                 var errorMessage3 = "${requestScope.BOOKING_ERROR.inBlockList}";
                                 var errorMessage4 = "${requestScope.SEARCH_FREESLOT_MESSAGE}";
                                 var errorMessage = "${requestScope.ERROR}";
 
-                                // Ki?m tra n?u errorMessage không r?ng, hi?n th? h?p tho?i c?nh báo
+// Ki?m tra n?u errorMessage không r?ng, hi?n th? c?a s? c?nh báo
                                 if (errorMessage.trim() !== "") {
-                                    alert(errorMessage);
+                                    showAlert(errorMessage);
                                 }
                                 if (errorMessage1.trim() !== "") {
-                                    alert(errorMessage1);
+                                    showAlert(errorMessage1);
                                 }
                                 if (errorMessage2.trim() !== "") {
-                                    alert(errorMessage2);
+                                    showAlert(errorMessage2);
                                 }
                                 if (errorMessage3.trim() !== "") {
-                                    alert(errorMessage3);
+                                    showAlert(errorMessage3);
                                 }
                                 if (errorMessage4.trim() !== "") {
-                                    alert(errorMessage4);
+                                    showAlert(errorMessage4);
                                 }
 
+                                function showAlert(message) {
+                                var alertContent = document.getElementById("alertContent");
+                                        alertContent.innerHTML = message;
+                                        document.getElementById("customAlert").style.display = "block";
+                                        var closeButton = alertDiv.querySelector(".closeButton");
+                                        closeButton.addEventListener("click", function() {
+                                        alertDiv.style.display = "none";
+                                        }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script>
-                                $(document).foundation();
+                                                $(document).foundation();
     </script>
     <%} else {
             response.sendRedirect("MainController");
