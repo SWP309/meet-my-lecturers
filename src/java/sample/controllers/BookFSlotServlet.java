@@ -1,4 +1,3 @@
-
 package sample.controllers;
 
 import java.io.IOException;
@@ -48,6 +47,8 @@ public class BookFSlotServlet extends HttpServlet {
             String studentID = us.getUserID();
             System.out.println(studentID);
             String freeSlotID = request.getParameter("txtFSlotID");
+            String LecturerID = request.getParameter("txtLecturerID");
+            System.out.println(LecturerID);
             System.out.println(freeSlotID);
             String startTime = request.getParameter("txtStartTime");
             System.out.println(startTime);
@@ -59,34 +60,41 @@ public class BookFSlotServlet extends HttpServlet {
             dto.setStudentID(studentID);
             dto.setFreeSlotID(freeSlotID);
             BookingError bookingError = new BookingError();
-            boolean existsInBlockList = FsDao.checkBlockList(studentID, freeSlotID);
+            boolean existsInBlockList = FsDao.checkBlockList(studentID, LecturerID);
+            System.out.println(existsInBlockList);
             if (existsInBlockList) {
                 checkValidation = false;
-                bookingError.setInBlockList("- You have been BLOCKED from this slot, please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
-                System.out.println("You have been blocked from this slot, please contact your lecturer to know reasons");
+                bookingError.setInBlockList("- You have been BLOCKED form by ALL THE SLOTS by " + LecturerID + ", please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
                 dto.setStatus(-1);
             }
             //tranfer String to Date
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            Date starts = format.parse(startTime);
+            Date start = format.parse(startTime);
             Date ends = format.parse(endTime);
             //check password
             if (!password.isEmpty()) {
                 if (!txtPassword.equals(password)) {
                     checkValidation = false;
                     bookingError.setCheckPassword("- Wrong password!!!");
+                    System.out.println("sai dong 78");
                 }
             }
             //*****check duplicateBookedFSlot
-            boolean checkStartDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, starts);
+            boolean checkStartDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, start);
             boolean checkEndDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, ends);
             System.out.println(checkStartDuplicateBookedFS);
             if (checkStartDuplicateBookedFS == false || checkEndDuplicateBookedFS == false) {
                 checkValidation = false;
                 bookingError.setDuplicateBookedSlot("- This slot was duplicated with another booked slot!!!");
+                System.out.println("Bi duplicate");
             }
+            boolean checkTimeDuplicateInBookedCancel = dao.checkTimeDuplicateInBookedCancel(studentID, start);
             request.setAttribute("BOOKING_ERROR", bookingError);
+
             if (checkValidation) {
+                if (checkTimeDuplicateInBookedCancel == false || checkTimeDuplicateInBookedCancel == false) {
+                    dao.DeleteStatusBookedCancel(freeSlotID);
+                }
                 boolean checkUpdate = dao.BookFSlot(dto);
                 List<BookingDTO> listbooking = dao.getListBooking(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
                 request.setAttribute("LIST_CREATED_SLOT", listbooking);
@@ -98,10 +106,10 @@ public class BookFSlotServlet extends HttpServlet {
                 } else {
                     request.setAttribute("ERROR", "Can not book the slot cause of Error in code");
                 }
-            } 
+            }
         } catch (SQLException | ParseException | ClassNotFoundException ex) {
             log("Error at BookFSlotServlet: " + ex.toString());
-        }  finally {
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
