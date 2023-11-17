@@ -312,12 +312,20 @@
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.meetLinkError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.meetLinkError}</h6>
                                 </c:if>
-                                <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="^((SE|IA|SS|MC)[0-9]{6};)*$"></div>
-                                <div class="d-flex justify-content-between"><strong>STATUS(public/private):</strong>
+                                    <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="^((SE|IA|SS|MC)[0-9]{6};)*$"></div>
+                                <div class="d-flex justify-content-between"><strong><b style="color: blue">STATUS(public/private):</b></strong>
                                     <div class="d-flex">
                                         <select class="form-control" name="txtStatusOption" value="${param.txtStatusOption}">
                                             <option value="PUB">Public</option>
                                             <option value="PRV">Private (check Hide list)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between"><strong><b style="color: blue">MODE:</b></strong>
+                                    <div class="d-flex">
+                                        <select class="form-control" name="txtModeOption">
+                                            <option value="BOOK">For Students to Book</option>
+                                            <option value="REQT">For Students to Request</option>
                                         </select>
                                     </div>
                                 </div>
