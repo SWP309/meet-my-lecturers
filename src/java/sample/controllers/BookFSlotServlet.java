@@ -61,10 +61,10 @@ public class BookFSlotServlet extends HttpServlet {
             dto.setFreeSlotID(freeSlotID);
             BookingError bookingError = new BookingError();
             boolean existsInBlockList = FsDao.checkBlockList(studentID, LecturerID);
-            System.out.println(existsInBlockList);
             if (existsInBlockList) {
                 checkValidation = false;
                 bookingError.setInBlockList("- You have been BLOCKED form by ALL THE SLOTS by " + LecturerID + ", please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
+                System.out.println("You have been BLOCKED");
                 dto.setStatus(-1);
             }
             //tranfer String to Date
@@ -76,7 +76,6 @@ public class BookFSlotServlet extends HttpServlet {
                 if (!txtPassword.equals(password)) {
                     checkValidation = false;
                     bookingError.setCheckPassword("- Wrong password!!!");
-                    System.out.println("sai dong 78");
                 }
             }
             //*****check duplicateBookedFSlot
