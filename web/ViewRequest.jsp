@@ -115,6 +115,23 @@
             function goBack() {
                 window.history.back();
             }
+            function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+            }
+
+// Close the dropdown if the user clicks outside of it
+            window.onclick = function (event) {
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            }
         </script>
         <style>
             .form-control {
@@ -146,52 +163,54 @@
                             </form>
                         </div>
                         <div class="frame-parent">
-                            <div class="frame-group">
-                                <div class="frame-div viewCreateSlot" onclick="submitForm()">
-                                    <form action="MainController" method="POST" style="display: none;">
-                                        <input type="hidden" name="action" value="viewFSlotLecturer" />
-                                    </form>
-                                    <i class="material-icons">visibility</i>View Create Slot
-                                </div>
-                                <div class="frame-div request-div" style="background-color: #b7b7b7;">
-                                    <form action="MainController" method="POST">
-                                        <input type="hidden" name="action" value="ViewRequest" />
-                                    </form>
 
-                                    <i class="material-icons">mail_outline</i>View Request
-                                </div>
-                                <div class="frame-div hideView" onclick="submitFormHideView()">
-                                    <form action="MainController" method="POST" style="display: none;">
-                                        <input type="hidden" name="action" value="HideView" />
-                                    </form>
-                                    <div>
-                                        <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
-                                    </div>
-                                </div>
-                                <div class="frame-div logout" style="text-align: center;" onclick="submitFormLogout()">
-                                    <form action="MainController" method="POST" style="display: none;">
-                                        <input type="hidden" name="action" value="Logout" />
-                                    </form>
-                                    <div class="logout-wrapper">
-                                        <i class="material-icons">logout</i>
-                                    </div>
-                                    <div class="logout">
-                                        <p class="logout1">Logout</p>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
-                                         onclick="showUserInfo()" />
+                            <div>
+                                <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
+                                     onclick="showUserInfo()" />
                                     <div id="user-info" style="display: none;
-                                         position: absolute;">
+                                    position: absolute">
                                         <p id="user-id"> </p>
                                         <p id="user-name"></p>
                                         <p id="user-email"></p>
                                     </div>
                                 </div>
-
+                                <div class="dropdown">
+                                    <button onclick="myFunction()" class="dropbtn"> 
+                                        <i class="fa fa-caret-down"></i>
+                                    </button>
+                                    <div id="myDropdown" class="dropdown-content" style="right: 0px;
+                                    flex-direction: column;
+                                    ">
+                                    <div class="frame-div viewCreateSlot" onclick="submitForm()">
+                                        <form action="MainController" method="POST" style="display: none;">
+                                            <input type="hidden" name="action" value="viewFSlotLecturer" />
+                                        </form>
+                                        <i class="material-icons">visibility</i>View Create Slot
+                                    </div>
+                                    <div class="frame-div request-div" style="background-color: #b7b7b7;">
+                                        <form style="display: flex;
+                                              align-content: center;" action="MainController" method="POST">
+                                            <input type="hidden" name="action" value="ViewRequest" />
+                                            <i class="material-icons">mail_outline</i>
+                                        </form>
+                                        View Request
+                                    </div>
+                                        <div class="frame-div hideView" onclick="submitFormHideView()">
+                                        <form action="MainController" method="POST" style="display: none;">
+                                            <input type="hidden" name="action" value="HideView" />
+                                        </form>
+                                        <i class="fas fa-search"></i>Hide List</p>
+                                    </div>
+                                    <div class="frame-div logout" onclick="submitFormLogout()">
+                                        <form action="MainController" method="POST" style="display: none;">
+                                            <input type="hidden" name="action" value="Logout" />
+                                        </form>
+                                        <i class="material-icons">logout</i> Logout
+                                    </div>
+                                </div>
                             </div>
+
+
                         </div>
                     </div>
                     <div class="container-div" style=" display: flex;
@@ -243,9 +262,9 @@
                                  <i class="material-icons">history</i>
                              </div>
                         </div>
-                    <h1 class="text-center textDashBoard" style="margin-top: 20px;">Request table</h1>
-                        <div class="container">
-                            <div class="row align-items-center justify-content-center" style="margin: 80px 0 -60px 0">
+                        <h1 class="text-center textDashBoard" style="margin-top: 20px;">Request table</h1>
+                    <div class="container">
+                        <div class="row align-items-center justify-content-center" style="margin: 80px 0 -60px 0">
                                 <div>
                                     <form action="MainController" method="POST" class="d-flex justify-content-center">
                                         <div class="form-group"  style="margin-left: 5px">

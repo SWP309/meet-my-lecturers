@@ -176,110 +176,21 @@
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
+            function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+            }
 
-            function confirmDelete() {
-                var result = confirm("Are you sure about delete this Free Slot ?");
-                console.log(result);
-                if (result) {
-                    // N?u ng??i dùng ch?n OK, chuy?n ??n trang MainController ?? x? lý hành ??ng "cancel".
-                    // Ví d?:
-                    window.location.href = "MainController?action=delete&freeSlotID=" + listCreatedSlot.freeSlotID;
-//                   window.location.href = "MainController?action=delete&freeSlotID=" + document.querySelector('[name="freeSlotID"]').value;
-                } else {
-                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
-//                    alert("Booking cancel canceled!"); // Hi?n th? thông báo cho ng??i dùng
-                    // N?u ng??i dùng ch?n Cancel, ng?n ch?n chuy?n h??ng trang m?c ??nh sau ?ó.
-                    event.preventDefault();
-                }
-            }
-            function confirmCheckAttendanceLink(event, freeSlotID) {
-                var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
-                if (result) {
-                    // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
-                    var xhr = new XMLHttpRequest();
-                    var url = "MainController?action=AttendanceLinkLecturer&freeSlotID=" + freeSlotID;
-                    xhr.open("POST", url, true);
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            // X? lý k?t qu? tr? v? n?u c?n
+// Close the dropdown if the user clicks outside of it
+            window.onclick = function (event) {
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
                         }
-                    };
-                    xhr.send();
-                } else {
-                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
-                    event.preventDefault();
-                }
-            }
-            function confirmCheckAttendanceLinkByStEt(event, freeSlotID) {
-                var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
-                if (result) {
-                    // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
-                    var xhr = new XMLHttpRequest();
-                    var url = "MainController?action=AttendanceLinkLecturer&freeSlotID=" + freeSlotID;
-                    xhr.open("POST", url, true);
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            // X? lý k?t qu? tr? v? n?u c?n
-                        }
-                    };
-                    xhr.send();
-                } else {
-                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
-                    event.preventDefault();
-                }
-            }
-            function confirmCheckAttendanceLinkByAll(event, freeSlotID) {
-                var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
-                if (result) {
-                    // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
-                    var xhr = new XMLHttpRequest();
-                    var url = "MainController?action=AttendanceLinkLecturer&freeSlotID=" + freeSlotID;
-                    xhr.open("POST", url, true);
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            // X? lý k?t qu? tr? v? n?u c?n
-                        }
-                    };
-                    xhr.send();
-                } else {
-                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
-                    event.preventDefault();
-                }
-            }
-            function confirmCheckAttendanceLinkBySubjectCode(event, freeSlotID) {
-                var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
-                if (result) {
-                    // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
-                    var xhr = new XMLHttpRequest();
-                    var url = "MainController?action=AttendanceLinkLecturer&freeSlotID=" + freeSlotID;
-                    xhr.open("POST", url, true);
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            // X? lý k?t qu? tr? v? n?u c?n
-                        }
-                    };
-                    xhr.send();
-                } else {
-                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
-                    event.preventDefault();
-                }
-            }
-            function confirmCheckAttendanceLinkByNull(event, freeSlotID) {
-                var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
-                if (result) {
-                    // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
-                    var xhr = new XMLHttpRequest();
-                    var url = "MainController?action=AttendanceLinkLecturer&freeSlotID=" + freeSlotID;
-                    xhr.open("POST", url, true);
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            // X? lý k?t qu? tr? v? n?u c?n
-                        }
-                    };
-                    xhr.send();
-                } else {
-                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
-                    event.preventDefault();
+                    }
                 }
             }
         </script>
@@ -287,57 +198,58 @@
     </head>
     <body>
         <div class="fptu-eng-1-parent">
-            <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+            <div class="returnHome" onclick="submitFormHomePage()"> 
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="returnHomePageLecturer" />
                 </form>
             </div>
             <div class="frame-parent">
-                <div class="frame-group">
-                    <div class="frame-div viewCreateSlot" onclick="submitForm()">
-                        <form action="MainController" method="POST" style="display: none;">
-                            <input type="hidden" name="action" value="viewFSlotLecturer" />
-                        </form>
-                        <i class="material-icons">visibility</i>View Create Slot
-                    </div>
-                    <div class="frame-div request-div" onclick="submitFormViewRequest()">
-                        <form action="MainController" method="POST">
-                            <input type="hidden" name="action" value="ViewRequest" />
-                        </form>
 
-                        <i class="material-icons">mail_outline</i>View Request
+                <div>
+                    <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
+                         onclick="showUserInfo()" />
+                    <div id="user-info" style="display: none; position: absolute">
+                        <p id="user-id"> </p>
+                        <p id="user-name"></p>
+                        <p id="user-email"></p>
                     </div>
-                    <div class="frame-div hideView" onclick="submitFormHideView()">
-                        <form action="MainController" method="POST" style="display: none;">
-                            <input type="hidden" name="action" value="HideView" />
-                        </form>
-                        <div>
-                            <p class="HideView"><i class="fas fa-search"></i>Hide List</p>
-                        </div>
-                    </div>
-                    <div class="frame-div logout" style="text-align: center;" onclick="submitFormLogout()">
-                        <form action="MainController" method="POST" style="display: none;">
-                            <input type="hidden" name="action" value="Logout" />
-                        </form>
-                        <div class="logout-wrapper">
-                            <i class="material-icons">logout</i>
-                        </div>
-                        <div class="logout">
-                            <p class="logout1">Logout</p>
-                        </div>
-                    </div>
-
-                    <div style="cursor: pointer">
-                        <img class="frame-item" alt="" src="public/BookingView/group-33.svg" 
-                             onclick="showUserInfo()" />
-                        <div id="user-info" style="display: none; position: absolute;">
-                            <p id="user-id"> </p>
-                            <p id="user-name"></p>
-                            <p id="user-email"></p>
-                        </div>
-                    </div>
-
                 </div>
+                <div class="dropdown">
+                    <button onclick="myFunction()" class="dropbtn"> 
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div id="myDropdown" class="dropdown-content" style="right: 0px;
+                         flex-direction: column;
+                         ">
+                        <div class="frame-div viewCreateSlot" onclick="submitForm()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="viewFSlotLecturer" />
+                            </form>
+                            <i class="material-icons">visibility</i>View Create Slot
+                        </div>
+                        <div class="frame-div request-div" onclick="submitFormViewRequest()">
+                            <form style="display: flex; align-content: center;" action="MainController" method="POST">
+                                <input type="hidden" name="action" value="ViewRequest" />
+                                <i class="material-icons">mail_outline</i>
+                            </form>
+                            View Request
+                        </div>
+                        <div class="frame-div hideView" onclick="submitFormHideView()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="HideView" />
+                            </form>
+                            <i class="fas fa-search"></i>Hide List</p>
+                        </div>
+                        <div class="frame-div logout" onclick="submitFormLogout()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="Logout" />
+                            </form>
+                            <i class="material-icons">logout</i> Logout
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
         <div class="container">
