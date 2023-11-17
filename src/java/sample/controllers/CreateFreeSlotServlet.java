@@ -113,6 +113,15 @@ public class CreateFreeSlotServlet extends HttpServlet {
                 status = 0;
             }
 
+            int mode = 1;
+            String modeOption = request.getParameter("txtModeOption");
+            if (modeOption.equals("BOOK")) {
+                mode = 1;
+            }
+            if (modeOption.equals("REQT")) {
+                mode = 2;
+            }
+
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
             //****Check input time with current time
@@ -171,7 +180,7 @@ public class CreateFreeSlotServlet extends HttpServlet {
                 freeSlotError.setSemesterTimeError("- The time you entered NOT MATCH with this Semester");
             }
 
-            FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status, semesterID, block_list);
+            FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status, semesterID, block_list, mode);
 
 //            //*****check duplicate timetable*****
 //            Service service = new Service();

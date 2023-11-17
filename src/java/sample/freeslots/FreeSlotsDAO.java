@@ -36,8 +36,8 @@ public class FreeSlotsDAO {
             + "AND ? BETWEEN fs.startTime AND fs.endTime\n"
             + "AND fs.status = ?";
     private final static String CREATE_FREESLOT = "INSERT INTO "
-            + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status,semesterID,block_list) "
-            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status,semesterID,block_list,mode) "
+            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final static String CHECK_DUPLICATE_GGMEETLINK = "SELECT freeSlotID "
             + "FROM FreeSlots WHERE meetLink=?";
     private final static String SEARCH_FREESLOT_BY_SUBJECTCODE = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
@@ -210,6 +210,7 @@ public class FreeSlotsDAO {
                 ps.setInt(9, freeSlotsDTO.getStatus());
                 ps.setString(10, freeSlotsDTO.getSemesterID());
                 ps.setString(11, freeSlotsDTO.getBlock_list());
+                ps.setInt(12, freeSlotsDTO.getMode());
                 result = ps.executeUpdate();
                 if (result > 0) {
                     checkCreate = true;
@@ -257,6 +258,7 @@ public class FreeSlotsDAO {
                 ps.setInt(9, freeSlotsDTO.getStatus());
                 ps.setString(10, freeSlotsDTO.getSemesterID());
                 ps.setString(11, freeSlotsDTO.getBlock_list());
+                ps.setInt(12, freeSlotsDTO.getMode());
                 result = ps.executeUpdate();
                 if (result > 0) {
                     checkCreate = true;
