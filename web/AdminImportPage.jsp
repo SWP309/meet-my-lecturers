@@ -158,17 +158,16 @@
             </form>
             <form action="MainController" method="POST" enctype="multipart/form-data">
                 <div style="padding-right: 100px; display: inline-block">
-                    Import Timetables
+                    Import list subject
                 </div>
                 <%    
-                    String TIMESERVLET = (String) request.getAttribute("TIMESERVLET");
-                    String DUPLICATEDATA = (String) request.getAttribute("DUPLICATEDATA");
-                    String DUPLICATEDATATIMETABLE = (String) request.getAttribute("DUPLICATEDATATIMETABLE");
+ 
+                    String SUBJECTSERVLET = (String) request.getAttribute("SUBJECTSERVLET");
                     
-                    if (TIMESERVLET != null) {
+                    if (SUBJECTSERVLET != null) {
                 %>
                 <span style="color: red; font-size: 1rem;">
-                    <%= TIMESERVLET%>
+                    <%= SUBJECTSERVLET%>
                 </span>
                 <%
                     }
@@ -176,17 +175,15 @@
                 <a href="https://drive.google.com/drive/folders/1s_yu8ElI5rP6RaON6SLxFOIN5kmEUh4D?usp=drive_link" target="_blank" style="color: blueviolet">Download template</a>
                 <div class="form-group input-group">
                     <div class="custom-file">
-                        <input type="hidden" value="importTB" name="action">
-                        <input type="file" name="txtexcel" class="custom-file-input" id="DSSV"  onchange="updateFileName('DSSV')" required>
+                        <input type="file" name="txtexcel" class="custom-file-input" id="subject"  onchange="updateFileName('subject')" required>
                         <label class="custom-file-label">Choose file</label>
                     </div>                    
-                    <input type="text" class="form-control" name="lecID" placeholder="E.g: GV0001" required>
-                    <input type="text" class="form-control" name="semesID" placeholder="E.g: FA23" required>
                     <div class="input-group-append">
-                        <button type="submit" value="importTB" name="action" class="btn btn-primary custom-submit-button">Submit</button>
+                        <button type="submit" value="importSJ" name="action" class="btn btn-primary custom-submit-button">Submit</button>
                     </div>
                 </div>
             </form>
+                <a href="AdminAddData.jsp">hello</a>
         </div>
         <script>
             function updateFileName(inputId) {
