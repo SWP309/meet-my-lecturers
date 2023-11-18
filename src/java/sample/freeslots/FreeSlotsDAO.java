@@ -159,6 +159,9 @@ public class FreeSlotsDAO {
     private static String GET_SEMESTERID = "SELECT s.semesterID\n" +
                                            "FROM Semesters s\n" +
                                            "WHERE ? BETWEEN s.startDay AND s.endDay";
+    private static String GET_FSLOTID = "SELECT freeSlotID\n" +
+                                        "FROM FreeSlots\n" +
+                                        "WHERE startTime = ? AND endTime = ?";
 
     public boolean updateStatusOutDate(Date currentTime) throws ClassNotFoundException, SQLException, ParseException {
         boolean checkUpdate = false;
@@ -1498,5 +1501,36 @@ public class FreeSlotsDAO {
             }
         }
         return semesterID;
+    }
+    public String getFreeSlotID(Date starts, Date ends) throws SQLException{
+        String freeSlotID="";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_FSLOTID);
+                ptm.setTimestamp(1, new Timestamp(starts.getTime()));
+                ptm.setTimestamp(2, new Timestamp(ends.getTime()));
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    freeSlotID = rs.getString("freeSlotID");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return freeSlotID;
     }
 }
