@@ -19,6 +19,7 @@ public class FreeSlotsDTO {
     private String studentID;
     private int bookedStudent;
     private String block_list;
+    private int mode;
 
     public FreeSlotsDTO() {
         this.freeSlotID = "";
@@ -35,6 +36,7 @@ public class FreeSlotsDTO {
         this.lecturerName = "";
         this.bookedStudent = 0;
         this.block_list = null;
+        this.mode = 1; //1:Book ; 2:Request
         this.studentID = "";
     }
     
@@ -47,7 +49,7 @@ public class FreeSlotsDTO {
         this.lecturerName = lecturerName;
     }
     
-    public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, int status, String semesterID, String block_list) {
+    public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, int status, String semesterID, String block_list, int mode) {
         this.subjectCode = subjectCode;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -59,6 +61,7 @@ public class FreeSlotsDTO {
         this.status = status;
         this.semesterID = semesterID;
         this.block_list = block_list;
+        this.mode = mode;
     }
     public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String lecturerID) {
         this.subjectCode = subjectCode;
@@ -239,4 +242,11 @@ public class FreeSlotsDTO {
         this.block_list = block_list;
     }
 
+    public int getMode() {
+        return mode;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
 }

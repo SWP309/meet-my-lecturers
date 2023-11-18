@@ -29,15 +29,15 @@ public class FreeSlotsDAO {
 
     private final static String CHECK_SEMESTERID = "SELECT semesterID FROM Semesters WHERE semesterID = ?";
     private final static String CHECK_SUBJECTCODE = "SELECT subjectCode FROM Subjects WHERE subjectCode = ?";
-    private final static String CHECK_BLOCKLIST = "SELECT block_list FROM FreeSlots WHERE block_list LIKE CONCAT('%', ?, '%') AND freeSlotID = ?";
+    private final static String CHECK_BLOCKLIST = "SELECT block_list FROM FreeSlots WHERE block_list LIKE CONCAT('%', ?, '%') AND lecturerID = ?";
     private final String CHECK_TIME_DUPLICATE_FS = "SELECT fs.freeSlotID\n"
             + "FROM FreeSlots fs\n"
             + "WHERE fs.lecturerID = ? \n"
             + "AND ? BETWEEN fs.startTime AND fs.endTime\n"
             + "AND fs.status = ?";
     private final static String CREATE_FREESLOT = "INSERT INTO "
-            + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status,semesterID,block_list) "
-            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            + "FreeSlots(subjectCode,startTime,endTime,password,capacity,meetLink,count,lecturerID,status,semesterID,block_list,mode) "
+            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final static String CHECK_DUPLICATE_GGMEETLINK = "SELECT freeSlotID "
             + "FROM FreeSlots WHERE meetLink=?";
     private final static String SEARCH_FREESLOT_BY_SUBJECTCODE = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
@@ -210,6 +210,7 @@ public class FreeSlotsDAO {
                 ps.setInt(9, freeSlotsDTO.getStatus());
                 ps.setString(10, freeSlotsDTO.getSemesterID());
                 ps.setString(11, freeSlotsDTO.getBlock_list());
+                ps.setInt(12, freeSlotsDTO.getMode());
                 result = ps.executeUpdate();
                 if (result > 0) {
                     checkCreate = true;
@@ -257,6 +258,7 @@ public class FreeSlotsDAO {
                 ps.setInt(9, freeSlotsDTO.getStatus());
                 ps.setString(10, freeSlotsDTO.getSemesterID());
                 ps.setString(11, freeSlotsDTO.getBlock_list());
+                ps.setInt(12, freeSlotsDTO.getMode());
                 result = ps.executeUpdate();
                 if (result > 0) {
                     checkCreate = true;
@@ -1264,7 +1266,7 @@ public class FreeSlotsDAO {
         return freeSlotID;
     }
 
-    public boolean checkBlockList(String block_list, String freeslotID) throws SQLException {
+    public boolean checkBlockList(String block_list, String LecturerID) throws SQLException {
         boolean exists = false;
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1274,7 +1276,7 @@ public class FreeSlotsDAO {
             if (conn != null) {
                 ps = conn.prepareStatement(CHECK_BLOCKLIST);
                 ps.setString(1, block_list);
-                ps.setString(2, freeslotID);
+                ps.setString(2, LecturerID);
                 rs = ps.executeQuery();
                 if (rs.next()) {
                     exists = true;

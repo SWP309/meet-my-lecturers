@@ -47,6 +47,8 @@ public class BookFSlotServlet extends HttpServlet {
             String studentID = us.getUserID();
             System.out.println(studentID);
             String freeSlotID = request.getParameter("txtFSlotID");
+            String LecturerID = request.getParameter("txtLecturerID");
+            System.out.println(LecturerID);
             System.out.println(freeSlotID);
             String startTime = request.getParameter("txtStartTime");
             System.out.println(startTime);
@@ -58,11 +60,10 @@ public class BookFSlotServlet extends HttpServlet {
             dto.setStudentID(studentID);
             dto.setFreeSlotID(freeSlotID);
             BookingError bookingError = new BookingError();
-            boolean existsInBlockList = FsDao.checkBlockList(studentID, freeSlotID);
-            System.out.println(existsInBlockList);
+            boolean existsInBlockList = FsDao.checkBlockList(studentID, LecturerID);
             if (existsInBlockList) {
                 checkValidation = false;
-                bookingError.setInBlockList("- You have been BLOCKED from this slot, please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
+                bookingError.setInBlockList("You have been BLOCKED form by ALL THE SLOTS by " + LecturerID + ", please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
                 dto.setStatus(-1);
             }
             //tranfer String to Date
@@ -73,7 +74,7 @@ public class BookFSlotServlet extends HttpServlet {
             if (!password.isEmpty()) {
                 if (!txtPassword.equals(password)) {
                     checkValidation = false;
-                    bookingError.setCheckPassword("- Wrong password!!!");
+                    bookingError.setCheckPassword("Wrong password!!!");
                     System.out.println("sai dong 78");
                 }
             }
@@ -83,7 +84,7 @@ public class BookFSlotServlet extends HttpServlet {
             System.out.println(checkStartDuplicateBookedFS);
             if (checkStartDuplicateBookedFS == false || checkEndDuplicateBookedFS == false) {
                 checkValidation = false;
-                bookingError.setDuplicateBookedSlot("- This slot was duplicated with another booked slot!!!");
+                bookingError.setDuplicateBookedSlot("This slot was duplicated with another booked slot!!!");
                 System.out.println("Bi duplicate");
             }
             boolean checkTimeDuplicateInBookedCancel = dao.checkTimeDuplicateInBookedCancel(studentID, start);
