@@ -148,7 +148,7 @@
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail
                 });
             }
-                 /* When the user clicks on the button, 
+            /* When the user clicks on the button, 
              toggle between hiding and showing the dropdown content */
             function myFunction() {
                 document.getElementById("myDropdown").classList.toggle("show");
@@ -210,18 +210,18 @@
                                 <i class="material-icons">visibility</i>View Request Status
                             </div>
                             <div class="frame-div request" style="background-color: #b7b7b7;">
-                                <form action="MainController" method="POST">
+                                <form style="display: flex; justify-content: center;" action="MainController" method="POST">
                                     <input type="hidden" name="action" value="Request" />
+                                    <i class="material-icons">mail_outline</i>
                                 </form>
-
-                                <i class="material-icons">mail_outline</i> Request
+                                Request
                             </div>
                             <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
                                 <form action="MainController" method="POST">
                                     <input type="hidden" name="action" value="ViewAllLecturers" />
+                                    <i class="fas fa-search"></i>
                                 </form>
-
-                                <i class="fas fa-search"></i>View Lecturer
+                                View Lecturer
                             </div>
                             <div class="frame-div logout" onclick="submitFormLogout()">
                                 <form action="MainController" method="POST" style="display: none;">

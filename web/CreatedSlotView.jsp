@@ -226,13 +226,17 @@
                     event.preventDefault();
                 }
             }
+            function updateFileName(inputId) {
+                const input = document.getElementById(inputId);
+                const fileName = input.value.split('\\').pop();
+                input.nextElementSibling.innerHTML = fileName;
+            }
             /* When the user clicks on the button, 
              toggle between hiding and showing the dropdown content */
             function myFunction() {
                 document.getElementById("myDropdown").classList.toggle("show");
             }
 
-// Close the dropdown if the user clicks outside of it
             window.onclick = function (event) {
                 if (!event.target.matches('.dropbtn')) {
                     var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -400,8 +404,40 @@
 
                 <i class="material-icons">send</i>
             </div>
-        </div>
+        </div> 
+        <div class="container mt-5">
 
+            <form action="MainController" method="POST" enctype="multipart/form-data">
+                <div style="padding-right: 100px; display: inline-block">
+                    Import Timetables
+                </div>
+                <%
+                    String TIMESERVLET = (String) request.getAttribute("TIMESERVLET");
+                    String DUPLICATEDATA = (String) request.getAttribute("DUPLICATEDATA");
+                    String DUPLICATEDATATIMETABLE = (String) request.getAttribute("DUPLICATEDATATIMETABLE");
+
+                    if (TIMESERVLET != null) {
+                %>
+                <span style="color: red; font-size: 1rem;">
+                    <%= TIMESERVLET%>
+                </span>
+                <%
+                    }
+                %>
+                <a href="https://drive.google.com/drive/folders/1s_yu8ElI5rP6RaON6SLxFOIN5kmEUh4D?usp=drive_link" target="_blank" style="color: blueviolet">Download template</a>
+                <div class="form-group input-group">
+                    <div class="custom-file">
+                        <input type="file" name="txtexcel" class="custom-file-input" id="DSSV"  onchange="updateFileName('DSSV')" required>
+                        <label class="custom-file-label">Choose file</label>
+                    </div>                    
+                    <input type="text" class="form-control" name="lecID" placeholder="E.g: GV0001" required>
+                    <input type="text" class="form-control" name="semesID" placeholder="E.g: FA23" required>
+                    <div class="input-group-append">
+                        <button style="background-color: #0d6efd; color: white" type="submit" value="importTB" name="action" class="btn btn-primary custom-submit-button">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
         <div class="student-viewbookedslot">
             <div class="container">
                 <div class="row align-items-center justify-content-center">
