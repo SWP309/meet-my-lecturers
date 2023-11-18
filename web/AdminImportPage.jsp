@@ -158,7 +158,7 @@
             </form>
             <form action="MainController" method="POST" enctype="multipart/form-data">
                 <div style="padding-right: 100px; display: inline-block">
-                    Import Timetables
+                    Import list subject
                 </div>
                 <%    
                     String TIMESERVLET = (String) request.getAttribute("TIMESERVLET");
@@ -180,10 +180,8 @@
                         <input type="file" name="txtexcel" class="custom-file-input" id="DSSV"  onchange="updateFileName('DSSV')" required>
                         <label class="custom-file-label">Choose file</label>
                     </div>                    
-                    <input type="text" class="form-control" name="lecID" placeholder="E.g: GV0001" required>
-                    <input type="text" class="form-control" name="semesID" placeholder="E.g: FA23" required>
                     <div class="input-group-append">
-                        <button type="submit" value="importTB" name="action" class="btn btn-primary custom-submit-button">Submit</button>
+                        <button type="submit" value="importSJ" name="action" class="btn btn-primary custom-submit-button">Submit</button>
                     </div>
                 </div>
             </form>
