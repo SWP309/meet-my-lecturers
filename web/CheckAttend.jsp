@@ -246,7 +246,7 @@
                             <i class="material-icons">visibility</i>View Request Status
                         </div>
                         <div class="frame-div request" onclick="submitFormRequest()">
-                            <form action="MainController" method="POST">
+                            <form style="display: flex; justify-content: center;" action="MainController" method="POST">
                                 <input type="hidden" name="action" value="Request" />
                                 <i class="material-icons">mail_outline</i> 
                             </form>
