@@ -216,3 +216,12 @@ td button {
 #user-id, #user-name, #user-email {
     color: black; /* Đặt màu chữ thành màu đen */
 }
+
+.custom-submit-button {
+    background-color: #f27125; /* Màu xanh */
+    color: #fff; /* Màu chữ trắng */
+    /* Các thuộc tính CSS khác tùy ý */
+}
+.custom-submit-button:hover{
+    background-color: #b05b18;
+}

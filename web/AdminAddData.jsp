@@ -3,6 +3,11 @@
     Created on : Oct 28, 2023, 1:20:11 AM
     Author     : Minh Khang
 --%>
+<%@page import="sample.subjects.SubjectDTO"%>
+<%@page import="sample.subjects.SubjectDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="sample.roles.RoleDAO"%>
+<%@page import="sample.roles.RoleDTO"%>
 <%@page import="sample.users.UserDTO"%>
 <%@page import="sample.dashboard.UserMaxSlotDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -24,6 +29,9 @@
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             if (us != null) {
+                ArrayList<RoleDTO> listRole = RoleDAO.getAllRole();
+//                ArrayList<SubjectDTO> listSub = SubjectDAO.getAllSubject();
+                ArrayList<SubjectDTO> ListSubject = (ArrayList<SubjectDTO>) request.getAttribute("ListSubject");
         %>
         <script>
             function submitFormHomePage() {
@@ -61,16 +69,42 @@
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
+            function submitAddForm() {
+                var form = document.querySelector('.container form');
+                var optionInput = document.querySelector('.container form input[name="option"]');
+                optionInput.value = "add"; // Set the option value for the "Add" button
+                form.submit();
+            }
+
+            function submitRemoveForm() {
+                var form = document.querySelector('.container form');
+                var optionInput = document.querySelector('.container form input[name="option"]');
+                optionInput.value = "remove"; // Set the option value for the "Remove" button
+                form.submit();
+            }
+
+            function submitUpdateForm() {
+                var form = document.querySelector('.container form');
+                var optionInput = document.querySelector('.container form input[name="option"]');
+                optionInput.value = "update"; // Set the option value for the "Update" button
+                form.submit();
+            }
         </script>
 
         <style>
-            .custom-submit-button {
-                background-color: #f27125; /* Màu xanh */
-                color: #fff; /* Màu chữ trắng */
-                /* Các thuộc tính CSS khác tùy ý */
+
+
+            .btn-primary{
+                border-color: black;
             }
-            .custom-submit-button:hover{
-                background-color: #b05b18;
+            #remove{
+                background-color: #F27125;
+            }
+            #add{
+                background-color: #0066B2;
+            }
+            #update{
+                background-color: #0DB04B;
             }
         </style>
     </head>
@@ -89,7 +123,7 @@
                             <input type="hidden" name="action" value="ViewUsers" />
                         </form>
                         <div class="bookedslot-wrapper">
-                             <i class="material-icons">event</i>
+                            <i class="material-icons">event</i>
                         </div>
                         <div class="view-booking" >Search Users</div>
                     </div>
@@ -107,7 +141,7 @@
                             <input type="hidden" name="action" value="Logout" />
                         </form>
                         <div class="logout-wrapper">
-                             <i class="material-icons">logout</i>
+                            <i class="material-icons">logout</i>
                         </div>
                         <div class="request">
                             <p class="logout1">Logout</p>
@@ -129,80 +163,121 @@
             </div>
         </div>
         <div class="container mt-5">
-            <h1 class="text-center">Import form excel</h1>
-            <form action="MainController" method="POST" enctype="multipart/form-data">
+            <form action="MainController" method="POST">
                 <div style="padding-right: 100px; display: inline-block">
-                    Import List Student
+                    Add new subject
                 </div>
-                <%                    String EXCSERVLET = (String) request.getAttribute("EXCSERVLET");
-                    
-                    if (EXCSERVLET != null) {
+                <%
+                    String Status = (String) request.getAttribute("Status");
+
+                    if (Status != null) {
                 %>
                 <span style="color: red; font-size: 1rem;">
-                    <%= EXCSERVLET%>
+                    <%= Status%>
                 </span>
                 <%
                     }
                 %>
-                <a href="https://drive.google.com/drive/folders/195tJBz5ZndD9dh9Lvdw3K1SH_dh8ACnZ?usp=sharing" target="_blank" style="color: blueviolet">Download template</a>
                 <div class="form-group input-group">
-                    <div class="custom-file">
-                        <input type="file" name="txtexcel" class="custom-file-input" id="imageUpload"  onchange="updateFileName('imageUpload')" required>
-                        <label class="custom-file-label" for="imageUpload">Choose file</label>
-                    </div>
+                    <!--<input type="hidden" value="importTB" name="action">-->
+
+                    <input type="text" class="form-control" name="txtsubject" placeholder="E.g: SWP391" required>
+                    <input type="text" class="form-control" name="txtdescription" placeholder="E.g: Software development project" required>
                     <div class="input-group-append">
-                        <input type="hidden" name="action" value="importST">
-                        <button type="submit" value="importST" name="action" class="btn btn-primary custom-submit-button">Submit</button>
+                        <button id="add" type="submit" value="AddSub" name="action" class="btn btn-primary custom-submit-button">Add</button>
                     </div>
                 </div>
             </form>
-            <form action="MainController" method="POST" enctype="multipart/form-data">
+
+            <form action="MainController" method="POST">
                 <div style="padding-right: 100px; display: inline-block">
-                    Import Timetables
+                    Add new User
                 </div>
-                <%    
-                    String TIMESERVLET = (String) request.getAttribute("TIMESERVLET");
-                    String DUPLICATEDATA = (String) request.getAttribute("DUPLICATEDATA");
-                    String DUPLICATEDATATIMETABLE = (String) request.getAttribute("DUPLICATEDATATIMETABLE");
-                    
-                    if (TIMESERVLET != null) {
+                <%
+                    String AddUserStatus = (String) request.getAttribute("AddUserStatus");
+
+                    if (AddUserStatus != null) {
                 %>
                 <span style="color: red; font-size: 1rem;">
-                    <%= TIMESERVLET%>
+                    <%= AddUserStatus%>
                 </span>
                 <%
                     }
                 %>
-                <a href="https://drive.google.com/drive/folders/1s_yu8ElI5rP6RaON6SLxFOIN5kmEUh4D?usp=drive_link" target="_blank" style="color: blueviolet">Download template</a>
                 <div class="form-group input-group">
-                    <div class="custom-file">
-                        <input type="hidden" value="importTB" name="action">
-                        <input type="file" name="txtexcel" class="custom-file-input" id="DSSV"  onchange="updateFileName('DSSV')" required>
-                        <label class="custom-file-label">Choose file</label>
-                    </div>                    
-                    <input type="text" class="form-control" name="lecID" placeholder="E.g: GV0001" required>
-                    <input type="text" class="form-control" name="semesID" placeholder="E.g: FA23" required>
+                    <!--<input type="hidden" value="importTB" name="action">-->
+                    <input type="text" class="form-control" name="txtuserid" placeholder="User ID" required>
+                    <input type="text" class="form-control" name="txtusername" placeholder="User name (Nguyễn Văn A)" required>
+                    <input type="text" class="form-control" name="txtuseremail" placeholder="User email (abc@fpt.edu.vn)" required>
+                    <select class="form-control" name="txtuserrole">
+                        <%
+                            for (RoleDTO role : listRole) {
+                        %> 
+                        <option value="<%=  role.getRoleID()%>" > <%=  role.getRoleName()%>   </option> 
+                        <% } %>
+                    </select>
                     <div class="input-group-append">
-                        <button type="submit" value="importTB" name="action" class="btn btn-primary custom-submit-button">Submit</button>
+                        <button id="add" type="submit" value="AddUser" name="action" class="btn btn-primary custom-submit-button">Add</button>
                     </div>
                 </div>
             </form>
-                <a href="AdminAddData.jsp">hello</a>
+            <div class="row align-items-center justify-content-center">
+
+                <form action="MainController" method="POST" class="d-flex justify-content-center" style=" margin-top: 10%;">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="txtInputSubject" placeholder="Input Subject">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchsj">Search</button>
+                    </div> <br>
+                    <%
+                        String RemoveStatus = (String) request.getAttribute("RemoveStatus");
+
+                        if (RemoveStatus != null) {
+                    %>
+                    <span style="color: red; font-size: 1rem;">
+                        <%= RemoveStatus%>
+                    </span>
+                    <%
+                        }
+                    %>
+                </form>
+
+            </div>
+            <%
+                if (ListSubject != null) {
+            %>
+            <form>
+                <%
+                    for (SubjectDTO sub : ListSubject) {
+                %>
+                <div class="form-group input-group">
+
+                    <input type="hidden" class="form-control" name="txtoldcode" value="<%= sub.getSubjectCode()%>">
+                    <input type="text" class="form-control" name="txtsubject" value="<%= sub.getSubjectCode()%>" required>
+                    <input style="color: tomato" type="text" class="form-control" name="txtdescription" value="<%=  sub.getSubjectName()%>" required>
+                    <div class="input-group-append">
+                        <button id="update" type="submit" value="UpdateSub" name="action" class="btn btn-primary custom-submit-button">Update</button>
+                    </div>
+                    <div class="input-group-append">
+                        <button id="remove" type="submit" value="RemoveSub" name="action" class="btn btn-primary custom-submit-button">Remove</button>
+                    </div>
+                </div>
+                <%
+                    }
+                %>
+            </form>
+            <%
+                }
+            %>
         </div>
-        <script>
-            function updateFileName(inputId) {
-                const input = document.getElementById(inputId);
-                const fileName = input.value.split('\\').pop();
-                input.nextElementSibling.innerHTML = fileName;
-            }
-        </script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <%
             } else {
                 response.sendRedirect("MainController?action=");
-            }            
+            }
         %>
     </body>
 </html>

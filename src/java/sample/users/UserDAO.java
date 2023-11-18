@@ -90,7 +90,8 @@ public class UserDAO implements Serializable {
         }
         return checkUpdate;
     }
-     public boolean UnbanUser(String userID) throws ClassNotFoundException, SQLException {
+
+    public boolean UnbanUser(String userID) throws ClassNotFoundException, SQLException {
         boolean checkUpdate = false;
         Connection con = null;
         PreparedStatement stm = null;
@@ -765,6 +766,26 @@ public class UserDAO implements Serializable {
             pst.setString(2, userid);
             rs = pst.executeUpdate();
             cn.close();
+        }
+        return rs;
+    }
+
+    public static int insertUser(UserDTO user) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "Insert [dbo].[Users] ([userID], [userName], [userEmail], [userStatus], [roleID], [password])\n"
+                    + "Values (?, ?, ?, ?, ?, ?)";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, user.getUserID());
+            pst.setString(2, user.getUserName());
+            pst.setString(3, user.getUserEmail());
+            pst.setInt(4, user.getUserStatus());
+            pst.setString(5, user.getRoleID());
+            pst.setString(6, user.getPassword());
+            rs = pst.executeUpdate();
+            cn.close();
+
         }
         return rs;
     }

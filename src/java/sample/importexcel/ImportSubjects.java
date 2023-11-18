@@ -1,15 +1,13 @@
-package sample.importexcel;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package sample.importexcel;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,14 +19,14 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import sample.timetables.TimetableDAO;
-import sample.timetables.TimetableDTO;
+import sample.subjects.SubjectDAO;
+import sample.subjects.SubjectDTO;
 
 /**
  *
  * @author Minh Khang
  */
-public class ImportTimetables extends HttpServlet {
+public class ImportSubjects extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,15 +38,13 @@ public class ImportTimetables extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            TimetableDAO tb = new TimetableDAO();
+            SubjectDAO sj = new SubjectDAO();
             String URL = "";
             Part filePart = request.getPart("txtexcel");
             String fileName = filePart.getSubmittedFileName();
-            String lecID = request.getParameter("lecID").toUpperCase();
-            String semesID = request.getParameter("semesID").toUpperCase();
             boolean flag = true;
             if (fileName != null) {
                 if (fileName.endsWith(".xls")) {
@@ -57,118 +53,101 @@ public class ImportTimetables extends HttpServlet {
                     HSSFWorkbook wb = new HSSFWorkbook(new POIFSFileSystem(inp));
                     String sheetName = wb.getSheetName(0);
                     HSSFSheet sheet = wb.getSheetAt(0);
-                    if (sheetName.equals("ImportTimetablesMMLT")) {
+                    if (sheetName.equals("ImportSubjectsMMLT")) {
                         try {
                             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                                 Row row = sheet.getRow(i);
 
                                 String subjectCode = row.getCell(1).getStringCellValue();
-                                String slotID = row.getCell(2).getStringCellValue();
-                                String lecturerID = row.getCell(3).getStringCellValue();
-                                String semesterID = row.getCell(4).getStringCellValue();
+                                String Description = row.getCell(2).getStringCellValue();
 
-                                if ((!lecID.equalsIgnoreCase(lecturerID) && !semesterID.equalsIgnoreCase(semesID))
-                                        || (!lecID.equalsIgnoreCase(lecturerID)) || (!semesterID.equalsIgnoreCase(semesID))) {
+                                if (subjectCode.equals("") || Description.equals("")) {
                                     flag = false;
-                                    request.setAttribute("TIMESERVLET", "Error data in Excel: Data must be correct with the given");
-                                    URL = "MainController?action=LecturerPage";
+                                    request.setAttribute("SUBJECTSERVLET", "Error data in Excel: Data is null");
+                                    URL = "MainController?action=";
                                 }
                             }
                             if (flag) {
-                                tb.removeTimetable(lecID, semesID);
                                 for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                                     Row row = sheet.getRow(i);
 
                                     String subjectCode = row.getCell(1).getStringCellValue();
-                                    String slotID = row.getCell(2).getStringCellValue();
-                                    String lecturerID = row.getCell(3).getStringCellValue();
-                                    String semesterID = row.getCell(4).getStringCellValue();
+                                    String Description = row.getCell(2).getStringCellValue();
 
-                                    TimetableDTO time = new TimetableDTO(subjectCode, slotID, lecturerID, semesterID);
-                                    TimetableDTO check = tb.getTimtables(subjectCode, slotID, lecturerID, semesterID);
+                                    SubjectDTO subject = new SubjectDTO(subjectCode, Description);
+                                    SubjectDTO check = sj.getSubject(subjectCode);
                                     if (check == null) {
-                                        request.setAttribute("TIMESERVLET", "Import Successfully");
-                                        TimetableDAO.ImportExcelTimetables(time);
-                                    } else {
-                                        request.setAttribute("TIMESERVLET", "Duplicate data defected");
+                                        continue;
                                     }
+                                    SubjectDAO.ImportExcelSubject(subject);
                                 }
                                 wb.close();
-                                URL = "MainController?action=LecturerPage";
+                                URL = "MainController?action=";
                             }
                         } catch (IllegalStateException e) {
                             wb.close();
-                            request.setAttribute("TIMESERVLET", "Error: Wrong format data");
-                            URL = "MainController?action=LecturerPage";
+                            request.setAttribute("SUBJECTSERVLET", "Error: Wrong format data");
+                            URL = "MainController?action=";
                         }
                     } else {
-                        request.setAttribute("TIMESERVLET", "Error: Incorrect sheet name");
-                        URL = "MainController?action=LecturerPage";
+                        request.setAttribute("SUBJECTSERVLET", "Error: Incorrect sheet name");
+                        URL = "MainController?action=";
                     }
                 } else if (fileName.endsWith(".xlsx")) {
                     InputStream inp = filePart.getInputStream();
                     XSSFWorkbook wb = new XSSFWorkbook(inp);
                     XSSFSheet sheet = wb.getSheetAt(0);
                     String sheetName = wb.getSheetName(0);
-                    if (sheetName.equals("ImportTimetablesMMLT")) {
+                    if (sheetName.equals("ImportSubjectsMMLT")) {
                         try {
                             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                                 Row row = sheet.getRow(i);
 
                                 String subjectCode = row.getCell(1).getStringCellValue();
-                                String slotID = row.getCell(2).getStringCellValue();
-                                String lecturerID = row.getCell(3).getStringCellValue();
-                                System.out.println(lecturerID);
-                                String semesterID = row.getCell(4).getStringCellValue();
-                                System.out.println(semesterID);
-                                if ((!lecID.equalsIgnoreCase(lecturerID) && !semesterID.equalsIgnoreCase(semesID))
-                                        || (!lecID.equalsIgnoreCase(lecturerID)) || (!semesterID.equalsIgnoreCase(semesID))) {
+                                String Description = row.getCell(2).getStringCellValue();
+
+                                if (subjectCode.equals("") || Description.equals("")) {
                                     flag = false;
-                                    request.setAttribute("TIMESERVLET", "Error data in Excel: Data must be correct with the given");
-                                    URL = "MainController?action=LecturerPage";
+                                    request.setAttribute("SUBJECTSERVLET", "Error data in Excel: Data is null");
+                                    URL = "MainController?action=importPage";
                                 }
                             }
                             if (flag) {
-                                tb.removeTimetable(lecID, semesID);
                                 for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                                     Row row = sheet.getRow(i);
 
                                     String subjectCode = row.getCell(1).getStringCellValue();
-                                    String slotID = row.getCell(2).getStringCellValue();
-                                    String lecturerID = row.getCell(3).getStringCellValue();
-                                    String semesterID = row.getCell(4).getStringCellValue();
+                                    String Description = row.getCell(2).getStringCellValue();
 
-                                    TimetableDTO time = new TimetableDTO(subjectCode, slotID, lecturerID, semesterID);
-                                    TimetableDTO check = tb.getTimtables(subjectCode, slotID, lecturerID, semesterID);
+                                    SubjectDTO subject = new SubjectDTO(subjectCode, Description);
+                                    SubjectDTO check = sj.getSubject(subjectCode);
                                     if (check == null) {
-                                        request.setAttribute("TIMESERVLET", "Import Successfully");
-                                        TimetableDAO.ImportExcelTimetables(time);
-                                    } else {
-                                        request.setAttribute("TIMESERVLET", "Duplicate data defected");
+                                        continue;
                                     }
+                                    SubjectDAO.ImportExcelSubject(subject);
                                 }
+                                wb.close();
+                                URL = "MainController?action=";
                             }
-                            wb.close();
-
-                            URL = "MainController?action=LecturerPage";
                         } catch (IllegalStateException e) {
                             wb.close();
-                            request.setAttribute("TIMESERVLET", "Error: Wrong format data");
-                            URL = "MainController?action=LecturerPage";
+                            request.setAttribute("SUBJECTSERVLET", "Error: Wrong format data");
+                            URL = "MainController?action=";
                         }
                     } else {
-                        request.setAttribute("TIMESERVLET", "Error: Incorrect sheet name");
-                        URL = "MainController?action=LecturerPage";
+                        request.setAttribute("SUBJECTSERVLET", "Error: Incorrect sheet name");
+                        URL = "MainController?action=";
                     }
                 } else {
-                    request.setAttribute("TIMESERVLET", "Error: Incorrect file format");
-                    URL = "MainController?action=LecturerPage";
+                    request.setAttribute("SUBJECTSERVLET", "Error: Incorrect file format");
+                    URL = "MainController?action=";
                 }
             } else {
-                request.setAttribute("TIMESERVLET", "Error: Null file");
-                URL = "MainController?action=LecturerPage";
+                request.setAttribute("SUBJECTSERVLET", "Error: Null file");
+                URL = "MainController?action=";
             }
             request.getRequestDispatcher(URL).forward(request, response);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -186,11 +165,7 @@ public class ImportTimetables extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(ImportTimetables.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -204,11 +179,7 @@ public class ImportTimetables extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(ImportTimetables.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
