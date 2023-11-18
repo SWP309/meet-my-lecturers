@@ -80,6 +80,7 @@
         <!--        font ch? gg-->
         <link href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
 
 
         <script>
@@ -296,16 +297,16 @@
                         <div class="frame-div request" onclick="submitFormRequest()">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="Request" />
+                                <i class="material-icons">mail_outline</i> 
                             </form>
-
-                            <i class="material-icons">mail_outline</i> Request
+                            Request
                         </div>
                         <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="ViewAllLecturers" />
+                                <i class="fas fa-search"></i>
                             </form>
-
-                            <i class="fas fa-search"></i>View Lecturer
+                            View Lecturer
                         </div>
                         <div class="frame-div logout" onclick="submitFormLogout()">
                             <form action="MainController" method="POST" style="display: none;">
@@ -1190,7 +1191,7 @@
 
             </div>
         </div>
-        <div id="customAlert" style="display: none;">
+        <div id="customAlert">
             <div id="alertContent">
                 <!-- N?i dung c?nh báo s? ???c thêm vào ?ây -->
             </div>
@@ -1212,14 +1213,24 @@
                 text-align: center;
                 z-index: 9999;
             }
+            #alertContent{
+                font-family: 'Oswald','Playpen Sans';
+                padding: 20px;
+            }
             .closeButton {
+                padding: 4px 4px;
                 position: absolute;
                 top: 10px;
                 right: 10px;
                 cursor: pointer;
+                font-weight: bold;
             }
+            .closeButton:hover{
+                opacity: 0.5;
+            }
+
             #alertContent {
-                /* Các thu?c tính cho n?i dung c?nh báo */
+                /* N?u b?n mu?n tu? ch?nh ki?u ch? và màu s?c, hãy ?i?u ch?nh ?o?n CSS này */
             }
         </style>
     </div>
@@ -1232,13 +1243,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
     <script>
+                                var errorMessage = "${requestScope.ERROR}";
                                 var errorMessage1 = "${requestScope.BOOKING_ERROR.duplicateBookedSlot}";
                                 var errorMessage2 = "${requestScope.BOOKING_ERROR.checkPassword}";
                                 var errorMessage3 = "${requestScope.BOOKING_ERROR.inBlockList}";
                                 var errorMessage4 = "${requestScope.SEARCH_FREESLOT_MESSAGE}";
-                                var errorMessage = "${requestScope.ERROR}";
 
-// Ki?m tra n?u errorMessage không r?ng, hi?n th? c?a s? c?nh báo
+                                // Ki?m tra n?u errorMessage không r?ng, hi?n th? thông báo c?nh báo
                                 if (errorMessage.trim() !== "") {
                                     showAlert(errorMessage);
                                 }
@@ -1255,18 +1266,21 @@
                                     showAlert(errorMessage4);
                                 }
 
+                                // Hàm ?? hi?n th? thông báo tùy ch?nh
                                 function showAlert(message) {
-                                var alertContent = document.getElementById("alertContent");
-                                        alertContent.innerHTML = message;
-                                        document.getElementById("customAlert").style.display = "block";
-                                        var closeButton = alertDiv.querySelector(".closeButton");
-                                        closeButton.addEventListener("click", function() {
+                                    var alertDiv = document.getElementById("customAlert");
+                                    var alertContentDiv = document.getElementById("alertContent");
+                                    alertContentDiv.textContent = message;
+                                    alertDiv.style.display = "block";
+                                    var closeButton = alertDiv.querySelector(".closeButton");
+                                    closeButton.addEventListener("click", function () {
                                         alertDiv.style.display = "none";
-                                        }
+                                    });
+                                }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script>
-                                                $(document).foundation();
+                                $(document).foundation();
     </script>
     <%} else {
             response.sendRedirect("MainController");

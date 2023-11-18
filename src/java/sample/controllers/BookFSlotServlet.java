@@ -64,7 +64,7 @@ public class BookFSlotServlet extends HttpServlet {
             System.out.println(existsInBlockList);
             if (existsInBlockList) {
                 checkValidation = false;
-                bookingError.setInBlockList("- You have been BLOCKED form by ALL THE SLOTS by " + LecturerID + ", please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
+                bookingError.setInBlockList("You have been BLOCKED form by ALL THE SLOTS by " + LecturerID + ", please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
                 dto.setStatus(-1);
             }
             //tranfer String to Date
@@ -75,7 +75,7 @@ public class BookFSlotServlet extends HttpServlet {
             if (!password.isEmpty()) {
                 if (!txtPassword.equals(password)) {
                     checkValidation = false;
-                    bookingError.setCheckPassword("- Wrong password!!!");
+                    bookingError.setCheckPassword("Wrong password!!!");
                     System.out.println("sai dong 78");
                 }
             }
@@ -85,7 +85,7 @@ public class BookFSlotServlet extends HttpServlet {
             System.out.println(checkStartDuplicateBookedFS);
             if (checkStartDuplicateBookedFS == false || checkEndDuplicateBookedFS == false) {
                 checkValidation = false;
-                bookingError.setDuplicateBookedSlot("- This slot was duplicated with another booked slot!!!");
+                bookingError.setDuplicateBookedSlot("This slot was duplicated with another booked slot!!!");
                 System.out.println("Bi duplicate");
             }
             boolean checkTimeDuplicateInBookedCancel = dao.checkTimeDuplicateInBookedCancel(studentID, start);
