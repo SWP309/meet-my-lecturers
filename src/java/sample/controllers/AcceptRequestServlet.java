@@ -71,7 +71,7 @@ public class AcceptRequestServlet extends HttpServlet {
             } else {
                 boolean checkAccept = requestDAO.acceptARequest(requestID);
 
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, null, 1, meetLink, 1, lecturerID, 1, semesterID, null);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, null, 1, meetLink, 1, lecturerID, 1, semesterID, null,2);//mode : 2 : cho request
                 FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
                 checkCreateFS = freeSlotsDAO.createFreeSlotBooking(freeSlotsDTO);
 

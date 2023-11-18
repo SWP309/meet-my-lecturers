@@ -61,7 +61,6 @@ public class BookFSlotServlet extends HttpServlet {
             dto.setFreeSlotID(freeSlotID);
             BookingError bookingError = new BookingError();
             boolean existsInBlockList = FsDao.checkBlockList(studentID, LecturerID);
-            System.out.println(existsInBlockList);
             if (existsInBlockList) {
                 checkValidation = false;
                 bookingError.setInBlockList("You have been BLOCKED form by ALL THE SLOTS by " + LecturerID + ", please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
