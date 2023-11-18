@@ -42,7 +42,7 @@ public class ImportSubjects extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             SubjectDAO sj = new SubjectDAO();
-            String URL = "";
+            String URL = "MainController?action=importPage";
             Part filePart = request.getPart("txtexcel");
             String fileName = filePart.getSubmittedFileName();
             boolean flag = true;
@@ -53,51 +53,6 @@ public class ImportSubjects extends HttpServlet {
                     HSSFWorkbook wb = new HSSFWorkbook(new POIFSFileSystem(inp));
                     String sheetName = wb.getSheetName(0);
                     HSSFSheet sheet = wb.getSheetAt(0);
-                    if (sheetName.equals("ImportSubjectsMMLT")) {
-                        try {
-                            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                                Row row = sheet.getRow(i);
-
-                                String subjectCode = row.getCell(1).getStringCellValue();
-                                String Description = row.getCell(2).getStringCellValue();
-
-                                if (subjectCode.equals("") || Description.equals("")) {
-                                    flag = false;
-                                    request.setAttribute("SUBJECTSERVLET", "Error data in Excel: Data is null");
-                                    URL = "MainController?action=";
-                                }
-                            }
-                            if (flag) {
-                                for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                                    Row row = sheet.getRow(i);
-
-                                    String subjectCode = row.getCell(1).getStringCellValue();
-                                    String Description = row.getCell(2).getStringCellValue();
-
-                                    SubjectDTO subject = new SubjectDTO(subjectCode, Description);
-                                    SubjectDTO check = sj.getSubject(subjectCode);
-                                    if (check == null) {
-                                        continue;
-                                    }
-                                    SubjectDAO.ImportExcelSubject(subject);
-                                }
-                                wb.close();
-                                URL = "MainController?action=";
-                            }
-                        } catch (IllegalStateException e) {
-                            wb.close();
-                            request.setAttribute("SUBJECTSERVLET", "Error: Wrong format data");
-                            URL = "MainController?action=";
-                        }
-                    } else {
-                        request.setAttribute("SUBJECTSERVLET", "Error: Incorrect sheet name");
-                        URL = "MainController?action=";
-                    }
-                } else if (fileName.endsWith(".xlsx")) {
-                    InputStream inp = filePart.getInputStream();
-                    XSSFWorkbook wb = new XSSFWorkbook(inp);
-                    XSSFSheet sheet = wb.getSheetAt(0);
-                    String sheetName = wb.getSheetName(0);
                     if (sheetName.equals("ImportSubjectsMMLT")) {
                         try {
                             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
@@ -127,24 +82,71 @@ public class ImportSubjects extends HttpServlet {
                                     SubjectDAO.ImportExcelSubject(subject);
                                 }
                                 wb.close();
-                                URL = "MainController?action=";
+                                request.setAttribute("SUBJECTSERVLET", "Import successfully");
+                                URL = "MainController?action=importPage";
                             }
                         } catch (IllegalStateException e) {
                             wb.close();
                             request.setAttribute("SUBJECTSERVLET", "Error: Wrong format data");
-                            URL = "MainController?action=";
+                            URL = "MainController?action=importPage";
                         }
                     } else {
                         request.setAttribute("SUBJECTSERVLET", "Error: Incorrect sheet name");
-                        URL = "MainController?action=";
+                        URL = "MainController?action=importPage";
+                    }
+                } else if (fileName.endsWith(".xlsx")) {
+                    InputStream inp = filePart.getInputStream();
+                    XSSFWorkbook wb = new XSSFWorkbook(inp);
+                    XSSFSheet sheet = wb.getSheetAt(0);
+                    String sheetName = wb.getSheetName(0);
+                    if (sheetName.equals("ImportSubjectsMMLT")) {
+                        try {
+                            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                                Row row = sheet.getRow(i);
+
+                                String subjectCode = row.getCell(1).getStringCellValue();
+                                String Description = row.getCell(2).getStringCellValue();
+
+                                if (subjectCode.equals("") || Description.equals("")) {
+                                    flag = false;
+                                    request.setAttribute("SUBJECTSERVLET", "Error data in Excel: Data is null");
+                                    URL = "MainController?action=importPage";
+                                }
+                            }
+                            if (flag) {
+                                for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                                    Row row = sheet.getRow(i);
+
+                                    String subjectCode = row.getCell(1).getStringCellValue();
+                                    String Description = row.getCell(2).getStringCellValue();
+                                    System.out.println(subjectCode);
+                                    SubjectDTO subject = new SubjectDTO(subjectCode, Description);
+                                    SubjectDTO check = sj.getSubject(subjectCode);
+                                    if (check != null) {
+                                        continue;
+                                    }
+                                    SubjectDAO.ImportExcelSubject(subject);
+                                }
+                                wb.close();
+                                request.setAttribute("SUBJECTSERVLET", "Import successfully");
+                                URL = "MainController?action=importPage";
+                            }
+                        } catch (IllegalStateException e) {
+                            wb.close();
+                            request.setAttribute("SUBJECTSERVLET", "Error: Wrong format data");
+                            URL = "MainController?action=importPage";
+                        }
+                    } else {
+                        request.setAttribute("SUBJECTSERVLET", "Error: Incorrect sheet name");
+                        URL = "MainController?action=importPage";
                     }
                 } else {
                     request.setAttribute("SUBJECTSERVLET", "Error: Incorrect file format");
-                    URL = "MainController?action=";
+                    URL = "MainController?action=importPage";
                 }
             } else {
                 request.setAttribute("SUBJECTSERVLET", "Error: Null file");
-                URL = "MainController?action=";
+                URL = "MainController?action=importPage";
             }
             request.getRequestDispatcher(URL).forward(request, response);
 

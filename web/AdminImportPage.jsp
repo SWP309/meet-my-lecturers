@@ -161,14 +161,13 @@
                     Import list subject
                 </div>
                 <%    
-                    String TIMESERVLET = (String) request.getAttribute("TIMESERVLET");
-                    String DUPLICATEDATA = (String) request.getAttribute("DUPLICATEDATA");
-                    String DUPLICATEDATATIMETABLE = (String) request.getAttribute("DUPLICATEDATATIMETABLE");
+ 
+                    String SUBJECTSERVLET = (String) request.getAttribute("SUBJECTSERVLET");
                     
-                    if (TIMESERVLET != null) {
+                    if (SUBJECTSERVLET != null) {
                 %>
                 <span style="color: red; font-size: 1rem;">
-                    <%= TIMESERVLET%>
+                    <%= SUBJECTSERVLET%>
                 </span>
                 <%
                     }
@@ -176,8 +175,7 @@
                 <a href="https://drive.google.com/drive/folders/1s_yu8ElI5rP6RaON6SLxFOIN5kmEUh4D?usp=drive_link" target="_blank" style="color: blueviolet">Download template</a>
                 <div class="form-group input-group">
                     <div class="custom-file">
-                        <input type="hidden" value="importTB" name="action">
-                        <input type="file" name="txtexcel" class="custom-file-input" id="DSSV"  onchange="updateFileName('DSSV')" required>
+                        <input type="file" name="txtexcel" class="custom-file-input" id="subject"  onchange="updateFileName('subject')" required>
                         <label class="custom-file-label">Choose file</label>
                     </div>                    
                     <div class="input-group-append">

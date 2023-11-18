@@ -70,6 +70,8 @@ public class MainController extends HttpServlet {
     private static final String ADMIN_IMPORTSTUDENT_ACTION = "ImportStudents";
     private static final String ADMIN_IMPORTTIMETABLES = "importTB";
     private static final String ADMIN_IMPORTTIMETABLES_ACTION = "ImportTimetables";
+    private static final String ADMIN_IMPORT_SUBJECT = "importSJ";
+    private static final String ADMIN_IMPORT_SUBJECT_ACTION = "ImportSubjects";
 
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
@@ -344,6 +346,8 @@ public class MainController extends HttpServlet {
                 url = UPDATE_SUBJECT_ACTION;
             } else if (ADD_USER.equals(action)) {
                 url = ADD_USER_ACTION;
+            } else if (ADMIN_IMPORT_SUBJECT.equals(action)) {
+                url = ADMIN_IMPORT_SUBJECT_ACTION;
             }
 
         } catch (Exception e) {
