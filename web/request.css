@@ -74,7 +74,7 @@
     display: none;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 205px;
+    min-width: 220px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -97,6 +97,9 @@
 .frame-div{
     padding: 10px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 .frame-parent {
     display: flex;
