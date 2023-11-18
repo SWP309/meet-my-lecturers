@@ -153,6 +153,10 @@
                 var form = document.querySelector('.returnHome form');
                 form.submit();
             }
+            function submitForm() {
+                var form = document.querySelector('.viewCreateSlot form');
+                form.submit();
+            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",

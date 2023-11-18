@@ -316,7 +316,7 @@
                                     <div class="d-flex justify-content-between"><strong><b>RECIPIENT (optional):</b></strong> <input type="email" class="form-control"  name="txtRecipient" value="${param.txtRecipient}" placeholder="ex: example@fpt.edu.vn | example@gmail.com,....." multiple></div>
                                 <div class="d-flex justify-content-between"><strong><b style="color: blue">STATUS(public/private):</b></strong>
                                     <div class="d-flex">
-                                        <select class="form-control" name="txtStatusOption" value="${param.txtStatusOption}">
+                                        <select style=" padding: 0 15px;" class="form-control" name="txtStatusOption"value="${param.txtStatusOption}">
                                             <option value="PUB">Public</option>
                                             <option value="PRV">Private (check Hide list)</option>
                                         </select>
@@ -347,7 +347,7 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex justify-content-center btn-book">
+                                    <div class="d-flex justify-content-center btn-book" style="gap: 10px">
                                     <input type="hidden" value="createFreeSlotAction" name="action"/>
                                     <input type="reset" class="btn-decline" value="Reset" onclick="resetForm()">
                                     <input type="submit" class="btn btn-primary" value="Create (Send E-mail if any)">
@@ -363,7 +363,7 @@
                                 <input type="hidden" value="${param.txtOption}">
                                 <input type="hidden" value="${param.txtStatusOption}">
                             </form>
-                            <div class="d-flex justify-content-center btn-book">
+                            <div style="margin-top: 10px;">
                                 <form action="MainController" method="POST">
                                     <input type="hidden" name="action" value="returnHomePageLecturer" />
                                     <input type="submit" class="btn" value="Cancel" style="background-color: red; color: white;">
