@@ -312,12 +312,21 @@
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.meetLinkError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.meetLinkError}</h6>
                                 </c:if>
-                                <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="^((SE|IA|SS|MC)[0-9]{6};)*$"></div>
-                                <div class="d-flex justify-content-between"><strong>STATUS(public/private):</strong>
+                                    <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="^((SE|IA|SS|MC)[0-9]{6};)*$"></div>
+                                    <div class="d-flex justify-content-between"><strong><b>RECIPIENT (optional):</b></strong> <input type="email" class="form-control"  name="txtRecipient" value="${param.txtRecipient}" placeholder="ex: example@fpt.edu.vn | example@gmail.com,....." multiple></div>
+                                <div class="d-flex justify-content-between"><strong><b style="color: blue">STATUS(public/private):</b></strong>
                                     <div class="d-flex">
-                                        <select class="form-control" name="txtStatusOption" value="${param.txtStatusOption}">
+                                        <select style=" padding: 0 15px;" class="form-control" name="txtStatusOption"value="${param.txtStatusOption}">
                                             <option value="PUB">Public</option>
                                             <option value="PRV">Private (check Hide list)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between"><strong><b style="color: blue">MODE:</b></strong>
+                                    <div class="d-flex">
+                                        <select class="form-control" name="txtModeOption">
+                                            <option value="BOOK">For Students to Book</option>
+                                            <option value="REQT">For Students to Request</option>
                                         </select>
                                     </div>
                                 </div>
@@ -338,10 +347,10 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex justify-content-center btn-book">
+                                    <div class="d-flex justify-content-center btn-book" style="gap: 10px">
                                     <input type="hidden" value="createFreeSlotAction" name="action"/>
                                     <input type="reset" class="btn-decline" value="Reset" onclick="resetForm()">
-                                    <input type="submit" class="btn btn-primary" value="Create">
+                                    <input type="submit" class="btn btn-primary" value="Create (Send E-mail if any)">
                                 </div>
                                 <input type="hidden" id="hiddenSemesterID" name="hiddenSemesterID">
                                 <input type="hidden" id="hiddenSubjectCode" name="hiddenSubjectCode">
@@ -354,7 +363,7 @@
                                 <input type="hidden" value="${param.txtOption}">
                                 <input type="hidden" value="${param.txtStatusOption}">
                             </form>
-                            <div class="d-flex justify-content-center btn-book">
+                            <div style="margin-top: 10px;">
                                 <form action="MainController" method="POST">
                                     <input type="hidden" name="action" value="returnHomePageLecturer" />
                                     <input type="submit" class="btn" value="Cancel" style="background-color: red; color: white;">
