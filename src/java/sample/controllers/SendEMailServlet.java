@@ -107,14 +107,14 @@ public class SendEMailServlet extends HttpServlet {
                 msg.addHeader("Content-Charset", "UTF-8");
                 msg.setFrom(new InternetAddress(from));
                 msg.addRecipients(Message.RecipientType.TO, addresses.toArray(new InternetAddress[0]));
-                msg.setSubject("Thông Tin Cua Môn Học : " + subjectCode + " Vào Lúc : " + startTime + " Và Ket Thúc Lúc : " + endTime);
+                msg.setSubject("Thông Tin Cua Môn Hoc : " + subjectCode + " Vào Lúc : " + startTime + " Và Ket Thúc Lúc : " + endTime);
 
                 // Create a multipart message
                 Multipart multipart = new MimeMultipart();
 
                 //first body part of the multipart
                 BodyPart messageBodyPart = new MimeBodyPart();
-                messageBodyPart.setContent("<html><body><b><h1>Thông Tin Của Môn Học : </h1></b></body></html>" + subjectCode + "<html><body><b><h3>Bắt Đầu lúc : </h3></b></body></html>" + startTime + "<html><body><b><h3> Và Kết Thúc lúc : </h3></b></body></html>" + endTime + "<html><body><b><h1>Mã Truy Cập Fslot Của Bạn : </h1></b></body></html>" + fslotPassword + "<html><body><b><h4>===============================================================================<html><body><b><h4>" + message + "<html><body><b><h4>===============================================================================<html><body><b><h4>" + "<html><body><b><h2>FSlot Này Là Của : </h2></b></body></html>" + lecturerName + "<html><body><b><h2>Email : </h2></b></body></html>" + lecturerEmail + "<html><body><img src=\"https://uni.fpt.edu.vn/Data/Sites/1/skins/default/img/og-image.png\" alt=\"This is an image of a cat.\" /></body></html>", "text/html; charset=UTF-8");
+                messageBodyPart.setContent("<html><body><b><h1>Thông Tin Của Môn Học : </h1></b></body></html>" + subjectCode + "<html><body><b><h3>Bắt Đầu lúc : </h3></b></body></html>" + startTime + "<html><body><b><h3> Và Kết Thúc lúc : </h3></b></body></html>" + endTime + "<html><body><b><h1>Mã Truy Cập Fslot Của Bạn : </h1></b></body></html>" + fslotPassword + "<html><body><b><h4>===============================================================================<html><body><b><h4>" + message + "<html><body><b><h4>===============================================================================<html><body><b><h4>" + "<html><body><b><h2>FSlot Này Là Của : </h2></b></body></html>" + lecturerName + "<html><body><b><h2>Email : </h2></b></body></html>" + lecturerEmail + "<html><body><img src=\"https://fpt.edu.vn/Content/images/assets/Logo-FU-03.png\" alt=\"This is an image of a cat.\" /></body></html>", "text/html; charset=UTF-8");
                 multipart.addBodyPart(messageBodyPart);
 
                 msg.setContent(multipart);
