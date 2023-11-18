@@ -100,14 +100,12 @@ public class SubjectDAO {
         try {
             cn = DBUtils.getConnection();
             if (cn != null) {
-                String sql = "IInsert [dbo].[Subjects] ([subjectCode], [subjectName])\n"
+                String sql = "Insert [dbo].[Subjects] ([subjectCode], [subjectName])\n"
                         + "Values (?,?)";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setString(1, subject.getSubjectCode());
                 pst.setString(2, subject.getSubjectName());
                 rs = pst.executeUpdate();
-            } else {
-                System.out.println("Error Import Excel func");
             }
         } catch (ClassNotFoundException | SQLException e) {
             // Handle exceptions here, you can log the error or take appropriate action
