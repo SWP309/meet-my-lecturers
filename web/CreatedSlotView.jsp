@@ -226,6 +226,11 @@
                     event.preventDefault();
                 }
             }
+            function updateFileName(inputId) {
+                const input = document.getElementById(inputId);
+                const fileName = input.value.split('\\').pop();
+                input.nextElementSibling.innerHTML = fileName;
+            }
 
         </script>
         <style>
