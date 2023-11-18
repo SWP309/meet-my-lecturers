@@ -187,6 +187,7 @@
                     </div>
                 </div>
             </form>
+                <a href="AdminAddData.jsp">hello</a>
         </div>
         <script>
             function updateFileName(inputId) {
