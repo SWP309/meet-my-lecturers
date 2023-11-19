@@ -39,107 +39,23 @@ public class SearchFreeSlotServlet extends HttpServlet {
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String subjectCode = request.getParameter("txtSubjectCode");
             String lecturerID = request.getParameter("txtUserID");
-            String name = request.getParameter("txtUserName");
-            String semester = request.getParameter("txtSemesterID");
             FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
-          
+
             Date date = new Date();
             freeSlotsDAO.updateStatusOutDate(date);
-            
-            if (!subjectCode.isEmpty() && lecturerID.isEmpty() && name.isEmpty() && semester.isEmpty()) {
-                freeSlotsDAO.getFreeSlotBySubjectCode(subjectCode, us.getUserID());
-                List<FreeSlotsDTO> freeSlotBySubject = freeSlotsDAO.getFreeSlotBySubjectCode();
-                if (freeSlotBySubject != null) {
-                    request.setAttribute("FREESLOT_BY_SUBJECT", freeSlotBySubject);
-                    url = SUCCESS;
-                }
-            } else if (subjectCode.isEmpty() && !lecturerID.isEmpty() && name.isEmpty() && semester.isEmpty()) {
-                freeSlotsDAO.getFreeSlotByLecturerID(lecturerID, us.getUserID());
-                List<FreeSlotsDTO> freeSlotByLecturerID = freeSlotsDAO.getFreeSlotByLecturerID();
-                if (freeSlotByLecturerID != null) {
-                    request.setAttribute("FREESLOT_BY_LECTURERID", freeSlotByLecturerID);
-                    url = SUCCESS;
-                }
-            } else if (subjectCode.isEmpty() && lecturerID.isEmpty() && !name.isEmpty() && semester.isEmpty()) {
-                freeSlotsDAO.getFreeSlotByLecName(name, us.getUserID());
-                List<FreeSlotsDTO> freeSlotByLecName = freeSlotsDAO.getFreeSlotByLecName();
-                if (freeSlotByLecName != null) {
-                    request.setAttribute("FREESLOT_BY_LECNAME", freeSlotByLecName);
-                    url = SUCCESS;
-                }
-            } else if (subjectCode.isEmpty() && lecturerID.isEmpty() && name.isEmpty() && !semester.isEmpty()) {
-                freeSlotsDAO.getFreeSlotBySemesterID(semester, us.getUserID());
-                List<FreeSlotsDTO> freeSlotBySemesterID = freeSlotsDAO.getFreeSlotBySemesterID();
-                if (freeSlotBySemesterID != null) {
-                    request.setAttribute("FREESLOT_BY_SEMESTERID", freeSlotBySemesterID);
-                    url = SUCCESS;
-                }
-            } else if (!subjectCode.isEmpty() && !lecturerID.isEmpty() && name.isEmpty() && semester.isEmpty()) {
-                freeSlotsDAO.getFreeSlotBySubjectAndLecID(subjectCode, lecturerID, us.getUserID());
-                List<FreeSlotsDTO> freeSlotBySubjectAndLecID = freeSlotsDAO.getFreeSlotBySubjectAndLecID();
-                if (freeSlotBySubjectAndLecID != null) {
-                    request.setAttribute("FREESLOT_BY_SUBJECT_AND_LECID", freeSlotBySubjectAndLecID);
-                    url = SUCCESS;
-                }
-            } else if (!subjectCode.isEmpty() && lecturerID.isEmpty() && !name.isEmpty() && semester.isEmpty()) {
-                freeSlotsDAO.getFreeSlotBySubjectAndLecName(subjectCode, name, us.getUserID());
-                List<FreeSlotsDTO> freeSlotBySubjectAndLecName = freeSlotsDAO.getFreeSlotBySubjectAndLecName();
-                if (freeSlotBySubjectAndLecName != null) {
-                    request.setAttribute("FREESLOT_BY_SUBJECT_AND_LECNAME", freeSlotBySubjectAndLecName);
-                    url = SUCCESS;
-                }
-            } else if (!subjectCode.isEmpty() && lecturerID.isEmpty() && name.isEmpty() && !semester.isEmpty()) {
-                freeSlotsDAO.getFreeSlotBySubjectAndSemester(subjectCode, semester, us.getUserID());
-                List<FreeSlotsDTO> freeSlotBySubjectAndSemester = freeSlotsDAO.getFreeSlotBySubjectAndSemester();
-                if (freeSlotBySubjectAndSemester != null) {
-                    request.setAttribute("FREESLOT_BY_SUBJECT_AND_SEMESTER", freeSlotBySubjectAndSemester);
-                    url = SUCCESS;
-                }
-            } else if (subjectCode.isEmpty() && !lecturerID.isEmpty() && name.isEmpty() && !semester.isEmpty()) {
-                freeSlotsDAO.getFreeSlotByLecIDAndSemester(lecturerID, semester, us.getUserID());
-                List<FreeSlotsDTO> freeSlotByLecIDAndSemester = freeSlotsDAO.getFreeSlotByLecIDAndSemester();
-                if (freeSlotByLecIDAndSemester != null) {
-                    request.setAttribute("FREESLOT_BY_LECID_AND_SEMESTER", freeSlotByLecIDAndSemester);
-                    url = SUCCESS;
-                }
-            } else if (subjectCode.isEmpty() && lecturerID.isEmpty() && !name.isEmpty() && !semester.isEmpty()) {
-                freeSlotsDAO.getFreeSlotByLecNameAndSemester(name, semester, us.getUserID());
-                List<FreeSlotsDTO> freeSlotByLecNameAndSemester = freeSlotsDAO.getFreeSlotByLecNameAndSemester();
-                if (freeSlotByLecNameAndSemester != null) {
-                    request.setAttribute("FREESLOT_BY_LECNAME_AND_SEMESTER", freeSlotByLecNameAndSemester);
-                    url = SUCCESS;
-                }
-            } else if (!subjectCode.isEmpty() && !lecturerID.isEmpty() && name.isEmpty() && !semester.isEmpty()) {
-                freeSlotsDAO.getFreeSlotBySubCodeAndLecIDAndSemester(subjectCode, lecturerID, semester, us.getUserID());
-                List<FreeSlotsDTO> freeSlotBySubCodeAndLecIDAndSemester = freeSlotsDAO.getFreeSlotBySubCodeAndLecIDAndSemester();
-                if (freeSlotBySubCodeAndLecIDAndSemester != null) {
-                    request.setAttribute("FREESLOT_BY_SUBCODE_AND_LECID_AND_SEMESTER", freeSlotBySubCodeAndLecIDAndSemester);
-                    url = SUCCESS;
-                }
-            } else if (!subjectCode.isEmpty() && lecturerID.isEmpty() && !name.isEmpty() && !semester.isEmpty()) {
-                freeSlotsDAO.getFreeSlotBySubCodeAndLecNameAndSemester(subjectCode, name, semester, us.getUserID());
-                List<FreeSlotsDTO> freeSlotBySubCodeAndLecNameAndSemester = freeSlotsDAO.getFreeSlotBySubCodeAndLecNameAndSemester();
-                if (freeSlotBySubCodeAndLecNameAndSemester != null) {
-                    request.setAttribute("FREESLOT_BY_SUBCODE_AND_LECNAME_AND_SEMESTER", freeSlotBySubCodeAndLecNameAndSemester);
-                    url = SUCCESS;
-                }
-            } else if (!subjectCode.isEmpty() && !lecturerID.isEmpty() && !name.isEmpty() && !semester.isEmpty()) {
-                freeSlotsDAO.getFreeSlotByAll(subjectCode, lecturerID, name, semester, us.getUserID());
-                List<FreeSlotsDTO> freeSlotByAll = freeSlotsDAO.getFreeSlotByAll();
-                if (freeSlotByAll != null) {
-                    request.setAttribute("FREESLOT_BY_ALL", freeSlotByAll);
-                    url = SUCCESS;
-                }
-            } else if (subjectCode.isEmpty() && lecturerID.isEmpty() && name.isEmpty() && semester.isEmpty()) {
-                freeSlotsDAO.getFreeSlot(us.getUserID());
-                List<FreeSlotsDTO> freeSlot = freeSlotsDAO.getFreeSlotList();
-                if (freeSlot != null) {
-                    request.setAttribute("FREESLOT", freeSlot);
-                    url = SUCCESS;
-                } else {
-                    request.setAttribute("SEARCH_FREESLOT_MESSAGE", "The system has no freeslot that meet your requirement!!!");
-                }
+            freeSlotsDAO.getFreeSlotBySubjectAndLecID(subjectCode, lecturerID, us.getUserID());
+            freeSlotsDAO.getFreeSlotBySubjectCode(subjectCode, us.getUserID());
+            List<FreeSlotsDTO> freeSlotBySubjectAndLecID = freeSlotsDAO.getFreeSlotBySubjectAndLecID();
+            List<FreeSlotsDTO> freeSlotBySubjectCode = freeSlotsDAO.getFreeSlotBySubjectCode();
+
+            if (freeSlotBySubjectAndLecID != null || freeSlotBySubjectCode != null) {
+                request.setAttribute("FREESLOT_BY_SUBJECT_AND_LECID", freeSlotBySubjectAndLecID);
+                request.setAttribute("FREESLOT_BY_SUBJECT", freeSlotBySubjectCode);
+                url = SUCCESS;
+            } else {
+                request.setAttribute("ERROR", "Dont have any slots in this time !!!");
             }
+
         } catch (ClassNotFoundException | SQLException | ParseException ex) {
             log("Error at ViewAllRequestStatus: " + ex.toString());
         } finally {
