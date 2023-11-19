@@ -433,7 +433,7 @@
                     <input type="text" class="form-control" name="lecID" placeholder="E.g: GV0001" required>
                     <input type="text" class="form-control" name="semesID" placeholder="E.g: FA23" required>
                     <div class="input-group-append">
-                        <button style="background-color: #0d6efd; color: white" type="submit" value="importTB" name="action" class="btn btn-primary custom-submit-button">Submit</button>
+                        <button style="background-color: #0d6efd; color: white; z-index: -1" type="submit" value="importTB" name="action" class="btn btn-primary custom-submit-button">Submit</button>
                     </div>
                 </div>
             </form>
