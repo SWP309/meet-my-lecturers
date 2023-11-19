@@ -3,6 +3,12 @@
     Created on : Oct 28, 2023, 1:20:11 AM
     Author     : Minh Khang
 --%>
+<%@page import="sample.adminView.ViewBookedSlotAdminDTO"%>
+<%@page import="sample.subjects.SubjectDTO"%>
+<%@page import="sample.subjects.SubjectDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="sample.roles.RoleDAO"%>
+<%@page import="sample.roles.RoleDTO"%>
 <%@page import="sample.users.UserDTO"%>
 <%@page import="sample.dashboard.UserMaxSlotDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -24,6 +30,7 @@
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             if (us != null) {
+                ArrayList<ViewBookedSlotAdminDTO> listSlot = (ArrayList<ViewBookedSlotAdminDTO>) request.getAttribute("listSlot");
         %>
         <script>
             function submitFormHomePage() {
@@ -61,16 +68,63 @@
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
+            function submitAddForm() {
+                var form = document.querySelector('.container form');
+                var optionInput = document.querySelector('.container form input[name="option"]');
+                optionInput.value = "add"; // Set the option value for the "Add" button
+                form.submit();
+            }
+
+            function submitRemoveForm() {
+                var form = document.querySelector('.container form');
+                var optionInput = document.querySelector('.container form input[name="option"]');
+                optionInput.value = "remove"; // Set the option value for the "Remove" button
+                form.submit();
+            }
+
+            function submitUpdateForm() {
+                var form = document.querySelector('.container form');
+                var optionInput = document.querySelector('.container form input[name="option"]');
+                optionInput.value = "update"; // Set the option value for the "Update" button
+                form.submit();
+            }
         </script>
 
         <style>
-            .custom-submit-button {
-                background-color: #f27125; /* Màu xanh */
-                color: #fff; /* Màu chữ trắng */
-                /* Các thuộc tính CSS khác tùy ý */
+
+
+            .btn-primary{
+                border-color: black;
             }
-            .custom-submit-button:hover{
-                background-color: #b05b18;
+            #remove{
+                background-color: #F27125;
+            }
+            #add{
+                background-color: #0066B2;
+            }
+            #update{
+                background-color: #0DB04B;
+            }
+            .table-container {
+                display: flex;
+                justify-content: center;
+                margin: auto;
+                margin-top: 10%;
+            }
+            .table-rounded th,
+            .table-rounded td {
+                padding: 8px;
+                border: 1px solid black;
+                text-align: center;
+            }
+
+            .table-rounded thead {
+                background-color: #f27125;
+                color: white;
+            }
+            .table-rounded{
+                width: 100%;
+                transform: scale(0.8); /* Tỉ lệ thu nhỏ bảng là 80% */
             }
         </style>
     </head>
@@ -89,7 +143,7 @@
                             <input type="hidden" name="action" value="ViewUsers" />
                         </form>
                         <div class="bookedslot-wrapper">
-                             <i class="material-icons">event</i>
+                            <i class="material-icons">event</i>
                         </div>
                         <div class="view-booking" >Search Users</div>
                     </div>
@@ -107,7 +161,7 @@
                             <input type="hidden" name="action" value="Logout" />
                         </form>
                         <div class="logout-wrapper">
-                             <i class="material-icons">logout</i>
+                            <i class="material-icons">logout</i>
                         </div>
                         <div class="request">
                             <p class="logout1">Logout</p>
@@ -129,77 +183,90 @@
             </div>
         </div>
         <div class="container mt-5">
-            <h1 class="text-center">Import form excel</h1>
-            <form action="MainController" method="POST" enctype="multipart/form-data">
-                <div style="padding-right: 100px; display: inline-block">
-                    Import List Student
-                </div>
-                <%                    String EXCSERVLET = (String) request.getAttribute("EXCSERVLET");
-                    
-                    if (EXCSERVLET != null) {
-                %>
-                <span style="color: red; font-size: 1rem;">
-                    <%= EXCSERVLET%>
-                </span>
-                <%
-                    }
-                %>
-                <a href="https://drive.google.com/drive/folders/195tJBz5ZndD9dh9Lvdw3K1SH_dh8ACnZ?usp=sharing" target="_blank" style="color: blueviolet">Download template</a>
-                <div class="form-group input-group">
-                    <div class="custom-file">
-                        <input type="file" name="txtexcel" class="custom-file-input" id="imageUpload"  onchange="updateFileName('imageUpload')" required>
-                        <label class="custom-file-label" for="imageUpload">Choose file</label>
+
+            <div class="row align-items-center justify-content-center">
+
+                <form action="MainController" method="POST" class="d-flex justify-content-center" style=" margin-top: 10%;">
+                    <div class="form-group">
+                        <input type="datetime-local" class="form-control" name="txtStartTime" required>
                     </div>
-                    <div class="input-group-append">
-                        <input type="hidden" name="action" value="importST">
-                        <button type="submit" value="importST" name="action" class="btn btn-primary custom-submit-button">Submit</button>
+                    <div class="form-group">
+                        <input type="datetime-local" class="form-control" name="txtEndTime" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="txtUser" placeholder="User ( SE171435)" required>
+                    </div>
+                    <div class="form-group">
+                        <select name="txtRole" class="form-control" required>
+                            <option value="2">Slots created by Lecturer</option>
+                            <option value="3">Slots booked by Student</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchSlot">Search</button>
+                    </div> <br>
+                </form>
+
+            </div>
+            <%
+                if (listSlot != null) {
+            %>
+            <form>
+                <div class="view-user-table" style="width: 100%; margin: 0 auto; border-radius: 20px;">
+                    <div class="table-container">
+                        <table class="custom-table table-hover table-primary table-rounded">
+                            <tr style="background-color: tomato">
+                                <th>Lecturer ID</th>
+                                <th>Student ID</th>
+                                <th>Subject Code</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Slot ID</th>
+                                <th>Meet Link</th>
+                            </tr>
+                            <%
+                                for (ViewBookedSlotAdminDTO slot : listSlot) {
+                            %>
+                            <tr>
+                                <td><%= slot.getLecturerID()%></td>
+                                <td><%= slot.getStudentID()%></td>
+                                <td><%= slot.getSubjectCode()%></td>
+                                <td><%= slot.getStartTime()%></td>
+                                <td><%= slot.getEndTime()%></td>
+                                <td><%= slot.getFreeSlotID()%></td>
+                                <td><%= slot.getMeetLink()%></td>
+                            </tr>
+                            <%
+                                }
+                            %>
+                        </table>
                     </div>
                 </div>
             </form>
-            <form action="MainController" method="POST" enctype="multipart/form-data">
-                <div style="padding-right: 100px; display: inline-block">
-                    Import list subject
-                </div>
-                <%    
- 
-                    String SUBJECTSERVLET = (String) request.getAttribute("SUBJECTSERVLET");
-                    
-                    if (SUBJECTSERVLET != null) {
-                %>
-                <span style="color: red; font-size: 1rem;">
-                    <%= SUBJECTSERVLET%>
-                </span>
-                <%
-                    }
-                %>
-                <a href="https://drive.google.com/drive/folders/1s_yu8ElI5rP6RaON6SLxFOIN5kmEUh4D?usp=drive_link" target="_blank" style="color: blueviolet">Download template</a>
-                <div class="form-group input-group">
-                    <div class="custom-file">
-                        <input type="file" name="txtexcel" class="custom-file-input" id="subject"  onchange="updateFileName('subject')" required>
-                        <label class="custom-file-label">Choose file</label>
-                    </div>                    
-                    <div class="input-group-append">
-                        <button type="submit" value="importSJ" name="action" class="btn btn-primary custom-submit-button">Submit</button>
-                    </div>
-                </div>
-            </form>
-                <a href="AdminAddData.jsp">Add data page</a>
-                <a href="AdminViewSlot.jsp">Manage slot page</a>
+            <%
+                }
+            %>
         </div>
-        <script>
-            function updateFileName(inputId) {
-                const input = document.getElementById(inputId);
-                const fileName = input.value.split('\\').pop();
-                input.nextElementSibling.innerHTML = fileName;
-            }
-        </script>
+        <div style="text-align: center">
+            <%
+                String Error = (String) request.getAttribute("Error");
+
+                if (Error != null) {
+            %>
+            <span style="color: red; font-size: 2rem;">
+                <%= Error %>
+            </span>
+            <%
+                }
+            %>
+            </div>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <%
             } else {
                 response.sendRedirect("MainController?action=");
-            }            
+            }
         %>
     </body>
 </html>
