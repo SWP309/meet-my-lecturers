@@ -199,7 +199,7 @@
         <%
             } else {
                 response.sendRedirect("MainController?action=");
-            }            
+            }
         %>
     </body>
 </html>
