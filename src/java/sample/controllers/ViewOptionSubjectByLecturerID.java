@@ -6,9 +6,13 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,42 +20,30 @@ import javax.servlet.http.HttpSession;
 import sample.freeslots.FreeSlotsDAO;
 import sample.freeslots.FreeSlotsDTO;
 import sample.users.UserDTO;
-import sample.viewCreatedSlot.ViewCreatedSlotDAO;
-import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
 /**
  *
  * @author PC
  */
-public class ViewOptionCreateFS extends HttpServlet {
+@WebServlet(name = "ViewOptionSubjectByLecturerID", urlPatterns = {"/searchbyLecturerID"})
+public class ViewOptionSubjectByLecturerID extends HttpServlet {
 
-    private static final String SUCCESS = "create-freeSlot.jsp";
-    private static final String ERROR = "CreatedSlotView.jsp";
-
+ 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
-        try {
-            HttpSession session = request.getSession();
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            FreeSlotsDAO searchDao = new FreeSlotsDAO();
-            List<FreeSlotsDTO> listSemester = searchDao.GetListSemesterID();
-            List<FreeSlotsDTO> listSubject = searchDao.GetListSubject();
-            System.out.println(us.getUserEmail());
-            if (us.getUserEmail() != null) {
-                request.setAttribute("LIST_SEMESTER", listSemester);
-                request.setAttribute("LIST_SUBJECT", listSubject);
-                
-                url = SUCCESS;
-            } else {
-                request.setAttribute("MESSAGE", "Can not open the create page");
-            }
-        } catch (Exception e) {
-            log("Error at BookingController: " + e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+        String txtSearch = request.getParameter("txt");
+        System.out.println(txtSearch);
+        HttpSession session = request.getSession();
+        UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+        FreeSlotsDAO searchDao = new FreeSlotsDAO();
+        Date date = new Date();
+        List<FreeSlotsDTO> ListSubjectByLecturer = searchDao.GetListSubjectCodeByLecturer(date, txtSearch);
+        PrintWriter out = response.getWriter();
+        for (FreeSlotsDTO list : ListSubjectByLecturer) {
+            out.println("<a style=\"padding: 10px; color:black;\" href=\"MainController?action=SearchFSlot&txtSubjectCode="+list.getSubjectCode()+"&txtUserID="+txtSearch+"\" >"+list.getSubjectCode()+" </a>");
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -66,7 +58,11 @@ public class ViewOptionCreateFS extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewOptionSubjectByLecturerID.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -80,7 +76,11 @@ public class ViewOptionCreateFS extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewOptionSubjectByLecturerID.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
