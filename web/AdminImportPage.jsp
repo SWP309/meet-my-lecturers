@@ -183,7 +183,8 @@
                     </div>
                 </div>
             </form>
-                <a href="AdminAddData.jsp">hello</a>
+                <a href="AdminAddData.jsp">Add data page</a>
+                <a href="AdminViewSlot.jsp">Manage slot page</a>
         </div>
         <script>
             function updateFileName(inputId) {
