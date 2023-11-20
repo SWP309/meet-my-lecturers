@@ -15,6 +15,16 @@
             <h3>Email: ${USER.userEmail}</h3>
         </div>
         <div>
+            <form action="MainController" method="POST">
+                <select class="form-control" name="txtSubjectCode">
+                    <c:forEach items="${LIST_ADD_MAJORS}" var="subject">
+                        <option value="${subject.subjectCode}">${subject.subjectCode}</option>
+                    </c:forEach>
+                </select>
+                <button type="submit" name="action" value="AddMajor">Add Major</button>
+            </form>
+        </div>
+        <div>
             <c:if test="${not empty requestScope.LIST_MAJORS}">
                 <div class="table-container">
                     <table class="custom-table table-hover table-primary table-rounded">
@@ -24,40 +34,27 @@
                                 <th>Lecturer ID</th>
                                 <th>Subject Code</th>
                                 <th>Subject Name</th>
-<!--                                <th>Delete</th>
-                                <th>Update</th>-->
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach items="${requestScope.LIST_MAJORS}" 
                                        var="major" varStatus="status">
                                 <tr>
-                                    <td>${status.count}</td>
-                                    <td>${major.lecturerID}</td>
-                                    <td>${major.subjectCode}</td>
-                                    <td>${major.subjectName}</td>
-<!--                                    <td>
-                                        <input type="hidden" name="txtSubjectCode" 
-                                               value="${major.subjectCode}" readonly="">
-                                        <input type="hidden" name="txtSearchUserID" 
-                                               value="${param.txtSearchUserID}" readonly="">
-                                        <input type="hidden" name="txtStatus" 
-                                               value="${user.userStatus}" readonly="">
-                                        <button class="btn-accept" type="submit" name="action"
-                                                value="UpdateUsers">Update</button>
-                                    </td>
-                                    <td>
-                                        <input type="hidden" name="txtUserID" 
-                                               value="${user.userID}" readonly="">
-                                        <input type="hidden" name="txtSearchUserID" 
-                                               value="${param.txtSearchUserID}" readonly="">
-                                        <input type="hidden" name="txtStatus" 
-                                               value="${user.userStatus}" readonly="">
-                                        <button class="btn-accept" type="submit" name="action"
-                                                value="UpdateUsers">Update</button>
-                                    </td>-->
-                                </tr>
-                            </c:forEach>
+                            <form action="MainController" method="POST">
+                                <td>${status.count}</td>
+                                <td>${major.lecturerID}</td>
+                                <td>${major.subjectCode}</td>
+                                <td>${major.subjectName}</td>
+                                <td>
+                                    <input type="hidden" name="txtSubjectCode" 
+                                           value="${major.subjectCode}" readonly="">
+                                    <button type="submit" name="action"
+                                            value="DeleteMajor">Delete</button>
+                                </td>
+                            </form>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>
