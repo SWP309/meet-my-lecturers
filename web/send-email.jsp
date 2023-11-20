@@ -293,7 +293,7 @@
                                 <h6> ${requestScope.FREESLOT_ERROR.durationError}</h6>
                             </c:if>
                             <div class="d-flex justify-content-between"><strong>Access code of your free slot(optional):</strong> <input type="text" class="form-control" name="txtPassword" value="${param.txtPassword}"></div>
-                            <div class="d-flex justify-content-between"><strong>Message(optional):</strong> <textarea style="width: 60%" name="txtMessage" rows="10" cols="60"></textarea></div>
+                            <div class="d-flex justify-content-between"><strong>Message(optional):</strong> <textarea style="width: 60%" name="txtMessage" rows="10" cols="60" charset="UTF-8"></textarea></div>
 
                             <div class="d-flex justify-content-center btn-book">
                                 <input type="hidden" value="sendEMailAction" name="action"/>

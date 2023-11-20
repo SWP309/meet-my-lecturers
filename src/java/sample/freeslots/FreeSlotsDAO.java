@@ -156,6 +156,7 @@ public class FreeSlotsDAO {
             + "AND startTime <= DATEADD(MINUTE, 10, CURRENT_TIMESTAMP)";
     private static String GET_LECTURERID_FROM_FSLOT = "SELECT lecturerID FROM FreeSlots WHERE freeSlotID = ?";
     private static String GET_EMAIL_FROM_LECTURERID = "SELECT userEmail FROM Users WHERE userID = ?";
+
     private static String GET_SEMESTERID = "SELECT s.semesterID\n"
             + "FROM Semesters s\n"
             + "WHERE ? BETWEEN s.startDay AND s.endDay";
@@ -163,6 +164,10 @@ public class FreeSlotsDAO {
             + "            FROM Majors s\n"
             + "			Join Semesters se on se.semesterID = s.semesterID\n"
             + "            WHERE ? BETWEEN se.startDay AND se.endDay and lecturerID like ? ";
+
+    private static String GET_FSLOTID = "SELECT freeSlotID\n"
+            + "FROM FreeSlots\n"
+            + "WHERE startTime = ? AND endTime = ?";
 
     public boolean updateStatusOutDate(Date currentTime) throws ClassNotFoundException, SQLException, ParseException {
         boolean checkUpdate = false;
@@ -187,7 +192,6 @@ public class FreeSlotsDAO {
         }
         return checkUpdate;
     }
-
 
     public List<FreeSlotsDTO> GetListSubjectCodeByLecturer(Date time, String lecturerID) throws SQLException {
         List<FreeSlotsDTO> listSemester = new ArrayList<>();
@@ -1537,5 +1541,37 @@ public class FreeSlotsDAO {
             }
         }
         return semesterID;
+    }
+
+    public String getFreeSlotID(Date starts, Date ends) throws SQLException {
+        String freeSlotID = "";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_FSLOTID);
+                ptm.setTimestamp(1, new Timestamp(starts.getTime()));
+                ptm.setTimestamp(2, new Timestamp(ends.getTime()));
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    freeSlotID = rs.getString("freeSlotID");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return freeSlotID;
     }
 }

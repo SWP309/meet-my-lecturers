@@ -70,6 +70,12 @@ public class MainController extends HttpServlet {
     private static final String ADMIN_IMPORTSTUDENT_ACTION = "ImportStudents";
     private static final String ADMIN_IMPORTTIMETABLES = "importTB";
     private static final String ADMIN_IMPORTTIMETABLES_ACTION = "ImportTimetables";
+    private static final String ADMIN_IMPORT_SUBJECT = "importSJ";
+    private static final String ADMIN_IMPORT_SUBJECT_ACTION = "ImportSubjects";
+    private static final String ADMIN_ADD_DATA = "AdminAddData";
+    private static final String ADMIM_ADD_DATA_PAGE = "AdminAddData.jsp";
+    private static final String ADMIN_MANAGE_SLOTS = "AdminViewSlot";
+    private static final String ADIMIN_MANAGE_SLOTS_PAGE = "AdminViewSlot.jsp";
 
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
@@ -168,7 +174,25 @@ public class MainController extends HttpServlet {
 
     private static final String SEND_EMAIL_REMIND_ACTION = "SendEmailForRemindStudent";
     private static final String SEND_EMAIL_REMIND_SERVLET = "send-email.jsp";
-
+    
+    private static final String ADD_SUBJECT = "AddSub";
+    private static final String REMOVE_SUBJECT = "RemoveSub";
+    private static final String UPDATE_SUBJECT = "UpdateSub";
+//    private static final String UPDATE_SUBJECT = "AddSub";
+    private static final String ADD_SUBJECT_ACTION = "AddSubject";
+    private static final String UPDATE_SUBJECT_ACTION = "UpdateSubject";
+    private static final String MANAGE_SUBJECT_SERVLET = "ManageServlet";
+    private static final String ADMIN_SUBJECT_PAGE = "AdminAddData.jsp";
+    private static final String REMOVE_SUBJECT_ACTION = "RemoveSubject";
+    private static final String SEARCH_SUBJECT = "searchsj";
+    private static final String SEARCH_SUBJECT_ACTION = "SearchServlet";
+    
+    private static final String SEARCH_SLOT_ADMIN = "searchSlot";
+    private static final String SEARCH_SLOT_ADMIN_ACTION = "SearchSlotAdmin";
+    
+    private static final String ADD_USER = "AddUser";
+    private static final String ADD_USER_ACTION = "AddUserServlet";
+    
     private static final String BACK = "back";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -317,6 +341,26 @@ public class MainController extends HttpServlet {
                 url = BAN_USER_SERVLET;
             } else if (UNBAN_USER_ACTION.equals(action)) {
                 url = UNBAN_USER_SERVLET;
+            } else if (ADD_SUBJECT.equals(action)) {
+                url = ADD_SUBJECT_ACTION;
+            } else if (REMOVE_SUBJECT.equals(action)) {
+                url = REMOVE_SUBJECT_ACTION;
+            } else if (MANAGE_SUBJECT_SERVLET.equals(action)) {
+                url = ADMIN_SUBJECT_PAGE;
+            } else if (SEARCH_SUBJECT.equals(action)) {
+                url = SEARCH_SUBJECT_ACTION;
+            } else if (UPDATE_SUBJECT.equals(action)) {
+                url = UPDATE_SUBJECT_ACTION;
+            } else if (ADD_USER.equals(action)) {
+                url = ADD_USER_ACTION;
+            } else if (ADMIN_IMPORT_SUBJECT.equals(action)) {
+                url = ADMIN_IMPORT_SUBJECT_ACTION;
+            } else if (SEARCH_SLOT_ADMIN.equals(action)) {
+                url = SEARCH_SLOT_ADMIN_ACTION;
+            } else if (ADMIN_ADD_DATA.equals(action)) {
+                url = ADMIM_ADD_DATA_PAGE;
+            } else if (ADMIN_MANAGE_SLOTS.equals(action)) {
+                url = ADIMIN_MANAGE_SLOTS_PAGE;
             }
 
         } catch (Exception e) {
