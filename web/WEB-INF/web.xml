@@ -222,6 +222,14 @@
         <servlet-name>ViewLecturerProfile</servlet-name>
         <servlet-class>sample.controllers.ViewLecturerProfile</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddMajorServlet</servlet-name>
+        <servlet-class>sample.controllers.AddMajorServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteMajorServlet</servlet-name>
+        <servlet-class>sample.controllers.DeleteMajorServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -425,6 +433,14 @@
     <servlet-mapping>
         <servlet-name>ViewLecturerProfile</servlet-name>
         <url-pattern>/ViewLecturerProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddMajorServlet</servlet-name>
+        <url-pattern>/AddMajorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteMajorServlet</servlet-name>
+        <url-pattern>/DeleteMajorServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

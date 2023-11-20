@@ -10,11 +10,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import sample.utils.DBUtils;
-
 
 /**
  *
@@ -26,8 +28,8 @@ public class SemesterDAO {
 
         List<SemesterDTO> list = null;
         //Tạo connection để kết nối vào DBMS
-       Connection con = null;
-       con = DBUtils.getConnection();
+        Connection con = null;
+        con = DBUtils.getConnection();
         //Tạo đối tượng statement
         Statement stm = con.createStatement();
         //Thực thi lệnh SELECT
@@ -44,8 +46,8 @@ public class SemesterDAO {
         con.close();
         return list;
     }
-    
-   public SemesterDTO read(String semesterID) throws SQLException, ClassNotFoundException {
+
+    public SemesterDTO read(String semesterID) throws SQLException, ClassNotFoundException {
         SemesterDTO semesters = null;
         Connection con = DBUtils.getConnection();
         PreparedStatement stm = con.prepareStatement("select * from Semesters where semesterID = ? ");
@@ -57,7 +59,7 @@ public class SemesterDAO {
             semesters.setSemesterName(rs.getString("semesterName"));
             semesters.setStartDay(rs.getTimestamp("startDay"));
             semesters.setEndDay(rs.getTimestamp("endDay"));
-           
+
         }
         con.close();
         return semesters;
@@ -79,7 +81,7 @@ public class SemesterDAO {
     public void update(SemesterDTO semesters) throws SQLException, ClassNotFoundException {
         Connection con = null;
         con = DBUtils.getConnection();
-PreparedStatement stm = con.prepareStatement("update Semesters set semesterName = ?, startDay = ?, endDay = ? where semesterID = ?");
+        PreparedStatement stm = con.prepareStatement("update Semesters set semesterName = ?, startDay = ?, endDay = ? where semesterID = ?");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         stm.setString(1, semesters.getSemesterName());
         stm.setString(2, sdf.format(semesters.getStartDay()));
@@ -98,5 +100,20 @@ PreparedStatement stm = con.prepareStatement("update Semesters set semesterName 
         con.close();
     }
 
-    
+    public String getCurrentSemester() throws ClassNotFoundException, SQLException, ParseException {
+        String semesterID = null;
+        Date currentDate = new Date();
+        System.out.println(currentDate);
+        Connection con = DBUtils.getConnection();
+        PreparedStatement stm = con.prepareStatement("SELECT s.semesterID\n"
+                + "                			FROM Semesters s\n"
+                + "                			WHERE ? BETWEEN s.startDay AND s.endDay");
+        String start = services.Service.sdfDateTime.format(currentDate);
+        stm.setTimestamp(1, new Timestamp(services.Service.sdfDateTime.parse(start).getTime()));
+        ResultSet rs = stm.executeQuery();
+        if (rs.next()) {
+            semesterID = rs.getString("semesterID");
+        }
+        return semesterID;
+    }
 }

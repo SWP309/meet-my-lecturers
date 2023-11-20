@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import sample.major.MajorDAO;
 import sample.major.MajorDTO;
 import sample.slots.SlotDTO;
+import sample.subjects.SubjectDAO;
 import sample.subjects.SubjectDTO;
 import sample.timetables.TimetableDAO;
 import sample.timetables.TimetableDTO;
@@ -47,8 +48,14 @@ public class ViewLecturerProfile extends HttpServlet {
             request.setAttribute("USER", lecturer);
             MajorDAO majorDAO = new MajorDAO();
             
-            
+            SubjectDAO subjectDAO = new SubjectDAO();
             List<MajorDTO> majorsByLecID = majorDAO.select(lecturerID);
+            List<SubjectDTO> listAddMajor = subjectDAO.listAddMajor(lecturerID);
+            if (listAddMajor != null) {
+                request.setAttribute("LIST_ADD_MAJORS", listAddMajor);
+                url = SUCCESS;
+            }
+            
             if (majorsByLecID != null) {
                 request.setAttribute("LIST_MAJORS", majorsByLecID);
                 url = SUCCESS;

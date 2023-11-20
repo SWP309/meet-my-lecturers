@@ -349,13 +349,13 @@
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
-                        <div class="frame-div viewLecProfile" onclick="submitViewLecProfile()" style="background-color: #b7b7b7;">
+                        <div class="frame-div viewLecProfile" onclick="submitViewLecProfile()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="viewLecturerProfile" />
                             </form>
                             <i class="material-icons">visibility</i>View Lecturer Profile
                         </div>
-                        <div class="frame-div viewCreateSlot" onclick="submitForm()" style="background-color: #b7b7b7;">
+                        <div class="frame-div viewCreateSlot" onclick="submitForm()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="viewFSlotLecturer" />
                             </form>

@@ -84,7 +84,7 @@ public class MajorDAO implements Serializable {
         stm.setString(1, lecturerID);
         ResultSet rs = stm.executeQuery();
         list = new ArrayList<>();
-        
+
         if (rs != null) {
             while (rs.next()) {
                 MajorDTO majorDTO = new MajorDTO();
@@ -110,15 +110,29 @@ public class MajorDAO implements Serializable {
         con.close();
     }
 
-    public void delete(MajorDTO majorDTO) throws SQLException, ClassNotFoundException {
+    public boolean delete(MajorDTO majorDTO) throws SQLException, ClassNotFoundException {
+        boolean checkDelete = false;
         Connection con = null;
-        con = DBUtils.getConnection();
-        PreparedStatement stm = con.prepareStatement("delete from Majors where lecturerID = ? and subjectCode = ? and semesterID = ?");
-        stm.setString(1, majorDTO.getLecturerID());
-        stm.setString(1, majorDTO.getSubjectCode());
-        stm.setString(1, majorDTO.getSemesterID());
-        stm.executeUpdate();
-        con.close();
+        PreparedStatement stm = null;
+        int result;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement("delete from Majors where lecturerID = ? and subjectCode = ?");
+            stm.setString(1, majorDTO.getLecturerID());
+            stm.setString(2, majorDTO.getSubjectCode());
+            result = stm.executeUpdate();
+            if (result > 0) {
+                checkDelete = true;
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return checkDelete;
     }
 
 }

@@ -171,6 +171,12 @@ public class MainController extends HttpServlet {
 
     private static final String SEND_EMAIL_REMIND_ACTION = "SendEmailForRemindStudent";
     private static final String SEND_EMAIL_REMIND_SERVLET = "send-email.jsp";
+    
+    private static final String ADD_MAJOR = "AddMajor";
+    private static final String ADD_MAJOR_CONTROLLER = "AddMajorServlet";
+    
+    private static final String DELETE_MAJOR = "DeleteMajor";
+    private static final String DELETE_MAJOR_CONTROLLER = "DeleteMajorServlet";
 
     private static final String BACK = "back";
 
@@ -322,6 +328,10 @@ public class MainController extends HttpServlet {
                 url = UNBAN_USER_SERVLET;
             } else if (VIEW_LECTURER_PROFILE.equals(action)) {
                 url = VIEW_LECTURER_PROFILE_ACTION;
+            } else if (ADD_MAJOR.equals(action)) {
+                url = ADD_MAJOR_CONTROLLER;
+            } else if (DELETE_MAJOR.equals(action)) {
+                url = DELETE_MAJOR_CONTROLLER;
             }
 
         } catch (Exception e) {
