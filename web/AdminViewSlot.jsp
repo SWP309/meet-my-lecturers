@@ -3,6 +3,12 @@
     Created on : Oct 28, 2023, 1:20:11 AM
     Author     : Minh Khang
 --%>
+<%@page import="sample.adminView.ViewBookedSlotAdminDTO"%>
+<%@page import="sample.subjects.SubjectDTO"%>
+<%@page import="sample.subjects.SubjectDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="sample.roles.RoleDAO"%>
+<%@page import="sample.roles.RoleDTO"%>
 <%@page import="sample.users.UserDTO"%>
 <%@page import="sample.dashboard.UserMaxSlotDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -30,6 +36,7 @@
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             if (us != null) {
+                ArrayList<ViewBookedSlotAdminDTO> listSlot = (ArrayList<ViewBookedSlotAdminDTO>) request.getAttribute("listSlot");
         %>
         <script>
             function submitFormHomePage() {
@@ -50,6 +57,10 @@
             }
             function submitFormViewSlots() {
                 var form = document.querySelector('.AdminViewSlot form');
+                form.submit();
+            }
+            function submitFormImport() {
+                var form = document.querySelector('.import form');
                 form.submit();
             }
             var userDTO = {
@@ -75,6 +86,26 @@
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
+            function submitAddForm() {
+                var form = document.querySelector('.container form');
+                var optionInput = document.querySelector('.container form input[name="option"]');
+                optionInput.value = "add"; // Set the option value for the "Add" button
+                form.submit();
+            }
+
+            function submitRemoveForm() {
+                var form = document.querySelector('.container form');
+                var optionInput = document.querySelector('.container form input[name="option"]');
+                optionInput.value = "remove"; // Set the option value for the "Remove" button
+                form.submit();
+            }
+
+            function submitUpdateForm() {
+                var form = document.querySelector('.container form');
+                var optionInput = document.querySelector('.container form input[name="option"]');
+                optionInput.value = "update"; // Set the option value for the "Update" button
+                form.submit();
+            }
             /* When the user clicks on the button, 
              toggle between hiding and showing the dropdown content */
             function myFunction() {
@@ -97,13 +128,40 @@
         </script>
 
         <style>
-            .custom-submit-button {
-                background-color: #f27125; /* Màu xanh */
-                color: #fff; /* Màu chữ trắng */
-                /* Các thuộc tính CSS khác tùy ý */
+
+
+            .btn-primary{
+                border-color: black;
             }
-            .custom-submit-button:hover{
-                background-color: #b05b18;
+            #remove{
+                background-color: #F27125;
+            }
+            #add{
+                background-color: #0066B2;
+            }
+            #update{
+                background-color: #0DB04B;
+            }
+            .table-container {
+                display: flex;
+                justify-content: center;
+                margin: auto;
+                margin-top: 5%;
+            }
+            .table-rounded th,
+            .table-rounded td {
+                padding: 8px;
+                border: 1px solid black;
+                text-align: center;
+            }
+
+            .table-rounded thead {
+                background-color: #f27125;
+                color: white;
+            }
+            .table-rounded{
+                width: 100%;
+                transform: scale(0.95); /* Tỉ lệ thu nhỏ bảng là 80% */
             }
         </style>
     </head>
@@ -139,7 +197,7 @@
                             <i class="material-icons">event</i>
                             <div class="view-booking" >Search Users</div>
                         </div>
-                        <div class="frame-div request import"  style="background-color: #b7b7b7;">
+                        <div class="frame-div request import" onclick="submitFormImport()">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="importPage" />
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
@@ -155,7 +213,7 @@
                             </form>
                             Add data page
                         </div>
-                        <div class="frame-div AdminViewSlot" onclick="submitFormViewSlots()">
+                        <div class="frame-div AdminViewSlot" style="background-color: #b7b7b7;">
                             <form action="MainController" method="POST" style="display: none">
                                 <input type="hidden" name="action" value="AdminViewSlot" />
                             </form>
@@ -172,67 +230,136 @@
                 </div>
             </div>
         </div>
-        <h1 class="text-center text-custom">Import form excel</h1>
+        <h1 class="text-center text-custom">Manage Slots</h1>
         <div class="container mt-5">
-            <form action="MainController" method="POST" enctype="multipart/form-data">
-                <div style="padding-right: 100px; display: inline-block">
-                    Import List Student
-                </div>
-                <%                    String EXCSERVLET = (String) request.getAttribute("EXCSERVLET");
 
-                    if (EXCSERVLET != null) {
-                %>
-                <span style="color: red; font-size: 1rem;">
-                    <%= EXCSERVLET%>
-                </span>
-                <%
-                    }
-                %>
-                <a href="https://drive.google.com/drive/folders/195tJBz5ZndD9dh9Lvdw3K1SH_dh8ACnZ?usp=sharing" target="_blank" style="color: blueviolet">Download template</a>
-                <div class="form-group input-group">
-                    <div class="custom-file">
-                        <input type="file" name="txtexcel" class="custom-file-input" id="imageUpload"  onchange="updateFileName('imageUpload')" required>
-                        <label class="custom-file-label" for="imageUpload">Choose file</label>
-                    </div>
-                    <div class="input-group-append">
-                        <input type="hidden" name="action" value="importST">
-                        <button type="submit" value="importST" name="action" class="btn btn-primary custom-submit-button">Submit</button>
-                    </div>
-                </div>
-            </form>
-            <form action="MainController" method="POST" enctype="multipart/form-data">
-                <div style="padding-right: 100px; display: inline-block">
-                    Import list subject
-                </div>
-                <%
-                    String SUBJECTSERVLET = (String) request.getAttribute("SUBJECTSERVLET");
+            <div class="row align-items-center justify-content-center">
 
-                    if (SUBJECTSERVLET != null) {
-                %>
-                <span style="color: red; font-size: 1rem;">
-                    <%= SUBJECTSERVLET%>
-                </span>
-                <%
-                    }
-                %>
-                <a href="https://drive.google.com/drive/folders/1s_yu8ElI5rP6RaON6SLxFOIN5kmEUh4D?usp=drive_link" target="_blank" style="color: blueviolet">Download template</a>
-                <div class="form-group input-group">
-                    <div class="custom-file">
-                        <input type="file" name="txtexcel" class="custom-file-input" id="subject"  onchange="updateFileName('subject')" required>
-                        <label class="custom-file-label">Choose file</label>
-                    </div>                    
-                    <div class="input-group-append">
-                        <button type="submit" value="importSJ" name="action" class="btn btn-primary custom-submit-button">Submit</button>
+                <form action="MainController" method="POST" class="d-flex justify-content-center" style=" margin-top: 10%;">
+                    <div class="form-group">
+                        <input type="datetime-local" class="form-control" name="txtStartTime" required>
                     </div>
-                </div>
-            </form>
+                    <div class="form-group">
+                        <input type="datetime-local" class="form-control" name="txtEndTime" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="txtUser" placeholder="User ( SE171435)" required>
+                    </div>
+                    <div class="form-group">
+                        <select name="txtRole" class="form-control" required>
+                            <option value="2">Slots created by Lecturer</option>
+                            <option value="3">Slots booked by Student</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchSlot">Search</button>
+                    </div> <br>
+                </form>
 
+            </div>
+            <%
+                if (listSlot != null) {
+            %>
+
+        </div> 
+        <div class="view-user-table" style="width: 100%; margin: 0 auto; border-radius: 20px;">
+            <div class="table-container">
+                <table class="custom-table table-hover table-primary table-rounded">
+                    <tr style="background-color: tomato">
+                        <th>Lecturer ID</th>
+                        <th>Student ID</th>
+                        <th>Subject Code</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Slot ID</th>
+                        <th>Meet Link</th>
+                    </tr>
+                    <%
+                        for (ViewBookedSlotAdminDTO slot : listSlot) {
+                    %>
+                    <tr>
+                        <td><%= slot.getLecturerID()%></td>
+                        <td><%= slot.getStudentID()%></td>
+                        <td><%= slot.getSubjectCode()%></td>
+                        <td><%= slot.getStartTime()%></td>
+                        <td><%= slot.getEndTime()%></td>
+                        <td><%= slot.getFreeSlotID()%></td>
+                        <td><%= slot.getMeetLink()%></td>
+                    </tr>
+                    <%
+                        }
+                    %>
+                </table>
+            </div>
         </div>
+        <%
+            }
+        %>
+
+        <div id="customAlert">
+            <div id="alertContent">
+                <!-- N?i dung c?nh báo s? ???c thêm vào ?ây -->
+            </div>
+            <button class="closeButton">X</button>
+        </div>
+        <style>
+            #customAlert {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #fff;
+                border-radius: 4px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                padding: 28px;
+                font-family: Arial, sans-serif;
+                font-size: 18px;
+                text-align: center;
+                z-index: 9999;
+                width: 36%;
+                color: red;
+                font-weight: bold;
+            }
+            #alertContent{
+                font-family: 'Oswald','Playpen Sans';
+                padding: 20px;
+            }
+            .closeButton {
+                padding: 4px 4px;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
+                font-weight: bold;
+                border: none;
+            }
+            .closeButton:hover{
+                opacity: 0.5;
+            }
+
+            #alertContent {
+                /* N?u b?n mu?n tu? ch?nh ki?u ch? và màu s?c, hãy ?i?u ch?nh ?o?n CSS này */
+            }
+        </style>
         <script>
-            function updateFileName(inputId) {
-                const input = document.getElementById(inputId);
-                const fileName = input.value.split('\\').pop();
-                input.nextElementSibling.innerHTML = fileName;
+            var errorMessage = "${requestScope.Error}";
+
+            // Ki?m tra n?u errorMessage không r?ng, hi?n th? thông báo c?nh báo
+            if (errorMessage.trim() !== "") {
+                showAlert(errorMessage);
+            }
+
+            // Hàm ?? hi?n th? thông báo tùy ch?nh
+            function showAlert(message) {
+                var alertDiv = document.getElementById("customAlert");
+                var alertContentDiv = document.getElementById("alertContent");
+                alertContentDiv.textContent = message;
+                alertDiv.style.display = "block";
+                var closeButton = alertDiv.querySelector(".closeButton");
+                closeButton.addEventListener("click", function () {
+                    alertDiv.style.display = "none";
+                });
             }
         </script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

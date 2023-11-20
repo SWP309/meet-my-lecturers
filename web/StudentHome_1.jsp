@@ -1,7 +1,7 @@
 
 
-<%@page import="sample.freeslots.FreeSlotsDTO"%>
 <%@page import="sample.freeslots.FreeSlotsDAO"%>
+<%@page import="sample.freeslots.FreeSlotsDTO"%>
 <%@page import="sample.users.Top3StudentDTO"%>
 <%@page import="sample.users.UserDAO"%>
 <%@page import="sample.users.UserDTO"%>
@@ -449,14 +449,14 @@
                     List<FreeSlotsDTO> listSubject = searchDao.GetListSubject();%>
                 <form action="MainController" method="POST" class="d-flex justify-content-center" style="margin-top: -7px;">
                     <div class="form-group">
-                        <select style="padding: 5px" class="form-control option" name="txtSubjectCode" onchange="updateHiddenField(this, 'hiddenSubjectCode')">
+                        <select style="padding: 5px" class="form-control option" name="txtSubjectCode" onchange="updateHiddenField(this, 'hiddenSubjectCode')" title="Select a subject code">
                             <% for (FreeSlotsDTO list : listSubject) {%>
                             <option value="<%= list.getSubjectCode()%>"><%= list.getSubjectCode()%></option>
                             <% } %>
                         </select>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary form-control Search-custom" style="border-color: black; background: #0d6efd; color: white;" type="submit" name="action" value="SearchFSlot">Search</button>
+                        <button class="btn btn-primary form-control Search-custom" type="submit" name="action" value="SearchFSlot">Search</button>
                     </div>
                 </form>
             </div>
@@ -609,18 +609,20 @@
                 background-color: #fff;
                 border-radius: 4px;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-                padding: 70px;
+                padding: 28px;
                 font-family: Arial, sans-serif;
-                font-size: 14px;
+                font-size: 18px;
                 text-align: center;
                 z-index: 9999;
+                width: 36%;
+                color: red;
+                font-weight: bold;
             }
             #alertContent{
                 font-family: 'Oswald','Playpen Sans';
                 padding: 20px;
             }
             .closeButton {
-                padding: 4px 4px;
                 position: absolute;
                 top: 10px;
                 right: 10px;

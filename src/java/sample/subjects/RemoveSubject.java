@@ -1,47 +1,53 @@
-package sample.controllers;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package sample.subjects;
 
 import java.io.IOException;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import sample.users.UserDTO;
-import sample.viewCreatedSlot.ViewCreatedSlotDAO;
-import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
-@WebServlet(name = "CreatedSlotViewSubController", urlPatterns = {"/CreatedSlotViewSubController"})
-public class CreatedSlotViewSubController extends HttpServlet {
+/**
+ *
+ * @author Minh Khang
+ */
+public class RemoveSubject extends HttpServlet {
 
-    private static final String ERROR = "CreateSlotViewSub.jsp";
-    private static final String SUCCESS = "CreateSlotViewSub.jsp";
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = ERROR;
-        try {
-            HttpSession session = request.getSession();
-            UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            String email=request.getParameter(us.getUserEmail());
-            ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
-            List<ViewCreatedSlotDTO> listCreatedSlotSub = dao.GetlistCreatedSlotSub(us.getUserEmail());
-            System.out.println(listCreatedSlotSub);
-            if (listCreatedSlotSub.size() > 0) {
-                System.out.println("vao dc if");
-                request.setAttribute("LIST_CREATED_SLOT_SUB", listCreatedSlotSub);
-                url = SUCCESS;
-            }
-        } catch (Exception e) {
-            log("Error at SearchController: " + e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            int rs = 0;
+            String url = "MainController?action=ManageServlet";
+            String subjectCode = request.getParameter("txtsubject");
+            rs = SubjectDAO.removeSubject(subjectCode);
+                    if (rs > 0) {
+                        request.setAttribute("RemoveStatus", "Remove successfully!");
+                        url = "MainController?action=ManageServlet";
+                    } else {
+                        request.setAttribute("RemoveStatus", "Remove fail!");
+                        url = "MainController?action=ManageServlet";
+                    }
+                    request.getRequestDispatcher(url).forward(request, response);
+        } catch(Exception e){
+            e.printStackTrace();
         }
     }
 
-  
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
