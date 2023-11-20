@@ -10,6 +10,15 @@
     font-family: 'Agbalumo', 'Playfair Display', sans-serif;
     height: 20px;
 }
+.Search-custom{
+    border-color: black;
+    background: #0d6efd;
+    color: white;
+}
+.Search-custom:hover{
+    opacity: 0.5;
+}
+
 
 .footer1 {
     position: fixed;

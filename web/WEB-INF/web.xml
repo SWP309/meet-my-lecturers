@@ -211,6 +211,10 @@
         <servlet-class>sample.controllers.UnBanUserServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ViewOptionSubjectByLecturerID</servlet-name>
+        <servlet-class>sample.controllers.ViewOptionSubjectByLecturerID</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ImportSubjects</servlet-name>
         <servlet-class>sample.importexcel.ImportSubjects</servlet-class>
     </servlet>
@@ -237,6 +241,7 @@
     <servlet>
         <servlet-name>SearchSlotAdmin</servlet-name>
         <servlet-class>sample.controllers.SearchSlotAdmin</servlet-class>
+        >>>>>>> origin/mymain
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
@@ -429,6 +434,10 @@
     <servlet-mapping>
         <servlet-name>UnBanUserServlet</servlet-name>
         <url-pattern>/UnBanUserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewOptionSubjectByLecturerID</servlet-name>
+        <url-pattern>/ViewOptionSubjectByLecturerID</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ImportSubjects</servlet-name>
