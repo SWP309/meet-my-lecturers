@@ -58,7 +58,7 @@ public class SubjectDAO {
                     + "From [dbo].[Subjects]\n"
                     + "Where [subjectCode] like ?";
             PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, subjectCode);
+            pst.setString(1, "%" + subjectCode + "%");
             ResultSet rs = pst.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -70,6 +70,30 @@ public class SubjectDAO {
             cn.close();
         }
         return subject;
+    }
+
+    public static ArrayList<SubjectDTO> getSubjects(String subject) throws Exception {
+        ArrayList<SubjectDTO> list = new ArrayList();
+        SubjectDTO sub = null;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "Select * \n"
+                    + "From [dbo].[Subjects]\n"
+                    + "Where [subjectCode] like ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1,"%" + subject + "%");
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    String id = rs.getString("subjectCode");
+                    String name = rs.getString("subjectName");
+                    sub = new SubjectDTO(id, name);
+                    list.add(sub);
+                }
+            }
+            cn.close();
+        }
+        return list;
     }
 
     public static ArrayList<SubjectDTO> getAllSubject() throws Exception {
