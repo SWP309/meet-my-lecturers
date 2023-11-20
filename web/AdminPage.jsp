@@ -22,11 +22,14 @@
         <link href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
         <!-- SweetAlert2 CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
-
-
-
         <!-- SweetAlert2 JS -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+        <!-- Font Awesome CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+        <!--        text gg -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
         <%
 
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -43,6 +46,14 @@
             }
             function submitFormLogout() {
                 var form = document.querySelector('.logout form');
+                form.submit();
+            }
+            function submitFormAddData() {
+                var form = document.querySelector('.AdminAddData form');
+                form.submit();
+            }
+            function submitFormViewSlots() {
+                var form = document.querySelector('.AdminViewSlot form');
                 form.submit();
             }
             function submitFormImport() {
@@ -72,6 +83,25 @@
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
+            /* When the user clicks on the button, 
+             toggle between hiding and showing the dropdown content */
+            function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+            }
+
+// Close the dropdown if the user clicks outside of it
+            window.onclick = function (event) {
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            };
         </script>
         <style>
             .textDashBoard{
@@ -88,41 +118,8 @@
                     <input type="hidden" name="action" value="returnHomePageAdmin" />
                 </form>
             </div>
-
             <div class="frame-parent">
-                <div class="frame-group">
-                    <div class="frame-div ViewUsers" onclick="submitFormViewUsers()">
-                        <form action="MainController" method="POST" style="display: none;">
-                            <input type="hidden" name="action" value="ViewUsers" />
-                        </form>
-                        <div class="bookedslot-wrapper">
-                            <i class="material-icons">event</i>
-                            <a href="../../copycuabao/meet-my-lecturers-copy/web/StudentHome.html"></a>
-                        </div>
-                        <div class="view-booking" >Search Users</div>
-                    </div>
-                    <div class="frame-div import" onclick="submitFormImport()">
-                        <form action="MainController" method="POST">
-                            <input type="hidden" name="action" value="importPage" />
-                        </form>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
-                        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0z"/>
-                        </svg>
-                        Import Schedule
 
-                    </div>
-                    <div class="frame-div logout" onclick="submitFormLogout()">
-                        <form action="MainController" method="POST" style="display: none;">
-                            <input type="hidden" name="action" value="Logout" />
-                        </form>
-                        <div class="logout-wrapper">
-                            <i class="material-icons">logout</i>
-                        </div>
-                        <div class="request">
-                            <p class="logout1">Logout</p>
-                        </div>
-                    </div>
-                </div>
                 <div>
                     <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
                          onclick="showUserInfo()" />
@@ -132,7 +129,51 @@
                         <p id="user-email"></p>
                     </div>
                 </div>
-
+                <div class="dropdown">
+                    <button onclick="myFunction()" class="dropbtn"> 
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div id="myDropdown" class="dropdown-content" style="right: 0px;
+                         flex-direction: column; z-index: 10;
+                         ">
+                        <div class="frame-div ViewUsers" onclick="submitFormViewUsers()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="ViewUsers" />
+                            </form>
+                            <i class="material-icons">event</i>
+                            <div class="view-booking" >Search Users</div>
+                        </div>
+                        <div class="frame-div request import"  onclick="submitFormImport()">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="importPage" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
+                                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0z"/>
+                                </svg>
+                            </form>
+                            Import Schedule
+                        </div>
+                        <div class="frame-div AdminAddData" onclick="submitFormAddData()">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="AdminAddData" />
+                                <i class="material-icons">add</i> 
+                            </form>
+                            Add data page
+                        </div>
+                        <div class="frame-div AdminViewSlot" onclick="submitFormViewSlots()">
+                            <form action="MainController" method="POST" style="display: none">
+                                <input type="hidden" name="action" value="AdminViewSlot" />
+                            </form>
+                            <i class="fas fa-users-cog"></i>
+                            Manage slot page
+                        </div>
+                        <div class="frame-div logout" onclick="submitFormLogout()" >
+                            <form action="MainController" method="POST" style="display: none">
+                                <input type="hidden" name="action" value="Logout" />
+                            </form>
+                            <i class="material-icons">logout</i> Logout
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -230,7 +271,7 @@
                 </div>
             </div>
         </div>
-    
+
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

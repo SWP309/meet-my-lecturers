@@ -1,3 +1,5 @@
+<%@page import="sample.freeslots.FreeSlotsDTO"%>
+<%@page import="sample.freeslots.FreeSlotsDAO"%>
 <%@page import="sample.viewCreatedSlot.ViewCreatedSlotDAO"%>
 <%@page import="sample.users.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -449,11 +451,14 @@
                             <div class="form-group">
                                 <input type="datetime-local" class="form-control" name="txtEndTime" value="${param.txtEndTime}">
                             </div>
+                            <%  FreeSlotsDAO searchDao = new FreeSlotsDAO();
+                                 List<FreeSlotsDTO> listSubject = searchDao.GetListSubject();%>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}" placeholder="Input the subject code">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="txtSemesterID" value="${param.txtSemesterID}" placeholder="Input the semesterID">
+                                <select class="form-control option" name="txtSubjectCode" onchange="updateHiddenField(this, 'hiddenSubjectCode')">
+                                    <% for (FreeSlotsDTO list : listSubject) {%>
+                                    <option value="<%= list.getSubjectCode()%>"><%= list.getSubjectCode()%></option>
+                                    <% } %>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-primary form-control Search-custom" style="border-color: black; background: #0d6efd; color: white;" type="submit" name="action" value="searchCSlot">Search</button>
@@ -538,7 +543,7 @@
 
 
                 <!--     SEARCH BY ST AND ET ---------------------------------------------------------->
-                <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and empty param.txtSubjectCode and empty param.txtSemesterID}">
+                <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and empty param.txtSubjectCode}">
                     <div class="container mt-5" style="    margin-top: -3% !important;">
                         <div class="row justify-content-center mt-5">
                             <c:if test="${requestScope.SEARCH_FREE_SLOT_BY_ST_ET !=null}">
@@ -607,7 +612,7 @@
                         </div>
                     </c:if>
                     <!--     SEARCH BY ALL ---------------------------------------------------------->
-                    <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and  not empty param.txtSubjectCode and not empty param.txtSemesterID}">
+                    <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and  not empty param.txtSubjectCode}">
                         <div class="container mt-5" style="    margin-top: -3% !important;">
                             <div class="row justify-content-center mt-5">
                                 <c:if test="${requestScope.SEARCH_FREE_SLOT_BY_ALL !=null}">
@@ -674,142 +679,8 @@
 
                             </div>
                         </c:if>
-                        <!--     SEARCH BY ST ET SUBJECT CODE ---------------------------------------------------------->
-                        <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and  not empty param.txtSubjectCode and empty param.txtSemesterID}">
-                            <div class="container mt-5" style="    margin-top: -3% !important;">
-                                <div class="row justify-content-center mt-5">
-                                    <c:if test="${requestScope.SEARCH_FREE_SLOT_BY_ST_ET_SUBJECTCODE !=null}">
-                                        <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_ST_ET_SUBJECTCODE}">
-                                            <c:forEach var="searchByStEtSubject" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_ST_ET_SUBJECTCODE}">
-                                                <div class="col-md-4">
-                                                    <div class="card" style="width: 364px; height:291px; border-radius: 5%;">                                                        <div class="card-body">
-                                                            <form action="MainController" method="POST">
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByStEtSubject.subjectCode.trim()}" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"/>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
-                                                                    <span class="ml-auto">${searchByStEtSubject.lectureName}</span>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEtSubject.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEtSubject.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
-    <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEtSubject.meetLink}"/>-->
-                                                                    <a class="ml-auto specific-input" href="https://${searchByStEtSubject.meetLink}" target="_blank" onclick="confirmCheckAttendanceLinkByAll(event, '${searchByStEtSubject.freeSlotID}')"> Link Meet</a>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
-                                                                    <span class="ml-auto specific-input">${searchByStEtSubject.semesterID}</span>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
-                                                                    <span class="ml-auto specific-input"> ${searchByStEtSubject.joinedMembers}/${searchByStEtSubject.capacity}</span>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between btn-book">
-
-                                                                    <div>
-                                                                        <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to hide this Free Slot')" href="MainController?action=hideFS&freeSlotID=${searchByStEtSubject.freeSlotID}">
-                                                                            <i class="material-icons">cancel</i>Hide
-                                                                        </a>
-                                                                        <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to delete this Free Slot')" href="MainController?action=deleteFS&freeSlotID=${searchByStEtSubject.freeSlotID}">
-                                                                            <i class="material-icons">delete</i>Delete
-                                                                        </a>
-                                                                    </div>
-                                                                    <div>
-
-                                                                        <a class="d-flex justify-content-between" style="text-decoration: none; gap: 2px; width: 11px; margin-left: 10px;" href="MainController?action=viewFS&freeSlotID=${searchByStEtSubject.freeSlotID}">
-                                                                            <i class="fas fa-search"></i>View
-                                                                        </a>
-                                                                        <form action="MainController" method="GET">
-                                                                            <input type="hidden" name="action" value="updateFS">
-                                                                            <input type="hidden" name="freeSlotID" value="${searchByStEtSubject.freeSlotID}">
-                                                                            <input type="hidden" name="subjectCode" value="${searchByStEtSubject.subjectCode.trim()}" required/>
-                                                                            <input type="hidden" name="startTime" value="${searchByStEtSubject.startTime}">
-                                                                            <input type="hidden" name="endTime" value="${searchByStEtSubject.endTime}">
-                                                                            <button type="submit" style="display: flex; text-decoration: none; justify-content: center; background-color: white;">
-                                                                                <i class="material-icons">update</i>Update
-                                                                            </button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </c:forEach>
-                                        </c:if>
-                                    </c:if>          
-
-                                </div>
-                            </c:if>
-                            <!--     SEARCH BY ST ET SEMESTER ---------------------------------------------------------->
-                            <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and  empty param.txtSubjectCode and not empty param.txtSemesterID}">
-                                <div class="container mt-5" style="    margin-top: -3% !important;">
-                                    <div class="row justify-content-center mt-5">
-                                        <c:if test="${requestScope.SEARCH_FREE_SLOT_BY_ST_ET_SEMESTER !=null}">
-                                            <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_ST_ET_SEMESTER}">
-                                                <c:forEach var="searchByStEtSemesterID" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_ST_ET_SEMESTER}">
-                                                    <div class="col-md-4">
-                                                        <div class="card" style="width: 364px; height:291px; border-radius: 5%;">
-                                                            <div class="card-body">
-                                                                <form action="MainController" method="POST">
-                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                        <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByStEtSemesterID.subjectCode.trim()}" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"/>
-                                                                    </div>
-                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
-                                                                        <span class="ml-auto">${searchByStEtSemesterID.lectureName}</span>
-                                                                    </div>
-                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                        <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEtSemesterID.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
-                                                                    </div>
-                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                        <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEtSemesterID.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
-                                                                    </div>
-                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
-        <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEtSemesterID.meetLink}"/>-->
-                                                                        <a class="ml-auto specific-input" href="https://${searchByStEtSemesterID.meetLink}" target="_blank" onclick="confirmCheckAttendanceLinkByAll(event, '${searchByStEtSemesterID.freeSlotID}')"> Link Meet</a>
-                                                                    </div>
-                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
-                                                                        <span class="ml-auto specific-input">${searchByStEtSemesterID.semesterID}</span>
-                                                                    </div>
-                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
-                                                                        <span class="ml-auto specific-input"> ${searchByStEtSemesterID.joinedMembers}/${searchByStEtSemesterID.capacity}</span>
-                                                                    </div>
-                                                                    <div class="d-flex justify-content-between btn-book">
-
-                                                                        <div>
-                                                                            <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to hide this Free Slot')" href="MainController?action=hideFS&freeSlotID=${searchByStEtSemesterID.freeSlotID}">
-                                                                                <i class="material-icons">cancel</i>Hide
-                                                                            </a>
-                                                                            <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to delete this Free Slot')" href="MainController?action=deleteFS&freeSlotID=${searchByStEtSemesterID.freeSlotID}">                                                                                <i class="material-icons">delete</i>Delete
-                                                                            </a>
-                                                                        </div>
-                                                                        <div>
-
-                                                                            <a class="d-flex justify-content-between" style="text-decoration: none; gap: 2px; width: 11px; margin-left: 10px;" href="MainController?action=viewFS&freeSlotID=${searchByStEtSemesterID.freeSlotID}">                                                                                <i class="fas fa-search"></i>View
-                                                                            </a>
-                                                                            <form action="MainController" method="GET">
-                                                                                <input type="hidden" name="action" value="updateFS">
-                                                                                <input type="hidden" name="freeSlotID" value="${searchByStEtSemesterID.freeSlotID}">
-                                                                                <input type="hidden" name="subjectCode" value="${searchByStEtSemesterID.subjectCode.trim()}" required/>
-                                                                                <input type="hidden" name="startTime" value="${searchByStEtSemesterID.startTime}">
-                                                                                <input type="hidden" name="endTime" value="${searchByStEtSemesterID.endTime}">
-                                                                                <button type="submit" style="display: flex; text-decoration: none; justify-content: center; background-color: white;">
-                                                                                    <i class="material-icons">update</i>Update
-                                                                                </button>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </c:forEach>
-                                            </c:if>
-                                        </c:if>          
-
-                                    </div>
-                                </c:if>
-
+                       
+                          
                                 <!--     SEARCH BY subjectCode ---------------------------------------------------------->
                                 <c:if test="${empty param.txtStartTime and empty param.txtEndTime and not empty param.txtSubjectCode}">
                                     <div class="container mt-5" style="    margin-top: -3% !important;">
@@ -880,76 +751,7 @@
                                         </div>
                                     </c:if>
 
-                                    <!--     SEARCH BY SEMESTER ---------------------------------------------------------->
-                                    <c:if test="${empty param.txtStartTime and empty param.txtEndTime and  empty param.txtSubjectCode and not empty param.txtSemesterID}">
-                                        <div class="container mt-5" style="    margin-top: -3% !important;">
-                                            <div class="row justify-content-center mt-5">
-                                                <c:if test="${requestScope.SEARCH_FREE_SLOT_BY_SEMESTER !=null}">
-                                                    <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_SEMESTER}">
-                                                        <c:forEach var="searchBySemesterID" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_SEMESTER}">
-                                                            <div class="col-md-4">
-                                                                <div class="card" style="width: 364px; height:291px; border-radius: 5%;">
-                                                                    <div class="card-body">
-                                                                        <form action="MainController" method="POST">
-                                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                                <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchBySemesterID.subjectCode.trim()}" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"/>
-                                                                            </div>
-                                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
-                                                                                <span class="ml-auto">${searchBySemesterID.lectureName}</span>
-                                                                            </div>
-                                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                                <input type="text" class="ml-auto specific-input" name="startTime" value="${searchBySemesterID.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
-                                                                            </div>
-                                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                                <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySemesterID.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
-                                                                            </div>
-                                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b >Link Meet:</b></strong> 
-            <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySemesterID.meetLink}"/>-->
-                                                                                <a class="ml-auto specific-input" href="https://${searchBySemesterID.meetLink}" target="_blank" onclick="confirmCheckAttendanceLinkBySubjectCode(event, '${searchBySemesterID.freeSlotID}')"> Link Meet</a>
-                                                                            </div>
-                                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> 
-                                                                                <span class="ml-auto specific-input">${searchBySemesterID.semesterID}</span>
-                                                                            </div>
-                                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Joined Members:</b></strong> 
-                                                                                <span class="ml-auto specific-input"> ${searchBySemesterID.joinedMembers}/${searchBySemesterID.capacity}</span>
-                                                                            </div>
-                                                                            <div class="d-flex justify-content-between btn-book">
-
-                                                                                <div>
-                                                                                    <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to hide this Free Slot')" href="MainController?action=hideFS&freeSlotID=${searchBySemesterID.freeSlotID}">
-                                                                                        <i class="material-icons">cancel</i>Hide
-                                                                                    </a>
-                                                                                    <a class="d-flex justify-content-between" style="text-decoration: none;" onclick="return confirm('Are you sure to delete this Free Slot')" href="MainController?action=deleteFS&freeSlotID=${searchBySemesterID.freeSlotID}">
-                                                                                        <i class="material-icons">delete</i>Delete
-                                                                                    </a>
-                                                                                </div>
-                                                                                <div>
-
-                                                                                    <a class="d-flex justify-content-between" style="text-decoration: none; gap: 2px; width: 11px; margin-left: 10px;" href="MainController?action=viewFS&freeSlotID=${searchBySemesterID.freeSlotID}">
-                                                                                        <i class="fas fa-search"></i>View
-                                                                                    </a>
-                                                                                    <form action="MainController" method="GET">
-                                                                                        <input type="hidden" name="action" value="updateFS">
-                                                                                        <input type="hidden" name="freeSlotID" value="${searchBySemesterID.freeSlotID}">
-                                                                                        <input type="hidden" name="subjectCode" value="${searchBySemesterID.subjectCode.trim()}" required/>
-                                                                                        <input type="hidden" name="startTime" value="${searchBySemesterID.startTime}">
-                                                                                        <input type="hidden" name="endTime" value="${searchBySemesterID.endTime}">
-                                                                                        <button type="submit" style="display: flex; text-decoration: none; justify-content: center;">
-                                                                                            <i class="material-icons">update</i>Update
-                                                                                        </button>
-                                                                                    </form>
-                                                                                </div>
-                                                                            </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </c:forEach>
-                                                    </c:if>
-                                                </c:if>          
-
-                                            </div>
-                                        </c:if>
-
+                                  
 
                                         <!--     SEARCH BY NULL ---------------------------------------------------------->
                                         <c:if test="${empty param.txtStartTime and empty param.txtEndTime and empty param.txtSubjectCode}">

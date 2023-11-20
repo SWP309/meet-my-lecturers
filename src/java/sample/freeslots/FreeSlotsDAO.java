@@ -156,12 +156,18 @@ public class FreeSlotsDAO {
             + "AND startTime <= DATEADD(MINUTE, 10, CURRENT_TIMESTAMP)";
     private static String GET_LECTURERID_FROM_FSLOT = "SELECT lecturerID FROM FreeSlots WHERE freeSlotID = ?";
     private static String GET_EMAIL_FROM_LECTURERID = "SELECT userEmail FROM Users WHERE userID = ?";
-    private static String GET_SEMESTERID = "SELECT s.semesterID\n" +
-                                           "FROM Semesters s\n" +
-                                           "WHERE ? BETWEEN s.startDay AND s.endDay";
-    private static String GET_FSLOTID = "SELECT freeSlotID\n" +
-                                        "FROM FreeSlots\n" +
-                                        "WHERE startTime = ? AND endTime = ?";
+
+    private static String GET_SEMESTERID = "SELECT s.semesterID\n"
+            + "FROM Semesters s\n"
+            + "WHERE ? BETWEEN s.startDay AND s.endDay";
+    private static String GET_LECTURERID = " SELECT subjectCode\n"
+            + "            FROM Majors s\n"
+            + "			Join Semesters se on se.semesterID = s.semesterID\n"
+            + "            WHERE ? BETWEEN se.startDay AND se.endDay and lecturerID like ? ";
+
+    private static String GET_FSLOTID = "SELECT freeSlotID\n"
+            + "FROM FreeSlots\n"
+            + "WHERE startTime = ? AND endTime = ?";
 
     public boolean updateStatusOutDate(Date currentTime) throws ClassNotFoundException, SQLException, ParseException {
         boolean checkUpdate = false;
@@ -185,6 +191,39 @@ public class FreeSlotsDAO {
             }
         }
         return checkUpdate;
+    }
+
+    public List<FreeSlotsDTO> GetListSubjectCodeByLecturer(Date time, String lecturerID) throws SQLException {
+        List<FreeSlotsDTO> listSemester = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_LECTURERID);
+                ptm.setTimestamp(1, new Timestamp(time.getTime()));
+                ptm.setString(2, lecturerID);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String subjectCode = rs.getString("subjectCode");
+                    listSemester.add(new FreeSlotsDTO(subjectCode));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listSemester;
     }
 
     public boolean createFreeSlotBooking(FreeSlotsDTO freeSlotsDTO) throws SQLException {
@@ -1440,7 +1479,7 @@ public class FreeSlotsDAO {
         }
         return lecturerID;
     }
-    
+
     public String getEmailByLecturerID(String lecturerID) throws SQLException {
         String lecturer_email = null;
 
@@ -1472,8 +1511,9 @@ public class FreeSlotsDAO {
         }
         return lecturer_email;
     }
-    public String getSemesterID(Date time) throws SQLException{
-        String semesterID="";//Để tránh gặp lỗi NullPointerException khi ng dùng nhập time mà trong DB ko có
+
+    public String getSemesterID(Date time) throws SQLException {
+        String semesterID = "";//Để tránh gặp lỗi NullPointerException khi ng dùng nhập time mà trong DB ko có
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -1502,8 +1542,9 @@ public class FreeSlotsDAO {
         }
         return semesterID;
     }
-    public String getFreeSlotID(Date starts, Date ends) throws SQLException{
-        String freeSlotID="";
+
+    public String getFreeSlotID(Date starts, Date ends) throws SQLException {
+        String freeSlotID = "";
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;

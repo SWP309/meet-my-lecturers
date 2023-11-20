@@ -5,6 +5,11 @@
     height: 44px;
     flex-shrink: 0;
 }
+.text-custom{
+    font-family: 'Agbalumo', 'Playfair Display', sans-serif;
+    height: 0px;
+    margin-top: 73px;
+}
 .infor-lec-child {
     position: relative;
     border-right: 1px solid #000;

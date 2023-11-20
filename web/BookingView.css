@@ -9,6 +9,10 @@
 .boxoftable{
     width: 100%;
 }
+.option{
+    width: 60%;
+
+}
 .frame-group, .frame-div{
     display: flex;
     flex-direction: row;
