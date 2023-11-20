@@ -44,20 +44,20 @@ public class SearchCreateSlotServlet extends HttpServlet {
             int listCountPage = dao.CountPage(us.getUserEmail());
             request.setAttribute("COUNT_PAGE", listCountPage);
             ViewCreatedSlotDAO searchFSlot = new ViewCreatedSlotDAO();
-            if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty() && semesterID.isEmpty()) {
+            if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty()) {
                 List<ViewCreatedSlotDTO> searchByStEt = searchFSlot.searchFSlotViewByStEt(startTime, endTime, userEmail);
                 if (searchByStEt != null) {
                     request.setAttribute("SEARCH_FREE_SLOT_BY_ST_ET", searchByStEt);
                     url = SUCCESS;
                 }
-            } else if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty() && !semesterID.isEmpty()) {
+            } else if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty()) {
                 List<ViewCreatedSlotDTO> searchByAll = searchFSlot.searchFSlotViewByAll(subjectCode, startTime, endTime, userEmail, semesterID);
                 if (searchByAll != null) {
                     request.setAttribute("SEARCH_FREE_SLOT_BY_ALL", searchByAll);
                     url = SUCCESS;
                 }
 
-            } else if (startTime.isEmpty() && endTime.isEmpty() && !subjectCode.isEmpty() && semesterID.isEmpty()) {
+            } else if (startTime.isEmpty() && endTime.isEmpty() && !subjectCode.isEmpty()) {
                 List<ViewCreatedSlotDTO> searchBySubjectCode = searchFSlot.searchFSlotViewBySubjectCode(subjectCode, userEmail);
                 if (searchBySubjectCode != null) {
                     request.setAttribute("SEARCH_FREE_SLOT_BY_SUBJECT", searchBySubjectCode);
@@ -65,35 +65,11 @@ public class SearchCreateSlotServlet extends HttpServlet {
                     url = SUCCESS;
                 }
 
-            } else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty() && semesterID.isEmpty()) {
+            } else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty()) {
                 List<ViewCreatedSlotDTO> searchByNull = searchFSlot.GetlistCreatedSlotByCount(us.getUserEmail(), 0);
                 System.out.println(us.getUserEmail());
                 if (searchByNull != null) {
                     request.setAttribute("SEARCH_FREE_SLOT_BY_NULL", searchByNull);
-                    url = SUCCESS;
-                }
-
-            } else if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty() && semesterID.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchByStEtSubject = searchFSlot.searchFSlotViewByStEtSubjectCode(subjectCode, startTime, endTime, userEmail);
-                System.out.println(us.getUserEmail());
-                if (searchByStEtSubject != null) {
-                    request.setAttribute("SEARCH_FREE_SLOT_BY_ST_ET_SUBJECTCODE", searchByStEtSubject);
-                    url = SUCCESS;
-                }
-
-            } else if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty() && !semesterID.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchByStEtSemesterID = searchFSlot.searchFSlotViewByStEtSemesterID(semesterID, startTime, endTime, userEmail);
-                System.out.println(us.getUserEmail());
-                if (searchByStEtSemesterID != null) {
-                    request.setAttribute("SEARCH_FREE_SLOT_BY_ST_ET_SEMESTER", searchByStEtSemesterID);
-                    url = SUCCESS;
-                }
-
-            } else if (startTime.isEmpty() && endTime.isEmpty() && subjectCode.isEmpty() && !semesterID.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchBySemesterID = searchFSlot.searchFSlotViewBySemesterID(semesterID, userEmail);
-                System.out.println(us.getUserEmail());
-                if (searchBySemesterID != null) {
-                    request.setAttribute("SEARCH_FREE_SLOT_BY_SEMESTER", searchBySemesterID);
                     url = SUCCESS;
                 }
 
