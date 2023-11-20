@@ -6,6 +6,7 @@
 package sample.controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
@@ -15,52 +16,69 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sound.midi.SoundbankResource;
+import javax.servlet.http.HttpSession;
+import sample.major.MajorDAO;
+import sample.major.MajorDTO;
 import sample.slots.SlotDTO;
 import sample.subjects.SubjectDTO;
 import sample.timetables.TimetableDAO;
 import sample.timetables.TimetableDTO;
+import sample.users.UserDAO;
+import sample.users.UserDTO;
 
 /**
  *
  * @author CHIBAO
  */
-public class ViewTimetableServlet extends HttpServlet { 
-    
-    public final String ERROR = "request.jsp";
-    public final String SUCCESS = "TimetableView.jsp"; 
-    
+public class ViewLecturerProfile extends HttpServlet {
+
+    private final String SUCCESS = "LecturerProfile.jsp";
+    private final String ERROR = "LecturerProfile.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String lecturerID = request.getParameter("txtLecturer");
-            String semesterID = request.getParameter("txtSemester");
-            System.out.println(semesterID);
+            UserDAO userDAO = new UserDAO();
+            HttpSession session = request.getSession();
+            UserDTO lecturer = (UserDTO) session.getAttribute("loginedUser");
+            String lecturerID = lecturer.getUserID();
+            request.setAttribute("USER", lecturer);
+            MajorDAO majorDAO = new MajorDAO();
+            
+            
+            List<MajorDTO> majorsByLecID = majorDAO.select(lecturerID);
+            if (majorsByLecID != null) {
+                request.setAttribute("LIST_MAJORS", majorsByLecID);
+                url = SUCCESS;
+            } else {
+                request.setAttribute("MAJOR_ERROR", "You have no major in the system. Please add your major.");
+            }
+
             TimetableDAO timetableDAO = new TimetableDAO();
             timetableDAO.getListTimetables(lecturerID);
             List<TimetableDTO> timetables = timetableDAO.getTimetables();
             List<SubjectDTO> subjects = timetableDAO.getSubjects();
             List<SlotDTO> slots = timetableDAO.getSlots();
-            System.out.println(semesterID);
+
             if (timetables != null) {
-                System.out.println(timetables.toString());
-                request.setAttribute("TB_TIMETABLES", timetables); 
+                request.setAttribute("LIST_TIMETABLES", timetables);
                 request.setAttribute("TB_SUBJECTS", subjects);
                 request.setAttribute("TB_SLOTS", slots);
                 url = SUCCESS;
             } else {
-                request.setAttribute("TB_MESSAGE", "No line matched!!Please try checking again LecturerID at View All Lecturer at the top!!");
+                request.setAttribute("TIMETABLE_MESSAGE", "You have no timetable. Please import your Timetable.");
             }
+
         } catch (ClassNotFoundException | SQLException | ParseException ex) {
-            log("Error at ViewTimetableServlet: " + ex.toString());
+            log("Error at ViewLecturerProfile: " + ex.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -72,7 +90,11 @@ public class ViewTimetableServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ViewLecturerProfile.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -86,7 +108,11 @@ public class ViewTimetableServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ViewLecturerProfile.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

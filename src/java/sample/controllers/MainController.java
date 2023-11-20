@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MainController extends HttpServlet {
 
+    private static final String VIEW_LECTURER_PROFILE = "viewLecturerProfile";
+    private static final String VIEW_LECTURER_PROFILE_ACTION = "ViewLecturerProfile";
+    
     private static final String HOME_ACTION_LECTURER = "returnHomePageLecturer";
     private static final String HOME_PAGE_LECTURER = "CreatedSlotController";
     private static final String HOME_ACTION_STUDENT = "returnHomePageStudent";
@@ -317,6 +320,8 @@ public class MainController extends HttpServlet {
                 url = BAN_USER_SERVLET;
             } else if (UNBAN_USER_ACTION.equals(action)) {
                 url = UNBAN_USER_SERVLET;
+            } else if (VIEW_LECTURER_PROFILE.equals(action)) {
+                url = VIEW_LECTURER_PROFILE_ACTION;
             }
 
         } catch (Exception e) {
