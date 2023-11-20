@@ -26,6 +26,12 @@
         <!-- SweetAlert2 JS -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <!-- Font Awesome CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+        <!--        text gg -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
         <title>File Upload</title>
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -43,6 +49,18 @@
             }
             function submitFormLogout() {
                 var form = document.querySelector('.logout form');
+                form.submit();
+            }
+            function submitFormAddData() {
+                var form = document.querySelector('.AdminAddData form');
+                form.submit();
+            }
+            function submitFormViewSlots() {
+                var form = document.querySelector('.AdminViewSlot form');
+                form.submit();
+            }
+            function submitFormImport() {
+                var form = document.querySelector('.import form');
                 form.submit();
             }
             var userDTO = {
@@ -88,6 +106,25 @@
                 optionInput.value = "update"; // Set the option value for the "Update" button
                 form.submit();
             }
+            /* When the user clicks on the button, 
+             toggle between hiding and showing the dropdown content */
+            function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+            }
+
+// Close the dropdown if the user clicks outside of it
+            window.onclick = function (event) {
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            };
         </script>
 
         <style>
@@ -109,7 +146,7 @@
                 display: flex;
                 justify-content: center;
                 margin: auto;
-                margin-top: 10%;
+                margin-top: 5%;
             }
             .table-rounded th,
             .table-rounded td {
@@ -124,7 +161,7 @@
             }
             .table-rounded{
                 width: 100%;
-                transform: scale(0.8); /* Tỉ lệ thu nhỏ bảng là 80% */
+                transform: scale(0.95); /* Tỉ lệ thu nhỏ bảng là 80% */
             }
         </style>
     </head>
@@ -135,53 +172,65 @@
                     <input type="hidden" name="action" value="returnHomePageAdmin" />
                 </form>
             </div>
-
             <div class="frame-parent">
-                <div class="frame-group">
-                    <div class="frame-div ViewUsers" onclick="submitFormViewUsers()">
-                        <form action="MainController" method="POST" style="display: none;">
-                            <input type="hidden" name="action" value="ViewUsers" />
-                        </form>
-                        <div class="bookedslot-wrapper">
-                            <i class="material-icons">event</i>
-                        </div>
-                        <div class="view-booking" >Search Users</div>
-                    </div>
-                    <div class="frame-div request import"  style="background-color: #b7b7b7;">
-                        <form action="MainController" method="POST">
-                            <input type="hidden" name="action" value="importPage" />
-                        </form>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
-                        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0z"/>
-                        </svg>
-                        Import Schedule
-                    </div>
-                    <div class="frame-div logout" onclick="submitFormLogout()">
-                        <form action="MainController" method="POST" style="display: none;">
-                            <input type="hidden" name="action" value="Logout" />
-                        </form>
-                        <div class="logout-wrapper">
-                            <i class="material-icons">logout</i>
-                        </div>
-                        <div class="request">
-                            <p class="logout1">Logout</p>
-                        </div>
-                    </div>
 
-                    <div>
-                        <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
-                             onclick="showUserInfo()" />
-                        <div id="user-info" style="display: none; position: absolute">
-                            <p id="user-id"> </p>
-                            <p id="user-name"></p>
-                            <p id="user-email"></p>
+                <div>
+                    <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
+                         onclick="showUserInfo()" />
+                    <div id="user-info" style="display: none; position: absolute">
+                        <p id="user-id"> </p>
+                        <p id="user-name"></p>
+                        <p id="user-email"></p>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button onclick="myFunction()" class="dropbtn"> 
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div id="myDropdown" class="dropdown-content" style="right: 0px;
+                         flex-direction: column; z-index: 10;
+                         ">
+                        <div class="frame-div ViewUsers" onclick="submitFormViewUsers()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="ViewUsers" />
+                            </form>
+                            <i class="material-icons">event</i>
+                            <div class="view-booking" >Search Users</div>
+                        </div>
+                        <div class="frame-div request import" onclick="submitFormImport()">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="importPage" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
+                                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0z"/>
+                                </svg>
+                            </form>
+                            Import Schedule
+                        </div>
+                        <div class="frame-div AdminAddData" onclick="submitFormAddData()">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="AdminAddData" />
+                                <i class="material-icons">add</i> 
+                            </form>
+                            Add data page
+                        </div>
+                        <div class="frame-div AdminViewSlot" style="background-color: #b7b7b7;">
+                            <form action="MainController" method="POST" style="display: none">
+                                <input type="hidden" name="action" value="AdminViewSlot" />
+                            </form>
+                            <i class="fas fa-users-cog"></i>
+                            Manage slot page
+                        </div>
+                        <div class="frame-div logout" onclick="submitFormLogout()" >
+                            <form action="MainController" method="POST" style="display: none">
+                                <input type="hidden" name="action" value="Logout" />
+                            </form>
+                            <i class="material-icons">logout</i> Logout
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
+        <h1 class="text-center text-custom">Manage Slots</h1>
         <div class="container mt-5">
 
             <div class="row align-items-center justify-content-center">
@@ -211,55 +260,108 @@
             <%
                 if (listSlot != null) {
             %>
-            <form>
-                <div class="view-user-table" style="width: 100%; margin: 0 auto; border-radius: 20px;">
-                    <div class="table-container">
-                        <table class="custom-table table-hover table-primary table-rounded">
-                            <tr style="background-color: tomato">
-                                <th>Lecturer ID</th>
-                                <th>Student ID</th>
-                                <th>Subject Code</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Slot ID</th>
-                                <th>Meet Link</th>
-                            </tr>
-                            <%
-                                for (ViewBookedSlotAdminDTO slot : listSlot) {
-                            %>
-                            <tr>
-                                <td><%= slot.getLecturerID()%></td>
-                                <td><%= slot.getStudentID()%></td>
-                                <td><%= slot.getSubjectCode()%></td>
-                                <td><%= slot.getStartTime()%></td>
-                                <td><%= slot.getEndTime()%></td>
-                                <td><%= slot.getFreeSlotID()%></td>
-                                <td><%= slot.getMeetLink()%></td>
-                            </tr>
-                            <%
-                                }
-                            %>
-                        </table>
-                    </div>
-                </div>
-            </form>
-            <%
-                }
-            %>
-        </div>
-        <div style="text-align: center">
-            <%
-                String Error = (String) request.getAttribute("Error");
 
-                if (Error != null) {
-            %>
-            <span style="color: red; font-size: 2rem;">
-                <%= Error %>
-            </span>
-            <%
-                }
-            %>
+        </div> 
+        <div class="view-user-table" style="width: 100%; margin: 0 auto; border-radius: 20px;">
+            <div class="table-container">
+                <table class="custom-table table-hover table-primary table-rounded">
+                    <tr style="background-color: tomato">
+                        <th>Lecturer ID</th>
+                        <th>Student ID</th>
+                        <th>Subject Code</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Slot ID</th>
+                        <th>Meet Link</th>
+                    </tr>
+                    <%
+                        for (ViewBookedSlotAdminDTO slot : listSlot) {
+                    %>
+                    <tr>
+                        <td><%= slot.getLecturerID()%></td>
+                        <td><%= slot.getStudentID()%></td>
+                        <td><%= slot.getSubjectCode()%></td>
+                        <td><%= slot.getStartTime()%></td>
+                        <td><%= slot.getEndTime()%></td>
+                        <td><%= slot.getFreeSlotID()%></td>
+                        <td><%= slot.getMeetLink()%></td>
+                    </tr>
+                    <%
+                        }
+                    %>
+                </table>
             </div>
+        </div>
+        <%
+            }
+        %>
+
+        <div id="customAlert">
+            <div id="alertContent">
+                <!-- N?i dung c?nh báo s? ???c thêm vào ?ây -->
+            </div>
+            <button class="closeButton">X</button>
+        </div>
+        <style>
+            #customAlert {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #fff;
+                border-radius: 4px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                padding: 28px;
+                font-family: Arial, sans-serif;
+                font-size: 18px;
+                text-align: center;
+                z-index: 9999;
+                width: 36%;
+                color: red;
+                font-weight: bold;
+            }
+            #alertContent{
+                font-family: 'Oswald','Playpen Sans';
+                padding: 20px;
+            }
+            .closeButton {
+                padding: 4px 4px;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
+                font-weight: bold;
+                border: none;
+            }
+            .closeButton:hover{
+                opacity: 0.5;
+            }
+
+            #alertContent {
+                /* N?u b?n mu?n tu? ch?nh ki?u ch? và màu s?c, hãy ?i?u ch?nh ?o?n CSS này */
+            }
+        </style>
+        <script>
+            var errorMessage = "${requestScope.Error}";
+
+            // Ki?m tra n?u errorMessage không r?ng, hi?n th? thông báo c?nh báo
+            if (errorMessage.trim() !== "") {
+                showAlert(errorMessage);
+            }
+
+            // Hàm ?? hi?n th? thông báo tùy ch?nh
+            function showAlert(message) {
+                var alertDiv = document.getElementById("customAlert");
+                var alertContentDiv = document.getElementById("alertContent");
+                alertContentDiv.textContent = message;
+                alertDiv.style.display = "block";
+                var closeButton = alertDiv.querySelector(".closeButton");
+                closeButton.addEventListener("click", function () {
+                    alertDiv.style.display = "none";
+                });
+            }
+        </script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

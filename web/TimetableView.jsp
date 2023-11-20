@@ -45,6 +45,10 @@
 
         <!-- JavaScript c?a SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+        <!--        text gg -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             if (us != null) {
@@ -199,6 +203,7 @@
 
 
             </div>
+            <h1 class="text-center text-custom">Table of Lecturer</h1>
             <div class="table-timetable" style="margin-top: 19%; padding: 40px;  display: flex;
                  justify-content: center;">
                 <c:if test="${not empty requestScope.TB_TIMETABLES}">
