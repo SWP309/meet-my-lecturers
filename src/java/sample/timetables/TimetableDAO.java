@@ -11,7 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,11 +28,13 @@ import sample.utils.DBUtils;
  */
 public class TimetableDAO implements Serializable {
 
-    private final String SEARCH_TIMETABLES = "SELECT T.slotID, T.subjectCode, S.subjectName, SL.day1, SL.day2, SL.starttime, SL.endtime\n"
+    private final String SEARCH_TIMETABLES = "SELECT T.semesterID, T.slotID, T.subjectCode, S.subjectName, SL.day1, SL.day2, SL.starttime, SL.endtime\n"
             + "FROM Timetables T\n"
             + "JOIN Slots SL ON T.slotID = SL.slotID\n"
             + "JOIN Subjects S ON T.subjectCode = S.subjectCode\n"
-            + "WHERE T.lecturerID = ? AND T.semesterID = ?";
+            + "WHERE T.lecturerID = ? AND T.semesterID = ( SELECT s.semesterID\n"
+            + "FROM Semesters s\n"
+            + "WHERE ? BETWEEN s.startDay AND s.endDay)";
 
     private List<TimetableDTO> timetables;
 
@@ -58,20 +62,23 @@ public class TimetableDAO implements Serializable {
         return dateFormat.format(sqlTime);
     }
 
-    public void getListTimetables(String lecturerID, String semesterID) throws ClassNotFoundException, SQLException {
+    public void getListTimetables(String lecturerID) throws ClassNotFoundException, SQLException, ParseException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
+            Date currentDate = new Date();
             con = DBUtils.getConnection();
             stm = con.prepareStatement(SEARCH_TIMETABLES);
             stm.setString(1, lecturerID);
-            stm.setString(2, semesterID);
+            String start = services.Service.sdfDateTime.format(currentDate);
+            stm.setTimestamp(2, new Timestamp(services.Service.sdfDateTime.parse(start).getTime()));
             rs = stm.executeQuery();
             while (rs.next()) {
                 String slotID = rs.getNString("slotID");
                 String subjectCode = rs.getNString("subjectCode");
                 String subjectName = rs.getNString("subjectName");
+                String semesterID = rs.getString("semesterID");
                 String day1 = rs.getString("day1");
                 String day2 = rs.getString("day2");
                 Time startTime = rs.getTime("starttime");
@@ -106,6 +113,7 @@ public class TimetableDAO implements Serializable {
             }
         }
     }
+
 
     public List<TimetableDTO> listByDate(String lecturerID, String day, String start, String end) throws SQLException, ClassNotFoundException {
         List<TimetableDTO> list = new ArrayList<>();

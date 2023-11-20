@@ -210,6 +210,18 @@
         <servlet-name>UnBanUserServlet</servlet-name>
         <servlet-class>sample.controllers.UnBanUserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewMajorServlet</servlet-name>
+        <servlet-class>sample.controllers.ViewMajorServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewTimetableForLec</servlet-name>
+        <servlet-class>sample.controllers.ViewTimetableForLec</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewLecturerProfile</servlet-name>
+        <servlet-class>sample.controllers.ViewLecturerProfile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -401,6 +413,18 @@
     <servlet-mapping>
         <servlet-name>UnBanUserServlet</servlet-name>
         <url-pattern>/UnBanUserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewMajorServlet</servlet-name>
+        <url-pattern>/ViewMajorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewTimetableForLec</servlet-name>
+        <url-pattern>/ViewTimetableForLec</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewLecturerProfile</servlet-name>
+        <url-pattern>/ViewLecturerProfile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

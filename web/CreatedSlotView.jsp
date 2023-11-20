@@ -83,6 +83,10 @@
                 var form = document.querySelector('.request-div form');
                 form.submit();
             }
+            function submitViewLecProfile() {
+                var form = document.querySelector('.viewLecProfile form');
+                form.submit();
+            }
             function submitFormHideView() {
                 var form = document.querySelector('.hideView form');
                 form.submit();
@@ -345,6 +349,12 @@
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
+                        <div class="frame-div viewLecProfile" onclick="submitViewLecProfile()" style="background-color: #b7b7b7;">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="viewLecturerProfile" />
+                            </form>
+                            <i class="material-icons">visibility</i>View Lecturer Profile
+                        </div>
                         <div class="frame-div viewCreateSlot" onclick="submitForm()" style="background-color: #b7b7b7;">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="viewFSlotLecturer" />
@@ -362,7 +372,7 @@
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="HideView" />
                             </form>
-                            <i class="fas fa-search"></i>Hide List</p>
+                            <i class="fas fa-search"></i>Hide List
                         </div>
                         <div class="frame-div logout" onclick="submitFormLogout()">
                             <form action="MainController" method="POST" style="display: none;">
