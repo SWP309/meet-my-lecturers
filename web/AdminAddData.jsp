@@ -107,25 +107,24 @@
                 optionInput.value = "update"; // Set the option value for the "Update" button
                 form.submit();
             }
-            /* When the user clicks on the button, 
-             toggle between hiding and showing the dropdown content */
             function myFunction() {
-                document.getElementById("myDropdown").classList.toggle("show");
-            }
+                var dropdown = document.getElementById("myDropdown");
+                dropdown.classList.toggle("show");
 
-// Close the dropdown if the user clicks outside of it
-            window.onclick = function (event) {
-                if (!event.target.matches('.dropbtn')) {
-                    var dropdowns = document.getElementsByClassName("dropdown-content");
-                    var i;
-                    for (i = 0; i < dropdowns.length; i++) {
-                        var openDropdown = dropdowns[i];
-                        if (openDropdown.classList.contains('show')) {
-                            openDropdown.classList.remove('show');
-                        }
-                    }
+                if (dropdown.classList.contains('show')) {
+                    dropdown.style.display = "flex";
+                    setTimeout(function () {
+                        dropdown.style.opacity = 1;
+                        dropdown.style.transform = "scaleY(1)";
+                    }, 10);
+                } else {
+                    dropdown.style.opacity = 0;
+                    dropdown.style.transform = "scaleY(0)";
+                    setTimeout(function () {
+                        dropdown.style.display = "none";
+                    }, 400);
                 }
-            };
+            }
         </script>
 
         <style>
@@ -281,17 +280,9 @@
                         <div class="form-group" style="width: 20%;">
                             <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchsj">Search</button>
                         </div> <br>
-                        <%
-                            String RemoveStatus = (String) request.getAttribute("RemoveStatus");
-
-                            if (RemoveStatus != null) {
-                        %>
                         <span style="color: red; font-size: 1rem;">
-                            <%= RemoveStatus%>
+
                         </span>
-                        <%
-                            }
-                        %>
                     </div>
                 </form>
 
@@ -331,6 +322,70 @@
                 }
             %>
         </div>
+        <div id="customAlert">
+            <div id="alertContent">
+                <!-- N?i dung c?nh báo s? ???c thêm vào ?ây -->
+            </div>
+            <button class="closeButton">X</button>
+        </div>
+        <style>
+            #customAlert {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #fff;
+                border-radius: 4px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                padding: 28px;
+                font-family: Arial, sans-serif;
+                font-size: 18px;
+                text-align: center;
+                z-index: 9999;
+                width: 36%;
+                color: red;
+                font-weight: bold;
+            }
+            #alertContent{
+                font-family: 'Oswald','Playpen Sans';
+                padding: 20px;
+            }
+            .closeButton {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
+                font-weight: bold;
+                background: white;
+                border: none;
+            }
+            .closeButton:hover{
+                opacity: 0.5;
+            }
+
+            #alertContent {
+                /* N?u b?n mu?n tu? ch?nh ki?u ch? và màu s?c, hãy ?i?u ch?nh ?o?n CSS này */
+            }
+        </style>
+        <script>
+            var errorMessage = "${requestScope.RemoveStatus}";
+
+            // Ki?m tra n?u errorMessage không r?ng, hi?n th? thông báo c?nh báo
+            if (errorMessage.trim() !== "") {
+                showAlert(errorMessage);
+            }
+            function showAlert(message) {
+                var alertDiv = document.getElementById("customAlert");
+                var alertContentDiv = document.getElementById("alertContent");
+                alertContentDiv.textContent = message;
+                alertDiv.style.display = "block";
+                var closeButton = alertDiv.querySelector(".closeButton");
+                closeButton.addEventListener("click", function () {
+                    alertDiv.style.display = "none";
+                });
+            }
+        </script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
