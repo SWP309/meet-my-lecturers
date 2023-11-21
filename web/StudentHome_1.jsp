@@ -573,7 +573,7 @@
                                                    value="${param.txtUserID}" readonly="">
                                             <input type="hidden" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px">
                                             <input type="hidden" name="password" value="${freeSlotBySubjectCode.password}">
-                                            <button type="submit" name="action" value="BookfreeSlotBySubjectCode" style="display: flex; text-decoration: none; border-radius: 20px; justify-content: center;  background-color:#018df7; padding: 10px 15px; color: white;">
+                                            <button type="submit" name="action" value="BookFreeSlot" style="display: flex; text-decoration: none; border-radius: 20px; justify-content: center;  background-color:#018df7; padding: 10px 15px; color: white;">
                                                 Book
                                             </button>
 
