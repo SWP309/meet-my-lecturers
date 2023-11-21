@@ -41,8 +41,7 @@ public class SearchServlet extends HttpServlet {
                 request.setAttribute("ListSubject", list);
                 url = "MainController?action=ManageServlet";
             } else{
-                SubjectDTO subject = SubjectDAO.getSubject(SearchCode);
-                list.add(subject);
+                list = SubjectDAO.getSubjects(SearchCode);
                 request.setAttribute("ListSubject", list);
                 url = "MainController?action=ManageServlet";
             }
