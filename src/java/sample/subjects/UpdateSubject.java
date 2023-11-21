@@ -7,10 +7,13 @@ package sample.subjects;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import sample.majors.MajorsDAO;
+import sample.majors.MajorsDTO;
 
 /**
  *
@@ -33,19 +36,31 @@ public class UpdateSubject extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             int rs = 0;
             String url = "MainController?action=ManageServlet";
-            String OldCode = request.getParameter("txtoldcode");
             String subjectCode = request.getParameter("txtsubject");
             String Description = request.getParameter("txtdescription");
+            System.out.println("Subject code: " + subjectCode);
+            System.out.println("Des: " + Description);
             SubjectDTO subject = new SubjectDTO(subjectCode, Description);
-            rs = SubjectDAO.updateSubject(subject, OldCode);
-            System.out.println(subjectCode);
-            System.out.println(Description);
-            if (rs > 0) {
-                request.setAttribute("RemoveStatus", "Update successfully!");
-                url = "MainController?action=ManageServlet";
-            } else {
-                request.setAttribute("RemoveStatus", "Update failed!");
-                url = "MainController?action=ManageServlet";
+            ArrayList<MajorsDTO> list = MajorsDAO.getAllMajors();
+            MajorsDTO major = null;
+            for (MajorsDTO ob : list) {
+                if (subjectCode.equalsIgnoreCase(ob.getSubjectCode())) {
+                    major = ob;
+                }
+            }
+            System.out.println("Major out for: " + major);
+            if (major == null) {
+                rs = SubjectDAO.updateSubject(subject);
+                System.out.println(subjectCode);
+                System.out.println(Description);
+                if (rs > 0) {
+                    request.setAttribute("RemoveStatus", "Update successfully!");
+                } else {
+                    request.setAttribute("RemoveStatus", "Update failed!");
+                }
+
+            } else{
+                request.setAttribute("RemoveStatus", "Update fail due to the existed of subject in lecturer's major");
             }
             request.getRequestDispatcher(url).forward(request, response);
         } catch (Exception e) {
