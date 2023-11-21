@@ -167,23 +167,22 @@
                     event.preventDefault();
                 }
             }
-            /* When the user clicks on the button, 
-             toggle between hiding and showing the dropdown content */
-            function myFunction() {
-                document.getElementById("myDropdown").classList.toggle("show");
-            }
+             function myFunction() {
+                var dropdown = document.getElementById("myDropdown");
+                dropdown.classList.toggle("show");
 
-// Close the dropdown if the user clicks outside of it
-            window.onclick = function (event) {
-                if (!event.target.matches('.dropbtn')) {
-                    var dropdowns = document.getElementsByClassName("dropdown-content");
-                    var i;
-                    for (i = 0; i < dropdowns.length; i++) {
-                        var openDropdown = dropdowns[i];
-                        if (openDropdown.classList.contains('show')) {
-                            openDropdown.classList.remove('show');
-                        }
-                    }
+                if (dropdown.classList.contains('show')) {
+                    dropdown.style.display = "flex";
+                    setTimeout(function () {
+                        dropdown.style.opacity = 1;
+                        dropdown.style.transform = "scaleY(1)";
+                    }, 10);
+                } else {
+                    dropdown.style.opacity = 0;
+                    dropdown.style.transform = "scaleY(0)";
+                    setTimeout(function () {
+                        dropdown.style.display = "none";
+                    }, 400);
                 }
             };
             function searchbyname(param) {
@@ -435,7 +434,7 @@
 
             <div style="width: 100%; display: flex; justify-content: center">
                 <div style="position: relative; width:50%;">
-                    <input class="form-control" oninput="searchbyname(this)" type="text" name="txt" value="${txtS}" placeholder="Search for names.." title="Type in a name">
+                    <input class="form-control" oninput="searchbyname(this)" type="text" name="txt" value="${txtS}" placeholder="Search for names.." title="Type in a name of lecturer">
 
                     <div class="result" style="display: none;
                          flex-direction: column;
@@ -587,10 +586,6 @@
                     </div>
                 </c:forEach>
             </c:if>
-
-            <c:if test="${empty requestScope.FREESLOT_BY_SUBJECT }">
-                <h3 style="color: red">${requestScope.SEARCH_FREESLOT_MESSAGE}</h3>
-            </c:if>
         </div>
 
         <div id="customAlert">
@@ -652,6 +647,7 @@
                             var errorMessage2 = "${requestScope.BOOKING_ERROR.checkPassword}";
                             var errorMessage3 = "${requestScope.BOOKING_ERROR.inBlockList}";
                             var errorMessage4 = "${requestScope.SEARCH_FREESLOT_MESSAGE}";
+                            var errorMessage5 = "${requestScope.FREESLOT_BY_SUBJECT}";
 
                             // Ki?m tra n?u errorMessage không r?ng, hi?n th? thông báo c?nh báo
                             if (errorMessage.trim() !== "") {
@@ -668,6 +664,9 @@
                             }
                             if (errorMessage4.trim() !== "") {
                                 showAlert(errorMessage4);
+                            }
+                            if (errorMessage5.trim() !== "") {
+                                showAlert(errorMessage5);
                             }
 
                             // Hàm ?? hi?n th? thông báo tùy ch?nh
