@@ -44,44 +44,85 @@ td button {
     color: black;
 }
 
-
-.frame-div {
-    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
-    border-radius: 12px;
-    /*background-color: #f27125;*/
-    width: 213px;
-    height: 43px;
-    /*align-items: flex-start;*/
-    padding: 10px 9px;
-    box-sizing: border-box;
-    gap: 8px;
-    justify-content: center;
-    color: #f27125;
+.dropbtn {
+    background-color: black;
+    color: white;
+    padding: 9px 15px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
 }
 
-.frame-group, .frame-div{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.dropbtn:hover, .dropbtn:focus {
+    opacity: 0.5;
 }
 
-.frame-group {
-    gap: 16px;
-    flex-wrap: wrap;
-}
-.frame-item {
-    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
+.dropdown {
     position: relative;
-    width: 45px;
-    height: 42px;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 205px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    transform-origin: top center;
+    transform: scaleY(0);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {
+    background-color: #ddd;
+}
+
+.show {
+    display: flex;
+    opacity: 0;
+    transform: scaleY(0);
 }
 .frame-parent {
     display: flex;
     flex-direction: row;
+    color: black;
+}
+.frame-div{
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.frame-choice{
+    border-radius: 20px;
+    background-color: #f27125;
+    width: 40px !important;
+    height: 40px;
+    align-items: center;
+    padding: 10px 9px;
+    box-sizing: border-box;
+    /* gap: 0px; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    float: right;
+    margin-top: 15px;
+    margin-right: 20px;
 }
 .fptu-eng-1-parent {
     position: relative;
-    background-color: rgba(0, 0, 0, 0.125);
+    background-color: black;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     box-sizing: border-box;
@@ -90,13 +131,11 @@ td button {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
     /*padding: 35px 40px;*/
     padding-left: 35px;
     font-size: 17px;
     color: #fff;
-
-    /*overflow: hidden;*/
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 
@@ -124,7 +163,11 @@ td button {
     width: 104.84px;
     height: 45.2px;
 }
-
+.text-custom{
+    font-family: 'Agbalumo', 'Playfair Display', sans-serif;
+    height: 0px;
+    margin-top: 73px;
+}
 .meetbutton-child {
     position: absolute;
     top: 0;

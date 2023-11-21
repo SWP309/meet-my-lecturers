@@ -160,10 +160,12 @@ public class FreeSlotsDAO {
     private static String GET_SEMESTERID = "SELECT s.semesterID\n"
             + "FROM Semesters s\n"
             + "WHERE ? BETWEEN s.startDay AND s.endDay";
-    private static String GET_LECTURERID = " SELECT subjectCode\n"
-            + "            FROM Majors s\n"
-            + "			Join Semesters se on se.semesterID = s.semesterID\n"
-            + "            WHERE ? BETWEEN se.startDay AND se.endDay and lecturerID like ? ";
+    private static String GET_LECTURERID = "  SELECT subjectCode , u.userName\n"
+            + "                  FROM Majors s\n"
+            + "				  join Users u on u.userID = s.lecturerID\n"
+            + "        		Join Semesters se on se.semesterID = s.semesterID\n"
+            + "                   WHERE ? BETWEEN se.startDay AND se.endDay and \n"
+            + " (s.lecturerID LIKE ? OR u.userName LIKE N'%' + ? + '%' COLLATE Latin1_General_CI_AI);";
 
     private static String GET_FSLOTID = "SELECT freeSlotID\n"
             + "FROM FreeSlots\n"
@@ -193,7 +195,7 @@ public class FreeSlotsDAO {
         return checkUpdate;
     }
 
-    public List<FreeSlotsDTO> GetListSubjectCodeByLecturer(Date time, String lecturerID) throws SQLException {
+    public List<FreeSlotsDTO> GetListSubjectCodeByLecturer(Date time, String lecturer) throws SQLException {
         List<FreeSlotsDTO> listSemester = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -203,7 +205,8 @@ public class FreeSlotsDAO {
             if (conn != null) {
                 ptm = conn.prepareStatement(GET_LECTURERID);
                 ptm.setTimestamp(1, new Timestamp(time.getTime()));
-                ptm.setString(2, lecturerID);
+                ptm.setString(2, lecturer);
+                ptm.setString(3, "%" + lecturer + "%");
                 rs = ptm.executeQuery();
                 while (rs.next()) {
                     String subjectCode = rs.getString("subjectCode");
