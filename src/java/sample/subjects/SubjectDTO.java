@@ -6,10 +6,9 @@ import java.io.Serializable;
 public class SubjectDTO implements Serializable{
     private String subjectCode;
     private String subjectName;
+    private int status;
 
     public SubjectDTO() {
-        this.subjectCode = "";
-        this.subjectName = "";
     }
 
     public SubjectDTO(String subjectCode, String subjectName) {
@@ -17,32 +16,35 @@ public class SubjectDTO implements Serializable{
         this.subjectName = subjectName;
     }
 
-    /**
-     * @return the subjectCode
-     */
+    public SubjectDTO(String subjectCode, String subjectName, int status) {
+        this.subjectCode = subjectCode;
+        this.subjectName = subjectName;
+        this.status = status;
+    }
+
     public String getSubjectCode() {
         return subjectCode;
     }
 
-    /**
-     * @param subjectCode the subjectCode to set
-     */
     public void setSubjectCode(String subjectCode) {
         this.subjectCode = subjectCode;
     }
 
-    /**
-     * @return the subjectName
-     */
     public String getSubjectName() {
         return subjectName;
     }
 
-    /**
-     * @param subjectName the subjectName to set
-     */
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
     }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     
 }

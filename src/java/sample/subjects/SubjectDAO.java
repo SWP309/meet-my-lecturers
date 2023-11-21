@@ -23,11 +23,12 @@ public class SubjectDAO {
         int rs = 0;
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
-            String sql = "Insert [dbo].[Subjects] ([subjectCode], [subjectName])\n"
-                    + "Values (?,?)";
+            String sql = "Insert [dbo].[Subjects] ([subjectCode], [subjectName], [status])\n"
+                    + "Values (?,?,?)";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, subject.getSubjectCode());
             pst.setString(2, subject.getSubjectName());
+            pst.setInt(3, 1);
             rs = pst.executeUpdate();
             cn.close();
 
@@ -64,7 +65,8 @@ public class SubjectDAO {
                 while (rs.next()) {
                     String code = rs.getString("subjectCode").trim();
                     String des = rs.getString("subjectName").trim();
-                    subject = new SubjectDTO(code, des);
+                    int status = rs.getInt("status");
+                    subject = new SubjectDTO(code, des, status);
                 }
             }
             cn.close();
@@ -79,15 +81,16 @@ public class SubjectDAO {
         if (cn != null) {
             String sql = "Select * \n"
                     + "From [dbo].[Subjects]\n"
-                    + "Where [subjectCode] like ?";
+                    + "Where [subjectCode] like ? and [status] = 1";
             PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1,"%" + subject + "%");
+            pst.setString(1, "%" + subject + "%");
             ResultSet rs = pst.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
                     String id = rs.getString("subjectCode");
                     String name = rs.getString("subjectName");
-                    sub = new SubjectDTO(id, name);
+                    int status = rs.getInt("status");
+                    sub = new SubjectDTO(id, name, status);
                     list.add(sub);
                 }
             }
@@ -101,14 +104,16 @@ public class SubjectDAO {
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
             String sql = "Select *\n"
-                    + "From [dbo].[Subjects]";
+                    + "From [dbo].[Subjects]\n"
+                    + "Where status = 1";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             if (rs != null) {
                 while (rs.next()) {
                     String code = rs.getString("subjectCode");
                     String name = rs.getString("subjectName");
-                    SubjectDTO type = new SubjectDTO(code, name);
+                    int status = rs.getInt("status");
+                    SubjectDTO type = new SubjectDTO(code, name, status);
                     list.add(type);
                 }
             }
@@ -124,11 +129,12 @@ public class SubjectDAO {
         try {
             cn = DBUtils.getConnection();
             if (cn != null) {
-                String sql = "Insert [dbo].[Subjects] ([subjectCode], [subjectName])\n"
-                        + "Values (?,?)";
+                String sql = "Insert [dbo].[Subjects] ([subjectCode], [subjectName], [status])\n"
+                        + "Values (?,?,?)";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setString(1, subject.getSubjectCode());
                 pst.setString(2, subject.getSubjectName());
+                pst.setInt(3, 1);
                 rs = pst.executeUpdate();
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -148,17 +154,15 @@ public class SubjectDAO {
         return rs;
     }
 
-    public static int updateSubject(SubjectDTO subject, String oldcode) throws Exception {
+    public static int updateSubject(SubjectDTO subject) throws Exception {
         int rs = 0;
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
             String sql = "Update [dbo].[Subjects]\n"
-                    + "Set [subjectCode] = ?, [subjectName] = ?\n"
+                    + "Set [status] = 0\n"
                     + "Where [subjectCode] = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, subject.getSubjectCode());
-            pst.setString(2, subject.getSubjectName());
-            pst.setString(3, oldcode);
             rs = pst.executeUpdate();
             cn.close();
         }
