@@ -211,6 +211,10 @@
         <servlet-class>sample.controllers.UnBanUserServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ViewOptionSubjectByLecturerID</servlet-name>
+        <servlet-class>sample.controllers.ViewOptionSubjectByLecturerID</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ImportSubjects</servlet-name>
         <servlet-class>sample.importexcel.ImportSubjects</servlet-class>
     </servlet>
@@ -233,6 +237,10 @@
     <servlet>
         <servlet-name>SearchServlet</servlet-name>
         <servlet-class>sample.subjects.SearchServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchSlotAdmin</servlet-name>
+        <servlet-class>sample.controllers.SearchSlotAdmin</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
@@ -427,6 +435,10 @@
         <url-pattern>/UnBanUserServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ViewOptionSubjectByLecturerID</servlet-name>
+        <url-pattern>/ViewOptionSubjectByLecturerID</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ImportSubjects</servlet-name>
         <url-pattern>/ImportSubjects</url-pattern>
     </servlet-mapping>
@@ -449,6 +461,10 @@
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/SearchServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchSlotAdmin</servlet-name>
+        <url-pattern>/SearchSlotAdmin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

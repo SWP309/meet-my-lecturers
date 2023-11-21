@@ -25,6 +25,12 @@
         <!-- SweetAlert2 JS -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <!-- Font Awesome CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+        <!--        text gg -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
         <title>File Upload</title>
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -44,6 +50,18 @@
             }
             function submitFormLogout() {
                 var form = document.querySelector('.logout form');
+                form.submit();
+            }
+            function submitFormAddData() {
+                var form = document.querySelector('.AdminAddData form');
+                form.submit();
+            }
+            function submitFormViewSlots() {
+                var form = document.querySelector('.AdminViewSlot form');
+                form.submit();
+            }
+            function submitFormImport() {
+                var form = document.querySelector('.import form');
                 form.submit();
             }
             var userDTO = {
@@ -89,6 +107,24 @@
                 optionInput.value = "update"; // Set the option value for the "Update" button
                 form.submit();
             }
+            function myFunction() {
+                var dropdown = document.getElementById("myDropdown");
+                dropdown.classList.toggle("show");
+
+                if (dropdown.classList.contains('show')) {
+                    dropdown.style.display = "flex";
+                    setTimeout(function () {
+                        dropdown.style.opacity = 1;
+                        dropdown.style.transform = "scaleY(1)";
+                    }, 10);
+                } else {
+                    dropdown.style.opacity = 0;
+                    dropdown.style.transform = "scaleY(0)";
+                    setTimeout(function () {
+                        dropdown.style.display = "none";
+                    }, 400);
+                }
+            }
         </script>
 
         <style>
@@ -115,53 +151,65 @@
                     <input type="hidden" name="action" value="returnHomePageAdmin" />
                 </form>
             </div>
-
             <div class="frame-parent">
-                <div class="frame-group">
-                    <div class="frame-div ViewUsers" onclick="submitFormViewUsers()">
-                        <form action="MainController" method="POST" style="display: none;">
-                            <input type="hidden" name="action" value="ViewUsers" />
-                        </form>
-                        <div class="bookedslot-wrapper">
-                            <i class="material-icons">event</i>
-                        </div>
-                        <div class="view-booking" >Search Users</div>
-                    </div>
-                    <div class="frame-div request import"  style="background-color: #b7b7b7;">
-                        <form action="MainController" method="POST">
-                            <input type="hidden" name="action" value="importPage" />
-                        </form>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
-                        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0z"/>
-                        </svg>
-                        Import Schedule
-                    </div>
-                    <div class="frame-div logout" onclick="submitFormLogout()">
-                        <form action="MainController" method="POST" style="display: none;">
-                            <input type="hidden" name="action" value="Logout" />
-                        </form>
-                        <div class="logout-wrapper">
-                            <i class="material-icons">logout</i>
-                        </div>
-                        <div class="request">
-                            <p class="logout1">Logout</p>
-                        </div>
-                    </div>
 
-                    <div>
-                        <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
-                             onclick="showUserInfo()" />
-                        <div id="user-info" style="display: none; position: absolute">
-                            <p id="user-id"> </p>
-                            <p id="user-name"></p>
-                            <p id="user-email"></p>
+                <div>
+                    <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
+                         onclick="showUserInfo()" />
+                    <div id="user-info" style="display: none; position: absolute">
+                        <p id="user-id"> </p>
+                        <p id="user-name"></p>
+                        <p id="user-email"></p>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button onclick="myFunction()" class="dropbtn"> 
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div id="myDropdown" class="dropdown-content" style="right: 0px;
+                         flex-direction: column; z-index: 10;
+                         ">
+                        <div class="frame-div ViewUsers" onclick="submitFormViewUsers()">
+                            <form action="MainController" method="POST" style="display: none;">
+                                <input type="hidden" name="action" value="ViewUsers" />
+                            </form>
+                            <i class="material-icons">event</i>
+                            <div class="view-booking" >Search Users</div>
+                        </div>
+                        <div class="frame-div request import"  onclick="submitFormImport()">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="importPage" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
+                                <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0z"/>
+                                </svg>
+                            </form>
+                            Import Schedule
+                        </div>
+                        <div class="frame-div AdminAddData" style="background-color: #b7b7b7;">
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="AdminAddData" />
+                                <i class="material-icons">add</i> 
+                            </form>
+                            Add data page
+                        </div>
+                        <div class="frame-div AdminViewSlot" onclick="submitFormViewSlots()">
+                            <form action="MainController" method="POST" style="display: none">
+                                <input type="hidden" name="action" value="AdminViewSlot" />
+                            </form>
+                            <i class="fas fa-users-cog"></i>
+                            Manage slot page
+                        </div>
+                        <div class="frame-div logout" onclick="submitFormLogout()" >
+                            <form action="MainController" method="POST" style="display: none">
+                                <input type="hidden" name="action" value="Logout" />
+                            </form>
+                            <i class="material-icons">logout</i> Logout
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
+        <h1 class="text-center text-custom">Manage Data</h1>
         <div class="container mt-5">
             <form action="MainController" method="POST">
                 <div style="padding-right: 100px; display: inline-block">
@@ -221,41 +269,45 @@
                     </div>
                 </div>
             </form>
-            <div class="row align-items-center justify-content-center">
+            <div>
+                <form action="MainController" method="POST" style=" margin-top: 10%;">
+                    <div style="    width: 100%;
+                         display: flex;
+                         justify-content: space-between;">
+                        <div class="form-group" style=" width: 120%;">
+                            <input type="text" class="form-control" name="txtInputSubject" placeholder="Input Subject">
+                        </div>
+                        <div class="form-group" style="width: 20%;">
+                            <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchsj">Search</button>
+                        </div> <br>
+                        <span style="color: red; font-size: 1rem;">
 
-                <form action="MainController" method="POST" class="d-flex justify-content-center" style=" margin-top: 10%;">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="txtInputSubject" placeholder="Input Subject">
+                        </span>
                     </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchsj">Search</button>
-                    </div> <br>
-                    <%
-                        String RemoveStatus = (String) request.getAttribute("RemoveStatus");
-
-                        if (RemoveStatus != null) {
-                    %>
-                    <span style="color: red; font-size: 1rem;">
-                        <%= RemoveStatus%>
-                    </span>
-                    <%
-                        }
-                    %>
                 </form>
 
             </div>
             <%
                 if (ListSubject != null) {
             %>
+            <div style="display: flex; text-align: center">
+                <div style="display: flex; width: 89%;">
+                    <span class="form-control" style="font-weight: bold;">Subject Code</span>
+                    <span class="form-control" style="font-weight: bold;">Description</span>
+                </div>
+                <div style="    display: flex;
+                     width: 15%;">
+                    <span class="form-control" style="font-weight: bold;">Manage</span>
+                </div>
+            </div>
             <form>
                 <%
                     for (SubjectDTO sub : ListSubject) {
                 %>
                 <div class="form-group input-group">
-
                     <input type="hidden" class="form-control" name="txtoldcode" value="<%= sub.getSubjectCode()%>">
-                    <input type="text" class="form-control" name="txtsubject" value="<%= sub.getSubjectCode()%>" required>
-                    <input style="color: tomato" type="text" class="form-control" name="txtdescription" value="<%=  sub.getSubjectName()%>" required>
+                    <input  style="text-align: center" type="text" class="form-control" name="txtsubject" value="<%= sub.getSubjectCode()%>" required>
+                    <input style="color: tomato;text-align: center" type="text" class="form-control" name="txtdescription" value="<%=  sub.getSubjectName()%>" required>
                     <div class="input-group-append">
                         <button id="update" type="submit" value="UpdateSub" name="action" class="btn btn-primary custom-submit-button">Update</button>
                     </div>
@@ -271,6 +323,70 @@
                 }
             %>
         </div>
+        <div id="customAlert">
+            <div id="alertContent">
+                <!-- N?i dung c?nh báo s? ???c thêm vào ?ây -->
+            </div>
+            <button class="closeButton">X</button>
+        </div>
+        <style>
+            #customAlert {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #fff;
+                border-radius: 4px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                padding: 28px;
+                font-family: Arial, sans-serif;
+                font-size: 18px;
+                text-align: center;
+                z-index: 9999;
+                width: 36%;
+                color: red;
+                font-weight: bold;
+            }
+            #alertContent{
+                font-family: 'Oswald','Playpen Sans';
+                padding: 20px;
+            }
+            .closeButton {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
+                font-weight: bold;
+                background: white;
+                border: none;
+            }
+            .closeButton:hover{
+                opacity: 0.5;
+            }
+
+            #alertContent {
+                /* N?u b?n mu?n tu? ch?nh ki?u ch? và màu s?c, hãy ?i?u ch?nh ?o?n CSS này */
+            }
+        </style>
+        <script>
+            var errorMessage = "${requestScope.RemoveStatus}";
+
+            // Ki?m tra n?u errorMessage không r?ng, hi?n th? thông báo c?nh báo
+            if (errorMessage.trim() !== "") {
+                showAlert(errorMessage);
+            }
+            function showAlert(message) {
+                var alertDiv = document.getElementById("customAlert");
+                var alertContentDiv = document.getElementById("alertContent");
+                alertContentDiv.textContent = message;
+                alertDiv.style.display = "block";
+                var closeButton = alertDiv.querySelector(".closeButton");
+                closeButton.addEventListener("click", function () {
+                    alertDiv.style.display = "none";
+                });
+            }
+        </script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

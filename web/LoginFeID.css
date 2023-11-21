@@ -238,7 +238,7 @@
 /*    position: relative;*/
     background-color: #fff;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
