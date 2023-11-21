@@ -281,6 +281,10 @@
                 background-color: #007bff;
                 color: blue;
             }
+            
+            .dropbtn{
+                background-color: #000000;
+            }
             @media (max-width: 767px) {
                 .logout i {
                     display: none;
@@ -438,7 +442,7 @@
 
                     <div class="result" style="display: none;
                          flex-direction: column;
-                         background: var(--bs-gray-200);
+                         background: #e9ecef;
                          height: 150px;
                          overflow-y: scroll;
                          border-radius: 15px;" id="content">
