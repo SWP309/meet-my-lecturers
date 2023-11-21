@@ -280,7 +280,7 @@
                 <div class="d-flex justify-content-center">
                     <div class="card" style="border-radius: 5%; width: 800px; max-height: 800px;">
                         <div class="card-body">
-                            <form action="MainController" method="POST">
+                            <form action="MainController" method="POST" enctype="multipart/form-data">
 
                                 <div class="d-flex justify-content-between"><strong>Recipient:</strong> <input type="email" class="form-control" name="txtRecipient" value="${param.txtRecipient}" placeholder="ex: example@fpt.edu.vn | example@gmail.com,....." multiple required=""></div>
                             <div class="d-flex justify-content-between"><strong>Subject Code:</strong> <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}" placeholder="ex: SWP391" required="" pattern="^[A-Z]{3}[0-9]{3}$"></div>
@@ -294,6 +294,7 @@
                             </c:if>
                             <div class="d-flex justify-content-between"><strong>Access code of your free slot(optional):</strong> <input type="text" class="form-control" name="txtPassword" value="${param.txtPassword}"></div>
                             <div class="d-flex justify-content-between"><strong>Message(optional):</strong> <textarea style="width: 60%" name="txtMessage" rows="10" cols="60" charset="UTF-8"></textarea></div>
+                            <div class="d-flex justify-content-between"><strong>File Attachment:</strong> <input type="file" class="form-control" name="txtAttachment" multiple ></div>
 
                             <div class="d-flex justify-content-center btn-book">
                                 <input type="hidden" value="sendEMailAction" name="action"/>

@@ -20,6 +20,8 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import sample.bookings.BookingDAO;
+import sample.bookings.BookingDTO;
 import sample.freeslots.FreeSlotsDAO;
 import sample.freeslots.FreeSlotsDTO;
 import sample.requests.RequestDTO;
@@ -146,6 +148,34 @@ public class Service {
         
         Transport.send(msg);
     }
+    
+    public static void sendReminderEmailForStudent(String freeSlotID, String student_email,String subjectCode,String startTime) throws AddressException, MessagingException {
+        
+        final String from = "meet.my.lecturers.fpt.edu@gmail.com";
+        final String password = "fmpheqhatzpjndvh";
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true");//TLS
+        Session session = Session.getInstance(prop, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from, password);
+            }
+        });
+        
+        // Compose email content
+        String subject = "Upcoming Free Slot Reminder ==> "+"for Subject : "+subjectCode;
+        String body = "Dear Student : "+student_email+"\n"+"This is a reminder that you have BOOKED Free Slot !!!!. Your free slot details are as follows:\n\nFree Slot ID: " + freeSlotID + "\nStart Time: " + startTime + "\n\nPlease arrive on time for your Free slot.\n\nRegards,\nThe Meet-My-Lecturer FPT-EDU Free Slot Management System\n"+"meet.my.lecturers.fpt.edu@gmail.com";
+        
+        Message msg = new MimeMessage(session);
+        msg.setFrom(new InternetAddress(from));
+        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(student_email));
+        msg.setSubject(subject);
+        msg.setText(body);
+        
+        Transport.send(msg);
+    }
 
     public static class FreeSlotReminderTask extends TimerTask {
 
@@ -170,11 +200,41 @@ public class Service {
             }
         }
     }
+    
+    public static class FreeSlotReminderTaskForStudent extends TimerTask {
+
+        @Override
+        public void run() {
+            try {
+                FreeSlotsDAO fsdao = new FreeSlotsDAO();
+                BookingDAO bkdao = new BookingDAO();
+
+                // Retrieve upcoming free slots from the database
+                List<FreeSlotsDTO> upcomingFSlots = fsdao.getUpcomingFSlots();
+
+                // Send reminder emails for each upcoming free slot AND for each student that booked FSlot IN studentIDList
+                for (FreeSlotsDTO fslot : upcomingFSlots) {
+                    List<BookingDTO> studentIDList = bkdao.getStudentIDListByFSlotID(fslot.getFreeSlotID());
+                    
+                    for (BookingDTO studentID : studentIDList) {
+                        String student_email = bkdao.getEmailByStudentID(studentID.getStudentID());
+                        sendReminderEmailForStudent(fslot.getFreeSlotID(), student_email,fslot.getSubjectCode(),fslot.getStartTime());
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (MessagingException ex) {
+                Logger.getLogger(Service.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
     public static void scheduleFreeSlotReminders() {
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new FreeSlotReminderTask(), 0, CHECK_INTERVAL_MINUTES * 60 * 1000); // Execute task every 1 minutes // 0 is executed immediately
         System.out.println("FreeSlotReminderTask Service is running .........");
+        timer.scheduleAtFixedRate(new FreeSlotReminderTaskForStudent(), 0, CHECK_INTERVAL_MINUTES * 60 * 1000); // Execute task every 1 minutes // 0 is executed immediately
+        System.out.println("FreeSlotReminderTaskForStudent Service is running .........");
     }
     public static void main(String[] args) {
         scheduleFreeSlotReminders();
