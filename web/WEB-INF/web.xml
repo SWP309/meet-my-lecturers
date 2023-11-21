@@ -241,7 +241,6 @@
     <servlet>
         <servlet-name>SearchSlotAdmin</servlet-name>
         <servlet-class>sample.controllers.SearchSlotAdmin</servlet-class>
-        >>>>>>> origin/mymain
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>

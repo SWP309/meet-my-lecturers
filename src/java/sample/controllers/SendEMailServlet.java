@@ -6,6 +6,7 @@
 package sample.controllers;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.activation.DataHandler;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Multipart;
@@ -26,11 +28,13 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import sample.freeslots.FreeSlotError;
 import sample.users.UserDTO;
 
@@ -76,6 +80,11 @@ public class SendEMailServlet extends HttpServlet {
         String lecturerEmail = us.getUserEmail();
 
         String subjectCode = request.getParameter("txtSubjectCode");
+        
+        Part attachmentPart = request.getPart("txtAttachment");
+        String fileName = extractFileName(attachmentPart);
+        InputStream attachmentInputStream = attachmentPart.getInputStream();
+        
         String startTime = request.getParameter("txtStartTime");
         String endTime = request.getParameter("txtEndTime");
 
@@ -109,13 +118,19 @@ public class SendEMailServlet extends HttpServlet {
                 msg.addRecipients(Message.RecipientType.TO, addresses.toArray(new InternetAddress[0]));
                 msg.setSubject("Thông Tin Cua Môn Hoc : " + subjectCode + " Vào Lúc : " + startTime + " Và Ket Thúc Lúc : " + endTime);
 
-                // Create a multipart message
-                Multipart multipart = new MimeMultipart();
-
                 //first body part of the multipart
                 BodyPart messageBodyPart = new MimeBodyPart();
                 messageBodyPart.setContent("<html><body><b><h1>Thông Tin Của Môn Học : </h1></b></body></html>" + subjectCode + "<html><body><b><h3>Bắt Đầu lúc : </h3></b></body></html>" + startTime + "<html><body><b><h3> Và Kết Thúc lúc : </h3></b></body></html>" + endTime + "<html><body><b><h1>Mã Truy Cập Fslot Của Bạn : </h1></b></body></html>" + fslotPassword + "<html><body><b><h4>===============================================================================<html><body><b><h4>" + message + "<html><body><b><h4>===============================================================================<html><body><b><h4>" + "<html><body><b><h2>FSlot Này Là Của : </h2></b></body></html>" + lecturerName + "<html><body><b><h2>Email : </h2></b></body></html>" + lecturerEmail + "<html><body><img src=\"https://fpt.edu.vn/Content/images/assets/Logo-FU-03.png\" alt=\"This is an image of a cat.\" /></body></html>", "text/html; charset=UTF-8");
+                
+                //second body part of the multipart
+                MimeBodyPart attachmentBodyPart = new MimeBodyPart();
+                attachmentBodyPart.setDataHandler(new DataHandler(new ByteArrayDataSource(attachmentInputStream, "application/octet-stream")));
+                attachmentBodyPart.setFileName(fileName);
+                
+                // Create a multipart message
+                Multipart multipart = new MimeMultipart();
                 multipart.addBodyPart(messageBodyPart);
+                multipart.addBodyPart(attachmentBodyPart);
 
                 msg.setContent(multipart);
                 Transport.send(msg);
@@ -178,5 +193,16 @@ public class SendEMailServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public String extractFileName(Part part) {
+        String disposition = part.getHeader("content-disposition");
+        String[] components = disposition.split(";");
+        for (String component : components) {
+            if (component.trim().startsWith("filename")) {
+                return component.substring(component.indexOf("filename") + 9).trim().replace("\"", "");
+            }
+        }
+        return null;
+    }
 
 }
