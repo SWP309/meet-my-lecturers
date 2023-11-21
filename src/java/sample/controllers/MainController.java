@@ -72,6 +72,10 @@ public class MainController extends HttpServlet {
     private static final String ADMIN_IMPORTTIMETABLES_ACTION = "ImportTimetables";
     private static final String ADMIN_IMPORT_SUBJECT = "importSJ";
     private static final String ADMIN_IMPORT_SUBJECT_ACTION = "ImportSubjects";
+    private static final String ADMIN_ADD_DATA = "AdminAddData";
+    private static final String ADMIM_ADD_DATA_PAGE = "AdminAddData.jsp";
+    private static final String ADMIN_MANAGE_SLOTS = "AdminViewSlot";
+    private static final String ADIMIN_MANAGE_SLOTS_PAGE = "AdminViewSlot.jsp";
 
     private static final String REQUEST_PAGE = "request.jsp";
     private static final String REQUEST = "Request";
@@ -182,6 +186,9 @@ public class MainController extends HttpServlet {
     private static final String REMOVE_SUBJECT_ACTION = "RemoveSubject";
     private static final String SEARCH_SUBJECT = "searchsj";
     private static final String SEARCH_SUBJECT_ACTION = "SearchServlet";
+    
+    private static final String SEARCH_SLOT_ADMIN = "searchSlot";
+    private static final String SEARCH_SLOT_ADMIN_ACTION = "SearchSlotAdmin";
     
     private static final String ADD_USER = "AddUser";
     private static final String ADD_USER_ACTION = "AddUserServlet";
@@ -348,6 +355,12 @@ public class MainController extends HttpServlet {
                 url = ADD_USER_ACTION;
             } else if (ADMIN_IMPORT_SUBJECT.equals(action)) {
                 url = ADMIN_IMPORT_SUBJECT_ACTION;
+            } else if (SEARCH_SLOT_ADMIN.equals(action)) {
+                url = SEARCH_SLOT_ADMIN_ACTION;
+            } else if (ADMIN_ADD_DATA.equals(action)) {
+                url = ADMIM_ADD_DATA_PAGE;
+            } else if (ADMIN_MANAGE_SLOTS.equals(action)) {
+                url = ADIMIN_MANAGE_SLOTS_PAGE;
             }
 
         } catch (Exception e) {

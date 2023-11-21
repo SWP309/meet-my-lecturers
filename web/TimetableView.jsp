@@ -45,6 +45,10 @@
 
         <!-- JavaScript c?a SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+        <!--        text gg -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             if (us != null) {
@@ -100,23 +104,22 @@
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
-            /* When the user clicks on the button, 
-             toggle between hiding and showing the dropdown content */
-            function myFunction() {
-                document.getElementById("myDropdown").classList.toggle("show");
-            }
+           function myFunction() {
+                var dropdown = document.getElementById("myDropdown");
+                dropdown.classList.toggle("show");
 
-// Close the dropdown if the user clicks outside of it
-            window.onclick = function (event) {
-                if (!event.target.matches('.dropbtn')) {
-                    var dropdowns = document.getElementsByClassName("dropdown-content");
-                    var i;
-                    for (i = 0; i < dropdowns.length; i++) {
-                        var openDropdown = dropdowns[i];
-                        if (openDropdown.classList.contains('show')) {
-                            openDropdown.classList.remove('show');
-                        }
-                    }
+                if (dropdown.classList.contains('show')) {
+                    dropdown.style.display = "flex";
+                    setTimeout(function () {
+                        dropdown.style.opacity = 1;
+                        dropdown.style.transform = "scaleY(1)";
+                    }, 10);
+                } else {
+                    dropdown.style.opacity = 0;
+                    dropdown.style.transform = "scaleY(0)";
+                    setTimeout(function () {
+                        dropdown.style.display = "none";
+                    }, 400);
                 }
             }
         </script>
@@ -199,6 +202,7 @@
 
 
             </div>
+            <h1 class="text-center text-custom">Table of Lecturer</h1>
             <div class="table-timetable" style="margin-top: 19%; padding: 40px;  display: flex;
                  justify-content: center;">
                 <c:if test="${not empty requestScope.TB_TIMETABLES}">
