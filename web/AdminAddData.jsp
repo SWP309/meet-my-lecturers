@@ -140,7 +140,7 @@
                 background-color: #0066B2;
             }
             #update{
-                background-color: #0DB04B;
+                background-color: red;
             }
         </style>
     </head>
@@ -260,7 +260,7 @@
                     <select class="form-control" name="txtuserrole">
                         <%
                             for (RoleDTO role : listRole) {
-                        %> 
+                        %>
                         <option value="<%=  role.getRoleID()%>" > <%=  role.getRoleName()%>   </option> 
                         <% } %>
                     </select>
@@ -300,25 +300,24 @@
                     <span class="form-control" style="font-weight: bold;">Manage</span>
                 </div>
             </div>
-            <form>
                 <%
                     for (SubjectDTO sub : ListSubject) {
                 %>
+            <form>
                 <div class="form-group input-group">
-                    <input type="hidden" class="form-control" name="txtoldcode" value="<%= sub.getSubjectCode()%>">
-                    <input  style="text-align: center" type="text" class="form-control" name="txtsubject" value="<%= sub.getSubjectCode()%>" required>
-                    <input style="color: tomato;text-align: center" type="text" class="form-control" name="txtdescription" value="<%=  sub.getSubjectName()%>" required>
+                    <input  style="text-align: center" type="text" class="form-control" name="txtsubject" value="<%= sub.getSubjectCode()%>" readonly>
+                    <input style="color: tomato;text-align: center" type="text" class="form-control" name="txtdescription" value="<%=  sub.getSubjectName()%>" readonly>
                     <div class="input-group-append">
-                        <button id="update" type="submit" value="UpdateSub" name="action" class="btn btn-primary custom-submit-button">Update</button>
+                        <button id="update" type="submit" value="UpdateSub" name="action" class="btn btn-primary custom-submit-button">Neutralize</button>
                     </div>
                     <div class="input-group-append">
                         <button id="remove" type="submit" value="RemoveSub" name="action" class="btn btn-primary custom-submit-button">Remove</button>
                     </div>
                 </div>
+            </form>
                 <%
                     }
                 %>
-            </form>
             <%
                 }
             %>
