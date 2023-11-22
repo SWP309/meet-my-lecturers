@@ -8,6 +8,9 @@
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
         <link rel="stylesheet" href="./ViewRequest.css" />
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./slick.css">
+        <script src="./lecturer.js"></script>
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
@@ -57,38 +60,6 @@
 
         %>
         <script>
-            function submitFormLogout() {
-                var form = document.querySelector('.logout form');
-                form.submit();
-            }
-            function submitFormHistory() {
-                var form = document.querySelector('.history form');
-                form.submit();
-            }
-            function submitFormSendEmail() {
-                var form = document.querySelector('.sendMail form');
-                form.submit();
-            }
-            function submitFormCreate() {
-                var form = document.querySelector('.CreateFSlot form');
-                form.submit();
-            }
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
-                form.submit();
-            }
-            function submitFormViewRequest() {
-                var form = document.querySelector('.request-div form');
-                form.submit();
-            }
-            function submitFormHideView() {
-                var form = document.querySelector('.hideView form');
-                form.submit();
-            }
-            function submitForm() {
-                var form = document.querySelector('.viewCreateSlot form');
-                form.submit();
-            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -115,7 +86,9 @@
             function goBack() {
                 window.history.back();
             }
-            function myFunction() {
+            /* When the user clicks on the button, 
+             toggle between hiding and showing the dropdown content */
+            function myFunctionDropdown() {
                 var dropdown = document.getElementById("myDropdown");
                 dropdown.classList.toggle("show");
 
@@ -133,6 +106,17 @@
                     }, 400);
                 }
             }
+            $(document).ready(function () {
+                /* Navigation burger onclick side navigation show */
+                $('.burger-container').on('click', function () {
+                    $('.main-navigation').toggle('slow');
+                    if ($('#myBtn').hasClass('change')) {
+                        $('body').addClass('stop-scroll');
+                    } else {
+                        $('body').removeClass('stop-scroll');
+                    }
+                });
+            });
         </script>
         <style>
             .form-control {
@@ -155,65 +139,116 @@
             </style>
         </head>
         <body>
-            <div class="admin-viewusersedited">
-                <div class="admin-viewusers">
-                    <div class="fptu-eng-1-parent">
-                        <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
-                            <form action="MainController" method="POST">
-                                <input type="hidden" name="action" value="returnHomePageLecturer" />
-                            </form>
-                        </div>
-                        <div class="frame-parent">
 
-                            <div>
-                                <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
-                                     onclick="showUserInfo()" />
-                                    <div id="user-info" style="display: none;
-                                    position: absolute">
-                                        <p id="user-id"> </p>
-                                        <p id="user-name"></p>
-                                        <p id="user-email"></p>
-                                    </div>
-                                </div>
-                                <div class="dropdown">
-                                    <button onclick="myFunction()" class="dropbtn"> 
-                                        <i class="fa fa-caret-down"></i>
-                                    </button>
-                                    <div id="myDropdown" class="dropdown-content" style="right: 0px;
-                                    flex-direction: column;
-                                    ">
-                                    <div class="frame-div viewCreateSlot" onclick="submitForm()">
-                                        <form action="MainController" method="POST" style="display: none;">
-                                            <input type="hidden" name="action" value="viewFSlotLecturer" />
+            <div class="fptu-eng-1-parent">
+                <div class="returnHome" onclick="submitFormHomePage()"> 
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="returnHomePageLecturer" />
+                    </form>
+                </div>
+                <div class="frame-parent">
+                    <!-- Navigation -->
+                    <nav class="site-navigation">
+                        <div class="site-navigation-inner site-container">
+                            <div class="main-navigation">
+                                <ul class="main-navigation__ul">
+                                    <li class="frame-choice" onclick="submitFormHomePage()"> 
+                                        <form action="MainController" method="POST">
+                                            <input type="hidden" name="action" value="returnHomePageLecturer" />
                                         </form>
-                                        <i class="material-icons">visibility</i>View Create Slot
-                                    </div>
-                                    <div class="frame-div request-div" style="background-color: #b7b7b7;">
-                                        <form style="display: flex;
-                                              align-content: center;" action="MainController" method="POST">
-                                            <input type="hidden" name="action" value="ViewRequest" />
-                                            <i class="material-icons">mail_outline</i>
+                                        <i class="material-icons">home</i>Home Page
+                                    </li>
+                                    <li class="frame-choice CreateFSlot" onclick="submitFormCreate()" title="Create free slots">
+                                        <form action="MainController" method="POST">
+                                            <input type="hidden" name="action" value="CreateFS" />
                                         </form>
-                                        View Request
-                                    </div>
-                                    <div class="frame-div hideView" onclick="submitFormHideView()">
-                                        <form action="MainController" method="POST" style="display: none;">
-                                            <input type="hidden" name="action" value="HideView" />
+                                        <i class="material-icons">add</i>Create New Slots
+                                    </li>
+                                    <li class="frame-choice history" onclick="submitFormHistory()"  title="View history attendance">
+                                        <form action="MainController" method="POST">
+                                            <input type="hidden" name="action" value="historyLec" />
                                         </form>
-                                        <i class="fas fa-search"></i>Hide List</p>
-                                    </div>
-                                    <div class="frame-div logout" onclick="submitFormLogout()">
-                                        <form action="MainController" method="POST" style="display: none;">
-                                            <input type="hidden" name="action" value="Logout" />
+                                        <i class="material-icons text-icon">history</i>View History Attendance
+                                    </li>
+                                    <li class="frame-choice sendMail"  onclick="submitFormSendEmail()" title="Send email for students">
+                                        <form action="MainController" method="POST">
+                                            <input type="hidden" name="action" value="SendEmailForRemindStudent" />
                                         </form>
-                                        <i class="material-icons">logout</i> Logout
-                                    </div>
-                                </div>
+                                        <i class="material-icons">send</i>Send Email for Students
+                                    </li>
+                                </ul>
                             </div>
+                            <div id="myBtn" class="burger-container" onclick="myFunction(this)">
+                                <div class="bar1"></div>
+                                <div class="bar2"></div>
+                                <div class="bar3"></div>
+                            </div>
+                            <script>
+                                function myFunction(x) {
+                                    x.classList.toggle("change");
+                                }
+                            </script>
 
-
+                        </div>
+                    </nav>
+                    <!-- Navigation end -->
+                    <div>
+                        <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
+                             onclick="showUserInfo()" />
+                            <div id="user-info" style="display: none;
+                            position: absolute">
+                                <p id="user-id"> </p>
+                                <p id="user-name"></p>
+                                <p id="user-email"></p>
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <button onclick="myFunctionDropdown()" class="dropbtn"> 
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div id="myDropdown" class="dropdown-content" style="right: 0px;
+                            flex-direction: column;
+                            ">
+                            <div class="frame-div viewCreateSlot" onclick="submitForm()">
+                                <form action="MainController" method="POST" style="display: none;">
+                                    <input type="hidden" name="action" value="viewFSlotLecturer" />
+                                </form>
+                                <i class="material-icons">visibility</i>View Create Slot
+                            </div>
+                            <div class="frame-div request-div"  style="background-color: #b7b7b7;">
+                                <form style="display: flex;
+                                      align-content: center;" action="MainController" method="POST">
+                                    <input type="hidden" name="action" value="ViewRequest" />
+                                    <i class="material-icons">mail_outline</i>
+                                </form>
+                                View Request
+                            </div>
+                            <div class="frame-div lecturerProfile" onclick="submitFormViewLecturerProfile()">
+                                <form style="display: flex;
+                                      align-content: center;" action="MainController" method="POST">
+                                    <input type="hidden" name="action" value="viewLecturerProfile" />
+                                    <i class="material-icons">person</i>
+                                </form>
+                                View Lecturer Profile
+                            </div>
+                            <div class="frame-div hideView" onclick="submitFormHideView()">
+                                <form action="MainController" method="POST" style="display: none;">
+                                    <input type="hidden" name="action" value="HideView" />
+                                </form>
+                                <i class="fas fa-search"></i>Hide List</p>
+                            </div>
+                            <div class="frame-div logout" onclick="submitFormLogout()">
+                                <form action="MainController" method="POST" style="display: none;">
+                                    <input type="hidden" name="action" value="Logout" />
+                                </form>
+                                <i class="material-icons">logout</i> Logout
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="admin-viewusersedited">
+                <div class="admin-viewusers">
                     <div class="container-div" style=" display: flex;
                          flex-direction: column;
                          float: right;">

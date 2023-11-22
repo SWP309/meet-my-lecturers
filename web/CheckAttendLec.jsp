@@ -129,16 +129,12 @@
                 var form = document.querySelector('.logout form');
                 form.submit();
             }
-            function submitFormHistory() {
-                var form = document.querySelector('.history form');
+            function submitFormCreate() {
+                var form = document.querySelector('.CreateFSlot form');
                 form.submit();
             }
             function submitFormSendEmail() {
                 var form = document.querySelector('.sendMail form');
-                form.submit();
-            }
-            function submitFormCreate() {
-                var form = document.querySelector('.CreateFSlot form');
                 form.submit();
             }
             function submitFormViewRequest() {
@@ -151,6 +147,14 @@
             }
             function submitFormHomePage() {
                 var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
+            function submitFormViewLecturerProfile() {
+                var form = document.querySelector('.lecturerProfile form');
                 form.submit();
             }
             function submitForm() {
@@ -180,7 +184,7 @@
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
-             function myFunction() {
+            function myFunction() {
                 var dropdown = document.getElementById("myDropdown");
                 dropdown.classList.toggle("show");
 
@@ -226,7 +230,7 @@
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
-                        <div class="frame-div viewCreateSlot" onclick="submitForm()">
+                        <div class="frame-div viewCreateSlot" onclick="submitForm()" >
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="viewFSlotLecturer" />
                             </form>
@@ -238,6 +242,13 @@
                                 <i class="material-icons">mail_outline</i>
                             </form>
                             View Request
+                        </div>
+                        <div class="frame-div lecturerProfile" onclick="submitFormViewLecturerProfile()">
+                            <form style="display: flex; align-content: center;" action="MainController" method="POST">
+                                <input type="hidden" name="action" value="viewLecturerProfile" />
+                                <i class="material-icons">person</i>
+                            </form>
+                            View Lecturer Profile
                         </div>
                         <div class="frame-div hideView" onclick="submitFormHideView()">
                             <form action="MainController" method="POST" style="display: none;">
@@ -253,8 +264,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
         <div class="container">

@@ -6,6 +6,28 @@
     background-size: 100%;
     background-image: url("public/BookingView/2021fptueng-1@2x.png");
 }
+@font-face {
+    font-family: 'Calisto-MT';
+    src: url(../fonts/Calisto-MT.ttf);
+}
+
+@font-face {
+    font-family: 'Calisto-MT-Italic';
+    src: url(../fonts/Calisto-MT-Italic.ttf);
+}
+
+@font-face {
+    font-family: 'Calisto-MT-Bold';
+    src: url(../fonts/Calisto-MT-Bold.ttf);
+}
+
+/* Colors */
+/* Universal style */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Calisto-MT";
+}
 .text-custom{
     font-family: 'Agbalumo', 'Playfair Display', sans-serif;
     height: 20px;

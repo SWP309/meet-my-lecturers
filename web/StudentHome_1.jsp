@@ -357,6 +357,7 @@
 
             </div>
         </div>
+  
 
         <div class="student-home" style="height: 1000px">
             <div class="container-fluid ar-content">
@@ -651,7 +652,7 @@
                             var errorMessage2 = "${requestScope.BOOKING_ERROR.checkPassword}";
                             var errorMessage3 = "${requestScope.BOOKING_ERROR.inBlockList}";
                             var errorMessage4 = "${requestScope.SEARCH_FREESLOT_MESSAGE}";
-                            var errorMessage5 = "${requestScope.FREESLOT_BY_SUBJECT}";
+                           
 
                             // Ki?m tra n?u errorMessage không r?ng, hi?n th? thông báo c?nh báo
                             if (errorMessage.trim() !== "") {
@@ -668,9 +669,6 @@
                             }
                             if (errorMessage4.trim() !== "") {
                                 showAlert(errorMessage4);
-                            }
-                            if (errorMessage5.trim() !== "") {
-                                showAlert(errorMessage5);
                             }
 
                             // Hàm ?? hi?n th? thông báo tùy ch?nh

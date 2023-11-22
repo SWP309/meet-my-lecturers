@@ -10,8 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import sample.utils.DBUtils;
 
@@ -61,6 +64,22 @@ public class SemesterDAO {
         }
         con.close();
         return semesters;
+    }
+    public String getCurrentSemester() throws ClassNotFoundException, SQLException, ParseException {
+        String semesterID = null;
+        Date currentDate = new Date();
+        System.out.println(currentDate);
+        Connection con = DBUtils.getConnection();
+        PreparedStatement stm = con.prepareStatement("SELECT s.semesterID\n"
+                + "                			FROM Semesters s\n"
+                + "                			WHERE ? BETWEEN s.startDay AND s.endDay");
+        String start = services.Service.sdfDateTime.format(currentDate);
+        stm.setTimestamp(1, new Timestamp(services.Service.sdfDateTime.parse(start).getTime()));
+        ResultSet rs = stm.executeQuery();
+        if (rs.next()) {
+            semesterID = rs.getString("semesterID");
+        }
+        return semesterID;
     }
 
     public void create(SemesterDTO semesters) throws SQLException, ClassNotFoundException {
