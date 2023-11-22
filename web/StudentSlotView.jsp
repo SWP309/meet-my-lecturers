@@ -11,7 +11,10 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-        <link rel="stylesheet" href="./StudentSlotView.css" />
+        <link rel="stylesheet" href="./LecturerPage.css" />
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./slick.css">
+        <script src="./lecturer.js"></script>
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
@@ -24,12 +27,34 @@
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
             />
+        <!-- CSS c?a Bootstrap 5 -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+        <!-- CSS c?a Bootstrap 4 -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Icon -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+        <!-- CSS c?a SweetAlert -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- JavaScript c?a Bootstrap 4 -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+        <!-- JavaScript c?a Bootstrap 5 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+        <!-- JavaScript c?a SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+        <!--        animation --------------->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
         <!--        text gg -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,38 +72,6 @@
                     // S? d?ng bi?n `bookingID` ? ?ây n?u c?n
                     window.location.href = 'MainController?action=cancel&bookingID=' + bookingID;
                 }
-            }
-            function submitFormLogout() {
-                var form = document.querySelector('.logout form');
-                form.submit();
-            }
-            function submitFormHistory() {
-                var form = document.querySelector('.history form');
-                form.submit();
-            }
-            function submitFormSendEmail() {
-                var form = document.querySelector('.sendMail form');
-                form.submit();
-            }
-            function submitFormCreate() {
-                var form = document.querySelector('.CreateFSlot form');
-                form.submit();
-            }
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
-                form.submit();
-            }
-            function submitFormViewRequest() {
-                var form = document.querySelector('.request-div form');
-                form.submit();
-            }
-            function submitFormHideView() {
-                var form = document.querySelector('.hideView form');
-                form.submit();
-            }
-            function submitForm() {
-                var form = document.querySelector('.viewCreateSlot form');
-                form.submit();
             }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
@@ -123,37 +116,75 @@
                 var form = document.querySelector('.returnHome form');
                 form.submit();
             }
-            /* When the user clicks on the button, 
-             toggle between hiding and showing the dropdown content */
-            function myFunction() {
-                var dropdown = document.getElementById("myDropdown");
-                dropdown.classList.toggle("show");
 
-                if (dropdown.classList.contains('show')) {
-                    dropdown.style.display = "flex";
-                    setTimeout(function () {
-                        dropdown.style.opacity = 1;
-                        dropdown.style.transform = "scaleY(1)";
-                    }, 10);
-                } else {
-                    dropdown.style.opacity = 0;
-                    dropdown.style.transform = "scaleY(0)";
-                    setTimeout(function () {
-                        dropdown.style.display = "none";
-                    }, 400);
-                }
-            }
+            $(document).ready(function () {
+
+
+                /* Navigation burger onclick side navigation show */
+                $('.burger-container').on('click', function () {
+                    $('.main-navigation').toggle('slow');
+                    if ($('#myBtn').hasClass('change')) {
+                        $('body').addClass('stop-scroll');
+                    } else {
+                        $('body').removeClass('stop-scroll');
+                    }
+                });
+            });
         </script>
     </head>
     <body>
         <div class="fptu-eng-1-parent">
-            <div class="returnHome" style="cursor: pointer;" onclick="submitFormHomePage()"> 
+            <div class="returnHome" onclick="submitFormHomePage()"> 
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="returnHomePageLecturer" />
                 </form>
             </div>
             <div class="frame-parent">
+                <!-- Navigation -->
+                <nav class="site-navigation">
+                    <div class="site-navigation-inner site-container">
+                        <div class="main-navigation">
+                            <ul class="main-navigation__ul">
+                                <li class="frame-choice" onclick="submitFormHomePage()"> 
+                                    <form action="MainController" method="POST">
+                                        <input type="hidden" name="action" value="returnHomePageLecturer" />
+                                    </form>
+                                    <i class="material-icons">home</i>Home Page
+                                </li>
+                                <li class="frame-choice CreateFSlot" onclick="submitFormCreate()" title="Create free slots">
+                                    <form action="MainController" method="POST">
+                                        <input type="hidden" name="action" value="CreateFS" />
+                                    </form>
+                                    <i class="material-icons">add</i>Create New Slots
+                                </li>
+                                <li class="frame-choice history" onclick="submitFormHistory()"  title="View history attendance">
+                                    <form action="MainController" method="POST">
+                                        <input type="hidden" name="action" value="historyLec" />
+                                    </form>
+                                    <i class="material-icons text-icon">history</i>View History Attendance
+                                </li>
+                                <li class="frame-choice sendMail"  onclick="submitFormSendEmail()" title="Send email for students">
+                                    <form action="MainController" method="POST">
+                                        <input type="hidden" name="action" value="SendEmailForRemindStudent" />
+                                    </form>
+                                    <i class="material-icons">send</i>Send Email for Students
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="myBtn" class="burger-container" onclick="myFunction(this)">
+                            <div class="bar1"></div>
+                            <div class="bar2"></div>
+                            <div class="bar3"></div>
+                        </div>
+                        <script>
+                            function myFunction(x) {
+                                x.classList.toggle("change");
+                            }
+                        </script>
 
+                    </div>
+                </nav>
+                <!-- Navigation end -->
                 <div>
                     <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
                          onclick="showUserInfo()" />
@@ -164,13 +195,13 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button onclick="myFunction()" class="dropbtn"> 
+                    <button onclick="myFunctionDropdown()" class="dropbtn"> 
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
-                        <div class="frame-div viewCreateSlot" onclick="submitForm()" style="background-color: #b7b7b7;">
+                        <div class="frame-div viewCreateSlot" onclick="submitForm()" >
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="viewFSlotLecturer" />
                             </form>
@@ -182,6 +213,13 @@
                                 <i class="material-icons">mail_outline</i>
                             </form>
                             View Request
+                        </div>
+                        <div class="frame-div lecturerProfile" onclick="submitFormViewLecturerProfile()">
+                            <form style="display: flex; align-content: center;" action="MainController" method="POST">
+                                <input type="hidden" name="action" value="viewLecturerProfile" />
+                                <i class="material-icons">person</i>
+                            </form>
+                            View Lecturer Profile
                         </div>
                         <div class="frame-div hideView" onclick="submitFormHideView()">
                             <form action="MainController" method="POST" style="display: none;">

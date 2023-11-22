@@ -111,20 +111,40 @@
             if (us != null) {
         %>
         <script>
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
+            function submitFormLogout() {
+                var form = document.querySelector('.logout form');
+                form.submit();
+            }
+            function submitFormCreate() {
+                var form = document.querySelector('.CreateFSlot form');
+                form.submit();
+            }
+            function submitFormSendEmail() {
+                var form = document.querySelector('.sendMail form');
                 form.submit();
             }
             function submitFormViewRequest() {
                 var form = document.querySelector('.request-div form');
                 form.submit();
             }
-            function submitForm() {
-                var form = document.querySelector('.viewCreateSlot form');
-                form.submit();
-            }
             function submitFormHideView() {
                 var form = document.querySelector('.hideView form');
+                form.submit();
+            }
+            function submitFormHomePage() {
+                var form = document.querySelector('.returnHome form');
+                form.submit();
+            }
+            function submitFormHistory() {
+                var form = document.querySelector('.history form');
+                form.submit();
+            }
+            function submitFormViewLecturerProfile() {
+                var form = document.querySelector('.lecturerProfile form');
+                form.submit();
+            }
+            function submitForm() {
+                var form = document.querySelector('.viewCreateSlot form');
                 form.submit();
             }
             function resetForm() {
@@ -226,7 +246,7 @@
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
-                        <div class="frame-div viewCreateSlot" onclick="submitForm()">
+                        <div class="frame-div viewCreateSlot" onclick="submitForm()" >
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="viewFSlotLecturer" />
                             </form>
@@ -238,6 +258,13 @@
                                 <i class="material-icons">mail_outline</i>
                             </form>
                             View Request
+                        </div>
+                        <div class="frame-div lecturerProfile" onclick="submitFormViewLecturerProfile()">
+                            <form style="display: flex; align-content: center;" action="MainController" method="POST">
+                                <input type="hidden" name="action" value="viewLecturerProfile" />
+                                <i class="material-icons">person</i>
+                            </form>
+                            View Lecturer Profile
                         </div>
                         <div class="frame-div hideView" onclick="submitFormHideView()">
                             <form action="MainController" method="POST" style="display: none;">
@@ -253,8 +280,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
 
@@ -311,8 +336,8 @@
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.meetLinkError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.meetLinkError}</h6>
                                 </c:if>
-                                    <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="^((SE|IA|SS|MC)[0-9]{6};)*$"></div>
-                                    <div class="d-flex justify-content-between"><strong><b>RECIPIENT (optional):</b></strong> <input type="email" class="form-control"  name="txtRecipient" value="${param.txtRecipient}" placeholder="ex: example@fpt.edu.vn | example@gmail.com,....." multiple></div>
+                                <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="^((SE|IA|SS|MC)[0-9]{6};)*$"></div>
+                                <div class="d-flex justify-content-between"><strong><b>RECIPIENT (optional):</b></strong> <input type="email" class="form-control"  name="txtRecipient" value="${param.txtRecipient}" placeholder="ex: example@fpt.edu.vn | example@gmail.com,....." multiple></div>
                                 <div class="d-flex justify-content-between"><strong><b style="color: blue">STATUS(public/private):</b></strong>
                                     <div class="d-flex">
                                         <select style=" padding: 0 15px;" class="form-control" name="txtStatusOption"value="${param.txtStatusOption}">
@@ -346,7 +371,7 @@
                                     </div>
                                 </div>
 
-                                    <div class="d-flex justify-content-center btn-book" style="gap: 10px">
+                                <div class="d-flex justify-content-center btn-book" style="gap: 10px">
                                     <input type="hidden" value="createFreeSlotAction" name="action"/>
                                     <input type="reset" class="btn-decline" value="Reset" onclick="resetForm()">
                                     <input type="submit" class="btn btn-primary" value="Create (Send E-mail if any)">
