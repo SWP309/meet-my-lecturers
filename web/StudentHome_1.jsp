@@ -28,6 +28,7 @@
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
         <link rel="stylesheet" href="./StudentHome_1.css" />
+        <script src="./student.js"></script>
         <!-- Google Fonts - Poppins -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap">
 
@@ -87,36 +88,7 @@
 
 
         <script>
-            function confirmCancel(bookingID) {
-                if (confirm('Are you sure to cancel this booking')) {
-                    // S? d?ng bi?n `bookingID` ? ?ây n?u c?n
-                    window.location.href = 'MainController?action=cancel&bookingID=' + bookingID;
-                }
-            }
-            function submitForm() {
-                var form = document.querySelector('.bookingview form');
-                form.submit();
-            }
-            function submitFormLogout() {
-                var form = document.querySelector('.logout form');
-                form.submit();
-            }
-            function submitFormRequest() {
-                var form = document.querySelector('.request form');
-                form.submit();
-            }
-            function submitSearchForm() {
-                var form = document.querySelector('.searchfunction form');
-                form.submit();
-            }
-            function submitFormViewLecturer() {
-                var form = document.querySelector('.viewLecturer form');
-                form.submit();
-            }
-            function submitFormRequestStatus() {
-                var form = document.querySelector('.requestViewStatus form');
-                form.submit();
-            }
+
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -167,27 +139,10 @@
                     event.preventDefault();
                 }
             }
-             function myFunction() {
-                var dropdown = document.getElementById("myDropdown");
-                dropdown.classList.toggle("show");
 
-                if (dropdown.classList.contains('show')) {
-                    dropdown.style.display = "flex";
-                    setTimeout(function () {
-                        dropdown.style.opacity = 1;
-                        dropdown.style.transform = "scaleY(1)";
-                    }, 10);
-                } else {
-                    dropdown.style.opacity = 0;
-                    dropdown.style.transform = "scaleY(0)";
-                    setTimeout(function () {
-                        dropdown.style.display = "none";
-                    }, 400);
-                }
-            };
             function searchbyname(param) {
                 var contentDiv = document.getElementById("content");
-
+                var scrollValue = contentDiv.style.overflowY;
                 if (param)
                     var txtSearch = param.value;
                 if (txtSearch.trim() === "") {
@@ -203,17 +158,13 @@
                         },
                         success: function (data) {
                             if (data === "") {
-                                var searchResults = contentDiv.getElementsByClassName("result");
-                                var maxHeight = 300;
-                                if (searchResults.length > 3) { // Ch? ??nh s? l??ng t?i ?a tr??c khi hi?n th? thanh cu?n
-                                    contentDiv.style.height = maxHeight + "px";
-                                    contentDiv.style.overflowY = "scroll";
-                                } else {
-                                    contentDiv.style.height = "auto";
-                                    contentDiv.style.overflowY = "visible";
-                                }
+                                contentDiv.style.height = "auto";
+                                contentDiv.style.overflowY = "visible";
                                 contentDiv.innerHTML = "<p>  No results found.</p>";
                             } else {
+                                var maxHeight = 300;
+                                contentDiv.style.height = maxHeight + "px";
+                                contentDiv.style.overflowY = "scroll";
                                 contentDiv.innerHTML = data;
                             }
                         },
@@ -281,7 +232,7 @@
                 background-color: #007bff;
                 color: blue;
             }
-            
+
             .dropbtn{
                 background-color: #000000;
             }
@@ -319,6 +270,13 @@
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
+                        <div class="frame-div returnHomeDiv" onclick="submitFormHomePageDiv()"> 
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="returnHomePageStudent" />
+                                <i class="material-icons">home</i>
+                            </form>
+                            Home
+                        </div>
                         <div class="frame-div bookingview" onclick="submitForm()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="ViewBooking" />
@@ -469,12 +427,11 @@
 
 
 
-
-            <c:if test="${not empty param.txtSubjectCode and not empty param.txtUserID and not empty requestScope.FREESLOT_BY_SUBJECT_AND_LECID}">
-                <c:forEach items="${requestScope.FREESLOT_BY_SUBJECT_AND_LECID}" 
-                           var="freeslot" varStatus="status">
-                    <div style="width: calc((100% - 60px) / 3)">
-                        <div class="card" style="border-radius: 5%;">
+            <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; padding: 30px;">
+                <c:if test="${not empty param.txtSubjectCode and not empty param.txtUserID and not empty requestScope.FREESLOT_BY_SUBJECT_AND_LECID}">
+                    <c:forEach items="${requestScope.FREESLOT_BY_SUBJECT_AND_LECID}" 
+                               var="freeslot" varStatus="status">
+                        <div class="card" style="width: calc((100% - 60px) / 3)" style="border-radius: 5%;">
                             <div  style="width: 100%" class="card-body">
                                 <form action="MainController" method="POST">
                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>FreeSlotID:</b></strong> <span class="ml-auto"> ${freeslot.freeSlotID}</span></div>
@@ -527,69 +484,72 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
-                </c:forEach>
-            </c:if>
-            <c:if test="${not empty param.txtSubjectCode and empty param.txtUserID and not empty requestScope.FREESLOT_BY_SUBJECT}">
-                <c:forEach items="${requestScope.FREESLOT_BY_SUBJECT}" 
-                           var="freeSlotBySubjectCode" varStatus="status">
-                    <div style="width: calc((100% - 60px) / 3)">
-                        <div class="card" style="border-radius: 5%;">
-                            <div  style="width: 100%" class="card-body">
-                                <form action="MainController" method="POST">
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>FreeSlotID:</b></strong> <span class="ml-auto"> ${freeSlotBySubjectCode.freeSlotID}</span></div>
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject Code:</b></strong> <span class="ml-auto"> ${freeSlotBySubjectCode.subjectCode}</span></div>
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's ID:</b></strong> <span class="ml-auto">${freeSlotBySubjectCode.lecturerID}</span></div>
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's name:</b></strong> <span class="ml-auto">${freeSlotBySubjectCode.lecturerName}</span></div>
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${freeSlotBySubjectCode.startTime}</span></div>
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeSlotBySubjectCode.endTime}</span></div>
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeSlotBySubjectCode.semesterID}</span></div>
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Capacity:</b></strong> <span class="ml-auto">${freeSlotBySubjectCode.bookedStudent}/${freeSlotBySubjectCode.capacity}</span></div>
-                                    <c:if test="${freeSlotBySubjectCode.password ne null}">
-                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
-                                                <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
-                                            </span></div>
-                                        </c:if>
-                                        <c:if test="${freeSlotBySubjectCode.password == null}">
-                                        <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
-                                                <b>None</b>
-                                            </span></div>
-                                        </c:if>
-                                    <div class="d-flex justify-content-between">
-                                        <c:if test="${freeSlotBySubjectCode.bookedStudent < freeSlotBySubjectCode.capacity}">
-                                            <input type="hidden" name="txtFSlotID" 
-                                                   value="${freeSlotBySubjectCode.freeSlotID}" readonly="">
-                                            <input type="hidden" name="txtStartTime" 
-                                                   value="${freeSlotBySubjectCode.startTime}" readonly="">
-                                            <input type="hidden" name="txtEndTime" 
-                                                   value="${freeSlotBySubjectCode.endTime}" readonly="">
-                                            <input type="hidden" name="txtLecturerID" 
-                                                   value="${freeSlotBySubjectCode.lecturerID}" readonly="">
-                                            <input type="hidden" name="intCapacity" 
-                                                   value="${freeSlotBySubjectCode.capacity}" readonly="">
-                                            <input type="hidden" name="txtSubjectCode" 
-                                                   value="${param.txtSubjectCode}" readonly="">
-                                            <input type="hidden" name="txtUserID" 
-                                                   value="${param.txtUserID}" readonly="">
-                                            <input type="hidden" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px">
-                                            <input type="hidden" name="password" value="${freeSlotBySubjectCode.password}">
-                                            <button type="submit" name="action" value="BookFreeSlot" style="display: flex; text-decoration: none; border-radius: 20px; justify-content: center;  background-color:#018df7; padding: 10px 15px; color: white;">
-                                                Book
-                                            </button>
 
-                                        </c:if>
-                                        <c:if test="${freeSlotBySubjectCode.bookedStudent == freeSlotBySubjectCode.capacity}">
-                                            <button disabled  class="button-style" style="display: flex; text-decoration: none; border-radius: 20px; justify-content: center;  background-color: #808588; padding: 10px 15px; color: white">
-                                                Full
-                                            </button>
-                                        </c:if>
-                                    </div>
-                                </form>
+                    </c:forEach>
+                </c:if>
+
+                <c:if test="${not empty param.txtSubjectCode and empty param.txtUserID and not empty requestScope.FREESLOT_BY_SUBJECT}">
+                    <c:forEach items="${requestScope.FREESLOT_BY_SUBJECT}" 
+                               var="freeSlotBySubjectCode" varStatus="status">
+                        <div style="width: calc((100% - 60px) / 3)">
+                            <div class="card" style="border-radius: 5%;">
+                                <div  style="width: 100%" class="card-body">
+                                    <form action="MainController" method="POST">
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>FreeSlotID:</b></strong> <span class="ml-auto"> ${freeSlotBySubjectCode.freeSlotID}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject Code:</b></strong> <span class="ml-auto"> ${freeSlotBySubjectCode.subjectCode}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's ID:</b></strong> <span class="ml-auto">${freeSlotBySubjectCode.lecturerID}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's name:</b></strong> <span class="ml-auto">${freeSlotBySubjectCode.lecturerName}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${freeSlotBySubjectCode.startTime}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeSlotBySubjectCode.endTime}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeSlotBySubjectCode.semesterID}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Capacity:</b></strong> <span class="ml-auto">${freeSlotBySubjectCode.bookedStudent}/${freeSlotBySubjectCode.capacity}</span></div>
+                                        <c:if test="${freeSlotBySubjectCode.password ne null}">
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
+                                                    <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
+                                                </span></div>
+                                            </c:if>
+                                            <c:if test="${freeSlotBySubjectCode.password == null}">
+                                            <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
+                                                    <b>None</b>
+                                                </span></div>
+                                            </c:if>
+                                        <div class="d-flex justify-content-between">
+                                            <c:if test="${freeSlotBySubjectCode.bookedStudent < freeSlotBySubjectCode.capacity}">
+                                                <input type="hidden" name="txtFSlotID" 
+                                                       value="${freeSlotBySubjectCode.freeSlotID}" readonly="">
+                                                <input type="hidden" name="txtStartTime" 
+                                                       value="${freeSlotBySubjectCode.startTime}" readonly="">
+                                                <input type="hidden" name="txtEndTime" 
+                                                       value="${freeSlotBySubjectCode.endTime}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" 
+                                                       value="${freeSlotBySubjectCode.lecturerID}" readonly="">
+                                                <input type="hidden" name="intCapacity" 
+                                                       value="${freeSlotBySubjectCode.capacity}" readonly="">
+                                                <input type="hidden" name="txtSubjectCode" 
+                                                       value="${param.txtSubjectCode}" readonly="">
+                                                <input type="hidden" name="txtUserID" 
+                                                       value="${param.txtUserID}" readonly="">
+                                                <input type="hidden" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px">
+                                                <input type="hidden" name="password" value="${freeSlotBySubjectCode.password}">
+                                                <button type="submit" name="action" value="BookFreeSlot" style="display: flex; text-decoration: none; border-radius: 20px; justify-content: center;  background-color:#018df7; padding: 10px 15px; color: white;">
+                                                    Book
+                                                </button>
+
+                                            </c:if>
+                                            <c:if test="${freeSlotBySubjectCode.bookedStudent == freeSlotBySubjectCode.capacity}">
+                                                <button disabled  class="button-style" style="display: flex; text-decoration: none; border-radius: 20px; justify-content: center;  background-color: #808588; padding: 10px 15px; color: white">
+                                                    Full
+                                                </button>
+                                            </c:if>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </c:forEach>
-            </c:if>
+                    </c:forEach>
+                </c:if>
+            </div>
+
         </div>
 
         <div id="customAlert">
@@ -651,7 +611,7 @@
                             var errorMessage2 = "${requestScope.BOOKING_ERROR.checkPassword}";
                             var errorMessage3 = "${requestScope.BOOKING_ERROR.inBlockList}";
                             var errorMessage4 = "${requestScope.SEARCH_FREESLOT_MESSAGE}";
-                            var errorMessage5 = "${requestScope.FREESLOT_BY_SUBJECT}";
+
 
                             // Ki?m tra n?u errorMessage không r?ng, hi?n th? thông báo c?nh báo
                             if (errorMessage.trim() !== "") {
@@ -668,9 +628,6 @@
                             }
                             if (errorMessage4.trim() !== "") {
                                 showAlert(errorMessage4);
-                            }
-                            if (errorMessage5.trim() !== "") {
-                                showAlert(errorMessage5);
                             }
 
                             // Hàm ?? hi?n th? thông báo tùy ch?nh

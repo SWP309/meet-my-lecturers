@@ -296,7 +296,7 @@
                     <span class="form-control" style="font-weight: bold;">Description</span>
                 </div>
                 <div style="    display: flex;
-                     width: 15%;">
+                     width: 17%;">
                     <span class="form-control" style="font-weight: bold;">Manage</span>
                 </div>
             </div>

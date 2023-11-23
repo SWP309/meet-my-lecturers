@@ -14,7 +14,10 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-        <link rel="stylesheet" href="./CreatedSlotView.css" />
+        <link rel="stylesheet" href="./LecturerPage.css" />
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./slick.css">
+        <script src="./lecturer.js"></script>
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
@@ -64,51 +67,6 @@
 
         %>
         <script>
-            function confirmCancel(bookingID) {
-                if (confirm('Are you sure to cancel this booking')) {
-                    // S? d?ng bi?n `bookingID` ? ?ây n?u c?n
-                    window.location.href = 'MainController?action=cancel&bookingID=' + bookingID;
-                }
-            }
-            function submitFormLogout() {
-                var form = document.querySelector('.logout form');
-                form.submit();
-            }
-            function submitFormCreate() {
-                var form = document.querySelector('.CreateFSlot form');
-                form.submit();
-            }
-            function submitFormSendEmail() {
-                var form = document.querySelector('.sendMail form');
-                form.submit();
-            }
-            function submitFormViewRequest() {
-                var form = document.querySelector('.request-div form');
-                form.submit();
-            }
-            function submitFormHideView() {
-                var form = document.querySelector('.hideView form');
-                form.submit();
-            }
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
-                form.submit();
-            }
-            function submitFormHistory() {
-                var form = document.querySelector('.history form');
-                form.submit();
-            }
-            function submitFormImportTimetables() {
-                var modal = document.getElementById("myModal");
-
-                if (modal.style.display === "block") {
-                    modal.style.display = "none";
-                } else {
-                    modal.style.display = "block";
-                }
-            }
-
-
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -223,7 +181,7 @@
             function confirmCheckAttendanceLinkByNull(event, freeSlotID) {
                 var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
                 if (result) {
-                    // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
+
                     var xhr = new XMLHttpRequest();
                     var url = "MainController?action=AttendanceLinkLecturer&freeSlotID=" + freeSlotID;
                     xhr.open("POST", url, true);
@@ -243,9 +201,7 @@
                 const fileName = input.value.split('\\').pop();
                 input.nextElementSibling.innerHTML = fileName;
             }
-            /* When the user clicks on the button, 
-             toggle between hiding and showing the dropdown content */
-            function myFunction() {
+            function myFunctionDropdown() {
                 var dropdown = document.getElementById("myDropdown");
                 dropdown.classList.toggle("show");
 
@@ -340,13 +296,12 @@
     </head>
     <body>
         <div class="fptu-eng-1-parent">
-            <div class="returnHome"> 
+            <div class="returnHome" onclick="submitFormHomePage()"> 
                 <form action="MainController" method="POST">
-                    <input type="hidden" name="action" value="returnHomePageStudent" />
+                    <input type="hidden" name="action" value="returnHomePageLecturer" />
                 </form>
             </div>
             <div class="frame-parent">
-
                 <div>
                     <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
                          onclick="showUserInfo()" />
@@ -357,13 +312,20 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button onclick="myFunction()" class="dropbtn"> 
+                    <button onclick="myFunctionDropdown()" class="dropbtn"> 
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
-                        <div class="frame-div viewCreateSlot" onclick="submitForm()" style="background-color: #b7b7b7;">
+                        <div class="frame-div returnHomeDiv" onclick="submitFormHomePageDiv()"> 
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="returnHomePageLecturer" />
+                                <i class="material-icons">home</i>
+                            </form>
+                            Home
+                        </div>
+                        <div class="frame-div viewCreateSlot" style="background-color: #b7b7b7;">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="viewFSlotLecturer" />
                             </form>
@@ -375,6 +337,13 @@
                                 <i class="material-icons">mail_outline</i>
                             </form>
                             View Request
+                        </div>
+                        <div class="frame-div lecturerProfile" onclick="submitFormViewLecturerProfile()">
+                            <form style="display: flex; align-content: center;" action="MainController" method="POST">
+                                <input type="hidden" name="action" value="viewLecturerProfile" />
+                                <i class="material-icons">person</i>
+                            </form>
+                            View Lecturer Profile
                         </div>
                         <div class="frame-div hideView" onclick="submitFormHideView()">
                             <form action="MainController" method="POST" style="display: none;">
@@ -390,8 +359,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
         <div class="container-div" style=" display: flex;
@@ -450,7 +417,7 @@
                     <input type="text" class="form-control" name="lecID" placeholder="E.g: GV0001" required>
                     <input type="text" class="form-control" name="semesID" placeholder="E.g: FA23" required>
                     <div class="input-group-append">
-                        <button style="background-color: #0d6efd; color: white; z-index: -1" type="submit" value="importTB" name="action" class="btn btn-primary custom-submit-button">Submit</button>
+                        <button style="background-color: #0d6efd; color: white;" type="submit" value="importTB" name="action" class="btn btn-primary custom-submit-button">Submit</button>
                     </div>
                 </div>
             </form>

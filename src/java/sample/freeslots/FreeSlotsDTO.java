@@ -107,6 +107,10 @@ public class FreeSlotsDTO {
         this.subjectCode = ofject;
         this.lecturerID = ofject;
     }
+    public FreeSlotsDTO(String ofject,String ofject2) {
+        this.subjectCode = ofject;
+        this.lecturerName = ofject2;
+    }
 
 
     public String getFreeSlotID() {

@@ -13,6 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Create Free Slot</title>
         <link rel="stylesheet" href="./createfreeSlot.css" />
+        <script src="./lecturer.js"></script>
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
@@ -111,22 +112,6 @@
             if (us != null) {
         %>
         <script>
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
-                form.submit();
-            }
-            function submitFormViewRequest() {
-                var form = document.querySelector('.request-div form');
-                form.submit();
-            }
-            function submitForm() {
-                var form = document.querySelector('.viewCreateSlot form');
-                form.submit();
-            }
-            function submitFormHideView() {
-                var form = document.querySelector('.hideView form');
-                form.submit();
-            }
             function resetForm() {
                 document.getElementsByName("txtStartTime").value = "";
                 document.getElementsByName("txtEndTime").value = "";
@@ -199,7 +184,7 @@
                 var selectedValue = selectElement.value;
                 document.getElementById(hiddenFieldId).value = selectedValue;
             }
-            
+
             function handleModeOptionChange() {
                 const selectedModeOption = document.getElementById('txtModeOption').value;
                 const inputSubjectCodeField = document.getElementById('txtSubjectCode');
@@ -242,7 +227,14 @@
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
-                        <div class="frame-div viewCreateSlot" onclick="submitForm()">
+                        <div class="frame-div returnHomeDiv" onclick="submitFormHomePageDiv()"> 
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="returnHomePageLecturer" />
+                                <i class="material-icons">home</i>
+                            </form>
+                            Home
+                        </div>
+                        <div class="frame-div viewCreateSlot" onclick="submitForm()" >
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="viewFSlotLecturer" />
                             </form>
@@ -254,6 +246,13 @@
                                 <i class="material-icons">mail_outline</i>
                             </form>
                             View Request
+                        </div>
+                        <div class="frame-div lecturerProfile" onclick="submitFormViewLecturerProfile()">
+                            <form style="display: flex; align-content: center;" action="MainController" method="POST">
+                                <input type="hidden" name="action" value="viewLecturerProfile" />
+                                <i class="material-icons">person</i>
+                            </form>
+                            View Lecturer Profile
                         </div>
                         <div class="frame-div hideView" onclick="submitFormHideView()">
                             <form action="MainController" method="POST" style="display: none;">
@@ -269,8 +268,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
 
@@ -282,7 +279,9 @@
                             <form action="MainController" method="POST">
                                 <div class="d-flex justify-content-between"><strong><b style="color: blue">MODE:</b></strong>
                                     <div class="d-flex">
-                                        <select class="form-control" id="txtModeOption" name="txtModeOption" onchange="handleModeOptionChange()">
+                                        <select class="form-control" id="txtModeOption" name="txtModeOption" onchange="handleModeOptionChange()" style="
+                                                padding: 0px 16px;
+                                                ">
                                             <option value="BOOK">For Students to Book</option>
                                             <option value="REQT">For Students to Request</option>
                                         </select>
