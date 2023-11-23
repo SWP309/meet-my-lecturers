@@ -5,9 +5,8 @@
 package sample.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
 import java.util.List;
+import java.util.Spliterator;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import sample.freeslots.FreeSlotsDAO;
 import sample.freeslots.FreeSlotsDTO;
+import sample.majors.MajorsDAO;
+import sample.majors.MajorsDTO;
 import sample.users.UserDTO;
-import sample.viewCreatedSlot.ViewCreatedSlotDAO;
-import sample.viewCreatedSlot.ViewCreatedSlotDTO;
 
 /**
  *
@@ -35,14 +34,19 @@ public class ViewOptionCreateFS extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
+            String lecturerID = us.getUserID();
+
             FreeSlotsDAO searchDao = new FreeSlotsDAO();
+            MajorsDAO majorsDAO = new MajorsDAO();
+
             List<FreeSlotsDTO> listSemester = searchDao.GetListSemesterID();
-            List<FreeSlotsDTO> listSubject = searchDao.GetListSubject();
+            List<MajorsDTO> listSubject = majorsDAO.getListSubjectCodeByMajorsOfLecturer(lecturerID);
+            
             System.out.println(us.getUserEmail());
             if (us.getUserEmail() != null) {
                 request.setAttribute("LIST_SEMESTER", listSemester);
                 request.setAttribute("LIST_SUBJECT", listSubject);
-                
+
                 url = SUCCESS;
             } else {
                 request.setAttribute("MESSAGE", "Can not open the create page");
