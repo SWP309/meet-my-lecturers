@@ -1,7 +1,7 @@
-# Welcome to my Repository - meet-my-lecturers - project
+# Welcome to our Repository - meet-my-lecturers - project
 ## You will find in this repo:
 
-* NetBeans Apache Ant project including JUnit Test
+* NetBeans Apache Ant project including Java/JSP Web app and connect with MySQL Microsoft
 * .gitignore file for NetBeans project
 * README.md - this file itself - using Markdown Language
 
