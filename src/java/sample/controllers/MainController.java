@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 public class MainController extends HttpServlet {
 
     private static final String HOME_ACTION_LECTURER = "returnHomePageLecturer";
-    private static final String HOME_PAGE_LECTURER = "CreatedSlotController";
+    private static final String HOME_PAGE_LECTURER = "LecturerHome";
     private static final String HOME_ACTION_STUDENT = "returnHomePageStudent";
     private static final String HOME_PAGE_STUDENT = "StudentHome_1.jsp";
     private static final String HOME_ACTION_ADMIN = "returnHomePageAdmin";
@@ -34,6 +34,7 @@ public class MainController extends HttpServlet {
     private static final String BOOKING_FREE_SLOT_SERVLET = "BookFSlotServlet";
 
     private static final String LECTURER_PAGE = "LecturerPage";
+    private static final String LECTURER_HOME = "LecturerHome";
     private static final String CREATE_FREE_SLOT_ACTION = "createFreeSlotAction";
     private static final String CREATE_FREE_SLOT_PAGE = "ViewOptionCreateFS";
     private static final String CREATE_FREE_SLOT = "CreateFS";
@@ -222,7 +223,7 @@ public class MainController extends HttpServlet {
             } else if (action.equals(STUDENT_PAGE)) {
                 url = STUDENT_PAGE_ACTION;
             } else if (action.equals(LECTURER_PAGE)) {
-                url = CREATED_VIEW_CONTROLLER;
+                url = LECTURER_HOME;
             } else if (action.equals(ADMIN_PAGE)) {
                 url = ADMIN_PAGE_ACTION;
             } else if (CREATE_REQUEST.equals(action)) {
