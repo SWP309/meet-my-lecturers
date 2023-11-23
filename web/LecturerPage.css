@@ -160,18 +160,7 @@ td button {
     justify-content: space-between;
     flex-wrap: wrap;
 }
-
-.frame-choice:hover{
-    opacity: 0.5;
-}
 .frame-choice{
-    gap: 8px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: white;
-}
-/*.frame-choice{
     border-radius: 20px;
     background-color: #f27125;
     width: 40px !important;
@@ -186,7 +175,7 @@ td button {
     float: right;
     margin-top: 15px;
     margin-right: 20px;
-}*/
+}
 
 .frame-item {
     margin-left: 17px;

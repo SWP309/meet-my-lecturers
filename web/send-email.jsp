@@ -13,6 +13,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Send Email Form</title>
         <link rel="stylesheet" href="./createfreeSlot.css" />
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./slick.css">
+        <script src="./lecturer.js"></script>
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
@@ -111,42 +114,6 @@
             if (us != null) {
         %>
         <script>
-            function submitFormLogout() {
-                var form = document.querySelector('.logout form');
-                form.submit();
-            }
-            function submitFormCreate() {
-                var form = document.querySelector('.CreateFSlot form');
-                form.submit();
-            }
-            function submitFormSendEmail() {
-                var form = document.querySelector('.sendMail form');
-                form.submit();
-            }
-            function submitFormViewRequest() {
-                var form = document.querySelector('.request-div form');
-                form.submit();
-            }
-            function submitFormHideView() {
-                var form = document.querySelector('.hideView form');
-                form.submit();
-            }
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
-                form.submit();
-            }
-            function submitFormHistory() {
-                var form = document.querySelector('.history form');
-                form.submit();
-            }
-            function submitFormViewLecturerProfile() {
-                var form = document.querySelector('.lecturerProfile form');
-                form.submit();
-            }
-            function submitForm() {
-                var form = document.querySelector('.viewCreateSlot form');
-                form.submit();
-            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -225,6 +192,13 @@
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
+                        <div class="frame-div returnHomeDiv" onclick="submitFormHomePageDiv()"> 
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="returnHomePageLecturer" />
+                                <i class="material-icons">home</i>
+                            </form>
+                            Home
+                        </div>
                         <div class="frame-div viewCreateSlot" onclick="submitForm()" >
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="viewFSlotLecturer" />
@@ -292,7 +266,7 @@
                 <div class="d-flex justify-content-center">
                     <div class="card" style="border-radius: 5%; width: 800px; max-height: 800px;">
                         <div class="card-body">
-                            <form action="MainController" method="POST">
+                            <form action="MainController" method="POST" enctype="multipart/form-data">
 
                                 <div class="d-flex justify-content-between"><strong>Recipient:</strong> <input type="email" class="form-control" name="txtRecipient" value="${param.txtRecipient}" placeholder="ex: example@fpt.edu.vn | example@gmail.com,....." multiple required=""></div>
                             <div class="d-flex justify-content-between"><strong>Subject Code:</strong> <input type="text" class="form-control" name="txtSubjectCode" value="${param.txtSubjectCode}" placeholder="ex: SWP391" required="" pattern="^[A-Z]{3}[0-9]{3}$"></div>
@@ -306,6 +280,7 @@
                             </c:if>
                             <div class="d-flex justify-content-between"><strong>Access code of your free slot(optional):</strong> <input type="text" class="form-control" name="txtPassword" value="${param.txtPassword}"></div>
                             <div class="d-flex justify-content-between"><strong>Message(optional):</strong> <textarea style="width: 60%" name="txtMessage" rows="10" cols="60" charset="UTF-8"></textarea></div>
+                            <div class="d-flex justify-content-between"><strong>File Attachment:</strong> <input type="file" class="form-control" name="txtAttachment" multiple ></div>
 
                             <div class="d-flex justify-content-center btn-book">
                                 <input type="hidden" value="sendEMailAction" name="action"/>
