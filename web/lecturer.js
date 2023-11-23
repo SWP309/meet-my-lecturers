@@ -33,6 +33,11 @@ function submitFormHomePage() {
     var form = document.querySelector('.returnHome form');
     form.submit();
 }
+function submitFormHomePageDiv() {
+    var form = document.querySelector('.returnHomeDiv form');
+    form.submit();
+}
+
 function submitFormHistory() {
     var form = document.querySelector('.history form');
     form.submit();

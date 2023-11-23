@@ -246,6 +246,13 @@
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
+                        <div class="frame-div returnHomeDiv" onclick="submitFormHomePageDiv()"> 
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="returnHomePageLecturer" />
+                                <i class="material-icons">home</i>
+                            </form>
+                            Home
+                        </div>
                         <div class="frame-div viewCreateSlot" onclick="submitForm()" >
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="viewFSlotLecturer" />

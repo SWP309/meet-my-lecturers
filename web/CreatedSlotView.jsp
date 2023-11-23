@@ -181,7 +181,7 @@
             function confirmCheckAttendanceLinkByNull(event, freeSlotID) {
                 var result = confirm("Are you sure about teach this slot ? if you check in , you will take attendane and this free slot will disapear");
                 if (result) {
-                    // Th?c hi?n AJAX request ?? g?i yêu c?u ??n action trong controller
+
                     var xhr = new XMLHttpRequest();
                     var url = "MainController?action=AttendanceLinkLecturer&freeSlotID=" + freeSlotID;
                     xhr.open("POST", url, true);
@@ -201,8 +201,6 @@
                 const fileName = input.value.split('\\').pop();
                 input.nextElementSibling.innerHTML = fileName;
             }
-            /* When the user clicks on the button, 
-             toggle between hiding and showing the dropdown content */
             function myFunctionDropdown() {
                 var dropdown = document.getElementById("myDropdown");
                 dropdown.classList.toggle("show");
@@ -221,19 +219,6 @@
                     }, 400);
                 }
             }
-            $(document).ready(function () {
-
-
-                /* Navigation burger onclick side navigation show */
-                $('.burger-container').on('click', function () {
-                    $('.main-navigation').toggle('slow');
-                    if ($('#myBtn').hasClass('change')) {
-                        $('body').addClass('stop-scroll');
-                    } else {
-                        $('body').removeClass('stop-scroll');
-                    }
-                });
-            });
 
         </script>
         <style>
@@ -317,51 +302,6 @@
                 </form>
             </div>
             <div class="frame-parent">
-                <!-- Navigation -->
-                <nav class="site-navigation">
-                    <div class="site-navigation-inner site-container">
-                        <div class="main-navigation">
-                            <ul class="main-navigation__ul">
-                                <li class="frame-choice" onclick="submitFormHomePage()"> 
-                                    <form action="MainController" method="POST">
-                                        <input type="hidden" name="action" value="returnHomePageLecturer" />
-                                    </form>
-                                    <i class="material-icons">home</i>Home Page
-                                </li>
-                                <li class="frame-choice CreateFSlot" onclick="submitFormCreate()" title="Create free slots">
-                                    <form action="MainController" method="POST">
-                                        <input type="hidden" name="action" value="CreateFS" />
-                                    </form>
-                                    <i class="material-icons">add</i>Create New Slots
-                                </li>
-                                <li class="frame-choice history" onclick="submitFormHistory()"  title="View history attendance">
-                                    <form action="MainController" method="POST">
-                                        <input type="hidden" name="action" value="historyLec" />
-                                    </form>
-                                    <i class="material-icons text-icon">history</i>View History Attendance
-                                </li>
-                                <li class="frame-choice sendMail"  onclick="submitFormSendEmail()" title="Send email for students">
-                                    <form action="MainController" method="POST">
-                                        <input type="hidden" name="action" value="SendEmailForRemindStudent" />
-                                    </form>
-                                    <i class="material-icons">send</i>Send Email for Students
-                                </li>
-                            </ul>
-                        </div>
-                        <div id="myBtn" class="burger-container" onclick="myFunction(this)">
-                            <div class="bar1"></div>
-                            <div class="bar2"></div>
-                            <div class="bar3"></div>
-                        </div>
-                        <script>
-                            function myFunction(x) {
-                                x.classList.toggle("change");
-                            }
-                        </script>
-
-                    </div>
-                </nav>
-                <!-- Navigation end -->
                 <div>
                     <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
                          onclick="showUserInfo()" />
@@ -378,6 +318,13 @@
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
+                        <div class="frame-div returnHomeDiv" onclick="submitFormHomePageDiv()"> 
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="returnHomePageLecturer" />
+                                <i class="material-icons">home</i>
+                            </form>
+                            Home
+                        </div>
                         <div class="frame-div viewCreateSlot" style="background-color: #b7b7b7;">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="viewFSlotLecturer" />
