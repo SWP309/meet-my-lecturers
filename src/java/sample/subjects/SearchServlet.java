@@ -38,10 +38,16 @@ public class SearchServlet extends HttpServlet {
             ArrayList<SubjectDTO> list = new ArrayList();
             if (SearchCode.equals("")) {
                 list = SubjectDAO.getAllSubject();
+                if(list.isEmpty()){
+                    request.setAttribute("RemoveStatus", "Subject not found!");
+                }
                 request.setAttribute("ListSubject", list);
                 url = "MainController?action=ManageServlet";
             } else{
                 list = SubjectDAO.getSubjects(SearchCode);
+                if(list.isEmpty()){
+                    request.setAttribute("RemoveStatus", "Subject not found!");
+                }
                 request.setAttribute("ListSubject", list);
                 url = "MainController?action=ManageServlet";
             }

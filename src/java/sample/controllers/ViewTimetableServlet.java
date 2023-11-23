@@ -7,7 +7,10 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +39,7 @@ public class ViewTimetableServlet extends HttpServlet {
             String semesterID = request.getParameter("txtSemester");
             System.out.println(semesterID);
             TimetableDAO timetableDAO = new TimetableDAO();
-            timetableDAO.getListTimetables(lecturerID, semesterID);
+            timetableDAO.getListTimetables(lecturerID);
             List<TimetableDTO> timetables = timetableDAO.getTimetables();
             List<SubjectDTO> subjects = timetableDAO.getSubjects();
             List<SlotDTO> slots = timetableDAO.getSlots();
@@ -50,9 +53,9 @@ public class ViewTimetableServlet extends HttpServlet {
             } else {
                 request.setAttribute("TB_MESSAGE", "No line matched!!Please try checking again LecturerID at View All Lecturer at the top!!");
             }
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (ClassNotFoundException | SQLException | ParseException ex) {
             log("Error at ViewTimetableServlet: " + ex.toString());
-        }  finally {
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

@@ -7,6 +7,7 @@
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
         <link rel="stylesheet" href="./TimetableView.css" />
+        <script src="./student.js"></script>
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
@@ -54,34 +55,6 @@
             if (us != null) {
         %>
         <script>
-            function submitForm() {
-                var form = document.querySelector('.bookingview form');
-                form.submit();
-            }
-            function submitFormLogout() {
-                var form = document.querySelector('.logout form');
-                form.submit();
-            }
-            function submitFormRequest() {
-                var form = document.querySelector('.request form');
-                form.submit();
-            }
-            function submitSearchForm() {
-                var form = document.querySelector('.searchfunction form');
-                form.submit();
-            }
-            function submitFormViewLecturer() {
-                var form = document.querySelector('.viewLecturer form');
-                form.submit();
-            }
-            function submitFormRequestStatus() {
-                var form = document.querySelector('.requestViewStatus form');
-                form.submit();
-            }
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
-                form.submit();
-            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -104,7 +77,7 @@
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
-           function myFunction() {
+            function myFunction() {
                 var dropdown = document.getElementById("myDropdown");
                 dropdown.classList.toggle("show");
 
@@ -126,7 +99,7 @@
     </head>
     <body>
         <div class="fptu-eng-1-parent">
-            <div class="returnHome" onclick="submitFormHomePage()"> 
+            <div class="returnHome"> 
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="returnHomePageStudent" />
                 </form>
@@ -149,6 +122,13 @@
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
+                        <div class="frame-div returnHomeDiv" onclick="submitFormHomePageDiv()"> 
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="returnHomePageStudent" />
+                                <i class="material-icons">home</i>
+                            </form>
+                            Home
+                        </div>
                         <div class="frame-div bookingview" onclick="submitForm()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="ViewBooking" />
@@ -164,16 +144,16 @@
                         <div class="frame-div request" onclick="submitFormRequest()">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="Request" />
+                                <i class="material-icons">mail_outline</i> 
                             </form>
-
-                            <i class="material-icons">mail_outline</i> Request
+                            Request
                         </div>
                         <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="ViewAllLecturers" />
+                                <i class="fas fa-search"></i>
                             </form>
-
-                            <i class="fas fa-search"></i>View Lecturer
+                            View Lecturer
                         </div>
                         <div class="frame-div logout" onclick="submitFormLogout()">
                             <form action="MainController" method="POST" style="display: none;">
@@ -185,6 +165,7 @@
                 </div>
             </div>
         </div>
+
         <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()">
             <form action="MainController" method="POST">
                 <input type="hidden" name="action" value="attendanceSemes" />
@@ -202,7 +183,7 @@
 
 
             </div>
-            <h1 class="text-center text-custom">Table of Lecturer</h1>
+            <h1 class="text-center text-custom">Table of Timetable</h1>
             <div class="table-timetable" style="margin-top: 19%; padding: 40px;  display: flex;
                  justify-content: center;">
                 <c:if test="${not empty requestScope.TB_TIMETABLES}">

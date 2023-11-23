@@ -28,7 +28,6 @@ import sample.users.UserDTO;
 @WebServlet(name = "ViewOptionSubjectByLecturerID", urlPatterns = {"/searchbyLecturerID"})
 public class ViewOptionSubjectByLecturerID extends HttpServlet {
 
- 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
@@ -41,7 +40,8 @@ public class ViewOptionSubjectByLecturerID extends HttpServlet {
         List<FreeSlotsDTO> ListSubjectByLecturer = searchDao.GetListSubjectCodeByLecturer(date, txtSearch);
         PrintWriter out = response.getWriter();
         for (FreeSlotsDTO list : ListSubjectByLecturer) {
-            out.println("<a style=\"padding: 10px; color:black;\" href=\"MainController?action=SearchFSlot&txtSubjectCode="+list.getSubjectCode()+"&txtUserID="+txtSearch+"\" >"+list.getSubjectCode()+" </a>");
+            out.println("<a style=\"  display: flex;\n"
+                    + "    gap: 10px; padding: 10px; color:black;\" href=\"MainController?action=SearchFSlot&txtSubjectCode=" + list.getSubjectCode() + "&txtUserID=" + txtSearch + "\" ><i class=\"material-icons\">book</i> " + list.getSubjectCode() +" / "+ list.getLecturerName() + " </a>");
         }
 
     }

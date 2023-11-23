@@ -122,6 +122,12 @@ public class BookingDAO {
             + "WHERE b.studentID = ? AND b.status = 0 AND fs.semesterID = ( SELECT s.semesterID\n"
             + "											FROM Semesters s\n"
             + "											WHERE ? BETWEEN s.startDay AND s.endDay)";
+    
+    private static String GET_STUDENTID_BY_FSLOTID = "SELECT studentID\n" +
+                                                     "FROM Bookings\n" +
+                                                     "WHERE freeSlotID = ? AND status = 1";
+    
+    private static String GET_EMAIL_FROM_STUDENTID = "SELECT userEmail FROM Users WHERE userID = ?";
 
     private static String convertDateToString(Timestamp sqlTime) {
         // Sử dụng SimpleDateFormat để định dạng ngày giờ
@@ -715,7 +721,8 @@ public class BookingDAO {
         }
         return checkDelete;
     }
-      public boolean DeleteStatusBookedCancel(String freeSlotID) throws SQLException {
+
+    public boolean DeleteStatusBookedCancel(String freeSlotID) throws SQLException {
         boolean checkDelete = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -850,6 +857,7 @@ public class BookingDAO {
         }
         return check;
     }
+
     public boolean checkTimeDuplicateInBookedCancel(String studentID, Date starts) throws ClassNotFoundException, SQLException {
         boolean check = true;
         Connection con = null;
@@ -926,4 +934,73 @@ public class BookingDAO {
         return list;
     }
 
+    public List<BookingDTO> getStudentIDListByFSlotID(String freeSlotID) throws SQLException {
+        List<BookingDTO> studentIDList = new ArrayList<>();
+        
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        
+        try {
+            BookingDTO bkdto=new BookingDTO();
+            
+            conn = DBUtils.getConnection();
+            if (conn!=null) {
+                ptm = conn.prepareStatement(GET_STUDENTID_BY_FSLOTID);
+                ptm.setString(1, freeSlotID);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    bkdto.setStudentID(rs.getString("studentID"));
+                    
+                    studentIDList.add(bkdto);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error retrieving studentID List: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return studentIDList;
+    }
+    
+    public String getEmailByStudentID(String studentID) throws SQLException {
+        String student_email = null;
+
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_EMAIL_FROM_STUDENTID);
+                ptm.setString(1, studentID);
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    student_email = rs.getString("userEmail");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return student_email;
+    } 
 }
