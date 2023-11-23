@@ -7,13 +7,14 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./StudentHome_1.css" />
+        <script src="./student.js"></script>
         <!-- Thêm liên kết đến Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <!-- Include Font Awesome CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
         <!-- Material Icons CSS -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="./StudentHome_1.css" />
         <!--        text gg -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -103,35 +104,6 @@
             if (us != null) {
         %>
         <script>
-            function submitForm() {
-                var form = document.querySelector('.bookingview form');
-                form.submit();
-            }
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
-                form.submit();
-            }
-            function submitFormLogout() {
-                var form = document.querySelector('.logout form');
-                form.submit();
-            }
-            function submitFormRequest() {
-                var form = document.querySelector('.request form');
-                form.submit();
-            }
-            function submitSearchForm() {
-                var form = document.querySelector('.searchfunction form');
-                form.submit();
-            }
-            function submitFormViewLecturer() {
-                var form = document.querySelector('.viewLecturer form');
-                form.submit();
-            }
-            function submitFormHistory() {
-                var form = document.querySelector('.history form');
-                form.submit();
-            }
-
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -200,6 +172,13 @@
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
+                        <div class="frame-div returnHomeDiv" onclick="submitFormHomePageDiv()"> 
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="returnHomePageStudent" />
+                                <i class="material-icons">home</i>
+                            </form>
+                            Home
+                        </div>
                         <div class="frame-div bookingview" onclick="submitForm()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="ViewBooking" />

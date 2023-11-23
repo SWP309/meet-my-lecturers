@@ -4,6 +4,28 @@
     border: 1px solid black;
     text-align: center;
 }
+@font-face {
+    font-family: 'Calisto-MT';
+    src: url(../fonts/Calisto-MT.ttf);
+}
+
+@font-face {
+    font-family: 'Calisto-MT-Italic';
+    src: url(../fonts/Calisto-MT-Italic.ttf);
+}
+
+@font-face {
+    font-family: 'Calisto-MT-Bold';
+    src: url(../fonts/Calisto-MT-Bold.ttf);
+}
+
+/* Colors */
+/* Universal style */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Calisto-MT";
+}
 
 .table-rounded thead {
     background-color: #f27125;
