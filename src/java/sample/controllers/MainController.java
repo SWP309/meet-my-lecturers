@@ -38,6 +38,14 @@ public class MainController extends HttpServlet {
     private static final String CREATE_FREE_SLOT_PAGE = "ViewOptionCreateFS";
     private static final String CREATE_FREE_SLOT = "CreateFS";
     private static final String CREATE_FREE_SLOT_SERVLET = "newfreeslot";
+    private static final String VIEW_LECTURER_PROFILE = "viewLecturerProfile";
+    private static final String VIEW_LECTURER_PROFILE_ACTION = "ViewLecturerProfile";
+
+    private static final String ADD_MAJOR = "AddMajor";
+    private static final String ADD_MAJOR_CONTROLLER = "AddMajorServlet";
+
+    private static final String DELETE_MAJOR = "DeleteMajor";
+    private static final String DELETE_MAJOR_CONTROLLER = "DeleteMajorServlet";
 
     private static final String HIDE_FREE_SLOT = "hideFS";
     private static final String HIDE_CREATED_CONTROLLER = "CancelSlotController";
@@ -128,10 +136,10 @@ public class MainController extends HttpServlet {
 
     private static final String CREATED_VIEW_FREE_SLOT_ACTION = "viewFSlotLecturer";
     private static final String CREATED_VIEW_CONTROLLER = "CreatedSlotController";
-    
+
     private static final String COUNT_PAGE = "countPageAction";
     private static final String COUNT_PAGE_SERVLET = "CountPageServlet";
-    
+
     private static final String CREATED_PAGE_HIDE = "HideView";
     private static final String CREATED_CONTROLLER_VIEW_SUB = "CreatedSlotViewSubController";
 
@@ -174,7 +182,7 @@ public class MainController extends HttpServlet {
 
     private static final String SEND_EMAIL_REMIND_ACTION = "SendEmailForRemindStudent";
     private static final String SEND_EMAIL_REMIND_SERVLET = "send-email.jsp";
-    
+
     private static final String ADD_SUBJECT = "AddSub";
     private static final String REMOVE_SUBJECT = "RemoveSub";
     private static final String UPDATE_SUBJECT = "UpdateSub";
@@ -186,13 +194,13 @@ public class MainController extends HttpServlet {
     private static final String REMOVE_SUBJECT_ACTION = "RemoveSubject";
     private static final String SEARCH_SUBJECT = "searchsj";
     private static final String SEARCH_SUBJECT_ACTION = "SearchServlet";
-    
+
     private static final String SEARCH_SLOT_ADMIN = "searchSlot";
     private static final String SEARCH_SLOT_ADMIN_ACTION = "SearchSlotAdmin";
-    
+
     private static final String ADD_USER = "AddUser";
     private static final String ADD_USER_ACTION = "AddUserServlet";
-    
+
     private static final String BACK = "back";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -335,7 +343,7 @@ public class MainController extends HttpServlet {
                 url = VIEW_FREESLOT_HISTORY_SERVLET_ACTION;
             } else if (SEND_EMAIL_REMIND_ACTION.equals(action)) {
                 url = SEND_EMAIL_REMIND_SERVLET;
-            }  else if (COUNT_PAGE.equals(action)) {
+            } else if (COUNT_PAGE.equals(action)) {
                 url = COUNT_PAGE_SERVLET;
             } else if (BAN_USER_ACTION.equals(action)) {
                 url = BAN_USER_SERVLET;
@@ -361,6 +369,12 @@ public class MainController extends HttpServlet {
                 url = ADMIM_ADD_DATA_PAGE;
             } else if (ADMIN_MANAGE_SLOTS.equals(action)) {
                 url = ADIMIN_MANAGE_SLOTS_PAGE;
+            } else if (VIEW_LECTURER_PROFILE.equals(action)) {
+                url = VIEW_LECTURER_PROFILE_ACTION;
+            } else if (ADD_MAJOR.equals(action)) {
+                url = ADD_MAJOR_CONTROLLER;
+            } else if (DELETE_MAJOR.equals(action)) {
+                url = DELETE_MAJOR_CONTROLLER;
             }
 
         } catch (Exception e) {

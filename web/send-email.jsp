@@ -13,6 +13,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Send Email Form</title>
         <link rel="stylesheet" href="./createfreeSlot.css" />
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./slick.css">
+        <script src="./lecturer.js"></script>
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
@@ -111,34 +114,6 @@
             if (us != null) {
         %>
         <script>
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
-                form.submit();
-            }
-            function submitFormViewRequest() {
-                var form = document.querySelector('.request-div form');
-                form.submit();
-            }
-            function submitForm() {
-                var form = document.querySelector('.viewCreateSlot form');
-                form.submit();
-            }
-            function submitFormHideView() {
-                var form = document.querySelector('.hideView form');
-                form.submit();
-            }
-            function submitFormHistory() {
-                var form = document.querySelector('.history form');
-                form.submit();
-            }
-            function submitFormSendEmail() {
-                var form = document.querySelector('.sendMail form');
-                form.submit();
-            }
-            function submitFormCreate() {
-                var form = document.querySelector('.CreateFSlot form');
-                form.submit();
-            }
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -170,23 +145,22 @@
                 var form = document.querySelector('.request-div form');
                 form.submit();
             }
-            /* When the user clicks on the button, 
-             toggle between hiding and showing the dropdown content */
             function myFunction() {
-                document.getElementById("myDropdown").classList.toggle("show");
-            }
+                var dropdown = document.getElementById("myDropdown");
+                dropdown.classList.toggle("show");
 
-// Close the dropdown if the user clicks outside of it
-            window.onclick = function (event) {
-                if (!event.target.matches('.dropbtn')) {
-                    var dropdowns = document.getElementsByClassName("dropdown-content");
-                    var i;
-                    for (i = 0; i < dropdowns.length; i++) {
-                        var openDropdown = dropdowns[i];
-                        if (openDropdown.classList.contains('show')) {
-                            openDropdown.classList.remove('show');
-                        }
-                    }
+                if (dropdown.classList.contains('show')) {
+                    dropdown.style.display = "flex";
+                    setTimeout(function () {
+                        dropdown.style.opacity = 1;
+                        dropdown.style.transform = "scaleY(1)";
+                    }, 10);
+                } else {
+                    dropdown.style.opacity = 0;
+                    dropdown.style.transform = "scaleY(0)";
+                    setTimeout(function () {
+                        dropdown.style.display = "none";
+                    }, 400);
                 }
             }
 
@@ -218,7 +192,14 @@
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
-                        <div class="frame-div viewCreateSlot" onclick="submitForm()">
+                        <div class="frame-div returnHomeDiv" onclick="submitFormHomePageDiv()"> 
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="returnHomePageLecturer" />
+                                <i class="material-icons">home</i>
+                            </form>
+                            Home
+                        </div>
+                        <div class="frame-div viewCreateSlot" onclick="submitForm()" >
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="viewFSlotLecturer" />
                             </form>
@@ -230,6 +211,13 @@
                                 <i class="material-icons">mail_outline</i>
                             </form>
                             View Request
+                        </div>
+                        <div class="frame-div lecturerProfile" onclick="submitFormViewLecturerProfile()">
+                            <form style="display: flex; align-content: center;" action="MainController" method="POST">
+                                <input type="hidden" name="action" value="viewLecturerProfile" />
+                                <i class="material-icons">person</i>
+                            </form>
+                            View Lecturer Profile
                         </div>
                         <div class="frame-div hideView" onclick="submitFormHideView()">
                             <form action="MainController" method="POST" style="display: none;">
@@ -245,8 +233,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
         <div class="container-div" style=" display: flex;

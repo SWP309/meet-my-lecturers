@@ -26,7 +26,7 @@ import sample.utils.DBUtils;
  * @author W10(hiep-tm)
  */
 public class FreeSlotsDAO {
-
+    
     private final static String CHECK_SEMESTERID = "SELECT semesterID FROM Semesters WHERE semesterID = ?";
     private final static String CHECK_SUBJECTCODE = "SELECT subjectCode FROM Subjects WHERE subjectCode = ?";
     private final static String CHECK_BLOCKLIST = "SELECT block_list FROM FreeSlots WHERE block_list LIKE CONCAT('%', ?, '%') AND lecturerID = ?";
@@ -131,11 +131,11 @@ public class FreeSlotsDAO {
             + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
             + "						FROM Bookings b\n"
             + "						WHERE b.studentID = ? and b.status = 1)";
-
+    
     private final static String SEARCH_FS_ACCEPT = "SELECT fs.freeSlotID\n"
             + "FROM FreeSlots fs\n"
             + "WHERE fs.startTime = ? AND fs.lecturerID = ? AND fs.status = 1";
-
+    
     private static BookingDAO bookingDAO = new BookingDAO();
     private final String UPDATE_STATUS_OUTDATE = "UPDATE [dbo].[FreeSlots]\n"
             + "SET [status] = 3\n"
@@ -156,21 +156,21 @@ public class FreeSlotsDAO {
             + "AND startTime <= DATEADD(MINUTE, 10, CURRENT_TIMESTAMP)";
     private static String GET_LECTURERID_FROM_FSLOT = "SELECT lecturerID FROM FreeSlots WHERE freeSlotID = ?";
     private static String GET_EMAIL_FROM_LECTURERID = "SELECT userEmail FROM Users WHERE userID = ?";
-
+    
     private static String GET_SEMESTERID = "SELECT s.semesterID\n"
             + "FROM Semesters s\n"
             + "WHERE ? BETWEEN s.startDay AND s.endDay";
-    private static String GET_LECTURERID = "  SELECT subjectCode , u.userName\n"
+    private static String GET_LECTURERID = "  SELECT DISTINCT subjectCode , u.userName\n"
             + "                  FROM Majors s\n"
             + "				  join Users u on u.userID = s.lecturerID\n"
             + "        		Join Semesters se on se.semesterID = s.semesterID\n"
             + "                   WHERE ? BETWEEN se.startDay AND se.endDay and \n"
             + " (s.lecturerID LIKE ? OR u.userName LIKE N'%' + ? + '%' COLLATE Latin1_General_CI_AI);";
-
+    
     private static String GET_FSLOTID = "SELECT freeSlotID\n"
             + "FROM FreeSlots\n"
             + "WHERE startTime = ? AND endTime = ?";
-
+    
     public boolean updateStatusOutDate(Date currentTime) throws ClassNotFoundException, SQLException, ParseException {
         boolean checkUpdate = false;
         Connection con = null;
@@ -194,7 +194,7 @@ public class FreeSlotsDAO {
         }
         return checkUpdate;
     }
-
+    
     public List<FreeSlotsDTO> GetListSubjectCodeByLecturer(Date time, String lecturer) throws SQLException {
         List<FreeSlotsDTO> listSemester = new ArrayList<>();
         Connection conn = null;
@@ -210,7 +210,8 @@ public class FreeSlotsDAO {
                 rs = ptm.executeQuery();
                 while (rs.next()) {
                     String subjectCode = rs.getString("subjectCode");
-                    listSemester.add(new FreeSlotsDTO(subjectCode));
+                    String userName = rs.getString("userName");
+                    listSemester.add(new FreeSlotsDTO(subjectCode, userName));
                 }
             }
         } catch (Exception e) {
@@ -228,7 +229,7 @@ public class FreeSlotsDAO {
         }
         return listSemester;
     }
-
+    
     public boolean createFreeSlotBooking(FreeSlotsDTO freeSlotsDTO) throws SQLException {
         boolean checkCreate = false;
         Connection conn = null;
@@ -237,11 +238,11 @@ public class FreeSlotsDAO {
 //        ResultSet rs = null;
         try {
             conn = DBUtils.getConnection();
-
+            
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date startTime = simpleDateFormat.parse(freeSlotsDTO.getStartTime());
             Date endTime = simpleDateFormat.parse(freeSlotsDTO.getEndTime());
-
+            
             if (conn != null) {
                 ps = conn.prepareStatement(CREATE_FREESLOT);
                 ps.setString(1, freeSlotsDTO.getSubjectCode());
@@ -276,7 +277,7 @@ public class FreeSlotsDAO {
         }
         return checkCreate;
     }
-
+    
     public boolean createFreeSlot(FreeSlotsDTO freeSlotsDTO) throws SQLException {
         boolean checkCreate = false;
         Connection conn = null;
@@ -285,11 +286,11 @@ public class FreeSlotsDAO {
 //        ResultSet rs = null;
         try {
             conn = DBUtils.getConnection();
-
+            
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
             Date startTime = simpleDateFormat.parse(freeSlotsDTO.getStartTime());
             Date endTime = simpleDateFormat.parse(freeSlotsDTO.getEndTime());
-
+            
             if (conn != null) {
                 ps = conn.prepareStatement(CREATE_FREESLOT);
                 ps.setString(1, freeSlotsDTO.getSubjectCode());
@@ -324,7 +325,7 @@ public class FreeSlotsDAO {
         }
         return checkCreate;
     }
-
+    
     public boolean checkDuplicateGGMeet(String meetLink) throws SQLException {
         boolean exists = false;
         Connection conn = null;
@@ -355,7 +356,7 @@ public class FreeSlotsDAO {
         }
         return exists;
     }
-
+    
     public List<FreeSlotsDTO> select() throws SQLException, ClassNotFoundException {
         List<FreeSlotsDTO> list = null;
         Connection con = null;
@@ -381,7 +382,7 @@ public class FreeSlotsDAO {
         con.close();
         return list;
     }
-
+    
     public FreeSlotsDTO read(int ID) throws SQLException, ClassNotFoundException {
         FreeSlotsDTO freeSlots = null;
         Connection con = null;
@@ -406,7 +407,7 @@ public class FreeSlotsDAO {
         con.close();
         return freeSlots;
     }
-
+    
     public void create(FreeSlotsDTO freeSlots) throws SQLException, ClassNotFoundException {
         Connection con = null;
         con = DBUtils.getConnection();
@@ -424,7 +425,7 @@ public class FreeSlotsDAO {
         int count = stm.executeUpdate();
         con.close();
     }
-
+    
     public void update(FreeSlotsDTO freeSlots) throws SQLException, ClassNotFoundException, ParseException {
         Connection con = null;
         con = DBUtils.getConnection();
@@ -443,7 +444,7 @@ public class FreeSlotsDAO {
         int count = stm.executeUpdate();
         con.close();
     }
-
+    
     public void delete(String freeSlotsID) throws SQLException, ClassNotFoundException {
         Connection con = null;
         con = DBUtils.getConnection();
@@ -452,7 +453,7 @@ public class FreeSlotsDAO {
         stm.executeUpdate();
         con.close();
     }
-
+    
     private Timestamp convertStringToTimestamp(String dateString) throws ParseException {
         try {
             System.out.println("Vao dc convert");
@@ -467,15 +468,15 @@ public class FreeSlotsDAO {
             throw new ParseException("Lỗi định dạng ngày giờ không hợp lệ: " + e.getMessage(), e.getErrorOffset());
         }
     }
-
+    
     public String convertTimestampToString(Timestamp timestamp) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateString = dateFormat.format(timestamp);
         return dateString;
     }
-
+    
     public List<FreeSlotsDTO> searchByStudentID(String studentID) throws SQLException, ClassNotFoundException {
-
+        
         List<FreeSlotsDTO> list = null;
         Connection con = null;
         con = DBUtils.getConnection();
@@ -503,9 +504,9 @@ public class FreeSlotsDAO {
         con.close();
         return list;
     }
-
+    
     public List<FreeSlotsDTO> searchByLecturerID(String lecturerID) throws SQLException, ClassNotFoundException {
-
+        
         List<FreeSlotsDTO> list = null;
         Connection con = null;
         con = DBUtils.getConnection();
@@ -534,9 +535,9 @@ public class FreeSlotsDAO {
         con.close();
         return list;
     }
-
+    
     public List<FreeSlotsDTO> searchBySubjectCode(String subjectCode) throws SQLException, ClassNotFoundException {
-
+        
         List<FreeSlotsDTO> list = null;
         Connection con = null;
         con = DBUtils.getConnection();
@@ -564,13 +565,13 @@ public class FreeSlotsDAO {
         con.close();
         return list;
     }
-
+    
     private List<FreeSlotsDTO> freeSlotBySubjectCode;
-
+    
     public List<FreeSlotsDTO> getFreeSlotBySubjectCode() {
         return freeSlotBySubjectCode;
     }
-
+    
     private String convertDateToString(Timestamp sqlTime) {
         // Sử dụng SimpleDateFormat để định dạng ngày giờ
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -578,7 +579,7 @@ public class FreeSlotsDAO {
         // Sử dụng phương thức format để chuyển đổi Time thành String
         return dateFormat.format(sqlTime);
     }
-
+    
     public void getFreeSlotBySubjectCode(String subjectCode, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -619,13 +620,13 @@ public class FreeSlotsDAO {
             }
         }
     }
-
+    
     private List<FreeSlotsDTO> freeSlotByLecturerID;
-
+    
     public List<FreeSlotsDTO> getFreeSlotByLecturerID() {
         return freeSlotByLecturerID;
     }
-
+    
     public void getFreeSlotByLecturerID(String lecturerID, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -666,13 +667,13 @@ public class FreeSlotsDAO {
             }
         }
     }
-
+    
     private List<FreeSlotsDTO> freeSlotByLecName;
-
+    
     public List<FreeSlotsDTO> getFreeSlotByLecName() {
         return freeSlotByLecName;
     }
-
+    
     public void getFreeSlotByLecName(String name, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -714,13 +715,13 @@ public class FreeSlotsDAO {
             }
         }
     }
-
+    
     private List<FreeSlotsDTO> freeSlotBySemesterID;
-
+    
     public List<FreeSlotsDTO> getFreeSlotBySemesterID() {
         return freeSlotBySemesterID;
     }
-
+    
     public void getFreeSlotBySemesterID(String semester, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -761,13 +762,13 @@ public class FreeSlotsDAO {
             }
         }
     }
-
+    
     private List<FreeSlotsDTO> freeSlotBySubjectAndLecID;
-
+    
     public List<FreeSlotsDTO> getFreeSlotBySubjectAndLecID() {
         return freeSlotBySubjectAndLecID;
     }
-
+    
     public void getFreeSlotBySubjectAndLecID(String subjectCode, String lecturerID, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -808,13 +809,13 @@ public class FreeSlotsDAO {
             }
         }
     }
-
+    
     private List<FreeSlotsDTO> freeSlotBySubjectAndLecName;
-
+    
     public List<FreeSlotsDTO> getFreeSlotBySubjectAndLecName() {
         return freeSlotBySubjectAndLecName;
     }
-
+    
     public void getFreeSlotBySubjectAndLecName(String subjectCode, String name, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -856,13 +857,13 @@ public class FreeSlotsDAO {
             }
         }
     }
-
+    
     private List<FreeSlotsDTO> freeSlotBySubjectAndSemester;
-
+    
     public List<FreeSlotsDTO> getFreeSlotBySubjectAndSemester() {
         return freeSlotBySubjectAndSemester;
     }
-
+    
     public void getFreeSlotBySubjectAndSemester(String subjectCode, String semester, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -903,13 +904,13 @@ public class FreeSlotsDAO {
             }
         }
     }
-
+    
     private List<FreeSlotsDTO> freeSlotByLecIDAndSemester;
-
+    
     public List<FreeSlotsDTO> getFreeSlotByLecIDAndSemester() {
         return freeSlotByLecIDAndSemester;
     }
-
+    
     public void getFreeSlotByLecIDAndSemester(String lecturerID, String semester, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -950,13 +951,13 @@ public class FreeSlotsDAO {
             }
         }
     }
-
+    
     private List<FreeSlotsDTO> freeSlotByLecNameAndSemester;
-
+    
     public List<FreeSlotsDTO> getFreeSlotByLecNameAndSemester() {
         return freeSlotByLecNameAndSemester;
     }
-
+    
     public void getFreeSlotByLecNameAndSemester(String name, String semester, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -998,13 +999,13 @@ public class FreeSlotsDAO {
             }
         }
     }
-
+    
     private List<FreeSlotsDTO> freeSlotBySubCodeAndLecIDAndSemester;
-
+    
     public List<FreeSlotsDTO> getFreeSlotBySubCodeAndLecIDAndSemester() {
         return freeSlotBySubCodeAndLecIDAndSemester;
     }
-
+    
     public void getFreeSlotBySubCodeAndLecIDAndSemester(String subjectCode, String lecturerID, String semester, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -1047,13 +1048,13 @@ public class FreeSlotsDAO {
             }
         }
     }
-
+    
     private List<FreeSlotsDTO> freeSlotBySubCodeAndLecNameAndSemester;
-
+    
     public List<FreeSlotsDTO> getFreeSlotBySubCodeAndLecNameAndSemester() {
         return freeSlotBySubCodeAndLecNameAndSemester;
     }
-
+    
     public void getFreeSlotBySubCodeAndLecNameAndSemester(String subjectCode, String name, String semester, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -1096,13 +1097,13 @@ public class FreeSlotsDAO {
             }
         }
     }
-
+    
     private List<FreeSlotsDTO> freeSlotByAll;
-
+    
     public List<FreeSlotsDTO> getFreeSlotByAll() {
         return freeSlotByAll;
     }
-
+    
     public void getFreeSlotByAll(String subjectCode, String lecturerID, String name, String semester, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -1146,13 +1147,13 @@ public class FreeSlotsDAO {
             }
         }
     }
-
+    
     private List<FreeSlotsDTO> freeSlotList;
-
+    
     public List<FreeSlotsDTO> getFreeSlotList() {
         return freeSlotList;
     }
-
+    
     public void getFreeSlot(String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -1193,7 +1194,7 @@ public class FreeSlotsDAO {
             }
         }
     }
-
+    
     public boolean checkTimeDuplicateInFreeSlot(String lecturerID, Date date) throws ClassNotFoundException, SQLException {
         boolean check = true;
         Connection con = null;
@@ -1219,7 +1220,7 @@ public class FreeSlotsDAO {
         }
         return check;
     }
-
+    
     public boolean checkSemesterID(String semesterID) throws SQLException {
         boolean exists = false;
         Connection conn = null;
@@ -1250,7 +1251,7 @@ public class FreeSlotsDAO {
         }
         return exists;
     }
-
+    
     public boolean checkSubjectCode(String subjectCode) throws SQLException {
         boolean exists = false;
         Connection conn = null;
@@ -1281,7 +1282,7 @@ public class FreeSlotsDAO {
         }
         return exists;
     }
-
+    
     public String searchFSAccept(String startTime, String lecturerID) throws ClassNotFoundException, SQLException, ParseException {
         String freeSlotID = null;
         Connection con = null;
@@ -1310,7 +1311,7 @@ public class FreeSlotsDAO {
         }
         return freeSlotID;
     }
-
+    
     public boolean checkBlockList(String block_list, String LecturerID) throws SQLException {
         boolean exists = false;
         Connection conn = null;
@@ -1342,7 +1343,7 @@ public class FreeSlotsDAO {
         }
         return exists;
     }
-
+    
     public List<FreeSlotsDTO> GetListSemesterID() throws SQLException {
         List<FreeSlotsDTO> listSemester = new ArrayList<>();
         Connection conn = null;
@@ -1373,7 +1374,7 @@ public class FreeSlotsDAO {
         }
         return listSemester;
     }
-
+    
     public List<FreeSlotsDTO> GetListSubject() throws SQLException {
         List<FreeSlotsDTO> listSubject = new ArrayList<>();
         Connection conn = null;
@@ -1404,7 +1405,7 @@ public class FreeSlotsDAO {
         }
         return listSubject;
     }
-
+    
     public List<FreeSlotsDTO> getUpcomingFSlots() throws SQLException {
         List<FreeSlotsDTO> upcomingFSlots = new ArrayList<>();
         Connection conn = null;
@@ -1412,7 +1413,7 @@ public class FreeSlotsDAO {
         ResultSet rs = null;
         try {
             FreeSlotsDTO fsdto = new FreeSlotsDTO();
-
+            
             conn = DBUtils.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(GET_UPCOMING_FSLOT);
@@ -1430,7 +1431,7 @@ public class FreeSlotsDAO {
                     fsdto.setStatus(rs.getInt("status"));
                     fsdto.setSemesterID(rs.getString("semesterID"));
                     fsdto.setBlock_list(rs.getString("block_list"));
-
+                    
                     upcomingFSlots.add(fsdto);
                 }
             }
@@ -1450,10 +1451,10 @@ public class FreeSlotsDAO {
         }
         return upcomingFSlots;
     }
-
+    
     public String getLecturerIDByFSlotID(String freeSlotID) throws SQLException {
         String lecturerID = null;
-
+        
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -1482,10 +1483,10 @@ public class FreeSlotsDAO {
         }
         return lecturerID;
     }
-
+    
     public String getEmailByLecturerID(String lecturerID) throws SQLException {
         String lecturer_email = null;
-
+        
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -1514,7 +1515,7 @@ public class FreeSlotsDAO {
         }
         return lecturer_email;
     }
-
+    
     public String getSemesterID(Date time) throws SQLException {
         String semesterID = "";//Để tránh gặp lỗi NullPointerException khi ng dùng nhập time mà trong DB ko có
         Connection conn = null;
@@ -1545,7 +1546,7 @@ public class FreeSlotsDAO {
         }
         return semesterID;
     }
-
+    
     public String getFreeSlotID(Date starts, Date ends) throws SQLException {
         String freeSlotID = "";
         Connection conn = null;

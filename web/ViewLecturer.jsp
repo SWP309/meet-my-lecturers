@@ -7,6 +7,7 @@
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
         <link rel="stylesheet" href="./ViewLecturer.css" />
+        <script src="./student.js"></script>
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
@@ -55,31 +56,6 @@
             if (us != null) {
         %>
         <script>
-            function submitForm() {
-                var form = document.querySelector('.bookingview form');
-                form.submit();
-            }
-            function submitFormLogout() {
-                var form = document.querySelector('.logout form');
-                form.submit();
-            }
-            function submitFormRequest() {
-                var form = document.querySelector('.request form');
-                form.submit();
-            }
-            function submitSearchForm() {
-                var form = document.querySelector('.searchfunction form');
-                form.submit();
-            }
-            function submitFormRequestStatus() {
-                var form = document.querySelector('.requestViewStatus form');
-                form.submit();
-            }
-            function submitFormHistory() {
-                var form = document.querySelector('.history form');
-                form.submit();
-            }
-
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -103,11 +79,7 @@
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
-                form.submit();
-            }
-         function myFunction() {
+            function myFunction() {
                 var dropdown = document.getElementById("myDropdown");
                 dropdown.classList.toggle("show");
 
@@ -152,6 +124,13 @@
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
+                        <div class="frame-div returnHomeDiv" onclick="submitFormHomePageDiv()"> 
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="returnHomePageStudent" />
+                                <i class="material-icons">home</i>
+                            </form>
+                            Home
+                        </div>
                         <div class="frame-div bookingview" onclick="submitForm()">
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="ViewBooking" />
