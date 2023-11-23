@@ -13,6 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Create Free Slot</title>
         <link rel="stylesheet" href="./createfreeSlot.css" />
+        <script src="./lecturer.js"></script>
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
@@ -111,42 +112,6 @@
             if (us != null) {
         %>
         <script>
-            function submitFormLogout() {
-                var form = document.querySelector('.logout form');
-                form.submit();
-            }
-            function submitFormCreate() {
-                var form = document.querySelector('.CreateFSlot form');
-                form.submit();
-            }
-            function submitFormSendEmail() {
-                var form = document.querySelector('.sendMail form');
-                form.submit();
-            }
-            function submitFormViewRequest() {
-                var form = document.querySelector('.request-div form');
-                form.submit();
-            }
-            function submitFormHideView() {
-                var form = document.querySelector('.hideView form');
-                form.submit();
-            }
-            function submitFormHomePage() {
-                var form = document.querySelector('.returnHome form');
-                form.submit();
-            }
-            function submitFormHistory() {
-                var form = document.querySelector('.history form');
-                form.submit();
-            }
-            function submitFormViewLecturerProfile() {
-                var form = document.querySelector('.lecturerProfile form');
-                form.submit();
-            }
-            function submitForm() {
-                var form = document.querySelector('.viewCreateSlot form');
-                form.submit();
-            }
             function resetForm() {
                 document.getElementsByName("txtStartTime").value = "";
                 document.getElementsByName("txtEndTime").value = "";
@@ -218,6 +183,22 @@
             function updateHiddenField(selectElement, hiddenFieldId) {
                 var selectedValue = selectElement.value;
                 document.getElementById(hiddenFieldId).value = selectedValue;
+            }
+
+            function handleModeOptionChange() {
+                const selectedModeOption = document.getElementById('txtModeOption').value;
+                const inputSubjectCodeField = document.getElementById('txtSubjectCode');
+                const subjectCodeDiv = document.getElementById('subjectCode');
+
+                if (selectedModeOption === 'BOOK') {
+                    inputSubjectCodeField.style.display = 'block';
+                    subjectCodeDiv.style.display = 'block';
+                    inputSubjectCodeField.disabled = false;
+                } else {
+                    inputSubjectCodeField.style.display = 'none';
+                    subjectCodeDiv.style.display = 'none';
+                    inputSubjectCodeField.disabled = true;
+                }
             }
         </script>
     </head>
@@ -296,6 +277,24 @@
                     <div class="card" style="border-radius: 5%; width: 800px; max-height: 800px;">
                         <div class="card-body">
                             <form action="MainController" method="POST">
+                                <div class="d-flex justify-content-between"><strong><b style="color: blue">MODE:</b></strong>
+                                    <div class="d-flex">
+                                        <select class="form-control" id="txtModeOption" name="txtModeOption" onchange="handleModeOptionChange()" style="
+                                                padding: 0px 16px;
+                                                ">
+                                            <option value="BOOK">For Students to Book</option>
+                                            <option value="REQT">For Students to Request</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between"><strong><b style="color: blue">STATUS(public/private):</b></strong>
+                                    <div class="d-flex">
+                                        <select style=" padding: 0 15px;" class="form-control" name="txtStatusOption"value="${param.txtStatusOption}">
+                                            <option value="PUB">Public</option>
+                                            <option value="PRV">Private (check Hide list)</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <c:if test="${not empty requestScope.LIST_SEMESTER and not empty requestScope.LIST_SUBJECT}">
                                     <div class="d-flex justify-content-between">
                                         <strong style="width: 120px;">Semester ID:</strong> 
@@ -306,8 +305,8 @@
                                         </select>
                                     </div>
                                     <div class="d-flex justify-content-between">
-                                        <strong style="width: 120px;">Subject Code:</strong> 
-                                        <select class="form-control option" name="txtSubjectCode" onchange="updateHiddenField(this, 'hiddenSubjectCode')">
+                                        <strong style="width: 250px;" id="subjectCode">Subject Code (of your Major):</strong> 
+                                        <select class="form-control option" id="txtSubjectCode" name="txtSubjectCode" onchange="updateHiddenField(this, 'hiddenSubjectCode')">
                                             <c:forEach var="listSubject" varStatus="counter" items="${requestScope.LIST_SUBJECT}">
                                                 <option value="${listSubject.subjectCode}">${listSubject.subjectCode}</option>
                                             </c:forEach>
@@ -338,29 +337,13 @@
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.capacityError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.capacityError}</h6>
                                 </c:if>
-                                <div class="d-flex justify-content-between"><strong>Password of this Free Slot(optional):</strong> <input type="text" class="form-control" name="txtPassword" value="${param.txtPassword}"></div>
                                 <div class="d-flex justify-content-between"><strong>Meet Link:</strong> <input type="text" class="form-control"  name="txtMeetLink" value="${param.txtMeetLink}" placeholder="ex:meet.google.com/...etc" required="" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$"></div>
                                     <c:if test="${not empty requestScope.FREESLOT_ERROR.meetLinkError}">
                                     <h6> ${requestScope.FREESLOT_ERROR.meetLinkError}</h6>
                                 </c:if>
                                 <div class="d-flex justify-content-between"><strong>Ban(BLOCK) StudentID (optional):</strong> <input type="text" class="form-control"  name="txtBan" value="${param.txtBan}" placeholder="ex: SExxxxxx;..." pattern="^((SE|IA|SS|MC)[0-9]{6};)*$"></div>
+                                <div class="d-flex justify-content-between"><strong>Password of this Free Slot(optional):</strong> <input type="text" class="form-control" name="txtPassword" value="${param.txtPassword}"></div>  
                                 <div class="d-flex justify-content-between"><strong><b>RECIPIENT (optional):</b></strong> <input type="email" class="form-control"  name="txtRecipient" value="${param.txtRecipient}" placeholder="ex: example@fpt.edu.vn | example@gmail.com,....." multiple></div>
-                                <div class="d-flex justify-content-between"><strong><b style="color: blue">STATUS(public/private):</b></strong>
-                                    <div class="d-flex">
-                                        <select style=" padding: 0 15px;" class="form-control" name="txtStatusOption"value="${param.txtStatusOption}">
-                                            <option value="PUB">Public</option>
-                                            <option value="PRV">Private (check Hide list)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-between"><strong><b style="color: blue">MODE:</b></strong>
-                                    <div class="d-flex">
-                                        <select class="form-control" name="txtModeOption">
-                                            <option value="BOOK">For Students to Book</option>
-                                            <option value="REQT">For Students to Request</option>
-                                        </select>
-                                    </div>
-                                </div>
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <label for="role" class="col-form-label"><strong><b style="color: red">SET BY:</b></strong></label>
