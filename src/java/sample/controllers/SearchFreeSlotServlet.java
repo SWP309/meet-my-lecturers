@@ -39,18 +39,25 @@ public class SearchFreeSlotServlet extends HttpServlet {
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String subjectCode = request.getParameter("txtSubjectCode");
             String lecturerID = request.getParameter("txtUserID");
+            String lecturerName = request.getParameter("txtUserID");
             FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
-
+            System.out.println(lecturerName);
             Date date = new Date();
             freeSlotsDAO.updateStatusOutDate(date);
             freeSlotsDAO.getFreeSlotBySubjectAndLecID(subjectCode, lecturerID, us.getUserID());
+            freeSlotsDAO.getFreeSlotByLecName(lecturerName,subjectCode, us.getUserID());
+            freeSlotsDAO.getFreeSlotByLecturerID(lecturerID, us.getUserID());
             freeSlotsDAO.getFreeSlotBySubjectCode(subjectCode, us.getUserID());
             List<FreeSlotsDTO> freeSlotBySubjectAndLecID = freeSlotsDAO.getFreeSlotBySubjectAndLecID();
             List<FreeSlotsDTO> freeSlotBySubjectCode = freeSlotsDAO.getFreeSlotBySubjectCode();
-
-            if (freeSlotBySubjectAndLecID != null || freeSlotBySubjectCode != null) {
+            List<FreeSlotsDTO> freeSlotByLecturerID = freeSlotsDAO.getFreeSlotByLecturerID();
+            List<FreeSlotsDTO> freeSlotByLecturerName = freeSlotsDAO.getFreeSlotByLecName();
+            System.out.println(freeSlotByLecturerName.get(0).getFreeSlotID());
+            if (freeSlotBySubjectAndLecID != null || freeSlotBySubjectCode != null || freeSlotByLecturerID !=null || freeSlotByLecturerName !=null ) {
                 request.setAttribute("FREESLOT_BY_SUBJECT_AND_LECID", freeSlotBySubjectAndLecID);
                 request.setAttribute("FREESLOT_BY_SUBJECT", freeSlotBySubjectCode);
+                request.setAttribute("FREESLOT_BY_LECTURERID", freeSlotBySubjectCode);
+                request.setAttribute("FREESLOT_BY_LECTURER_NAME", freeSlotByLecturerName);
                 url = SUCCESS;
             } else {
                 request.setAttribute("ERROR", "Dont have any slots in this time !!!");
