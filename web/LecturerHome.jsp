@@ -130,10 +130,41 @@
                 }
             }
 
+
+            // Lấy phần header
+            var header = document.getElementById("myHeader");
+
+            // Xác định vị trí của header trên trình duyệt
+            var headerOffsetTop = header.offsetTop;
+
+            // Xác định chiều cao của header
+            var headerHeight = header.clientHeight;
+
+            // Thêm sự kiện cuộn trang
+            window.addEventListener('scroll', function () {
+                // Lấy vị trí hiện tại của thanh cuộn
+                var scrollPosition = window.scrollY;
+
+                // Kiểm tra nếu vị trí cuộn lớn hơn vị trí của header
+                if (scrollPosition > headerOffsetTop) {
+                    // Thêm lớp CSS để đặt độ mờ cho header
+                    header.classList.add('header-transparent');
+                } else {
+                    // Xóa lớp CSS nếu vị trí cuộn nhỏ hơn hoặc bằng vị trí của header
+                    header.classList.remove('header-transparent');
+                }
+            });
+
         </script>
+        <style>
+            .header-transparent {
+                opacity: 0.5;
+            }
+        </style>
     </head>
     <body>
-        <div class="fptu-eng-1-parent">
+
+        <div id="myHeader" class="fptu-eng-1-parent">
             <div class="returnHome" onclick="submitFormHomePage()"> 
                 <form action="MainController" method="POST">
                     <input type="hidden" name="action" value="returnHomePageLecturer" />
@@ -202,44 +233,44 @@
                 </div>
             </div>
         </div>
+
         <div id="page">
-            <div class="container-fluid ar-content">
-                <div class="container">
-                    <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize" style="margin-top: -8px;">
-                        <ul class="orbit-container" tabindex="0" style="height: 613.389px;">
-                            <button class="orbit-previous" tabindex="0" style="color: gray;"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
-                            <button class="orbit-next" tabindex="0" style="color: gray;"><span class="show-for-sr">Next Slide</span>&#9654;</button>
-                            <li class="orbit-slide" data-slide="0" style="display: none; position: relative; top: 0px;">
-                                <img class="orbit-image" src="./public/StudentHome/HCM-scaled.jpeg"  style="width: 2000px; height: 600px; object-fit:contain;" alt="Space">
-                            <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">FPT University</p></figcaption>
-                            </li>
-                            <li class="orbit-slide" data-slide="1" style="position: relative; top: 0px; display: none;">
-                                <img class="orbit-image" src="./public/StudentHome/anh3.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
-                            <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">Ceremony</p></figcaption>
-                            </li>
-                            <li class="orbit-slide" data-slide="2" style="position: relative; top: 0px; display: none;">
-                                <img class="orbit-image" src="./public/StudentHome/anh4.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
-                            <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">Orientation Week</p></figcaption>
-                            </li>
-                            <li class="orbit-slide" data-slide="3" style="position: relative; top: 0px; display: block;" aria-live="polite">
-                                <img class="orbit-image" src="./public/StudentHome/anh5.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
-                            <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">F-Camp</p></figcaption>
-                            </li>
-                            <li class="orbit-slide is-active" data-slide="4" style="position: relative; top: 0px; display: block;" aria-live="polite">
-                                <img class="orbit-image" src="./public/StudentHome/anh6.png"  style="width: 2000px; height: 750px; object-fit:contain;" alt="Space">
-                            <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">Training at the military</p></figcaption>
-                            </li>
-                        </ul>
-                        <nav class="orbit-bullets">
-                            <button class="" data-slide="0"><span class="show-for-sr">First slide details.</span></button>
-                            <button data-slide="1" class=""><span class="show-for-sr">Second slide details.</span></button>
-                            <button data-slide="2" class=""><span class="show-for-sr">Third slide details.</span></button>
-                            <button data-slide="3" class=""><span class="show-for-sr">Fourth slide details.</span></button>
-                            <button data-slide="4" class="is-active"><span class="show-for-sr">Fifth slide details.</span><span class="show-for-sr">Current Slide</span></button>
-                        </nav>
-                    </div>
-                </div>
+
+            <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize">
+                <ul class="orbit-container" tabindex="0" style="height: 613.389px;">
+                    <button class="orbit-previous" tabindex="0" style="color: gray;"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
+                    <button class="orbit-next" tabindex="0" style="color: gray;"><span class="show-for-sr">Next Slide</span>&#9654;</button>
+                    <li class="orbit-slide" data-slide="0" style="display: none; position: relative; top: 0px;">
+                        <img class="orbit-image" src="./public/StudentHome/HCM-scaled.jpeg"  style="width: 100%; height: auto; object-fit:cover;" alt="Space">
+                    <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">FPT University</p></figcaption>
+                    </li>
+                    <li class="orbit-slide" data-slide="1" style="position: relative; top: 0px; display: none;">
+                        <img class="orbit-image" src="./public/StudentHome/anh3.png"  style="width: 100%; height: auto; object-fit:cover;"alt="Space">
+                    <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">Ceremony</p></figcaption>
+                    </li>
+                    <li class="orbit-slide" data-slide="2" style="position: relative; top: 0px; display: none;">
+                        <img class="orbit-image" src="./public/StudentHome/anh4.png"  style="width: 100%; height: auto; object-fit:cover;" alt="Space">
+                    <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">Orientation Week</p></figcaption>
+                    </li>
+                    <li class="orbit-slide" data-slide="3" style="position: relative; top: 0px; display: block;" aria-live="polite">
+                        <img class="orbit-image" src="./public/StudentHome/anh5.png"  style="width: 100%; height: auto; object-fit:cover;" alt="Space">
+                    <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">F-Camp</p></figcaption>
+                    </li>
+                    <li class="orbit-slide is-active" data-slide="4" style="position: relative; top: 0px; display: block;" aria-live="polite">
+                        <img class="orbit-image" src="./public/StudentHome/anh6.png"  style="width: 100%; height: auto; object-fit:cover;" alt="Space">
+                    <figcaption class="orbit-caption"><p style="font-family: 'Playpen Sans', sans-serif;">Training at the military</p></figcaption>
+                    </li>
+                </ul>
+                <nav class="orbit-bullets">
+                    <button class="" data-slide="0"><span class="show-for-sr">First slide details.</span></button>
+                    <button data-slide="1" class=""><span class="show-for-sr">Second slide details.</span></button>
+                    <button data-slide="2" class=""><span class="show-for-sr">Third slide details.</span></button>
+                    <button data-slide="3" class=""><span class="show-for-sr">Fourth slide details.</span></button>
+                    <button data-slide="4" class="is-active"><span class="show-for-sr">Fifth slide details.</span><span class="show-for-sr">Current Slide</span></button>
+                </nav>
             </div>
+
+
 
             <div id="fh5co-staff">
                 <div class="container">

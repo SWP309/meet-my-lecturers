@@ -1,5 +1,6 @@
 
 
+<%@page import="java.util.Random"%>
 <%@page import="sample.freeslots.FreeSlotsDAO"%>
 <%@page import="sample.freeslots.FreeSlotsDTO"%>
 <%@page import="sample.users.Top3StudentDTO"%>
@@ -28,7 +29,9 @@
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
         <link rel="stylesheet" href="./StudentHome_1.css" />
+        <link rel="stylesheet" href="./LecturerHome.css" />
         <script src="./student.js"></script>
+        <script src="./simplyCountdown.js"></script>
         <!-- Google Fonts - Poppins -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap">
 
@@ -245,83 +248,83 @@
         </style>
     </head>
     <body>
-
-        <div class="fptu-eng-1-parent">
-            <div class="returnHome"> 
-                <form action="MainController" method="POST">
-                    <input type="hidden" name="action" value="returnHomePageStudent" />
-                </form>
-            </div>
-            <div class="frame-parent">
-
-                <div>
-                    <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
-                         onclick="showUserInfo()" />
-                    <div id="user-info" style="display: none; position: absolute">
-                        <p id="user-id"> </p>
-                        <p id="user-name"></p>
-                        <p id="user-email"></p>
-                    </div>
+        <div class="student-home" style="height: auto">
+            <div class="fptu-eng-1-parent">
+                <div class="returnHome"> 
+                    <form action="MainController" method="POST">
+                        <input type="hidden" name="action" value="returnHomePageStudent" />
+                    </form>
                 </div>
-                <div class="dropdown">
-                    <button onclick="myFunction()" class="dropbtn"> 
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div id="myDropdown" class="dropdown-content" style="right: 0px;
-                         flex-direction: column;
-                         ">
-                        <div class="frame-div returnHomeDiv" onclick="submitFormHomePageDiv()"> 
-                            <form action="MainController" method="POST">
-                                <input type="hidden" name="action" value="returnHomePageStudent" />
-                                <i class="material-icons">home</i>
-                            </form>
-                            Home
-                        </div>
-                        <div class="frame-div bookingview" onclick="submitForm()">
-                            <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="ViewBooking" />
-                            </form>
-                            <i class="material-icons">event</i>View Booked Slots
-                        </div>
-                        <div class="frame-div requestViewStatus" style=" cursor: pointer" onclick="submitFormRequestStatus()" id="booking-view-div">
-                            <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="ViewRequestStatus" />
-                            </form>
-                            <i class="material-icons">visibility</i>View Request Status
-                        </div>
-                        <div class="frame-div request" onclick="submitFormRequest()">
-                            <form action="MainController" method="POST">
-                                <input type="hidden" name="action" value="Request" />
-                                <i class="material-icons">mail_outline</i> 
-                            </form>
-                            Request
-                        </div>
-                        <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
-                            <form action="MainController" method="POST">
-                                <input type="hidden" name="action" value="ViewAllLecturers" />
-                                <i class="fas fa-search"></i>
-                            </form>
-                            View Lecturer
-                        </div>
-                        <div class="frame-div logout" onclick="submitFormLogout()">
-                            <form action="MainController" method="POST" style="display: none;">
-                                <input type="hidden" name="action" value="Logout" />
-                            </form>
-                            <i class="material-icons">logout</i> Logout
+                <div class="frame-parent">
+
+                    <div>
+                        <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
+                             onclick="showUserInfo()" />
+                        <div id="user-info" style="display: none; position: absolute">
+                            <p id="user-id"> </p>
+                            <p id="user-name"></p>
+                            <p id="user-email"></p>
                         </div>
                     </div>
+                    <div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn"> 
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div id="myDropdown" class="dropdown-content" style="right: 0px;
+                             flex-direction: column;
+                             ">
+                            <div class="frame-div returnHomeDiv" onclick="submitFormHomePageDiv()"> 
+                                <form action="MainController" method="POST">
+                                    <input type="hidden" name="action" value="returnHomePageStudent" />
+                                    <i class="material-icons">home</i>
+                                </form>
+                                Home
+                            </div>
+                            <div class="frame-div bookingview" onclick="submitForm()">
+                                <form action="MainController" method="POST" style="display: none;">
+                                    <input type="hidden" name="action" value="ViewBooking" />
+                                </form>
+                                <i class="material-icons">event</i>View Booked Slots
+                            </div>
+                            <div class="frame-div requestViewStatus" style=" cursor: pointer" onclick="submitFormRequestStatus()" id="booking-view-div">
+                                <form action="MainController" method="POST" style="display: none;">
+                                    <input type="hidden" name="action" value="ViewRequestStatus" />
+                                </form>
+                                <i class="material-icons">visibility</i>View Request Status
+                            </div>
+                            <div class="frame-div request" onclick="submitFormRequest()">
+                                <form action="MainController" method="POST">
+                                    <input type="hidden" name="action" value="Request" />
+                                    <i class="material-icons">mail_outline</i> 
+                                </form>
+                                Request
+                            </div>
+                            <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
+                                <form action="MainController" method="POST">
+                                    <input type="hidden" name="action" value="ViewAllLecturers" />
+                                    <i class="fas fa-search"></i>
+                                </form>
+                                View Lecturer
+                            </div>
+                            <div class="frame-div logout" onclick="submitFormLogout()">
+                                <form action="MainController" method="POST" style="display: none;">
+                                    <input type="hidden" name="action" value="Logout" />
+                                </form>
+                                <i class="material-icons">logout</i> Logout
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
-
-
             </div>
-        </div>
 
-        <div class="student-home" style="height: 1000px">
+
             <div class="container-fluid ar-content">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-9 pr-5">
-                            <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize" style="margin-top: -8px;">
+                            <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit="" data-options="animInFromLeft:fade-in; animInFromRight:fade-in; animOutToLeft:fade-out; animOutToRight:fade-out;" data-resize="co1gk1-orbit" id="co1gk1-orbit" data-e="3gpl68-e" data-events="resize">
                                 <ul class="orbit-container" tabindex="0" style="height: 613.389px;">
                                     <button class="orbit-previous" tabindex="0" style="color: gray;"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
                                     <button class="orbit-next" tabindex="0" style="color: gray;"><span class="show-for-sr">Next Slide</span>&#9654;</button>
@@ -428,67 +431,131 @@
 
 
             <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; padding: 30px;">
-                <c:if test="${not empty param.txtSubjectCode and not empty param.txtUserID and not empty requestScope.FREESLOT_BY_SUBJECT_AND_LECID}">
+                <c:if test="${not empty requestScope.FREESLOT_BY_SUBJECT_AND_LECID}">
                     <c:forEach items="${requestScope.FREESLOT_BY_SUBJECT_AND_LECID}" 
                                var="freeslot" varStatus="status">
-                        <div class="card" style="width: calc((100% - 60px) / 3)" style="border-radius: 5%;">
-                            <div  style="width: 100%" class="card-body">
-                                <form action="MainController" method="POST">
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>FreeSlotID:</b></strong> <span class="ml-auto"> ${freeslot.freeSlotID}</span></div>
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject Code:</b></strong> <span class="ml-auto"> ${freeslot.subjectCode}</span></div>
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's ID:</b></strong> <span class="ml-auto">${freeslot.lecturerID}</span></div>
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's name:</b></strong> <span class="ml-auto">${freeslot.lecturerName}</span></div>
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${freeslot.startTime}</span></div>
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
-                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Capacity:</b></strong> <span class="ml-auto">${freeslot.bookedStudent}/${freeslot.capacity}</span></div>
-                                    <c:if test="${freeslot.password ne null}">
-                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
-                                                <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
-                                            </span></div>
-                                        </c:if>
-                                        <c:if test="${freeslot.password == null}">
-                                        <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
-                                                <b>None</b>
-                                            </span></div>
-                                        </c:if>
-                                    <div class="d-flex justify-content-between">
-                                        <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
-                                            <input type="hidden" name="txtFSlotID" 
-                                                   value="${freeslot.freeSlotID}" readonly="">
-                                            <input type="hidden" name="txtStartTime" 
-                                                   value="${freeslot.startTime}" readonly="">
-                                            <input type="hidden" name="txtEndTime" 
-                                                   value="${freeslot.endTime}" readonly="">
-                                            <input type="hidden" name="txtLecturerID" 
-                                                   value="${freeslot.lecturerID}" readonly="">
-                                            <input type="hidden" name="intCapacity" 
-                                                   value="${freeslot.capacity}" readonly="">
-                                            <input type="hidden" name="txtSubjectCode" 
-                                                   value="${param.txtSubjectCode}" readonly="">
-                                            <input type="hidden" name="txtUserID" 
-                                                   value="${param.txtUserID}" readonly="">
-                                            <input type="hidden" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px">
-                                            <input type="hidden" name="password" value="${freeslot.password}">
-                                            <button type="submit" name="action" value="BookFreeSlot" style="display: flex; text-decoration: none; border-radius: 20px; justify-content: center;  background-color:#018df7; padding: 10px 15px; color: white;">
-                                                Book
-                                            </button>
+                        <div style="width: calc((100% - 60px) / 3)">
+                            <div class="card" style="border-radius: 5%;">
+                                <div  style="width: 100%" class="card-body">
+                                    <form action="MainController" method="POST">
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>FreeSlotID:</b></strong> <span class="ml-auto"> ${freeslot.freeSlotID}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject Code:</b></strong> <span class="ml-auto"> ${freeslot.subjectCode}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's ID:</b></strong> <span class="ml-auto">${freeslot.lecturerID}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's name:</b></strong> <span class="ml-auto">${freeslot.lecturerName}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${freeslot.startTime}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeslot.endTime}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeslot.semesterID}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Capacity:</b></strong> <span class="ml-auto">${freeslot.bookedStudent}/${freeslot.capacity}</span></div>
+                                        <c:if test="${freeslot.password ne null}">
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
+                                                    <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
+                                                </span></div>
+                                            </c:if>
+                                            <c:if test="${freeslot.password == null}">
+                                            <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
+                                                    <b>None</b>
+                                                </span></div>
+                                            </c:if>
+                                        <div class="d-flex justify-content-between">
+                                            <c:if test="${freeslot.bookedStudent < freeslot.capacity}">
+                                                <input type="hidden" name="txtFSlotID" 
+                                                       value="${freeslot.freeSlotID}" readonly="">
+                                                <input type="hidden" name="txtStartTime" 
+                                                       value="${freeslot.startTime}" readonly="">
+                                                <input type="hidden" name="txtEndTime" 
+                                                       value="${freeslot.endTime}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" 
+                                                       value="${freeslot.lecturerID}" readonly="">
+                                                <input type="hidden" name="intCapacity" 
+                                                       value="${freeslot.capacity}" readonly="">
+                                                <input type="hidden" name="txtSubjectCode" 
+                                                       value="${param.txtSubjectCode}" readonly="">
+                                                <input type="hidden" name="txtUserID" 
+                                                       value="${param.txtUserID}" readonly="">
+                                                <input type="hidden" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px">
+                                                <input type="hidden" name="password" value="${freeslot.password}">
+                                                <button type="submit" name="action" value="BookFreeSlot" style="display: flex; text-decoration: none; border-radius: 20px; justify-content: center;  background-color:#018df7; padding: 10px 15px; color: white;">
+                                                    Book
+                                                </button>
 
-                                        </c:if>
-                                        <c:if test="${freeslot.bookedStudent == freeslot.capacity}">
-                                            <button disabled  class="button-style" style="display: flex; text-decoration: none; border-radius: 20px; justify-content: center;  background-color: #808588; padding: 10px 15px; color: white">
-                                                Full
-                                            </button>
-                                        </c:if>
-                                    </div>
-                                </form>
+                                            </c:if>
+                                            <c:if test="${freeslot.bookedStudent == freeslot.capacity}">
+                                                <button disabled  class="button-style" style="display: flex; text-decoration: none; border-radius: 20px; justify-content: center;  background-color: #808588; padding: 10px 15px; color: white">
+                                                    Full
+                                                </button>
+                                            </c:if>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
 
                     </c:forEach>
                 </c:if>
+                <!--search by lecturerName-->
+                <c:if test="${not empty requestScope.FREESLOT_BY_LECTURER_NAME}">
+                    <c:forEach items="${requestScope.FREESLOT_BY_LECTURER_NAME}" 
+                               var="freeSlotByLecturerName" varStatus="status">
+                        <div style="width: calc((100% - 60px) / 3)">
+                            <div class="card" style="border-radius: 5%;">
+                                <div  style="width: 100%" class="card-body">
+                                    <form action="MainController" method="POST">
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>FreeSlotID:</b></strong> <span class="ml-auto"> ${freeSlotByLecturerName.freeSlotID}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject Code:</b></strong> <span class="ml-auto"> ${freeSlotByLecturerName.subjectCode}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's ID:</b></strong> <span class="ml-auto">${freeSlotByLecturerName.lecturerID}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's name:</b></strong> <span class="ml-auto">${freeSlotByLecturerName.lecturerName}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${freeSlotByLecturerName.startTime}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${freeSlotByLecturerName.endTime}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${freeSlotByLecturerName.semesterID}</span></div>
+                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Capacity:</b></strong> <span class="ml-auto">${freeSlotByLecturerName.bookedStudent}/${freeSlotByLecturerName.capacity}</span></div>
+                                        <c:if test="${freeSlotByLecturerName.password ne null}">
+                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
+                                                    <input type="text" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px" placeholder="Input password" required="">
+                                                </span></div>
+                                            </c:if>
+                                            <c:if test="${freeSlotByLecturerName.password == null}">
+                                            <div style="margin-bottom: 16px" class="d-flex justify-content-between"><strong style="color: red"><b>Password:</b></strong> <span class="ml-auto">
+                                                    <b>None</b>
+                                                </span></div>
+                                            </c:if>
+                                        <div class="d-flex justify-content-between">
+                                            <c:if test="${freeSlotByLecturerName.bookedStudent < freeSlotByLecturerName.capacity}">
+                                                <input type="hidden" name="txtFSlotID" 
+                                                       value="${freeSlotByLecturerName.freeSlotID}" readonly="">
+                                                <input type="hidden" name="txtStartTime" 
+                                                       value="${freeSlotByLecturerName.startTime}" readonly="">
+                                                <input type="hidden" name="txtEndTime" 
+                                                       value="${freeSlotByLecturerName.endTime}" readonly="">
+                                                <input type="hidden" name="txtLecturerID" 
+                                                       value="${freeSlotByLecturerName.lecturerID}" readonly="">
+                                                <input type="hidden" name="intCapacity" 
+                                                       value="${freeSlotByLecturerName.capacity}" readonly="">
+                                                <input type="hidden" name="txtSubjectCode" 
+                                                       value="${param.txtSubjectCode}" readonly="">
+                                                <input type="hidden" name="txtUserID" 
+                                                       value="${param.txtUserID}" readonly="">
+                                                <input type="hidden" name="txtPassword" value="${param.txtPassword}" style="border: none; margin: 0px">
+                                                <input type="hidden" name="password" value="${freeSlotByLecturerName.password}">
+                                                <button type="submit" name="action" value="BookFreeSlot" style="display: flex; text-decoration: none; border-radius: 20px; justify-content: center;  background-color:#018df7; padding: 10px 15px; color: white;">
+                                                    Book
+                                                </button>
 
-                <c:if test="${not empty param.txtSubjectCode and empty param.txtUserID and not empty requestScope.FREESLOT_BY_SUBJECT}">
+                                            </c:if>
+                                            <c:if test="${freeSlotByLecturerName.bookedStudent == freeSlotByLecturerName.capacity}">
+                                                <button disabled  class="button-style" style="display: flex; text-decoration: none; border-radius: 20px; justify-content: center;  background-color: #808588; padding: 10px 15px; color: white">
+                                                    Full
+                                                </button>
+                                            </c:if>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </c:if>
+
+                <!--search by subject-->
+                <c:if test="${not empty requestScope.FREESLOT_BY_SUBJECT}">
                     <c:forEach items="${requestScope.FREESLOT_BY_SUBJECT}" 
                                var="freeSlotBySubjectCode" varStatus="status">
                         <div style="width: calc((100% - 60px) / 3)">
@@ -548,6 +615,32 @@
                         </div>
                     </c:forEach>
                 </c:if>
+
+
+
+            </div>
+
+            <%
+                UserDAO userDAO = new UserDAO();
+                userDAO.getListLecturers();
+                List<UserDTO> lecturers = userDAO.getLecturers();
+                Random random = new Random();
+                int randomIndex = random.nextInt(lecturers.size());
+            %>
+
+            <div id="fh5co-register" style="background-image: url(./public/UsersView/anhTruongFPT.jpg);">
+                <div class="overlay"></div>
+                <div class="row">
+                    <div class="col-md-12 col-md-offset-2 animate-box">
+                        <div class="date-counter text-center">
+                            <h2>Get 400 of Online Courses for Free</h2>
+                            <h3><%= lecturers.get(randomIndex).getUserName()%></h3>
+                            <div class="simply-countdown simply-countdown-one"></div>
+                            <p><strong>Limited Offer, Hurry Up!</strong></p>
+                            <p><a href="#" class="btn btn-primary btn-lg btn-reg">Register Now!</a></p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -641,6 +734,26 @@
                                     alertDiv.style.display = "none";
                                 });
                             }
+
+
+
+                            var d = new Date(new Date().getTime() + 1000 * 120 * 120 * 2000);
+
+                            // default example
+                            simplyCountdown('.simply-countdown-one', {
+                                year: d.getFullYear(),
+                                month: d.getMonth() + 1,
+                                day: d.getDate()
+                            });
+
+                            //jQuery example
+                            $('#simply-countdown-losange').simplyCountdown({
+                                year: d.getFullYear(),
+                                month: d.getMonth() + 1,
+                                day: d.getDate(),
+                                enableUtc: false
+                            });
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script>
