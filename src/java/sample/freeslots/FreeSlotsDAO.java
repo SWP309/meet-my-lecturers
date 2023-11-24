@@ -57,7 +57,7 @@ public class FreeSlotsDAO {
     private final static String SEARCH_FREESLOT_BY_LECNAME = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID, lec.userName\n"
             + "            FROM FreeSlots fs\n"
             + "            JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "            WHERE lec.userName LIKE ? AND fs.status = 1\n"
+            + "            WHERE lec.userName LIKE N'%' + ? + '%' COLLATE Latin1_General_CI_AI AND fs.subjectCode = ? AND fs.status = 1\n"
             + "			AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
             + "						FROM Bookings b\n"
             + "						WHERE b.studentID = ? and b.status = 1)";
@@ -674,7 +674,7 @@ public class FreeSlotsDAO {
         return freeSlotByLecName;
     }
     
-    public void getFreeSlotByLecName(String name, String studentID) throws ClassNotFoundException, SQLException {
+    public void getFreeSlotByLecName(String name,String subjectCode, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -682,14 +682,15 @@ public class FreeSlotsDAO {
             con = DBUtils.getConnection();
             stm = con.prepareStatement(SEARCH_FREESLOT_BY_LECNAME);
             stm.setNString(1, "%" + name + "%");
-            stm.setString(2, studentID);
+            stm.setString(2, subjectCode);
+            stm.setString(3, studentID);
             rs = stm.executeQuery();
             while (rs.next()) {
                 String freeSlotID = rs.getString("freeSlotID");
                 String lecturerID = rs.getString("lecturerID");
                 String password = rs.getString("password");
                 String lecname = rs.getString("userName");
-                String subjectCode = rs.getString("subjectCode");
+                String subjectCodeSub = rs.getString("subjectCode");
                 Timestamp startTime = rs.getTimestamp("startTime");
                 String starts = convertDateToString(startTime);
                 Timestamp endTime = rs.getTimestamp("endTime");
@@ -697,7 +698,7 @@ public class FreeSlotsDAO {
                 int capacity = rs.getInt("capacity");
                 String semester = rs.getString("semesterID");
                 int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCodeSub, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
                 if (this.freeSlotByLecName == null) {
                     this.freeSlotByLecName = new ArrayList<>();
                 }

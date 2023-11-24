@@ -5,7 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import sample.roles.RoleDTO;
 import sample.dashboard.UserMaxRequestDTO;
@@ -64,6 +66,19 @@ public class UserDAO implements Serializable {
     private final String UNBAN_USER = "UPDATE Users\n"
             + "SET userStatus = 1\n"
             + "WHERE userID = ?";
+    private final String GET_LIST_USER = " WITH StudentCounts AS (\n"
+            + "                     SELECT b.studentID,u.userName , u.userEmail ,COUNT(*) as 'NumberSlot'\n"
+            + "                       FROM Bookings b, Users u\n"
+            + "                      WHERE b.studentID = u.userID and b.freeSlotID IN (\n"
+            + "                          SELECT fs.freeSlotID\n"
+            + "                           FROM FreeSlots fs, Semesters s\n"
+            + "                          WHERE ? between s.startDay and s.endDay\n"
+            + "                      )\n"
+            + "                      GROUP BY b.studentID , u.userName , u.userEmail\n"
+            + "                    )\n"
+            + "                    SELECT TOP 6 studentID, userName, userEmail ,NumberSlot\n"
+            + "                    FROM StudentCounts\n"
+            + "                   ORDER BY NumberSlot DESC;";
 
     private List<UserDTO> lecturers;
 
@@ -642,6 +657,41 @@ public class UserDAO implements Serializable {
             cn.close();
         }
         return st;
+    }
+
+    public List<UserMaxSlotDTO> getStudentMaxBookLecturerHome(Date time) throws SQLException {
+        List<UserMaxSlotDTO> listUser = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(GET_LIST_USER);
+                ptm.setTimestamp(1, new Timestamp(time.getTime()));
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String userID = rs.getString("studentID").trim();
+                    String userName = rs.getString("userName").trim();
+                    String userEmail = rs.getString("userEmail").trim();
+                    int number = rs.getInt("NumberSlot");
+                   listUser.add(new UserMaxSlotDTO(userID, userName, userEmail, number));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return listUser;
     }
 
     public static UserMaxRequestDTO getStudentMaxRequest(String semester) throws Exception {

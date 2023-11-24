@@ -7,6 +7,7 @@
         <meta name="viewport" content="initial-scale=1, width=device-width" />
 
         <link rel="stylesheet" href="./ViewLecturer.css" />
+        <link rel="stylesheet" href="./LecturerHome.css" />
         <script src="./student.js"></script>
         <link
             rel="stylesheet"
@@ -178,33 +179,36 @@
             </div>
 
             <h1 class="text-center text-custom">Table of Lecturer</h1>
-            <div class="view-user-table" style="width: 80%; margin: 0 auto; border-radius: 20px;">
-                <c:if test="${not empty requestScope.LIST_LECTURERS}">
-                    <div class="table-container">
-                        <table class="custom-table table-hover table-primary table-rounded">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>LecturerID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${requestScope.LIST_LECTURERS}" 
-                                           var="lecturer" varStatus="status">
-                                    <tr>
-                                        <td>${status.count}</td>
-                                        <td>${lecturer.userID}</td>
-                                        <td>${lecturer.userName}</td>
-                                        <td>${lecturer.userEmail}</td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
+
+            <div id="fh5co-staff">
+                <div class="container">
+                    <div class="row">
+                        <c:if test="${not empty requestScope.LIST_LECTURERS}">
+                            <c:forEach items="${requestScope.LIST_LECTURERS}" 
+                                       var="lecturer" varStatus="status">
+                                <div class="col-md-3 animate-box text-center">
+                                    <div class="staff">
+                                        <div class="staff-img" style="background-image: url(./public/StudentHome/User-avatar.png);">
+                                            <ul class="fh5co-social" style="display: flex;
+                                                align-items: center;
+                                                justify-content: center;">
+                                                <li><a href="https://www.facebook.com/lam.cat.77770/"><i class="material-icons">facebook</i></a></li>
+                                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                                <li><a href="#"><i class="material-icons">phone</i></a></li>
+                                                <li><a href="#"><i class="fa fa-globe"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <span>${lecturer.userID}</span>
+                                        <h3>${lecturer.userName}</h3>
+                                        <p>${lecturer.userEmail}</p>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </c:if>
                     </div>
-                </c:if>
+                </div>
             </div>
+
             <div class="footer1">
                 <div class="powered-by-fpt-container1">
                     © Powered by
