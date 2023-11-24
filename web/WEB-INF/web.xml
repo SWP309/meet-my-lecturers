@@ -263,6 +263,10 @@
         <servlet-name>FileServlet</servlet-name>
         <servlet-class>com.froala.examples.servlets.FileServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LecturerHome</servlet-name>
+        <servlet-class>sample.controllers.LecturerHome</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -506,6 +510,10 @@
     <servlet-mapping>
         <servlet-name>FileServlet</servlet-name>
         <url-pattern>/FileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LecturerHome</servlet-name>
+        <url-pattern>/LecturerHome</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

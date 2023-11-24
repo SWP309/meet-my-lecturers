@@ -160,7 +160,7 @@
     position: relative;
     background-color: #fff;
     width: 100%;
-    height: 1024px;
+    height: auto;
     overflow: hidden;
     text-align: left;
     font-size: 30px;
@@ -198,7 +198,6 @@
     margin-right: 20px;
 }
 .footer1 {
-    position: fixed;
     bottom: 0px;
     display: flex;
     background-color: #f8d867;
