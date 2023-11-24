@@ -37,7 +37,6 @@ public class AddUserServlet extends HttpServlet {
             int rs = 0;
             String url = "MainController?action=ManageServlet";
             String subject = "Meet My Lecturer";
-            System.out.println("Vao dc add servlet");
             String id = request.getParameter("txtuserid").trim();
             String name = request.getParameter("txtusername").trim();
             String email = request.getParameter("txtuseremail").trim();
@@ -45,7 +44,6 @@ public class AddUserServlet extends HttpServlet {
             String role = request.getParameter("txtuserrole").trim();
             int passWord = (int) (Math.random() * 1000000) % 1000 + 10000;
             String password = String.valueOf(passWord);
-            System.out.println("Hello" + id);
 
             UserDTO user = new UserDTO(id, name, email, status, role, password);
             UserDTO check = UserDAO.getUserByID(id);
@@ -58,20 +56,19 @@ public class AddUserServlet extends HttpServlet {
                                                 + "</head>%n"
                                                 + "<body style=\"background-color: #f2f2f2;\">%n"
                                                 + "    <div style=\"background-color: #0078d4; color: white; padding: 10px;\">%n"
-                                                + "        <h1>%s</h1>%n"
+                                                + "        <h1>Meet My Lecturer</h1>%n"
                                                 + "    </div>%n"
                                                 + "    <div style=\"padding: 10px;\">%n"
-                                                + "        <p>Hello,</p>%n"
-                                                + "        <p>%s</p>%n"
-                                                + "        <p>Cảm ơn bạn đã đọc email này.</p>%n"
+                                                + "        <p>Hello, %s</p>%n"
+                                                + "        <p>This is your password: <span style=\"color: red;\">%s</span></p>%n"
+                                                + "        <p>Thank you for choosing FUA.</p>%n"
                                                 + "    </div>%n"
                                                 + "    <div style=\"background-color: #f2f2f2; padding: 10px;\">%n"
-                                                + "        <p>Đây là phần chân trang của email.</p>%n"
-                                                + "        <p>Liên hệ: example@example.com</p>%n"
+                                                + "        <p>Any problem please contact via meet.my.lecturers.fpt.edu@gmail.com</p>%n"
                                                 + "    </div>%n"
                                                 + "</body>%n"
                                                 + "</html>",
-                                                email, password);
+                                                 email, password);
                                         EmailDAO.sendMail(email, subject, content);
                 if (rs > 0) {
                     request.setAttribute("AddUserStatus", "Add successfully!");

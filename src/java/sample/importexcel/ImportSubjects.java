@@ -55,18 +55,18 @@ public class ImportSubjects extends HttpServlet {
                     HSSFSheet sheet = wb.getSheetAt(0);
                     if (sheetName.equals("ImportSubjectsMMLT")) {
                         try {
-                            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                                Row row = sheet.getRow(i);
-
-                                String subjectCode = row.getCell(1).getStringCellValue();
-                                String Description = row.getCell(2).getStringCellValue();
-
-                                if (subjectCode.equals("") || Description.equals("")) {
-                                    flag = false;
-                                    request.setAttribute("SUBJECTSERVLET", "Error data in Excel: Data is null");
-                                    URL = "MainController?action=importPage";
-                                }
-                            }
+//                            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+//                                Row row = sheet.getRow(i);
+//
+//                                String subjectCode = row.getCell(1).getStringCellValue();
+//                                String Description = row.getCell(2).getStringCellValue();
+//
+//                                if (subjectCode.equals("") || Description.equals("")) {
+//                                    flag = false;
+//                                    request.setAttribute("SUBJECTSERVLET", "Error data in Excel: Data is null");
+//                                    URL = "MainController?action=importPage";
+//                                }
+//                            }
                             if (flag) {
                                 for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                                     Row row = sheet.getRow(i);
@@ -89,6 +89,10 @@ public class ImportSubjects extends HttpServlet {
                             wb.close();
                             request.setAttribute("SUBJECTSERVLET", "Error: Wrong format data");
                             URL = "MainController?action=importPage";
+                        } catch (NullPointerException e){
+                            wb.close();
+                            request.setAttribute("SUBJECTSERVLET", "Error: Null data in file");
+                            URL = "MainController?action=importPage";
                         }
                     } else {
                         request.setAttribute("SUBJECTSERVLET", "Error: Incorrect sheet name");
@@ -101,25 +105,24 @@ public class ImportSubjects extends HttpServlet {
                     String sheetName = wb.getSheetName(0);
                     if (sheetName.equals("ImportSubjectsMMLT")) {
                         try {
-                            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                                Row row = sheet.getRow(i);
-
-                                String subjectCode = row.getCell(1).getStringCellValue();
-                                String Description = row.getCell(2).getStringCellValue();
-
-                                if (subjectCode.equals("") || Description.equals("")) {
-                                    flag = false;
-                                    request.setAttribute("SUBJECTSERVLET", "Error data in Excel: Data is null");
-                                    URL = "MainController?action=importPage";
-                                }
-                            }
+//                            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+//                                Row row = sheet.getRow(i);
+//
+//                                String subjectCode = row.getCell(1).getStringCellValue();
+//                                String Description = row.getCell(2).getStringCellValue();
+//
+//                                if (subjectCode.equals("") || Description.equals("")) {
+//                                    flag = false;
+//                                    request.setAttribute("SUBJECTSERVLET", "Error data in Excel: Data is null");
+//                                    URL = "MainController?action=importPage";
+//                                }
+//                            }
                             if (flag) {
                                 for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                                     Row row = sheet.getRow(i);
 
                                     String subjectCode = row.getCell(1).getStringCellValue();
                                     String Description = row.getCell(2).getStringCellValue();
-                                    System.out.println(subjectCode);
                                     SubjectDTO subject = new SubjectDTO(subjectCode, Description);
                                     SubjectDTO check = sj.getSubject(subjectCode);
                                     if (check != null) {
@@ -134,6 +137,10 @@ public class ImportSubjects extends HttpServlet {
                         } catch (IllegalStateException e) {
                             wb.close();
                             request.setAttribute("SUBJECTSERVLET", "Error: Wrong format data");
+                            URL = "MainController?action=importPage";
+                        } catch (NullPointerException e){
+                            wb.close();
+                            request.setAttribute("SUBJECTSERVLET", "Error: Null data in file");
                             URL = "MainController?action=importPage";
                         }
                     } else {
