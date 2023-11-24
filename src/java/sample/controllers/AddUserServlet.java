@@ -81,7 +81,7 @@ public class AddUserServlet extends HttpServlet {
                     url = "MainController?action=ManageServlet";
                 }
             } else {
-                request.setAttribute("AddStatus", "User existed");
+                request.setAttribute("AddUserStatus", "User existed");
                 url = "MainController?action=ManageServlet";
             }
             request.getRequestDispatcher(url).forward(request, response);
