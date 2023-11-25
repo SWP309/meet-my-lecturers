@@ -287,11 +287,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <button> <a href="MainController?action=acceptAllRequest">Accept All</a> </button>
+                        </div>
+                        <div>
+                            <button> <a href="MainController?action=declineAllRequest">Decline All</a> </button>
+                        </div>
 
                         <div class="view-user-table" style="width: 90%;
                         margin: 0 auto;
                         border-radius: 20px;">
                         <c:if test="${not empty requestScope.LIST_REQUESTS}">
+
                             <div style="display: flex;
                                  justify-content: center;
                                  margin: auto;
@@ -300,15 +307,15 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>RequestID</th>
-                                            <th>SemesterID</th>
-                                            <th>StudentID</th>
+                                            <th>Request ID</th>
+                                            <th>Semester ID</th>
+                                            <th>Free Slot ID</th>
+                                            <th>Student ID</th>
                                             <th>Student's Name</th>
                                             <th>Subject Code</th>
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Description</th>
-                                            <th>MeetLink (If accept)</th>
                                             <th>Accept</th>
                                             <th>Note (If decline)</th>
                                             <th>Decline</th>
@@ -321,29 +328,21 @@
                                             <td>${counter.count}</td>
                                             <td>${request.requestID}</td>
                                             <td>${request.semesterID}</td>
+                                            <td>${request.freeSlotID}</td>
                                             <td>${request.studentID}</td>
-                                            <td>
-                                                <c:set var="breakLoop" value="false" />
-                                                <c:forEach var="user" items="${requestScope.LIST_REQUESTS_USERS}">
-                                                    <c:if test="${!breakLoop and request.studentID eq user.userID}">
-                                                        ${user.userName}
-                                                        <c:set var="breakLoop" value="true" />
-                                                    </c:if>
-                                                </c:forEach>
-                                            </td>
+                                            <td>${request.studentName}</td>
                                             <td>${request.subjectCode}</td>
                                             <td>${request.startTime}</td>
                                             <td>${request.endTime}</td>
                                             <td>${request.description}</td>
-                                            <td>
-                                                <input class="form-control" type="text" name="txtLinkMeet" 
-                                                       value="${param.txtLinkMeet}" placeholder="E.g: meet.google.com/hgi-fyrr-npm" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$">
-                                            </td>
+
                                             <td>
                                                 <input type="hidden" name="txtRequestID" 
                                                        value="${request.requestID}" readonly="">
                                                 <input type="hidden" name="txtSemesterID" 
                                                        value="${request.semesterID}" readonly="">
+                                                <input type="hidden" name="txtFreeSlotID" 
+                                                       value="${request.freeSlotID}" readonly="">
                                                 <input type="hidden" name="txtStudentID" 
                                                        value="${request.studentID}" readonly="">
                                                 <input type="hidden" name="txtSubjectCode" 
@@ -352,8 +351,7 @@
                                                        value="${request.startTime}" readonly="">
                                                 <input type="hidden" name="txtEndTime" 
                                                        value="${request.endTime}" readonly="">
-                                                <input type="hidden" name="txtLinkMeet" 
-                                                       value="${param.txtLinkMeet}" readonly="">
+
                                                 <button type="submit" name="action"
                                                         value="AcceptRequest" class="btn-accept">Accept</button>
                                             </td>
@@ -385,15 +383,16 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>RequestID</th>
-                                            <th>SemesterID</th>
-                                            <th>StudentID</th>
+                                            <th>Request ID</th>
+                                            <th>Semester ID</th>
+                                            <th>Free Slot ID</th>
+                                            <th>Student ID</th>
                                             <th>Student's Name</th>
                                             <th>Subject Code</th>
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Description</th>
-                                            <th>MeetLink (If accept)</th>
+                                            <th>Meet Link (If accept)</th>
                                             <th>Accept</th>
                                             <th>Note (If decline)</th>
                                             <th>Decline</th>
@@ -407,6 +406,7 @@
                                             <td>${counter.count}</td>
                                             <td>${request.requestID}</td>
                                             <td>${request.semesterID}</td>
+                                            <td>${request.freeSlotID}</td>
                                             <td>${request.studentID}</td>
                                             <td>${request.studentName}</td>
                                             <td>${request.subjectCode}</td>
@@ -422,6 +422,8 @@
                                                        value="${request.requestID}" readonly="">
                                                 <input type="hidden" name="txtSemesterID" 
                                                        value="${request.semesterID}" readonly="">
+                                                <input type="hidden" name="txtFreeSlotID" 
+                                                       value="${request.freeSlotID}" readonly="">
                                                 <input type="hidden" name="txtStudentID" 
                                                        value="${request.studentID}" readonly="">
                                                 <input type="hidden" name="txtSubjectCode" 
@@ -463,15 +465,16 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>RequestID</th>
-                                            <th>SemesterID</th>
-                                            <th>StudentID</th>
+                                            <th>Request ID</th>
+                                            <th>Semester ID</th>
+                                            <th>Free Slot ID</th>
+                                            <th>Student ID</th>
                                             <th>Student's Name</th>
                                             <th>Subject Code</th>
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Description</th>
-                                            <th>MeetLink (If accept)</th>
+                                            <th>Meet Link (If accept)</th>
                                             <th>Accept</th>
                                             <th>Note (If decline)</th>
                                             <th>Decline</th>
@@ -485,6 +488,7 @@
                                             <td>${counter.count}</td>
                                             <td>${request.requestID}</td>
                                             <td>${request.semesterID}</td>
+                                            <td>${request.freeSlotID}</td>
                                             <td>${request.studentID}</td>
                                             <td>${request.studentName}</td>
                                             <td>${request.subjectCode}</td>
@@ -500,6 +504,8 @@
                                                        value="${request.requestID}" readonly="">
                                                 <input type="hidden" name="txtSemesterID" 
                                                        value="${request.semesterID}" readonly="">
+                                                <input type="hidden" name="txtFreeSlotID" 
+                                                       value="${request.freeSlotID}" readonly="">
                                                 <input type="hidden" name="txtStudentID" 
                                                        value="${request.studentID}" readonly="">
                                                 <input type="hidden" name="txtSubjectCode" 
@@ -541,15 +547,16 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>RequestID</th>
-                                            <th>SemesterID</th>
-                                            <th>StudentID</th>
+                                            <th>Request ID</th>
+                                            <th>Semester ID</th>
+                                            <th>Free Slot ID</th>
+                                            <th>Student ID</th>
                                             <th>Student's Name</th>
                                             <th>Subject Code</th>
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Description</th>
-                                            <th>MeetLink (If accept)</th>
+                                            <th>Meet Link (If accept)</th>
                                             <th>Accept</th>
                                             <th>Note (If decline)</th>
                                             <th>Decline</th>
@@ -563,6 +570,7 @@
                                             <td>${counter.count}</td>
                                             <td>${request.requestID}</td>
                                             <td>${request.semesterID}</td>
+                                            <td>${request.freeSlotID}</td>
                                             <td>${request.studentID}</td>
                                             <td>${request.studentName}</td>
                                             <td>${request.subjectCode}</td>
@@ -578,6 +586,8 @@
                                                        value="${request.requestID}" readonly="">
                                                 <input type="hidden" name="txtSemesterID" 
                                                        value="${request.semesterID}" readonly="">
+                                                <input type="hidden" name="txtFreeSlotID" 
+                                                       value="${request.freeSlotID}" readonly="">
                                                 <input type="hidden" name="txtStudentID" 
                                                        value="${request.studentID}" readonly="">
                                                 <input type="hidden" name="txtSubjectCode" 
@@ -619,15 +629,16 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>RequestID</th>
-                                            <th>SemesterID</th>
-                                            <th>StudentID</th>
+                                            <th>Request ID</th>
+                                            <th>Semester ID</th>
+                                            <th>Free Slot ID</th>
+                                            <th>Student ID</th>
                                             <th>Student's Name</th>
                                             <th>Subject Code</th>
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Description</th>
-                                            <th>MeetLink (If accept)</th>
+                                            <th>Meet Link (If accept)</th>
                                             <th>Accept</th>
                                             <th>Note (If decline)</th>
                                             <th>Decline</th>
@@ -641,6 +652,7 @@
                                             <td>${counter.count}</td>
                                             <td>${request.requestID}</td>
                                             <td>${request.semesterID}</td>
+                                            <td>${request.freeSlotID}</td>
                                             <td>${request.studentID}</td>
                                             <td>${request.studentName}</td>
                                             <td>${request.subjectCode}</td>
@@ -656,6 +668,8 @@
                                                        value="${request.requestID}" readonly="">
                                                 <input type="hidden" name="txtSemesterID" 
                                                        value="${request.semesterID}" readonly="">
+                                                <input type="hidden" name="txtFreeSlotID" 
+                                                       value="${request.freeSlotID}" readonly="">
                                                 <input type="hidden" name="txtStudentID" 
                                                        value="${request.studentID}" readonly="">
                                                 <input type="hidden" name="txtSubjectCode" 

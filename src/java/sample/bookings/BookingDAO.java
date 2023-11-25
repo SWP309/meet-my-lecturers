@@ -122,11 +122,11 @@ public class BookingDAO {
             + "WHERE b.studentID = ? AND b.status = 0 AND fs.semesterID = ( SELECT s.semesterID\n"
             + "											FROM Semesters s\n"
             + "											WHERE ? BETWEEN s.startDay AND s.endDay)";
-    
-    private static String GET_STUDENTID_BY_FSLOTID = "SELECT studentID\n" +
-                                                     "FROM Bookings\n" +
-                                                     "WHERE freeSlotID = ? AND status = 1";
-    
+
+    private static String GET_STUDENTID_BY_FSLOTID = "SELECT studentID\n"
+            + "FROM Bookings\n"
+            + "WHERE freeSlotID = ? AND status = 1";
+
     private static String GET_EMAIL_FROM_STUDENTID = "SELECT userEmail FROM Users WHERE userID = ?";
 
     private static String convertDateToString(Timestamp sqlTime) {
@@ -143,13 +143,13 @@ public class BookingDAO {
 //        String d = Service.sdfDateTime.format(date);
         Connection con = DBUtils.getConnection();
         PreparedStatement stm = con.prepareStatement(
-                "select top 5 b.studentID, COUNT(*) AS 'Number of absent slots'\n"
-                + "                                    from Bookings b\n"
-                + "                                    join FreeSlots f on f.freeSlotID = b.freeSlotID\n"
-                + "									join Users u ON b.studentID = u.userID\n"
-                + "                                    where b.status = 1 and f.endTime < ? AND u.userStatus = 1 AND f.semesterID = ?"
-                + "                                    GROUP BY b.studentID\n"
-                + "                                    ORDER BY [Number of absent slots] asc");
+                "select top 1 b.studentID, COUNT(*) AS 'Number of absent slots'\n"
+                + "          from Bookings b\n"
+                + "          join FreeSlots f on f.freeSlotID = b.freeSlotID\n"
+                + "          join Users u ON b.studentID = u.userID\n"
+                + "          where b.status = 1 and f.endTime < ? AND u.userStatus = 1 AND f.semesterID = ?\n"
+                + "          GROUP BY b.studentID\n"
+                + "          ORDER BY [Number of absent slots] desc");
         String start = services.Service.sdfDateTime.format(date);
         stm.setTimestamp(1, new Timestamp(services.Service.sdfDateTime.parse(start).getTime()));
         stm.setString(2, semesterID);
@@ -169,13 +169,13 @@ public class BookingDAO {
         Date date = new Date();
 //        String d = Service.sdfDateTime.format(date);
         Connection con = DBUtils.getConnection();
-        PreparedStatement stm = con.prepareStatement("select top 5 b.studentID, COUNT(*) AS 'Number of cancel slots'\n"
-                + "                                    from Bookings b\n"
-                + "                                    join FreeSlots f on f.freeSlotID = b.freeSlotID\n"
-                + "									JOIN Users u ON b.studentID = u.userID\n"
-                + "                                    where b.status = 0 AND u.userStatus = 1 AND f.semesterID = ?"
-                + "                                   GROUP BY b.studentID\n"
-                + "                                    ORDER BY [Number of cancel slots] asc");
+        PreparedStatement stm = con.prepareStatement("select top 1 b.studentID, COUNT(*) AS 'Number of cancel slots'\n"
+                + "                                                    from Bookings b\n"
+                + "													join FreeSlots f on f.freeSlotID = b.freeSlotID\n"
+                + "                									JOIN Users u ON b.studentID = u.userID\n"
+                + "                                                    where b.status = 0 AND u.userStatus = 1 AND f.semesterID = ?\n"
+                + "                                                   GROUP BY b.studentID\n"
+                + "                                                    ORDER BY [Number of cancel slots] desc");
         String start = services.Service.sdfDateTime.format(date);
         stm.setString(1, semesterID);
         ResultSet rs = stm.executeQuery();
@@ -936,22 +936,22 @@ public class BookingDAO {
 
     public List<BookingDTO> getStudentIDListByFSlotID(String freeSlotID) throws SQLException {
         List<BookingDTO> studentIDList = new ArrayList<>();
-        
+
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
-        
+
         try {
-            BookingDTO bkdto=new BookingDTO();
-            
+            BookingDTO bkdto = new BookingDTO();
+
             conn = DBUtils.getConnection();
-            if (conn!=null) {
+            if (conn != null) {
                 ptm = conn.prepareStatement(GET_STUDENTID_BY_FSLOTID);
                 ptm.setString(1, freeSlotID);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
                     bkdto.setStudentID(rs.getString("studentID"));
-                    
+
                     studentIDList.add(bkdto);
                 }
             }
@@ -971,7 +971,7 @@ public class BookingDAO {
         }
         return studentIDList;
     }
-    
+
     public String getEmailByStudentID(String studentID) throws SQLException {
         String student_email = null;
 
@@ -1002,5 +1002,5 @@ public class BookingDAO {
             }
         }
         return student_email;
-    } 
+    }
 }
