@@ -20,10 +20,6 @@ import sample.bookings.BookingError;
 import sample.freeslots.FreeSlotsDAO;
 import sample.users.UserDTO;
 
-/**
- *
- * @author PC
- */
 public class BookFSlotServlet extends HttpServlet {
 
     private static final String ERROR = "StudentHome_1.jsp";
@@ -45,15 +41,14 @@ public class BookFSlotServlet extends HttpServlet {
             FreeSlotsDAO FsDao = new FreeSlotsDAO();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String studentID = us.getUserID();
-            System.out.println(studentID);
+            
             String freeSlotID = request.getParameter("txtFSlotID");
             String LecturerID = request.getParameter("txtLecturerID");
-            System.out.println(LecturerID);
-            System.out.println(freeSlotID);
+            
             String startTime = request.getParameter("txtStartTime");
-            System.out.println(startTime);
+            
             String endTime = request.getParameter("txtEndTime");
-            System.out.println(endTime);
+            
             String txtPassword = request.getParameter("txtPassword");
             String password = request.getParameter("password");
             BookingDTO dto = new BookingDTO();
@@ -81,12 +76,13 @@ public class BookFSlotServlet extends HttpServlet {
             //*****check duplicateBookedFSlot
             boolean checkStartDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, start);
             boolean checkEndDuplicateBookedFS = dao.checkTimeDuplicateInBookedFreeSlot(studentID, ends);
-            System.out.println(checkStartDuplicateBookedFS);
+            
             if (checkStartDuplicateBookedFS == false || checkEndDuplicateBookedFS == false) {
                 checkValidation = false;
                 bookingError.setDuplicateBookedSlot("This slot was duplicated with another booked slot!!!");
                 System.out.println("Bi duplicate");
             }
+            
             boolean checkTimeDuplicateInBookedCancel = dao.checkTimeDuplicateInBookedCancel(studentID, start);
             request.setAttribute("BOOKING_ERROR", bookingError);
 

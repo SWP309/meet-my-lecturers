@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import sample.freeslots.FreeSlotsDAO;
 import sample.freeslots.FreeSlotsDTO;
+import sample.major.MajorDAO;
 import sample.users.Top3StudentDTO;
 import sample.users.UserDAO;
 import sample.users.UserDTO;
@@ -38,29 +39,60 @@ public class SearchFreeSlotServlet extends HttpServlet {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String subjectCode = request.getParameter("txtSubjectCode");
-            String lecturerID = request.getParameter("txtUserID");
-            String lecturerName = request.getParameter("txtUserID");
-            FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
+            String lecturerID = request.getParameter("txtLecturerID");
+            String lecturerName = request.getParameter("txtLecturerName");
+            int mode = Integer.parseInt(request.getParameter("txtMode"));
+            System.out.println(subjectCode);
             System.out.println(lecturerName);
+            System.out.println(lecturerID);
+            System.out.println(mode);
+            FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
             Date date = new Date();
             freeSlotsDAO.updateStatusOutDate(date);
+
             freeSlotsDAO.getFreeSlotBySubjectAndLecID(subjectCode, lecturerID, us.getUserID());
-            freeSlotsDAO.getFreeSlotByLecName(lecturerName,subjectCode, us.getUserID());
-            freeSlotsDAO.getFreeSlotByLecturerID(lecturerID, us.getUserID());
-            freeSlotsDAO.getFreeSlotBySubjectCode(subjectCode, us.getUserID());
+            freeSlotsDAO.getFreeSlotByLecName(lecturerName, subjectCode, us.getUserID());
+
             List<FreeSlotsDTO> freeSlotBySubjectAndLecID = freeSlotsDAO.getFreeSlotBySubjectAndLecID();
-            List<FreeSlotsDTO> freeSlotBySubjectCode = freeSlotsDAO.getFreeSlotBySubjectCode();
-            List<FreeSlotsDTO> freeSlotByLecturerID = freeSlotsDAO.getFreeSlotByLecturerID();
             List<FreeSlotsDTO> freeSlotByLecturerName = freeSlotsDAO.getFreeSlotByLecName();
-            System.out.println(freeSlotByLecturerName.get(0).getFreeSlotID());
-            if (freeSlotBySubjectAndLecID != null || freeSlotBySubjectCode != null || freeSlotByLecturerID !=null || freeSlotByLecturerName !=null ) {
-                request.setAttribute("FREESLOT_BY_SUBJECT_AND_LECID", freeSlotBySubjectAndLecID);
-                request.setAttribute("FREESLOT_BY_SUBJECT", freeSlotBySubjectCode);
-                request.setAttribute("FREESLOT_BY_LECTURERID", freeSlotBySubjectCode);
-                request.setAttribute("FREESLOT_BY_LECTURER_NAME", freeSlotByLecturerName);
-                url = SUCCESS;
+            MajorDAO majorDAO = new MajorDAO();
+
+            if (freeSlotBySubjectAndLecID != null) {
+                for (FreeSlotsDTO freeSlotsDTO : freeSlotBySubjectAndLecID) {
+                    if (!majorDAO.select(freeSlotsDTO.getLecturerID()).isEmpty()) {
+                        freeSlotsDTO.setListMajor(majorDAO.select(freeSlotsDTO.getLecturerID()));
+                    }
+                }
+            }
+            if (freeSlotByLecturerName != null) {
+                for (FreeSlotsDTO freeSlotsDTO : freeSlotByLecturerName) {
+                    if (!majorDAO.select(freeSlotsDTO.getLecturerID()).isEmpty()) {
+                        freeSlotsDTO.setListMajor(majorDAO.select(freeSlotsDTO.getLecturerID()));
+                    }
+                }
+            }
+
+            if (subjectCode == null && lecturerID == null && lecturerName == null && (mode == 2 || mode == 1)) {
+                freeSlotsDAO.getFreeSlotByMode(mode, us.getUserID());
+                List<FreeSlotsDTO> freeSlotByMode = freeSlotsDAO.getFreeSlotByMode();
+                if (freeSlotByMode != null) {
+                    for (FreeSlotsDTO freeSlotsDTO : freeSlotByMode) {
+                        if (!majorDAO.select(freeSlotsDTO.getLecturerID()).isEmpty()) {
+                            request.setAttribute("FREESLOT_BY_MODE", freeSlotByMode);
+                            freeSlotsDTO.setListMajor(majorDAO.select(freeSlotsDTO.getLecturerID()));
+                        }
+                    }
+                } else {
+                    request.setAttribute("ERROR", "Dont have any slots in this time !!!");
+                }
             } else {
-                request.setAttribute("ERROR", "Dont have any slots in this time !!!");
+                if (freeSlotBySubjectAndLecID != null || freeSlotByLecturerName != null) {
+                    request.setAttribute("FREESLOT_BY_SUBJECT_AND_LECID", freeSlotBySubjectAndLecID);
+                    request.setAttribute("FREESLOT_BY_LECTURER_NAME", freeSlotByLecturerName);
+                    url = SUCCESS;
+                } else {
+                    request.setAttribute("ERROR", "Dont have any slots in this time !!!");
+                }
             }
 
         } catch (ClassNotFoundException | SQLException | ParseException ex) {

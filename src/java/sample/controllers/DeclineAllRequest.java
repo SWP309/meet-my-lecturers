@@ -1,10 +1,12 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sample.controllers;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.Date;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,9 +17,11 @@ import sample.requests.RequestDAO;
 import sample.requests.RequestDTO;
 import sample.users.UserDTO;
 
-public class ViewRequestServlet extends HttpServlet {
+public class DeclineAllRequest extends HttpServlet {
+
     private final String SUCCESS = "ViewRequest.jsp";
     private final String ERROR = "ViewRequest.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -25,26 +29,43 @@ public class ViewRequestServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             UserDTO userDTO = (UserDTO) session.getAttribute("loginedUser");
+            List<RequestDTO> listRequest = null;
             RequestDAO requestDAO = new RequestDAO();
-            
-            Date date = new Date();
-            requestDAO.updateStatusOutDate(date);
-            
-            requestDAO.getRequest(userDTO.getUserID());
-            List<RequestDTO> requests = requestDAO.getListRequests();//da check
-            if (requests != null) {
-                    request.setAttribute("LIST_REQUESTS", requests);
-                    session.setAttribute("LIST_REQUESTS", requests);
 
-                    url = SUCCESS;
-            } else {
-                request.setAttribute("VIEW_REQUEST_MESSAGE", "No request!!!");
+            if (session.getAttribute("LIST_REQUESTS") != null) {
+                listRequest = (List<RequestDTO>) session.getAttribute("LIST_REQUESTS");
+            } else if (session.getAttribute("SEARCH_REQUEST_BY_ST_ET") != null) {
+                listRequest = (List<RequestDTO>) session.getAttribute("SEARCH_REQUEST_BY_ST_ET");
+            } else if (session.getAttribute("SEARCH_REQUEST_BY_ALL") != null) {
+                listRequest = (List<RequestDTO>) session.getAttribute("SEARCH_REQUEST_BY_ALL");
+            } else if (session.getAttribute("SEARCH_REQUEST_BY_SUBJECT") != null) {
+                listRequest = (List<RequestDTO>) session.getAttribute("SEARCH_REQUEST_BY_SUBJECT");
+            } else if (session.getAttribute("SEARCH_REQUEST_BY_NULL") != null) {
+                listRequest = (List<RequestDTO>) session.getAttribute("SEARCH_REQUEST_BY_NULL");
             }
-        } catch (ClassNotFoundException | SQLException | ParseException ex) {
-            log("Error at ViewRequestServlet: " + ex.toString());
-        } finally {
+            if (listRequest != null) {
+                for (RequestDTO requestDTO : listRequest) {
+                    requestDAO.deleteARequest(requestDTO.getRequestID());
+                }
+                if (session.getAttribute("LIST_REQUESTS") != null) {
+                    session.setAttribute("LIST_REQUESTS", null);
+                } else if (session.getAttribute("SEARCH_REQUEST_BY_ST_ET") != null) {
+                    session.setAttribute("SEARCH_REQUEST_BY_ST_ET", null);
+                } else if (session.getAttribute("SEARCH_REQUEST_BY_ALL") != null) {
+                    session.setAttribute("SEARCH_REQUEST_BY_ALL", null);
+                } else if (session.getAttribute("SEARCH_REQUEST_BY_SUBJECT") != null) {
+                    session.setAttribute("SEARCH_REQUEST_BY_SUBJECT", null);
+                } else if (session.getAttribute("SEARCH_REQUEST_BY_NULL") != null) {
+                    session.setAttribute("SEARCH_REQUEST_BY_NULL", null);
+                }
+                url = SUCCESS;
+            }
             request.getRequestDispatcher(url).forward(request, response);
+
+        } catch (Exception e) {
+            log("Error at MainController: " + e.toString());
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

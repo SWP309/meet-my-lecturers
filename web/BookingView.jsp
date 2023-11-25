@@ -143,6 +143,10 @@
                 alert(errorMessage);
             }
             function updateHiddenField(selectElement, hiddenFieldId) {
+                var firstOption = selectElement.options[0];
+                if (firstOption.value === "") {
+                    selectElement.remove(0);
+                }
                 var selectedValue = selectElement.value;
                 document.getElementById(hiddenFieldId).value = selectedValue;
             }
