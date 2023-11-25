@@ -6,10 +6,28 @@
     background-size: 100%;
     background-image: url("public/BookingView/2021fptueng-1@2x.png");
 }
-.boxoftable{
-    width: 100%;
+@font-face {
+    font-family: 'Calisto-MT';
+    src: url(../fonts/Calisto-MT.ttf);
 }
 
+@font-face {
+    font-family: 'Calisto-MT-Italic';
+    src: url(../fonts/Calisto-MT-Italic.ttf);
+}
+
+@font-face {
+    font-family: 'Calisto-MT-Bold';
+    src: url(../fonts/Calisto-MT-Bold.ttf);
+}
+
+/* Colors */
+/* Universal style */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Calisto-MT";
+}
 .center-content {
     display: flex !important;
     align-items: center !important;
@@ -18,8 +36,27 @@
 .div {
     position: relative;
 }
+.text-custom{
+    font-family: 'Agbalumo', 'Playfair Display', sans-serif;
+    height: 0px;
+    margin-bottom: 5%;
+}
+
+.table-container {
+    height: 100%;
+    width: 100% !important;
+    /*    max-height: 400px;  thay đổi kích thước tối đa tùy ý */
+    overflow-y: auto; /* để hiển thị thanh cuộn dọc khi vượt quá kích thước cố định */
+    padding-bottom: 10%;
+    margin-top: -25%;
+    margin-bottom: 25%;
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 th,td{
-    text-align: center;
+    text-align: center !important;
 }
 .error-message {
     color: red;
@@ -66,7 +103,7 @@ td button {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 205px;
+    min-width: 210px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -96,6 +133,7 @@ td button {
     display: flex;
     flex-direction: row;
     color: black;
+    gap: 13px
 }
 .frame-div{
     padding: 10px;
@@ -103,22 +141,6 @@ td button {
     display: flex;
     align-items: center;
     gap: 8px;
-}
-.frame-choice{
-    border-radius: 20px;
-    background-color: #f27125;
-    width: 40px !important;
-    height: 40px;
-    align-items: center;
-    padding: 10px 9px;
-    box-sizing: border-box;
-    /* gap: 0px; */
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    float: right;
-    margin-top: 15px;
-    margin-right: 20px;
 }
 .fptu-eng-1-parent {
     position: relative;
@@ -138,6 +160,31 @@ td button {
     justify-content: space-between;
     flex-wrap: wrap;
 }
+.frame-choice{
+    border-radius: 20px;
+    background-color: #f27125;
+    width: 40px !important;
+    height: 40px;
+    align-items: center;
+    padding: 10px 9px;
+    box-sizing: border-box;
+    gap: 0px; 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    float: right;
+    margin-top: 15px;
+    margin-right: 20px;
+}
+
+.frame-item {
+    margin-left: 17px;
+    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
+    position: relative;
+    width: 45px;
+    height: 42px;
+}
+
 
 .cancelbutton-child {
     position: absolute;
@@ -163,11 +210,7 @@ td button {
     width: 104.84px;
     height: 45.2px;
 }
-.text-custom{
-    font-family: 'Agbalumo', 'Playfair Display', sans-serif;
-    height: 0px;
-    margin-top: 73px;
-}
+
 .meetbutton-child {
     position: absolute;
     top: 0;
@@ -178,16 +221,23 @@ td button {
     height: 21.02px;
 }
 
+.cancelbutton1
+{
+    position: absolute;
+    top: 176.58px;
+    left: 133.14px;
+    width: 104.84px;
+    height: 45.2px;
+}
+
+.listslot {
+    position: relative;
+    width: 1062px;
+    height: 597px;
+}
+
 .boxoftable th{
     text-align: center;
-}
-.backbutton {
-    cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
-    position: relative;
-    width: 125px;
-    height: 35px;
-    font-size: 30px;
-    color: #000;
 }
 .student-viewbookedslot {
     position: relative;
@@ -203,8 +253,38 @@ td button {
     font-size: 17px;
     color: #fff;
     font-family: Lexend;
+
+}
+.footer1 {
+    position: fixed;
+    bottom: 0px;
+    display: flex;
+    background-color: #f8d867;
+    width: 100%;
+    height: 4rem;
+    justify-content: center;
+    align-items: center;
+    /*padding: 1.69rem 35.5rem;*/
+    box-sizing: border-box;
+    max-width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    color: inherit;
+    font-family: Poppins;
+}
+.tableview{
+    grid-row-gap: 15px;
 }
 
 #user-id, #user-name, #user-email {
     color: black; /* Đặt màu chữ thành màu đen */
+}
+
+.custom-submit-button {
+    background-color: #f27125; /* Màu xanh */
+    color: #fff; /* Màu chữ trắng */
+    /* Các thuộc tính CSS khác tùy ý */
+}
+.custom-submit-button:hover{
+    background-color: #b05b18;
 }

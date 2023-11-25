@@ -242,6 +242,30 @@
         <servlet-name>SearchSlotAdmin</servlet-name>
         <servlet-class>sample.controllers.SearchSlotAdmin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddMajorServlet</servlet-name>
+        <servlet-class>sample.controllers.AddMajorServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteMajorServlet</servlet-name>
+        <servlet-class>sample.controllers.DeleteMajorServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewLecturerProfile</servlet-name>
+        <servlet-class>sample.controllers.ViewLecturerProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ImageUpload</servlet-name>
+        <servlet-class>com.froala.examples.servlets.ImageUpload</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FileServlet</servlet-name>
+        <servlet-class>com.froala.examples.servlets.FileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LecturerHome</servlet-name>
+        <servlet-class>sample.controllers.LecturerHome</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -465,6 +489,30 @@
     <servlet-mapping>
         <servlet-name>SearchSlotAdmin</servlet-name>
         <url-pattern>/SearchSlotAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddMajorServlet</servlet-name>
+        <url-pattern>/AddMajorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteMajorServlet</servlet-name>
+        <url-pattern>/DeleteMajorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewLecturerProfile</servlet-name>
+        <url-pattern>/ViewLecturerProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImageUpload</servlet-name>
+        <url-pattern>/ImageUpload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileServlet</servlet-name>
+        <url-pattern>/FileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LecturerHome</servlet-name>
+        <url-pattern>/LecturerHome</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -6,55 +6,42 @@
 package sample.controllers;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
+import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sound.midi.SoundbankResource;
-import sample.slots.SlotDTO;
-import sample.subjects.SubjectDTO;
-import sample.timetables.TimetableDAO;
-import sample.timetables.TimetableDTO;
+import sample.dashboard.UserMaxSlotDTO;
+import sample.users.UserDAO;
 
 /**
  *
- * @author CHIBAO
+ * @author PC
  */
-public class ViewTimetableServlet extends HttpServlet { 
-    
-    public final String ERROR = "request.jsp";
-    public final String SUCCESS = "TimetableView.jsp"; 
-    
+public class LecturerHome extends HttpServlet {
+
+    private static final String ERROR = "LecturerHome.jsp";
+    private static final String SUCCESS = "LecturerHome.jsp";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String lecturerID = request.getParameter("txtLecturer");
-            String semesterID = request.getParameter("txtSemester");
-            System.out.println(semesterID);
-            TimetableDAO timetableDAO = new TimetableDAO();
-            timetableDAO.getListTimetables(lecturerID);
-            List<TimetableDTO> timetables = timetableDAO.getTimetables();
-            List<SubjectDTO> subjects = timetableDAO.getSubjects();
-            List<SlotDTO> slots = timetableDAO.getSlots();
-            System.out.println(semesterID);
-            if (timetables != null) {
-                System.out.println(timetables.toString());
-                request.setAttribute("TB_TIMETABLES", timetables); 
-                request.setAttribute("TB_SUBJECTS", subjects);
-                request.setAttribute("TB_SLOTS", slots);
+            Date date = new Date();
+            UserDAO userDAO = new UserDAO();
+            List<UserMaxSlotDTO> ListStudent = userDAO.getStudentMaxBookLecturerHome(date);
+            System.out.println(ListStudent.get(0).getUserID());
+            if (ListStudent != null){
+                request.setAttribute("Top5StuBookSlots", ListStudent);
                 url = SUCCESS;
-            } else {
-                request.setAttribute("TB_MESSAGE", "No line matched!!Please try checking again LecturerID at View All Lecturer at the top!!");
+            }else{
+                request.setAttribute("ERROR", "Do not have any Student book the slots");
             }
-        } catch (ClassNotFoundException | SQLException | ParseException ex) {
-            log("Error at ViewTimetableServlet: " + ex.toString());
+        } catch (Exception e) {
+            log("Error at BookingController: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

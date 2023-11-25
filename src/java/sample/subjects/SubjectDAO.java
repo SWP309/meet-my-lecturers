@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import sample.utils.DBUtils;
 
 /**
@@ -18,6 +19,17 @@ import sample.utils.DBUtils;
  * @author Minh Khang
  */
 public class SubjectDAO {
+
+    private final String SEARCH_SUBJECTS = "SELECT s.subjectCode, s.subjectName\n"
+            + "FROM Subjects s";
+
+    private final String LIST_ADD_MAJORS = "SELECT subjectCode \n"
+            + "FROM Subjects s\n"
+            + "WHERE s.subjectCode  not in (SELECT m.subjectCode\n"
+            + "							FROM Majors m\n"
+            + "							WHERE m.lecturerID = ?)";
+
+    private List<SubjectDTO> subjects;
 
     public static int insertSubject(SubjectDTO subject) throws Exception {
         int rs = 0;
@@ -152,6 +164,26 @@ public class SubjectDAO {
         }
 
         return rs;
+    }
+
+    public List<SubjectDTO> listAddMajor(String lecturerID) throws SQLException, ClassNotFoundException {
+        List<SubjectDTO> list = null;
+        Connection con = null;
+        con = DBUtils.getConnection();
+        PreparedStatement stm = con.prepareStatement(LIST_ADD_MAJORS);
+        stm.setString(1, lecturerID);
+        ResultSet rs = stm.executeQuery();
+        list = new ArrayList<>();
+
+        if (rs != null) {
+            while (rs.next()) {
+                SubjectDTO subjectDTO = new SubjectDTO();
+                subjectDTO.setSubjectCode(rs.getString("subjectCode"));
+                list.add(subjectDTO);
+            }
+        }
+        con.close();
+        return list;
     }
 
     public static int updateSubject(SubjectDTO subject) throws Exception {
