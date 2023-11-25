@@ -66,6 +66,12 @@ public class MainController extends HttpServlet {
     private static final String VIEW_REQUEST_LECTURER_ACTION = "ViewRequest";
     private static final String REQUEST_VIEW_CONTROLLER = "ViewRequestServlet";
 
+    private static final String ACCEPT_ALL_REQUEST = "acceptAllRequest";
+    private static final String ACCEPT_ALL_REQUEST_CONTROLLER = "AcceptAllRequest";
+
+    private static final String DECLINE_ALL_REQUEST = "declineAllRequest";
+    private static final String DECLINE_ALL_REQUEST_CONTROLLER = "DeclineAllRequest";
+
     private static final String ADMIN_PAGE = "AdminPage";
     private static final String ADMIN_PAGE_ACTION = "AdminPage.jsp";
     private static final String ADMIN_PAGE_CONTROLLER = "DashBoardServlet";
@@ -376,6 +382,10 @@ public class MainController extends HttpServlet {
                 url = ADD_MAJOR_CONTROLLER;
             } else if (DELETE_MAJOR.equals(action)) {
                 url = DELETE_MAJOR_CONTROLLER;
+            } else if (ACCEPT_ALL_REQUEST.equals(action)) {//acceptAllRequest
+                url = ACCEPT_ALL_REQUEST_CONTROLLER;
+            } else if (DECLINE_ALL_REQUEST.equals(action)) {//declineAllRequest
+                url = DECLINE_ALL_REQUEST_CONTROLLER;
             }
 
         } catch (Exception e) {

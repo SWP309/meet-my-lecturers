@@ -6,27 +6,71 @@ public class RequestDTO implements Serializable{
     private String requestID;
     private int status;
     private String subjectCode;
-    private String startTime;
-    private String endTime;
+    private String freeSlotID;
     private String description;
     private String studentID;
-    private String lecturerID;
-    private String semesterID;
     private String note;
     
     //bien ngoai lai
     private String studentName;
+    private String startTime;
+    private String endTime;
+    private String lecturerID;
+    private String lecturerName;
+    private String semesterID;
+    
 
-    public String getSemesterID() {
-        return semesterID;
+    public RequestDTO() {
     }
 
-    public void setSemesterID(String semesterID) {
+    public RequestDTO(String requestID, int status, String subjectCode, String freeSlotID, String description, String studentID, String studentName, String startTime, String endTime, String semesterID) {
+        this.requestID = requestID;
+        this.status = status;
+        this.subjectCode = subjectCode;
+        this.freeSlotID = freeSlotID;
+        this.description = description;
+        this.studentID = studentID;
+        this.studentName = studentName;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.semesterID = semesterID;
     }
 
-    public RequestDTO() {
+    public RequestDTO(String requestID, String studentID, String subjectCode, String freeSlotID, String description, String studentName, String startTime, String endTime, String semesterID) {
+        this.requestID = requestID;
+        this.subjectCode = subjectCode;
+        this.freeSlotID = freeSlotID;
+        this.description = description;
+        this.studentID = studentID;
+        this.studentName = studentName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.semesterID = semesterID;
+    }
+    
+    
+
+    public RequestDTO(String requestID, String note, int status, String subjectCode, String freeSlotID, String description, String startTime, String endTime, String lecturerID, String lecturerName, String semesterID) {
+        this.requestID = requestID;
+        this.status = status;
+        this.subjectCode = subjectCode;
+        this.freeSlotID = freeSlotID;
+        this.description = description;
+        this.note = note;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.lecturerID = lecturerID;
+        this.lecturerName = lecturerName;
+        this.semesterID = semesterID;
+    }
+   
+
+ 
+    
+    public RequestDTO(String requestID, String freeSlotID, int status, String subjectCode, String startTime, 
+            String endTime, String description,String studentID, String lecturerID, String semesterID) {
         this.requestID = "";
+        this.freeSlotID = "";
         this.status = 0;
         this.subjectCode = "";
         this.startTime = "";
@@ -36,48 +80,19 @@ public class RequestDTO implements Serializable{
         this.lecturerID = "";
         this.semesterID = "";
         this.note = "";
-        this.studentName = "";
     }
 
-    public RequestDTO(String requestID, int status, String subjectCode, String startTime, String endTime, String description, String studentID, String lecturerID, String semesterID, String note, String studentName) {
-        this.requestID = requestID;
+    public RequestDTO(int status, String subjectCode, String freeSlotID, String description, String studentID, 
+            String note, String studentName) {
         this.status = status;
         this.subjectCode = subjectCode;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.freeSlotID = freeSlotID;
         this.description = description;
         this.studentID = studentID;
-        this.lecturerID = lecturerID;
-        this.semesterID = semesterID;
         this.note = note;
         this.studentName = studentName;
     }
-
-    public RequestDTO(String requestID, int status, String subjectCode, String startTime, String endTime, String description, String studentID, String lecturerID, String semesterID, String note) {
-        this.requestID = requestID;
-        this.status = status;
-        this.subjectCode = subjectCode;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.description = description;
-        this.studentID = studentID;
-        this.lecturerID = lecturerID;
-        this.semesterID = semesterID;
-        this.note = note;
-    }
     
-    public RequestDTO(String requestID, int status, String subjectCode, String startTime, String endTime, String description, String studentID, String lecturerID, String semesterID) {
-        this.requestID = requestID;
-        this.status = status;
-        this.subjectCode = subjectCode;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.description = description;
-        this.studentID = studentID;
-        this.lecturerID = lecturerID;
-        this.semesterID = semesterID;
-    }
-
     
     /**
      * @return the requestID
@@ -105,6 +120,98 @@ public class RequestDTO implements Serializable{
      */
     public void setSubjectCode(String subjectCode) {
         this.subjectCode = subjectCode;
+    }
+
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * @return the studentID
+     */
+    public String getStudentID() {
+        return studentID;
+    }
+
+    /**
+     * @param studentID the studentID to set
+     */
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
+    }
+
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+
+    /**
+     * @return the note
+     */
+    public String getNote() {
+        return note;
+    }
+
+    /**
+     * @param note the note to set
+     */
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    /**
+     * @return the studentName
+     */
+    public String getStudentName() {
+        return studentName;
+    }
+
+    /**
+     * @param studentName the studentName to set
+     */
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    /**
+     * @return the freeSlotID
+     */
+    public String getFreeSlotID() {
+        return freeSlotID;
+    }
+
+    /**
+     * @param freeSlotID the freeSlotID to set
+     */
+    public void setFreeSlotID(String freeSlotID) {
+        this.freeSlotID = freeSlotID;
+    }
+
+    @Override
+    public String toString() {
+        return "RequestDTO{" + "requestID=" + getRequestID() + ", status=" + getStatus() + ", subjectCode=" + getSubjectCode() + ", freeSlotID=" + getFreeSlotID() + ", description=" + getDescription() + ", studentID=" + getStudentID() + ", note=" + getNote() + ", studentName=" + getStudentName() + ", startTime=" + getStartTime() + ", endTime=" + getEndTime() + ", lecturerID=" + getLecturerID() + ", semesterID=" + getSemesterID() + '}';
     }
 
     /**
@@ -136,34 +243,6 @@ public class RequestDTO implements Serializable{
     }
 
     /**
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * @return the studentID
-     */
-    public String getStudentID() {
-        return studentID;
-    }
-
-    /**
-     * @param studentID the studentID to set
-     */
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
-    }
-
-    /**
      * @return the lecturerID
      */
     public String getLecturerID() {
@@ -178,50 +257,31 @@ public class RequestDTO implements Serializable{
     }
 
     /**
-     * @return the status
+     * @return the semesterID
      */
-    public int getStatus() {
-        return status;
+    public String getSemesterID() {
+        return semesterID;
     }
 
     /**
-     * @param status the status to set
+     * @param semesterID the semesterID to set
      */
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "RequestDTO{" + "requestID=" + getRequestID() + ", status=" + getStatus() + ", subjectCode=" + getSubjectCode() + ", startTime=" + getStartTime() + ", endTime=" + getEndTime() + ", description=" + getDescription() + ", studentID=" + getStudentID() + ", lecturerID=" + getLecturerID() + ", semesterID=" + getSemesterID() + '}';
+    public void setSemesterID(String semesterID) {
+        this.semesterID = semesterID;
     }
 
     /**
-     * @return the note
+     * @return the lecturerName
      */
-    public String getNote() {
-        return note;
+    public String getLecturerName() {
+        return lecturerName;
     }
 
     /**
-     * @param note the note to set
+     * @param lecturerName the lecturerName to set
      */
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    /**
-     * @return the studentName
-     */
-    public String getStudentName() {
-        return studentName;
-    }
-
-    /**
-     * @param studentName the studentName to set
-     */
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
+    public void setLecturerName(String lecturerName) {
+        this.lecturerName = lecturerName;
     }
     
     

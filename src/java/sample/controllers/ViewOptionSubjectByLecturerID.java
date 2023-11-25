@@ -41,7 +41,7 @@ public class ViewOptionSubjectByLecturerID extends HttpServlet {
         PrintWriter out = response.getWriter();
         for (FreeSlotsDTO list : ListSubjectByLecturer) {
             out.println("<a style=\"  display: flex;\n"
-                    + "    gap: 10px; padding: 10px; color:black;\" href=\"MainController?action=SearchFSlot&txtSubjectCode=" + list.getSubjectCode() + "&txtUserID=" + txtSearch + "\" ><i class=\"material-icons\">book</i> " + list.getSubjectCode() +" / "+ list.getLecturerName() + " </a>");
+                    + "    gap: 10px; padding: 10px; color:black;\" href=\"MainController?action=SearchFSlot&txtSubjectCode=" + list.getSubjectCode() + "&txtLecturerID=" + txtSearch  + "&txtLecturerName=" + txtSearch + "\" ><i class=\"material-icons\">book</i> " + list.getSubjectCode() +" / "+ list.getLecturerName() + " </a>");
         }
 
     }

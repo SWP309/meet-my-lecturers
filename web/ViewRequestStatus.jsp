@@ -223,47 +223,22 @@
             <i class="material-icons">history</i>
         </div>
 
-        <div class="container mt-5">
-            <form action="MainController" method="POST">
-                <div class="row align-items-center">
-                    <div class="form-group">
-                        <input type="text" class="form-control " name="txtSubjectCode" value="${param.txtSubjectCode}" placeholder="SubjectCode" pattern="^[A-Z]{3}[0-9]{3}$">
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" name="txtRequestStatus">
-                            <option value="All">All Requests</option>
-                            <option value="Accepted">Accepted</option>
-                            <option value="Declined">Declined</option>
-                            <option value="InProgress">In progress</option>
-                            <option value="Overdue">Overdue</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" name="txtSemesterID">
-                            <option value="FA23">FA23</option>
-                            <option value="SU23">SU23</option>
-                            <option value="SP23">SP23</option>
-                            <option value="FA22">FA22</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary form-control" type="submit" name="action" value="SearchRequestStatus">Search</button>
-                    </div>
-                </div>
-            </form>
-            <h1 class="text-center text-custom">Table of Requests</h1>
+        <h1 class="text-center text-custom">Table of Requests</h1>
             <div class="row justify-content-center mt-5">
                 <c:if test="${empty param.txtSubjectCode and not empty requestScope.LIST_REQUEST}">
                     <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
                         <thead>
                             <tr>
                                 <th>No.</th>
+                                <th>Request ID</th>
                                 <th>Semester</th>
+                                <th>Free Slot ID</th>
                                 <th>Subject Code</th>
-                                <th>LecturerID</th>
+                                <th>Lecturer ID</th>
                                 <th>Name</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
+                                <th>Description</th>
                                 <th>Status</th>
                                 <th>Note</th>
                             </tr>
@@ -273,20 +248,15 @@
                                        var="request" varStatus="status">
                                 <tr>
                                     <td>${status.count}</td>
+                                    <td>${request.requestID}</td>
                                     <td>${request.semesterID}</td>
+                                    <td>${request.freeSlotID}</td>
                                     <td>${request.subjectCode}</td>
                                     <td>${request.lecturerID}</td>
-                                    <td>
-                                        <c:set var="breakLoop" value="false" />
-                                        <c:forEach var="user" items="${requestScope.LIST_USER}">
-                                            <c:if test="${!breakLoop and user.userID eq request.lecturerID}">
-                                                ${user.userName}
-                                                <c:set var="breakLoop" value="true" />
-                                            </c:if>
-                                        </c:forEach>
-                                    </td>
+                                    <td>${request.lecturerName}</td>
                                     <td>${request.startTime}</td>
                                     <td>${request.endTime}</td>
+                                    <td>${request.description}</td>
                                     <td>
                                         <c:if test="${request.status == 1}">
                                             <b style="color: green">Accepted</b>
@@ -324,12 +294,15 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
+                                <th>Request ID</th>
                                 <th>Semester</th>
+                                <th>Free Slot ID</th>
                                 <th>Subject Code</th>
-                                <th>LecturerID</th>
+                                <th>Lecturer ID</th>
                                 <th>Name</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
+                                <th>Description</th>
                                 <th>Status</th>
                                 <th>Note</th>
                             </tr>
@@ -339,20 +312,15 @@
                                        var="request" varStatus="status">
                                 <tr>
                                     <td>${status.count}</td>
+                                    <td>${request.requestID}</td>
                                     <td>${request.semesterID}</td>
+                                    <td>${request.freeSlotID}</td>
                                     <td>${request.subjectCode}</td>
                                     <td>${request.lecturerID}</td>
-                                    <td>
-                                        <c:set var="breakLoop" value="false" />
-                                        <c:forEach var="user" items="${requestScope.USER_BY_STATUS}">
-                                            <c:if test="${!breakLoop and user.userID eq request.lecturerID}">
-                                                ${user.userName}
-                                                <c:set var="breakLoop" value="true" />
-                                            </c:if>
-                                        </c:forEach>
-                                    </td>
+                                    <td>${request.lecturerName}</td>
                                     <td>${request.startTime}</td>
                                     <td>${request.endTime}</td>
+                                    <td>${request.description}</td>
                                     <td>
                                         <c:if test="${request.status == 1}">
                                             <b style="color: green">Accepted</b>
@@ -387,12 +355,15 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
+                                <th>Request ID</th>
                                 <th>Semester</th>
+                                <th>Free Slot ID</th>
                                 <th>Subject Code</th>
-                                <th>LecturerID</th>
+                                <th>Lecturer ID</th>
                                 <th>Name</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
+                                <th>Description</th>
                                 <th>Status</th>
                                 <th>Note</th>
                             </tr>
@@ -402,20 +373,15 @@
                                        var="request" varStatus="status">
                                 <tr>
                                     <td>${status.count}</td>
+                                    <td>${request.requestID}</td>
                                     <td>${request.semesterID}</td>
+                                    <td>${request.freeSlotID}</td>
                                     <td>${request.subjectCode}</td>
                                     <td>${request.lecturerID}</td>
-                                    <td>
-                                        <c:set var="breakLoop" value="false" />
-                                        <c:forEach var="user" items="${requestScope.USER_BY_SUBCODE_AND_STATUS}">
-                                            <c:if test="${!breakLoop and user.userID eq request.lecturerID}">
-                                                ${user.userName}
-                                                <c:set var="breakLoop" value="true" />
-                                            </c:if>
-                                        </c:forEach>
-                                    </td>
+                                    <td>${request.lecturerName}</td>
                                     <td>${request.startTime}</td>
                                     <td>${request.endTime}</td>
+                                    <td>${request.description}</td>
                                     <td>
                                         <c:if test="${request.status == 1}">
                                             <b style="color: green">Accepted</b>
@@ -450,12 +416,15 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
+                                <th>Request ID</th>
                                 <th>Semester</th>
+                                <th>Free Slot ID</th>
                                 <th>Subject Code</th>
                                 <th>Lecturer ID</th>
                                 <th>Name</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
+                                <th>Description</th>
                                 <th>Status</th>
                                 <th>Note</th>
                             </tr>
@@ -465,20 +434,15 @@
                                        var="request" varStatus="status">
                                 <tr>
                                     <td>${status.count}</td>
+                                    <td>${request.requestID}</td>
                                     <td>${request.semesterID}</td>
+                                    <td>${request.freeSlotID}</td>
                                     <td>${request.subjectCode}</td>
                                     <td>${request.lecturerID}</td>
-                                    <td>
-                                        <c:set var="breakLoop" value="false" />
-                                        <c:forEach var="user" items="${requestScope.ALL_USER}">
-                                            <c:if test="${!breakLoop and user.userID eq request.lecturerID}">
-                                                ${user.userName}
-                                                <c:set var="breakLoop" value="true" />
-                                            </c:if>
-                                        </c:forEach>
-                                    </td>
+                                    <td>${request.lecturerName}</td>
                                     <td>${request.startTime}</td>
                                     <td>${request.endTime}</td>
+                                    <td>${request.description}</td>
                                     <td>
                                         <c:if test="${request.status == 1}">
                                             <b style="color: green">Accepted</b>
@@ -513,12 +477,15 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
+                                <th>Request ID</th>
                                 <th>Semester</th>
+                                <th>Free Slot ID</th>
                                 <th>Subject Code</th>
-                                <th>LecturerID</th>
+                                <th>Lecturer ID</th>
                                 <th>Name</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
+                                <th>Description</th>
                                 <th>Status</th>
                                 <th>Note</th>
                             </tr>
@@ -528,20 +495,15 @@
                                        var="request" varStatus="status">
                                 <tr>
                                     <td>${status.count}</td>
+                                    <td>${request.requestID}</td>
                                     <td>${request.semesterID}</td>
+                                    <td>${request.freeSlotID}</td>
                                     <td>${request.subjectCode}</td>
                                     <td>${request.lecturerID}</td>
-                                    <td>
-                                        <c:set var="breakLoop" value="false" />
-                                        <c:forEach var="user" items="${requestScope.ALL_USER_BY_SUBCODE}">
-                                            <c:if test="${!breakLoop and user.userID eq request.lecturerID}">
-                                                ${user.userName}
-                                                <c:set var="breakLoop" value="true" />
-                                            </c:if>
-                                        </c:forEach>
-                                    </td>
+                                    <td>${request.lecturerName}</td>
                                     <td>${request.startTime}</td>
                                     <td>${request.endTime}</td>
+                                    <td>${request.description}</td>
                                     <td>
                                         <c:if test="${request.status == 1}">
                                             <b style="color: green">Accepted</b>

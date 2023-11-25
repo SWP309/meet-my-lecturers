@@ -44,6 +44,11 @@ public class BookingDTO {
         this.numberOfAbsenceSlot = 0;
     }
 
+    public BookingDTO(String freeSlotID, String studentID) {
+        this.freeSlotID = freeSlotID;
+        this.studentID = studentID;
+    }
+
     public String getLecturerID() {
         return lecturerID;
     }
@@ -76,8 +81,6 @@ public class BookingDTO {
         this.numberOfCancelSlot = numberOfCancelSlot;
         this.semesterID = semesterID;
     }
-
-  
 
     public BookingDTO(String subjectCode, String lectureName, String startTime, String endTime, String userName, String bookingID, String meetLink, String freeSlotID, String studentID, int status, int numberOfAbsenceSlot) {
         this.subjectCode = subjectCode;
