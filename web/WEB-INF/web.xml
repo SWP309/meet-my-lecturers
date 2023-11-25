@@ -67,10 +67,6 @@
         <servlet-class>sample.controllers.DashBoardServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SearchFreeSlot</servlet-name>
-        <servlet-class>sample.controllers.SearchFreeSlot</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>SearchFreeSlotServlet</servlet-name>
         <servlet-class>sample.controllers.SearchFreeSlotServlet</servlet-class>
     </servlet>
@@ -267,6 +263,14 @@
         <servlet-name>LecturerHome</servlet-name>
         <servlet-class>sample.controllers.LecturerHome</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AcceptAllRequest</servlet-name>
+        <servlet-class>sample.controllers.AcceptAllRequest</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeclineAllRequest</servlet-name>
+        <servlet-class>sample.controllers.DeclineAllRequest</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -354,10 +358,6 @@
     <servlet-mapping>
         <servlet-name>DashBoardServlet</servlet-name>
         <url-pattern>/DashBoardServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchFreeSlot</servlet-name>
-        <url-pattern>/SearchFreeSlot</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchFreeSlotServlet</servlet-name>
@@ -514,6 +514,14 @@
     <servlet-mapping>
         <servlet-name>LecturerHome</servlet-name>
         <url-pattern>/LecturerHome</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AcceptAllRequest</servlet-name>
+        <url-pattern>/AcceptAllRequest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeclineAllRequest</servlet-name>
+        <url-pattern>/DeclineAllRequest</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

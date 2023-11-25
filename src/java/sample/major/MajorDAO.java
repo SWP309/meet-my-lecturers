@@ -77,7 +77,7 @@ public class MajorDAO implements Serializable {
         List<MajorDTO> list = null;
         Connection con = null;
         con = DBUtils.getConnection();
-        PreparedStatement stm = con.prepareStatement("SELECT m.lecturerID, m.subjectCode, s.subjectName\n"
+        PreparedStatement stm = con.prepareStatement("SELECT m.lecturerID, m.subjectCode, s.subjectName, m.semesterID\n"
                 + "FROM Majors m\n"
                 + "JOIN Subjects s ON m.subjectCode = s.subjectCode\n"
                 + "WHERE m.lecturerID = ?");
@@ -91,8 +91,9 @@ public class MajorDAO implements Serializable {
                 majorDTO.setLecturerID(lecturerID);
                 majorDTO.setSubjectCode(rs.getString("subjectCode"));
                 majorDTO.setSubjectName(rs.getString("subjectName"));
-                System.out.println(majorDTO.toString());
+                majorDTO.setSemesterID(rs.getString("semesterID"));
                 list.add(majorDTO);
+                System.out.println(majorDTO);
             }
         }
         con.close();

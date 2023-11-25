@@ -41,10 +41,8 @@ public class ViewAllRequestStatus extends HttpServlet {
 
             requestDAO.getListRequest(studentID);
             List<RequestDTO> listRequest = requestDAO.getListRequest();
-            List<UserDTO> listUser = requestDAO.getListUser();
             if (listRequest != null) {
                 request.setAttribute("LIST_REQUEST", listRequest);
-                request.setAttribute("LIST_USER", listUser);
                 url = SUCCESS;
             }else {
                 request.setAttribute("ERROR", "Dont have any request !!!");

@@ -256,8 +256,6 @@ td button {
 
 }
 .footer1 {
-    position: fixed;
-    bottom: 0px;
     display: flex;
     background-color: #f8d867;
     width: 100%;

@@ -2,142 +2,43 @@
 package sample.requests;
 
 public class RequestError {
-    private String currentDateError;
-    private String endTimeError;
-    private String durationError;
-    private String duplicateRequestError;
-    private String duplicateFreeSlotError;
-    private String duplicateTimetableError;
-    private String limitTimeAtNight;
-    private String semesterTimeError;
+    private String duplicateBookedSlot;
+    private String checkPassword;
 
     public RequestError() {
-        this.currentDateError = "";
-        this.endTimeError = "";
-        this.durationError = "";
-        this.duplicateRequestError = "";
-        this.duplicateFreeSlotError = "";
-        this.duplicateTimetableError = "";
-        this.limitTimeAtNight = "";
-        this.semesterTimeError = "";
     }
 
-    public RequestError(String currentDateError, String endTimeError, String durationError, String duplicateRequestError, String duplicateFreeSlotError, String duplicateTimetableError, String limitTimeAtNight, String semesterTimeError) {
-        this.currentDateError = currentDateError;
-        this.endTimeError = endTimeError;
-        this.durationError = durationError;
-        this.duplicateRequestError = duplicateRequestError;
-        this.duplicateFreeSlotError = duplicateFreeSlotError;
-        this.duplicateTimetableError = duplicateTimetableError;
-        this.limitTimeAtNight = limitTimeAtNight;
-        this.semesterTimeError = semesterTimeError;
-    }
-
-
-    /**
-     * @return the currentDateError
-     */
-    public String getCurrentDateError() {
-        return currentDateError;
+    public RequestError(String duplicateBookedSlot, String checkPassword) {
+        this.duplicateBookedSlot = duplicateBookedSlot;
+        this.checkPassword = checkPassword;
     }
 
     /**
-     * @param currentDateError the currentDateError to set
+     * @return the checkPassword
      */
-    public void setCurrentDateError(String currentDateError) {
-        this.currentDateError = currentDateError;
+    public String getCheckPassword() {
+        return checkPassword;
     }
 
     /**
-     * @return the endTimeError
+     * @param checkPassword the checkPassword to set
      */
-    public String getEndTimeError() {
-        return endTimeError;
+    public void setCheckPassword(String checkPassword) {
+        this.checkPassword = checkPassword;
     }
 
     /**
-     * @param endTimeError the endTimeError to set
+     * @return the duplicateBookedSlot
      */
-    public void setEndTimeError(String endTimeError) {
-        this.endTimeError = endTimeError;
+    public String getDuplicateBookedSlot() {
+        return duplicateBookedSlot;
     }
 
     /**
-     * @return the durationError
+     * @param duplicateBookedSlot the duplicateBookedSlot to set
      */
-    public String getDurationError() {
-        return durationError;
-    }
-
-    /**
-     * @param durationError the durationError to set
-     */
-    public void setDurationError(String durationError) {
-        this.durationError = durationError;
-    }
-
-    /**
-     * @return the duplicateRequestError
-     */
-    public String getDuplicateRequestError() {
-        return duplicateRequestError;
-    }
-
-    /**
-     * @param duplicateRequestError the duplicateRequestError to set
-     */
-    public void setDuplicateRequestError(String duplicateRequestError) {
-        this.duplicateRequestError = duplicateRequestError;
-    }
-
-    /**
-     * @return the duplicateTimetableError
-     */
-    public String getDuplicateTimetableError() {
-        return duplicateTimetableError;
-    }
-
-    /**
-     * @param duplicateTimetableError the duplicateTimetableError to set
-     */
-    public void setDuplicateTimetableError(String duplicateTimetableError) {
-        this.duplicateTimetableError = duplicateTimetableError;
-    }
-
-    /**
-     * @return the duplicateFreeSlotError
-     */
-    public String getDuplicateFreeSlotError() {
-        return duplicateFreeSlotError;
-    }
-
-    /**
-     * @param duplicateFreeSlotError the duplicateFreeSlotError to set
-     */
-    public void setDuplicateFreeSlotError(String duplicateFreeSlotError) {
-        this.duplicateFreeSlotError = duplicateFreeSlotError;
-    }
-
-    /**
-     * @return the limitTimeAtNight
-     */
-    public String getLimitTimeAtNight() {
-        return limitTimeAtNight;
-    }
-
-    /**
-     * @param limitTimeAtNight the limitTimeAtNight to set
-     */
-    public void setLimitTimeAtNight(String limitTimeAtNight) {
-        this.limitTimeAtNight = limitTimeAtNight;
-    }
-
-    public String getSemesterTimeError() {
-        return semesterTimeError;
-    }
-
-    public void setSemesterTimeError(String semesterTimeError) {
-        this.semesterTimeError = semesterTimeError;
+    public void setDuplicateBookedSlot(String duplicateBookedSlot) {
+        this.duplicateBookedSlot = duplicateBookedSlot;
     }
     
 }
