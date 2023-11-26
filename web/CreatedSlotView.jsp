@@ -462,14 +462,19 @@
                         <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">
                             <c:forEach var="listCreatedSlot" varStatus="counter" items="${requestScope.LIST_CREATED_SLOT}">
                                 <div class="col-md-4">
-                                    <div class="card" style="width: 357px; height:291px; border-radius: 5%;">
+                                    <div class="card" style="    width: 100%;
+                                         height: auto;
+                                         border-radius: 5%;">
                                         <div class="card-body">
                                             <form action="MainController" method="POST">
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture ID:</b></strong> 
+                                                    <span class="ml-auto specific-input">${listCreatedSlot.freeSlotID}</span>
+                                                </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}" />
+                                                    <span class="ml-auto specific-input">${listCreatedSlot.subjectCode.trim()}</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
-                                                    <span class="ml-auto">${listCreatedSlot.lectureName}</span>
+                                                    <span class="ml-auto specific-input">${listCreatedSlot.lectureName}</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
                                                     <input type="text" class="ml-auto specific-input" name="startTime" value="${listCreatedSlot.startTime}"  pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
@@ -532,14 +537,19 @@
                                 <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_ST_ET}">
                                     <c:forEach var="searchByStEt" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_ST_ET}">
                                         <div class="col-md-4">
-                                            <div class="card" style="width: 364px; height:291px; border-radius: 5%;">
+                                            <div class="card" style="    width: 100%;
+                                                 height: auto;
+                                                 border-radius: 5%;">
                                                 <div class="card-body">
                                                     <form action="MainController" method="POST">
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture ID:</b></strong> 
+                                                            <span class="ml-auto specific-input">${searchByStEt.freeSlotID}</span>
+                                                        </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                            <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByStEt.subjectCode.trim()}"/>
+                                                            <span class="ml-auto specific-input">${searchByStEt.subjectCode.trim()}</span>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
-                                                            <span class="ml-auto">${searchByStEt.lectureName}</span>
+                                                            <span class="ml-auto specific-input">${searchByStEt.lectureName}</span>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
                                                             <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEt.startTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
@@ -601,14 +611,19 @@
                                     <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_ALL}">
                                         <c:forEach var="searchByAll" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_ALL}">
                                             <div class="col-md-4">
-                                                <div class="card" style="width: 364px; height:291px; border-radius: 5%;">
+                                                <div class="card" style="    width: 100%;
+                                                     height: auto;
+                                                     border-radius: 5%;">
                                                     <div class="card-body">
                                                         <form action="MainController" method="POST">
+                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture ID:</b></strong> 
+                                                                <span class="ml-auto specific-input">${searchByAll.freeSlotID}</span>
+                                                            </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByAll.subjectCode.trim()}" />
+                                                                <span class="ml-auto specific-input">${searchByAll.subjectCode.trim()}</span>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
-                                                                <span class="ml-auto">${searchByAll.lectureName}</span>
+                                                                <span class="ml-auto specific-input">${searchByAll.lectureName}</span>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
                                                                 <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByAll.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
@@ -671,14 +686,19 @@
                                         <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_SUBJECT}">
                                             <c:forEach var="searchBySubjectCode" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_SUBJECT}">
                                                 <div class="col-md-4">
-                                                    <div class="card" style="width: 364px; height:291px; border-radius: 5%;">
+                                                    <div class="card" style="    width: 100%;
+                                                         height: auto;
+                                                         border-radius: 5%;">
                                                         <div class="card-body">
                                                             <form action="MainController" method="POST">
+                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture ID:</b></strong> 
+                                                                    <span class="ml-auto specific-input">${searchBySubjectCode.freeSlotID}</span>
+                                                                </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchBySubjectCode.subjectCode.trim()}" />
+                                                                    <span class="ml-auto specific-input">${searchBySubjectCode.subjectCode.trim()}</span>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
-                                                                    <span class="ml-auto">${searchBySubjectCode.lectureName}</span>
+                                                                    <span class="ml-auto specific-input">${searchBySubjectCode.lectureName}</span>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
                                                                     <input type="text" class="ml-auto specific-input" name="startTime" value="${searchBySubjectCode.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
@@ -743,14 +763,19 @@
                                             <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_NULL}">
                                                 <c:forEach var="searchByNull" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_NULL}">
                                                     <div class="col-md-4">
-                                                        <div class="card" style="width: 357px; height:291px; border-radius: 5%;">
+                                                        <div class="card" style="    width: 100%;
+                                                             height: auto;
+                                                             border-radius: 5%;">
                                                             <div class="card-body">
                                                                 <form action="MainController" method="POST">
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture ID:</b></strong> 
+                                                                        <span class="ml-auto specific-input">${searchByNull.freeSlotID}</span>
+                                                                    </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                        <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByNull.subjectCode.trim()}"/>
+                                                                        <span class="ml-auto specific-input">${searchByNull.subjectCode.trim()}</span>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
-                                                                        <span class="ml-auto">${searchByNull.lectureName}</span>
+                                                                        <span class="ml-auto specific-input">${searchByNull.lectureName}</span>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
                                                                         <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByNull.startTime}"  pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>

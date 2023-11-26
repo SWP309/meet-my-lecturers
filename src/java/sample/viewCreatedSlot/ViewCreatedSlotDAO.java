@@ -24,20 +24,6 @@ import sample.utils.DBUtils;
  */
 public class ViewCreatedSlotDAO {
 
-    private static String CREATED_SLOT_VIEW_COUNT_PAGE = "SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID, fs.semesterID, fs.meetLink, bo.[Number of students], fs.capacity\n"
-            + "FROM FreeSlots fs\n"
-            + "JOIN Users u1 ON fs.lecturerID = u1.userID\n"
-            + "LEFT JOIN (\n"
-            + "    SELECT freeSlotID, COUNT(*) AS 'Number of students'\n"
-            + "    FROM Bookings b\n"
-            + "    WHERE b.status = 1\n"
-            + "    GROUP BY b.freeSlotID\n"
-            + ") bo ON fs.freeSlotID = bo.freeSlotID\n"
-            + "WHERE fs.status='1' and u1.userEmail = ?\n"
-            + "ORDER BY fs.freeSlotID -- Add an order by clause for consistency\n"
-            + "OFFSET ? ROW\n"
-            + "FETCH NEXT 6 ROWS ONLY;";
-
     private static String CREATED_SLOT_VIEW = "	SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID, fs.semesterID, fs.meetLink, bo.[Number of students], fs.capacity\n"
             + "FROM FreeSlots fs\n"
             + "JOIN Users u1 ON fs.lecturerID = u1.userID\n"
@@ -89,14 +75,31 @@ public class ViewCreatedSlotDAO {
             + "    endTime = ?, \n"
             + "    subjectCode = ? \n"
             + "WHERE freeSlotID = ? ";
-    private static String SEARCH_FREE_SLOT_BY_ALL = "SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID,fs.semesterID,fs.meetLink, bo.[Number of students], fs.capacity\n"
-            + "           FROM FreeSlots fs\n"
-            + "          JOIN Users u1 ON fs.lecturerID = u1.userID\n"
-            + "           LEFT JOIN (SELECT freeSlotID, COUNT(*) AS 'Number of students'\n"
-            + "              FROM Bookings b\n"
-            + "              WHERE b.status = 1\n"
-            + "              GROUP BY b.freeSlotID) bo ON fs.freeSlotID = bo.freeSlotID\n"
-            + "		  where fs.status='1' and fs.startTime >= ? and fs.endTime <= ? and fs.subjectCode = ? and u1.userEmail = ? and fs.semesterID = ?";
+    private static String CREATED_SLOT_VIEW_COUNT_PAGE = "SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID, fs.semesterID, fs.meetLink, bo.[Number of students], fs.capacity\n"
+            + "FROM FreeSlots fs\n"
+            + "JOIN Users u1 ON fs.lecturerID = u1.userID\n"
+            + "LEFT JOIN (\n"
+            + "    SELECT freeSlotID, COUNT(*) AS 'Number of students'\n"
+            + "    FROM Bookings b\n"
+            + "    WHERE b.status = 1\n"
+            + "    GROUP BY b.freeSlotID\n"
+            + ") bo ON fs.freeSlotID = bo.freeSlotID\n"
+            + "WHERE fs.status='1' and u1.userEmail = ?\n"
+            + "ORDER BY fs.freeSlotID -- Add an order by clause for consistency\n"
+            + "OFFSET ? ROW\n"
+            + "FETCH NEXT 6 ROWS ONLY;";
+
+    private static String SEARCH_FREE_SLOT_BY_ALL = "  SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID,fs.semesterID,fs.meetLink, bo.[Number of students], fs.capacity\n"
+            + "                    FROM FreeSlots fs\n"
+            + "                  JOIN Users u1 ON fs.lecturerID = u1.userID\n"
+            + "                   LEFT JOIN (SELECT freeSlotID, COUNT(*) AS 'Number of students'\n"
+            + "                       FROM Bookings b\n"
+            + "                      WHERE b.status = 1\n"
+            + "                      GROUP BY b.freeSlotID) bo ON fs.freeSlotID = bo.freeSlotID\n"
+            + "         	  where fs.status='1' and fs.startTime >= ? and fs.endTime <= ? and fs.subjectCode = ? and u1.userEmail = ?\n"
+            + "           ORDER BY fs.freeSlotID \n"
+            + "            OFFSET ? ROW\n"
+            + "           FETCH NEXT 6 ROWS ONLY";
     private static String SEARCH_FREE_SLOT_BY_ST_ET_SUBJECTCODE = "SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID,fs.semesterID,fs.meetLink, bo.[Number of students], fs.capacity\n"
             + "           FROM FreeSlots fs\n"
             + "          JOIN Users u1 ON fs.lecturerID = u1.userID\n"
@@ -112,7 +115,10 @@ public class ViewCreatedSlotDAO {
             + "              FROM Bookings b\n"
             + "              WHERE b.status = 1\n"
             + "              GROUP BY b.freeSlotID) bo ON fs.freeSlotID = bo.freeSlotID\n"
-            + "		  where fs.status='1' and fs.startTime >= ? and fs.endTime <= ? and fs.semesterID = ? and u1.userEmail = ?";
+            + "		  where fs.status='1' and fs.startTime >= ? and fs.endTime <= ? and fs.semesterID = ? and u1.userEmail = ? "
+            + "ORDER BY fs.freeSlotID \n"
+            + "            OFFSET ? ROW\n"
+            + "           FETCH NEXT 6 ROWS ONLY;";
     private static String SEARCH_FREE_SLOT_BY_ST_ET = "SELECT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID,fs.semesterID,fs.meetLink, bo.[Number of students], fs.capacity\n"
             + "                       FROM FreeSlots fs\n"
             + "                    JOIN Users u1 ON fs.lecturerID = u1.userID\n"
@@ -128,7 +134,10 @@ public class ViewCreatedSlotDAO {
             + "              FROM Bookings b\n"
             + "              WHERE b.status = 1\n"
             + "              GROUP BY b.freeSlotID) bo ON fs.freeSlotID = bo.freeSlotID\n"
-            + "		  where  fs.status='1' and fs.subjectCode = ? and u1.userEmail = ?";
+            + "		  where  fs.status='1' and fs.subjectCode = ? and u1.userEmail = ? "
+            + "ORDER BY fs.freeSlotID \n"
+            + "            OFFSET ? ROW\n"
+            + "           FETCH NEXT 6 ROWS ONLY;";
     private static String SEARCH_FREE_SLOT_BY_SEMESTER = "SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID,fs.semesterID,fs.meetLink, bo.[Number of students], fs.capacity\n"
             + "           FROM FreeSlots fs\n"
             + "          JOIN Users u1 ON fs.lecturerID = u1.userID\n"
@@ -381,7 +390,7 @@ public class ViewCreatedSlotDAO {
         return listCreatedSlot;
     }
 
-    public List<ViewCreatedSlotDTO> searchFSlotViewByAll(String subjectCode, String startTime, String endTime, String userEmail, String semesterID) throws SQLException {
+    public List<ViewCreatedSlotDTO> searchFSlotViewByAll(String subjectCode, String startTime, String endTime, String userEmail, int countpage) throws SQLException {
         List<ViewCreatedSlotDTO> searchFSlotList = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -397,7 +406,7 @@ public class ViewCreatedSlotDAO {
                 ptm.setTimestamp(2, new Timestamp(endTimeFS.getTime()));
                 ptm.setString(3, subjectCode);
                 ptm.setString(4, userEmail);
-                ptm.setString(5, semesterID);
+                ptm.setInt(5, countpage);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
                     String fetchedSubjectCode = rs.getString("subjectCode");
@@ -574,7 +583,7 @@ public class ViewCreatedSlotDAO {
         return searchFSlotList;
     }
 
-    public List<ViewCreatedSlotDTO> searchFSlotViewBySubjectCode(String subjectCode, String userEmail) throws SQLException {
+    public List<ViewCreatedSlotDTO> searchFSlotViewBySubjectCode(String subjectCode, String userEmail, int countpage) throws SQLException {
         List<ViewCreatedSlotDTO> searchFSlotList = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -585,6 +594,7 @@ public class ViewCreatedSlotDAO {
                 ptm = conn.prepareStatement(SEARCH_FREE_SLOT_BY_SUBJECTCODE);
                 ptm.setString(1, subjectCode);
                 ptm.setString(2, userEmail);
+                ptm.setInt(3, countpage);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
                     String fetchedSubjectCode = rs.getString("subjectCode");
@@ -722,8 +732,6 @@ public class ViewCreatedSlotDAO {
         }
         return CheckHide;
     }
-
-  
 
     public boolean UnHide(String freeSlotID) throws SQLException {
         boolean CheckUnhide = false;
