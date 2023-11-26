@@ -47,7 +47,7 @@ public class ImportTimetables extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             TimetableDAO tb = new TimetableDAO();
-            String URL = "MainController?action=LecturerPage";
+            String URL = "MainController?action=viewFSlotLecturer";
             ArrayList<SubjectDTO> ListSubject = SubjectDAO.getAllSubject();
             Part filePart = request.getPart("txtexcel");
             String fileName = filePart.getSubmittedFileName();
@@ -75,7 +75,7 @@ public class ImportTimetables extends HttpServlet {
                                         || (!lecID.equalsIgnoreCase(lecturerID)) || (!semesterID.equalsIgnoreCase(semesID))) {
                                     flag = false;
                                     request.setAttribute("TIMESERVLET", "Error data in Excel at line " + i + ": Data must be correct with the given");
-                                    URL = "MainController?action=LecturerPage";
+//                                    URL = "MainController?action=viewFSlotLecturer";
                                     break;
                                 }
                                 for (SubjectDTO list : ListSubject) {
@@ -83,7 +83,7 @@ public class ImportTimetables extends HttpServlet {
                                     if (Sub == null) {
                                         flag = false;
                                         request.setAttribute("TIMESERVLET", "Error data in Excel at line " + i + ": Subject must existed in Database");
-                                        URL = "MainController?action=LecturerPage";
+//                                        URL = "MainController?action=viewFSlotLecturer";
                                         break;
                                     } else {
                                         continue;
@@ -110,16 +110,16 @@ public class ImportTimetables extends HttpServlet {
                                     }
                                 }
                                 wb.close();
-                                URL = "MainController?action=LecturerPage";
+                                URL = "MainController?action=viewFSlotLecturer";
                             }
                         } catch (IllegalStateException e) {
                             wb.close();
                             request.setAttribute("TIMESERVLET", "Error: Wrong format data");
-                            URL = "MainController?action=LecturerPage";
+//                            URL = "MainController?action=viewFSlotLecturer";
                         }
                     } else {
                         request.setAttribute("TIMESERVLET", "Error: Incorrect sheet name");
-                        URL = "MainController?action=LecturerPage";
+//                        URL = "MainController?action=viewFSlotLecturer";
                     }
                 } else if (fileName.endsWith(".xlsx")) {
                     InputStream inp = filePart.getInputStream();
@@ -140,7 +140,7 @@ public class ImportTimetables extends HttpServlet {
                                         || (!lecID.equalsIgnoreCase(lecturerID)) || (!semesterID.equalsIgnoreCase(semesID))) {
                                     flag = false;
                                     request.setAttribute("TIMESERVLET", "Error data in Excel at line " + i + ": Data must be correct with the given");
-                                    URL = "MainController?action=LecturerPage";
+//                                    URL = "MainController?action=viewFSlotLecturer";
                                     break;
                                 }
                                 for (SubjectDTO list : ListSubject) {
@@ -148,7 +148,7 @@ public class ImportTimetables extends HttpServlet {
                                     if (Sub == null) {
                                         flag = false;
                                         request.setAttribute("TIMESERVLET", "Error data in Excel at line " + i + ": Subject must existed in Database");
-                                        URL = "MainController?action=LecturerPage";
+//                                        URL = "MainController?action=viewFSlotLecturer";
                                         break;
                                     } else {
                                         continue;
@@ -175,24 +175,24 @@ public class ImportTimetables extends HttpServlet {
                                     }
                                 }
                                 wb.close();
-                                URL = "MainController?action=LecturerPage";
+//                                URL = "MainController?action=viewFSlotLecturer";
                             }
                         } catch (IllegalStateException e) {
                             wb.close();
                             request.setAttribute("TIMESERVLET", "Error: Wrong format data");
-                            URL = "MainController?action=LecturerPage";
+//                            URL = "MainController?action=viewFSlotLecturer";
                         }
                     } else {
                         request.setAttribute("TIMESERVLET", "Error: Incorrect sheet name");
-                        URL = "MainController?action=LecturerPage";
+//                        URL = "MainController?action=viewFSlotLecturer";
                     }
                 } else {
                     request.setAttribute("TIMESERVLET", "Error: Incorrect file format");
-                    URL = "MainController?action=LecturerPage";
+//                    URL = "MainController?action=viewFSlotLecturer";
                 }
             } else {
                 request.setAttribute("TIMESERVLET", "Error: Null file");
-                URL = "MainController?action=LecturerPage";
+//                URL = "MainController?action=viewFSlotLecturer";
             }
             request.getRequestDispatcher(URL).forward(request, response);
         } catch (Exception e) {

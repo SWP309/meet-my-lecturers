@@ -15,10 +15,6 @@
         <servlet-class>sample.controllers.LoginServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CreateRequestServlet</servlet-name>
-        <servlet-class>sample.controllers.CreateRequestServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>BookingController</servlet-name>
         <servlet-class>sample.controllers.BookingController</servlet-class>
     </servlet>
@@ -41,6 +37,10 @@
     <servlet>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <servlet-class>sample.controllers.CreateFreeSlotServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateRequestServlet</servlet-name>
+        <servlet-class>sample.controllers.CreateRequestServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UnhideFSlotController</servlet-name>
@@ -286,9 +286,21 @@
         <servlet-name>DeclineAllRequest</servlet-name>
         <servlet-class>sample.controllers.DeclineAllRequest</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchByMode</servlet-name>
+        <servlet-class>sample.controllers.SearchByMode</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelRequestServlet</servlet-name>
+        <servlet-class>sample.controllers.CancelRequestServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateRequestServlet</servlet-name>
+        <url-pattern>/CreateRequestServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreatedSlotController</servlet-name>
@@ -301,10 +313,6 @@
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CreateRequestServlet</servlet-name>
-        <url-pattern>/CreateRequestServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BookingController</servlet-name>
@@ -531,14 +539,18 @@
         <url-pattern>/LecturerHome</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-
         <servlet-name>AcceptAllRequest</servlet-name>
         <url-pattern>/AcceptAllRequest</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeclineAllRequest</servlet-name>
         <url-pattern>/DeclineAllRequest</url-pattern>
-
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchByMode</servlet-name>
+        <url-pattern>/SearchByMode</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>SearchBlockListServlet</servlet-name>
         <url-pattern>/SearchBlockListServlet</url-pattern>
     </servlet-mapping>
@@ -553,7 +565,10 @@
     <servlet-mapping>
         <servlet-name>DeleteBlockListServlet</servlet-name>
         <url-pattern>/DeleteBlockListServlet</url-pattern>
-
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelRequestServlet</servlet-name>
+        <url-pattern>/CancelRequestServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

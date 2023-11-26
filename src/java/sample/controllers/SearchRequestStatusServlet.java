@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import sample.requests.RequestDAO;
 import sample.requests.RequestDTO;
+import sample.semester.SemesterDAO;
+import sample.semester.SemesterDTO;
 import sample.users.UserDTO;
 
 public class SearchRequestStatusServlet extends HttpServlet {
@@ -21,6 +23,7 @@ public class SearchRequestStatusServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
+
         try {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -46,14 +49,20 @@ public class SearchRequestStatusServlet extends HttpServlet {
                     if (requestByStatus != null) {
                         request.setAttribute("REQUEST_BY_STATUS", requestByStatus);
                         url = SUCCESS;
+                    } else {
+                        request.setAttribute("ERROR", "Do not have the requests that you have searched !!");
                     }
-                } else {
+                } else if (!subjectCode.isEmpty()) {
                     requestDAO.getRequestBySubCodeAndStatus(us.getUserID(), subjectCode, status, txtSemesterID);
                     List<RequestDTO> requestBySubCodeAndStatus = requestDAO.getRequestBySubCodeAndStatus();
                     if (requestBySubCodeAndStatus != null) {
                         request.setAttribute("REQUEST_BY_SUBCODE_AND_STATUS", requestBySubCodeAndStatus);
                         url = SUCCESS;
+                    } else {
+                        request.setAttribute("ERROR", "Do not have the requests that you have searched !!");
                     }
+                } else {
+                    request.setAttribute("ERROR", "Do not have the requests that you have searched !!");
                 }
             } else {
                 if (subjectCode.isEmpty()) {
@@ -62,16 +71,25 @@ public class SearchRequestStatusServlet extends HttpServlet {
                     if (requestList != null) {
                         request.setAttribute("ALL_REQUEST", requestList);
                         url = SUCCESS;
+                    } else {
+                        request.setAttribute("ERROR", "Do not have the requests that you have searched !!");
                     }
-                } else {
+                } else if (!subjectCode.isEmpty()) {
                     requestDAO.getAllRequestBySubCode(us.getUserID(), subjectCode, txtSemesterID);
                     List<RequestDTO> requestBySubCode = requestDAO.getAllRequestBySubCode();
                     if (requestBySubCode != null) {
                         request.setAttribute("ALL_REQUEST_BY_SUBCODE", requestBySubCode);
                         url = SUCCESS;
+                    } else {
+                        request.setAttribute("ERROR", "Do not have the requests that you have searched !!");
                     }
+                } else {
+                    request.setAttribute("ERROR", "Do not have the requests that you have searched !!");
                 }
             }
+            SemesterDAO list = new SemesterDAO();
+            List<SemesterDTO> listSemes = list.select();
+            request.setAttribute("ListSemes", listSemes);
         } catch (ClassNotFoundException | SQLException ex) {
             log("Error at SearchRequestStatusServlet: " + ex.toString());
         } finally {

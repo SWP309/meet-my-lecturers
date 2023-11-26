@@ -23,6 +23,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="./ViewRequest.css" />
+        <script src="./lecturer.js"></script>
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
@@ -74,7 +75,8 @@
 
             .custom-table {
                 border-collapse: collapse;
-                width: 100%;
+                width: 80%;
+                margin: 0 auto;
             }
 
             .custom-table th,

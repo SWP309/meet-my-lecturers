@@ -54,7 +54,7 @@ public class AcceptAllRequest extends HttpServlet {
                 listRequest = (List<RequestDTO>) session.getAttribute("SEARCH_REQUEST_BY_NULL");
             }
             for (RequestDTO requestDTO : listRequest) {
-                System.out.println("");
+                System.out.println(requestDTO.toString());
             }
 
             String subject = "";
@@ -64,8 +64,9 @@ public class AcceptAllRequest extends HttpServlet {
 
                         subject = (freeSlotsDAO.checkSubjectFS(requestDTO.getFreeSlotID())).trim();
                         if (requestDTO.getSubjectCode().trim().equals(subject)) {
-//                            requestDAO.acceptARequest(requestDTO.getRequestID());
-//                            requestDAO.updateStatusDuplicateAcceptedRequest(requestDTO.getStudentID());                            
+                            requestDAO.acceptARequest(requestDTO.getRequestID());
+                            System.out.println(requestDTO.getStartTime() + " " + requestDTO.getEndTime());
+                            System.out.println(requestDAO.updateStatusDuplicateAcceptedRequest(requestDTO.getStudentID(), requestDTO.getStartTime(), requestDTO.getEndTime()));                            
                             bookingDAO.BookFSlot(new BookingDTO(requestDTO.getFreeSlotID(), requestDTO.getStudentID()));
                             url = SUCCESS;
                         } else {
@@ -76,7 +77,8 @@ public class AcceptAllRequest extends HttpServlet {
                     } else {
                         requestDAO.acceptARequest(requestDTO.getRequestID());
                         freeSlotsDAO.updateSubject(requestDTO.getSubjectCode(), requestDTO.getFreeSlotID());
-                        requestDAO.updateStatusDuplicateAcceptedRequest(requestDTO.getStudentID());
+                        //sua o day nha
+//                        requestDAO.updateStatusDuplicateAcceptedRequest(requestDTO.getStudentID());
                         System.out.println(requestDTO.getFreeSlotID() + " " + requestDTO.getStudentID());
                         bookingDAO.BookFSlot(new BookingDTO(requestDTO.getFreeSlotID(), requestDTO.getStudentID()));
                         url = SUCCESS;

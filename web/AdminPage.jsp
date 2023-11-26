@@ -140,7 +140,7 @@
                                 <input type="hidden" name="action" value="ViewUsers" />
                             </form>
                             <i class="material-icons">event</i>
-                            <div class="view-booking" >Search Users</div>
+                            <div class="view-booking" >Manage Users</div>
                         </div>
                         <div class="frame-div request import"  onclick="submitFormImport()">
                             <form action="MainController" method="POST">
@@ -149,21 +149,21 @@
                                 <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0z"/>
                                 </svg>
                             </form>
-                            Import Schedule
+                            Import Data
                         </div>
                         <div class="frame-div AdminAddData" onclick="submitFormAddData()">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="AdminAddData" />
                                 <i class="material-icons">add</i> 
                             </form>
-                            Add data page
+                            Add Data
                         </div>
                         <div class="frame-div AdminViewSlot" onclick="submitFormViewSlots()">
                             <form action="MainController" method="POST" style="display: none">
                                 <input type="hidden" name="action" value="AdminViewSlot" />
                             </form>
                             <i class="fas fa-users-cog"></i>
-                            Manage slot page
+                            View Slots
                         </div>
                         <div class="frame-div logout" onclick="submitFormLogout()" >
                             <form action="MainController" method="POST" style="display: none">
@@ -203,7 +203,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
-                                <h5 class="card-title">Sinh viên GỬI <span style="color: red" >NHIỀU REQUEST NHẤT</span></h5>
+                                <h5 class="card-title">Sinh viên <span style="color: red" >GỬI NHIỀU REQUEST NHẤT</span></h5>
 
                             </div>
 
@@ -248,7 +248,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
-                                <h5 class="card-title">Sinh viên <span style="color: red" >SINH VIÊN ABSENT NHIỀU SLOT NHẤT</span></h5>                              
+                                <h5 class="card-title">Sinh viên <span style="color: red" >ABSENT NHIỀU SLOT NHẤT</span></h5>                              
                             </div> 
                             <p class="mt-2">Số lượt absent: <b style="color: red">${requestScope.Top5StuMaxAbsentNum.numberOfAbsenceSlot}</b></p>
                             <p class="mt-2">MSSV: <b style="color: red">${requestScope.Top5StuMaxAbsentNum.studentID}</b></p>
@@ -260,7 +260,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
-                                <h5 class="card-title">Sinh viên GỬI <span style="color: red" >SINH VIÊN CANCEL NHIỀU SLOT NHẤT</span></h5>
+                                <h5 class="card-title">Sinh viên <span style="color: red" >CANCEL NHIỀU SLOT NHẤT</span></h5>
 
                             </div>
                             <p class="mt-2">Số lượt cancel: <b style="color: red">${requestScope.Top5StuMaxCancelNum.numberOfCancelSlot}</b></p>

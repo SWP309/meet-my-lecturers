@@ -310,9 +310,6 @@
                     <div class="input-group-append">
                         <button id="update" type="submit" value="UpdateSub" name="action" class="btn btn-primary custom-submit-button">Neutralize</button>
                     </div>
-                    <div class="input-group-append">
-                        <button id="remove" type="submit" value="RemoveSub" name="action" class="btn btn-primary custom-submit-button">Remove</button>
-                    </div>
                 </div>
             </form>
                 <%

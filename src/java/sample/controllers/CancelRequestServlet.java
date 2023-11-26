@@ -1,63 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package sample.subjects;
+
+package sample.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sample.majors.MajorsDAO;
-import sample.majors.MajorsDTO;
+import sample.bookings.BookingDAO;
+import sample.requests.RequestDAO;
 
 /**
  *
- * @author Minh Khang
+ * @author CHIBAO
  */
-public class RemoveSubject extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+public class CancelRequestServlet extends HttpServlet {
+    private final String SUCCESS = "ViewAllRequestStatus";
+    private final String ERROR = "ViewAllRequestStatus";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            int rs = 0;
-            String url = "MainController?action=ManageServlet";
-            String subjectCode = request.getParameter("txtsubject");
-//            ArrayList<MajorsDTO> list = MajorsDAO.getAllMajors();
-//            MajorsDTO major = null;
-//            for (MajorsDTO ob : list) {
-//                if (subjectCode.equalsIgnoreCase(ob.getSubjectCode())) {
-//                    major = ob;
-//                }
-//            }
-//            if (major == null) {
-
-                rs = SubjectDAO.removeSubject(subjectCode);
-                if (rs > 0) {
-                    request.setAttribute("RemoveStatus", "Remove successfully!");
-                } else {
-                    request.setAttribute("RemoveStatus", "Remove fail!");
-                }
-//            } else{
-//                request.setAttribute("RemoveStatus", "Remove fail due to major");
-//            }
+        String url = ERROR;
+        try {
+            String requestID = request.getParameter("txtRequestID");
+            RequestDAO requestDAO = new RequestDAO();
+            boolean checkCancel = requestDAO.deleteRequestStatus(requestID);
+            if (checkCancel) {
+                url = SUCCESS;
+            }
+        } catch (ClassNotFoundException | SQLException | ParseException ex) {
+            log("Error at CancelRequestServlet: " + ex.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

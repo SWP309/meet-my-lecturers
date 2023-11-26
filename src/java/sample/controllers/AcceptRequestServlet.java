@@ -37,6 +37,8 @@ public class AcceptRequestServlet extends HttpServlet {
             UserDTO lecturer = (UserDTO) session.getAttribute("loginedUser");
             String requestID = request.getParameter("txtRequestID");
             String freeSlotID = request.getParameter("txtFreeSlotID");
+            String startTime = request.getParameter("txtStartTime");
+            String endTime = request.getParameter("txtEndTime");
 
             String studentID = request.getParameter("txtStudentID");
             String meetLink = request.getParameter("txtLinkMeet");
@@ -48,7 +50,7 @@ public class AcceptRequestServlet extends HttpServlet {
             } else {
                 boolean checkAccept = requestDAO.acceptARequest(requestID);
                 
-                requestDAO.updateStatusDuplicateAcceptedRequest(studentID);
+                requestDAO.updateStatusDuplicateAcceptedRequest(studentID, startTime, endTime);
 
                 BookingDTO bookingDTO = new BookingDTO();
                 bookingDTO.setStudentID(studentID);
@@ -65,8 +67,7 @@ public class AcceptRequestServlet extends HttpServlet {
             }
 
         } catch (ClassNotFoundException | SQLException | ParseException ex) {
-            log("Error at AcceptRequestServlet: " + ex);
-            ex.printStackTrace();
+            log("Error at AcceptRequestServlet: " + ex.toString());
         }
     }
 
