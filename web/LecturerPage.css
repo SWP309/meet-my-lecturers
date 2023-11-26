@@ -41,6 +41,9 @@
     height: 0px;
     margin-bottom: 5%;
 }
+.frame-choice:hover{
+    opacity: 0.5;
+}
 
 .table-container {
     height: 100%;

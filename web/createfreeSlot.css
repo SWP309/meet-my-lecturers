@@ -92,7 +92,9 @@ td button {
     width: 45px;
     height: 42px;
 }
-
+.frame-choice:hover{
+    opacity: 0.5;
+}
 .dropbtn {
     background-color: black;
     color: white;
