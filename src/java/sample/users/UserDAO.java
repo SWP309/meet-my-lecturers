@@ -76,7 +76,7 @@ public class UserDAO implements Serializable {
             + "                      )\n"
             + "                      GROUP BY b.studentID , u.userName , u.userEmail\n"
             + "                    )\n"
-            + "                    SELECT TOP 6 studentID, userName, userEmail ,NumberSlot\n"
+            + "                    SELECT TOP 8 studentID, userName, userEmail ,NumberSlot\n"
             + "                    FROM StudentCounts\n"
             + "                   ORDER BY NumberSlot DESC;";
 

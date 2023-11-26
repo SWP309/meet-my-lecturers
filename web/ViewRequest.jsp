@@ -125,6 +125,10 @@
                     color: red;
                     text-align: center;
                 }
+                .button-style:hover{
+                    opacity: 0.5;
+                    background: activeborder;
+                }
             </style>
         </head>
         <body>
@@ -280,18 +284,15 @@
                                                 <option value="FA22">FA22</option>
                                             </select>
                                         </div>
-                                        <div class="form-group" style="margin-left: 5px">
-                                            <button class="btn btn-primary form-control" style="border-color: black" type="submit" name="action" value="searchRequestForLec">Search</button>
+                                        <div class="form-group" style="margin-left: 5px; display: flex;
+                                        gap: 10px;">
+                                        <button class="btn btn-primary form-control" type="submit" name="action" value="searchRequestForLec">Search</button>
+                                            <button class="form-control btn btn-primary" type="submit" name="action" value="acceptAllRequest">Accept All</button>
+                                            <button class="form-control btn btn-primary"  type="submit" name="action" value="declineAllRequest">Decline All</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <button> <a href="MainController?action=acceptAllRequest">Accept All</a> </button>
-                        </div>
-                        <div>
-                            <button> <a href="MainController?action=declineAllRequest">Decline All</a> </button>
                         </div>
 
                         <div class="view-user-table" style="width: 90%;

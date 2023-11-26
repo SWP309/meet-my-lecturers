@@ -13,13 +13,52 @@
         <title>Thay đổi mật khẩu</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <meta charset="UTF-8">
-        <!-- Material Icons CSS -->
+
+        <link rel="stylesheet" href="./LecturerPage.css" />
+        <link rel="stylesheet" href="./LecturerHome.css" />
+        <script src="./lecturer.js"></script>
+
+
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap"
+            />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Lohit Tamil:wght@400&display=swap"
+            />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
+            />
+        <!-- CSS c?a Bootstrap 5 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+        <!-- CSS c?a Bootstrap 4 -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Icon -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <!-- SweetAlert2 CSS -->
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+        <!-- CSS c?a SweetAlert -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
 
-        <!-- SweetAlert2 JS -->
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- JavaScript c?a Bootstrap 4 -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+        <!-- JavaScript c?a Bootstrap 5 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+        <!-- JavaScript c?a SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.all.min.js"></script>
+        <!--        animation --------------->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
         <%
 
@@ -27,100 +66,7 @@
             if (us != null) {
         %>
 
-        <style>
-            .form-control{
-                border-radius: 40px;
-                width: 30%;
-            }
-            .btn{
-                border-radius: 40px;
 
-            }
-            .returnHome{
-                /*position: absolute;*/
-                width: 120px;
-                height: 50px;
-                background-repeat: no-repeat;
-                background-size: 100%;
-                background-image: url("public/BookingView/2021fptueng-1@2x.png");
-            }
-            .frame-group, .frame-div{
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-            }
-            .logout{
-                width: 170px !important;
-            }
-            .frame-item {
-                margin-left: 44px;
-                cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
-                position: relative;
-                width: 45px;
-                height: 42px;
-            }
-            .frame-parent {
-                display: flex;
-                flex-direction: row;
-            }
-            .fptu-eng-1-parent {
-                position: relative;
-                background-color: rgba(0, 0, 0, 0.125);
-                border-top: 1px solid #000;
-                border-bottom: 1px solid #000;
-                box-sizing: border-box;
-                width: 100%;
-                min-height: 68px;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                /*padding: 35px 40px;*/
-                padding-left: 35px;
-                font-size: 17px;
-                color: #fff;
-
-                flex-wrap: wrap;
-            }
-            #user-id, #user-name, #user-email {
-                color: black; /* Đặt màu chữ thành màu đen */
-            }
-            .div {
-                position: relative;
-            }
-            .frame-div {
-                cursor: pointer; /* Hiển thị con trỏ chuột khi di chuột qua */
-                border-radius: 12px;
-                background-color: #f27125;
-                width: 213px;
-                height: 43px;
-                /*align-items: flex-start;*/
-                padding: 10px 9px;
-                box-sizing: border-box;
-                gap: 8px;
-                justify-content: center;
-            }
-            .frame-group {
-                gap: 3px;
-                flex-wrap: wrap;
-            }
-            .frame-History{
-                border-radius: 20px;
-                background-color: #f27125;
-                width: 40px !important;
-                height: 40px;
-                align-items: center;
-                padding: 10px 9px;
-                box-sizing: border-box;
-                /* gap: 0px; */
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                float: right;
-                margin-top: 15px;
-                margin-right: 20px;
-            }
-        </style>
         <script>
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
@@ -149,21 +95,34 @@
                 var form = document.querySelector('.logout form');
                 form.submit();
             }
+            function myFunctionDropdown() {
+                var dropdown = document.getElementById("myDropdown");
+                dropdown.classList.toggle("show");
+
+                if (dropdown.classList.contains('show')) {
+                    dropdown.style.display = "flex";
+                    setTimeout(function () {
+                        dropdown.style.opacity = 1;
+                        dropdown.style.transform = "scaleY(1)";
+                    }, 10);
+                } else {
+                    dropdown.style.opacity = 0;
+                    dropdown.style.transform = "scaleY(0)";
+                    setTimeout(function () {
+                        dropdown.style.display = "none";
+                    }, 400);
+                }
+            }
         </script>
     </head>
     <div class="fptu-eng-1-parent">
         <div class="returnHome"> 
             <form action="MainController" method="POST">
-                <input type="hidden" name="action" value="CheckStatusUser" />
+                <input type="hidden" name="action" value="returnHomePageStudent" />
             </form>
         </div>
-        <div class="frame-parent"> 
-            <div class="frame-div logout" onclick="submitFormLogout()" style="width: 10%; text-align: center">
-                <form action="MainController" method="POST" style="display: none;">
-                    <input type="hidden" name="action" value="Logout" />
-                </form>
-                <i class="material-icons">logout</i> Logout
-            </div>
+        <div class="frame-parent">
+
             <div>
                 <img class="frame-item" alt="" style="cursor: pointer" src="public/BookingView/group-33.svg" 
                      onclick="showUserInfo()" />
@@ -173,6 +132,22 @@
                     <p id="user-email"></p>
                 </div>
             </div>
+            <div class="dropdown">
+                <button onclick="myFunctionDropdown()" class="dropbtn"> 
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div id="myDropdown" class="dropdown-content" style="right: 0px;
+                     flex-direction: column;
+                     ">
+                    <div class="frame-div logout" onclick="submitFormLogout()">
+                        <form action="MainController" method="POST" style="display: none;">
+                            <input type="hidden" name="action" value="Logout" />
+                        </form>
+                        <i class="material-icons">logout</i> Logout
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </div>

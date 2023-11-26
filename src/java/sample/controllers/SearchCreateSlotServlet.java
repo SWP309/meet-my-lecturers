@@ -32,13 +32,13 @@ public class SearchCreateSlotServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
+
         try {
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String subjectCode = request.getParameter("txtSubjectCode");
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
-            String semesterID = request.getParameter("txtSemesterID");
             String userEmail = us.getUserEmail();
             ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
             int listCountPage = dao.CountPage(us.getUserEmail());
@@ -46,7 +46,7 @@ public class SearchCreateSlotServlet extends HttpServlet {
             ViewCreatedSlotDAO searchFSlot = new ViewCreatedSlotDAO();
 
             if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchByAll = searchFSlot.searchFSlotViewByAll(subjectCode, startTime, endTime, userEmail, semesterID);
+                List<ViewCreatedSlotDTO> searchByAll = searchFSlot.searchFSlotViewByAll(subjectCode, startTime, endTime, userEmail, 0);
                 if (searchByAll != null) {
                     for (ViewCreatedSlotDTO viewCreatedSlotDTO : searchByAll) {
                         System.out.println(viewCreatedSlotDTO.getSubjectCode());
@@ -57,7 +57,7 @@ public class SearchCreateSlotServlet extends HttpServlet {
                 }
 
             } else if (startTime.isEmpty() && endTime.isEmpty() && !subjectCode.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchBySubjectCode = searchFSlot.searchFSlotViewBySubjectCode(subjectCode, userEmail);
+                List<ViewCreatedSlotDTO> searchBySubjectCode = searchFSlot.searchFSlotViewBySubjectCode(subjectCode, userEmail, 0);
                 if (searchBySubjectCode != null) {
                     request.setAttribute("SEARCH_FREE_SLOT_BY_SUBJECT", searchBySubjectCode);
                     System.out.println(subjectCode);
