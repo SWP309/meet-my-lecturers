@@ -65,16 +65,25 @@ td button {
     display: block; /* Đảm bảo rằng nút sẽ có kích thước của ô td */
     margin: 0 auto; /* Để căn giữa nút bên trong ô td */
 }
-.table-rounded {
-    border-radius: 10px; /* Điều chỉnh giá trị này để thay đổi độ bo tròn */
-    overflow: hidden;
-    border-collapse: separate;
-    /*        border-spacing: 0 10px;  Điều chỉnh giá trị 10px để thay đổi khoảng cách giữa các cột */
-
+.table-rounded{
+    width: 100%
+}
+.table-rounded th,
+.table-rounded td {
+    padding: 8px;
+    border: 1px solid black;
+    text-align: center;
+    color: black;
 }
 
-.table-rounded th, .table-rounded td {
-    border-radius: 0;
+.table-rounded thead {
+    background-color: #f27125;
+    color: white;
+}
+
+/* Tùy chỉnh màu nền khi hover */
+.table-rounded tbody tr:hover {
+    background-color: #e0e0e0;
 }
 .frame-div:hover{
     background-color: #f27125;
