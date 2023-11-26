@@ -149,6 +149,7 @@ public class ImportStudents extends HttpServlet {
                                 Row row = sheet.getRow(i);
 
                                 String userID = row.getCell(1).getStringCellValue();
+                                System.out.println(userID);
                                 String userName = row.getCell(2).getStringCellValue();
                                 String userEmail = row.getCell(3).getStringCellValue();
                                 int userStatus = (int) row.getCell(4).getNumericCellValue();
