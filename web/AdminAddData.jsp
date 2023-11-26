@@ -332,6 +332,7 @@
                     <input  style="text-align: center" type="text" class="form-control" name="txtsubject" value="<%= sub.getSubjectCode()%>" readonly>
                     <input style="color: tomato;text-align: center" type="text" class="form-control" name="txtdescription" value="<%=  sub.getSubjectName()%>" readonly>
                     <div class="input-group-append">
+
                         <button id="update" onclick="return confirm('Are you sure to hide this subject Code ?')" type="submit" value="UpdateSub" name="action" class="btn btn-primary custom-submit-button">Neutralize</button>
                     </div>
                 </div>

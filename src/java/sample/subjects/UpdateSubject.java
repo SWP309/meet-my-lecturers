@@ -38,25 +38,34 @@ public class UpdateSubject extends HttpServlet {
             String url = "MainController?action=ManageServlet";
             String subjectCode = request.getParameter("txtsubject");
             String Description = request.getParameter("txtdescription");
-            SubjectDTO subject = new SubjectDTO(subjectCode, Description);
-            ArrayList<MajorsDTO> list = MajorsDAO.getAllMajors();
-            MajorsDTO major = null;
-            for (MajorsDTO ob : list) {
-                if (subjectCode.equalsIgnoreCase(ob.getSubjectCode())) {
-                    major = ob;
-                }
-            }
-            if (major == null) {
-                rs = SubjectDAO.updateSubject(subject);
-                if (rs > 0) {
-                    request.setAttribute("RemoveStatus", "Update successfully!");
-                } else {
-                    request.setAttribute("RemoveStatus", "Update failed!");
-                }
+            SubjectDAO.updateRequestStatus(subjectCode);
+            SubjectDAO.updateFSandBKStatus(subjectCode);
+            SubjectDAO.updateFSStatus(subjectCode);
+            SubjectDAO.updateSubjectStatus(subjectCode);
+            request.setAttribute("RemoveStatus", "Update successfully!");
+//            request.setAttribute("RemoveStatus", "Update failed!");
+//            request.setAttribute("RemoveStatus", "Update failed!");
+//            request.setAttribute("RemoveStatus", "Update failed!");
 
-            } else{
-                request.setAttribute("RemoveStatus", "Update fail due to the existed of subject in lecturer's major");
-            }
+//            SubjectDTO subject = new SubjectDTO(subjectCode, Description);
+//            ArrayList<MajorsDTO> list = MajorsDAO.getAllMajors();
+//            MajorsDTO major = null;
+//            for (MajorsDTO ob : list) {
+//                if (subjectCode.equalsIgnoreCase(ob.getSubjectCode())) {
+//                    major = ob;
+//                }
+//            }
+//            if (major == null) {
+//                rs = SubjectDAO.updateSubject(subject);
+//                if (rs > 0) {
+//                    request.setAttribute("RemoveStatus", "Update successfully!");
+//                } else {
+//                    request.setAttribute("RemoveStatus", "Update failed!");
+//                }
+//
+//            } else{
+//                request.setAttribute("RemoveStatus", "Update fail due to the existed of subject in lecturer's major");
+//            }
             request.getRequestDispatcher(url).forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
