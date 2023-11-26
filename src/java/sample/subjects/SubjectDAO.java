@@ -204,4 +204,64 @@ public class SubjectDAO {
         }
         return rs;
     }
+
+    public static int updateRequestStatus(String subjectCode) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "Update [dbo].[Requests]\n"
+                    + "Set [status] = 4\n"
+                    + "Where [subjectCode] = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, subjectCode);
+            rs = pst.executeUpdate();
+            cn.close();
+        }
+        return rs;
+    }
+
+    public static int updateFSandBKStatus(String subjectCode) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "BEGIN TRANSACTION UPDATE bk SET status = 4 FROM Bookings bk, FreeSlots fs WHERE subjectCode = ? AND bk.freeSlotID = fs.freeSlotID\n"
+                    + "UPDATE fs SET status = 4 FROM FreeSlots fs, Bookings bk WHERE subjectCode = ? AND fs.freeSlotID = bk.freeSlotID COMMIT";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, subjectCode);
+            pst.setString(2, subjectCode);
+            rs = pst.executeUpdate();
+            cn.close();
+        }
+        return rs;
+    }
+
+    public static int updateSubjectStatus(String subjectCode) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "Update [dbo].[Subjects]\n"
+                    + "Set [status] = 0\n"
+                    + "Where [subjectCode] = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, subjectCode);
+            rs = pst.executeUpdate();
+            cn.close();
+        }
+        return rs;
+    }
+
+    public static int updateFSStatus(String subjectCode) throws Exception {
+        int rs = 0;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "Update [dbo].[FreeSlots]\n"
+                    + "Set [status] = 4\n"
+                    + "Where [subjectCode] = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, subjectCode);
+            rs = pst.executeUpdate();
+            cn.close();
+        }
+        return rs;
+    }
 }
