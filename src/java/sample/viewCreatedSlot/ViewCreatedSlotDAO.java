@@ -138,6 +138,7 @@ public class ViewCreatedSlotDAO {
             + "              GROUP BY b.freeSlotID) bo ON fs.freeSlotID = bo.freeSlotID\n"
             + "		  where  fs.status='1' and fs.semesterID = ? and u1.userEmail = ?";
     private static String CHECK_ATTENDANCE_CREATE_SLOT = "UPDATE FreeSlots SET status = 2 WHERE freeSlotID = ?";
+
     private static String CHECK_TIME_DUPLICATE_FS = " SELECT DISTINCT fs.subjectCode, u1.userName AS lectureName, fs.startTime, fs.endTime, fs.freeSlotID, fs.semesterID, fs.meetLink, bo.[Number of students], fs.capacity\n"
             + "            FROM FreeSlots fs\n"
             + "            JOIN Users u1 ON fs.lecturerID = u1.userID\n"
@@ -721,6 +722,8 @@ public class ViewCreatedSlotDAO {
         }
         return CheckHide;
     }
+
+  
 
     public boolean UnHide(String freeSlotID) throws SQLException {
         boolean CheckUnhide = false;

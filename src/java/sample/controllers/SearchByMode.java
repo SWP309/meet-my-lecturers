@@ -52,7 +52,9 @@ public class SearchByMode extends HttpServlet {
             MajorDAO majorDAO = new MajorDAO();
             Date date = new Date();
             freeSlotsDAO.updateStatusOutDate(date);
-            if (mode == 1) {
+            if (mode == 0) {
+                request.setAttribute("ERROR", "Can not search if have not chosen the mode before !!!");
+            } else if (mode == 1) {
                 freeSlotsDAO.getFreeSlotByMode1(mode, us.getUserID());
                 List<FreeSlotsDTO> freeSlotByMode1 = freeSlotsDAO.getFreeSlotByMode1();
                 request.setAttribute("FREESLOT_BY_MODE1", freeSlotByMode1);

@@ -41,12 +41,7 @@
 
 
         <script>
-            function confirmCancel(bookingID) {
-                if (confirm('Are you sure to cancel this booking')) {
-                    // S? d?ng bi?n `bookingID` ? ?ây n?u c?n
-                    window.location.href = 'MainController?action=cancel&bookingID=' + bookingID;
-                }
-            }
+           
             var userDTO = {
                 userID: "<%= us.getUserID()%>",
                 userName: "<%= us.getUserName()%>",
@@ -70,19 +65,7 @@
                             + userName + '<br><b style="color: red;">User Email: </b>' + userEmail,
                 });
             }
-            function confirmCancel() {
-                var result = confirm("Are you sure about cancel your booking ?");
-                if (result) {
-                    // N?u ng??i dùng ch?n OK, chuy?n ??n trang MainController ?? x? lý hành ??ng "cancel".
-                    // Ví d?:
-                    window.location.href = "MainController?action=cancel&bookingID=" + document.querySelector('[name="bookingID"]').value;
-                } else {
-                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
-//                    alert("Booking cancel canceled!"); // Hi?n th? thông báo cho ng??i dùng
-                    // N?u ng??i dùng ch?n Cancel, ng?n ch?n chuy?n h??ng trang m?c ??nh sau ?ó.
-                    event.preventDefault();
-                }
-            }
+            
             function confirmCheckAttendanceLink(event, bookingID) {
                 var result = confirm("Are you sure about take part in this slot ?");
                 if (result) {
