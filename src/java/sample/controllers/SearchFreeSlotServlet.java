@@ -41,11 +41,10 @@ public class SearchFreeSlotServlet extends HttpServlet {
             String subjectCode = request.getParameter("txtSubjectCode");
             String lecturerID = request.getParameter("txtLecturerID");
             String lecturerName = request.getParameter("txtLecturerName");
-            int mode = Integer.parseInt(request.getParameter("txtMode"));
             System.out.println(subjectCode);
             System.out.println(lecturerName);
             System.out.println(lecturerID);
-            System.out.println(mode);
+//            System.out.println(mode);
             FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
             Date date = new Date();
             freeSlotsDAO.updateStatusOutDate(date);
@@ -71,21 +70,6 @@ public class SearchFreeSlotServlet extends HttpServlet {
                     }
                 }
             }
-
-            if (subjectCode == null && lecturerID == null && lecturerName == null && (mode == 2 || mode == 1)) {
-                freeSlotsDAO.getFreeSlotByMode(mode, us.getUserID());
-                List<FreeSlotsDTO> freeSlotByMode = freeSlotsDAO.getFreeSlotByMode();
-                if (freeSlotByMode != null) {
-                    for (FreeSlotsDTO freeSlotsDTO : freeSlotByMode) {
-                        if (!majorDAO.select(freeSlotsDTO.getLecturerID()).isEmpty()) {
-                            request.setAttribute("FREESLOT_BY_MODE", freeSlotByMode);
-                            freeSlotsDTO.setListMajor(majorDAO.select(freeSlotsDTO.getLecturerID()));
-                        }
-                    }
-                } else {
-                    request.setAttribute("ERROR", "Dont have any slots in this time !!!");
-                }
-            } else {
                 if (freeSlotBySubjectAndLecID != null || freeSlotByLecturerName != null) {
                     request.setAttribute("FREESLOT_BY_SUBJECT_AND_LECID", freeSlotBySubjectAndLecID);
                     request.setAttribute("FREESLOT_BY_LECTURER_NAME", freeSlotByLecturerName);
@@ -93,7 +77,7 @@ public class SearchFreeSlotServlet extends HttpServlet {
                 } else {
                     request.setAttribute("ERROR", "Dont have any slots in this time !!!");
                 }
-            }
+
 
         } catch (ClassNotFoundException | SQLException | ParseException ex) {
             log("Error at ViewAllRequestStatus: " + ex.toString());

@@ -54,7 +54,10 @@ public class RequestDAO implements Serializable {
 
     private final String ACCEPT_REQUEST = "UPDATE Requests\n"
             + "SET status = ?\n"
-            + "WHERE requestID = ? and status = 2";
+            + "WHERE requestID = ? and status = 2"
+            + "UPDATE [FreeSlots]\n"
+            + "SET [mode] = 1\n"
+            + "WHERE [freeSlotID] = ? and mode = 2";
 
     private final String DELETE_REQUEST = "UPDATE Requests\n"
             + "SET status = ?\n"
@@ -240,7 +243,7 @@ public class RequestDAO implements Serializable {
         }
     }
 
-    public boolean acceptARequest(String requestID) throws ClassNotFoundException, SQLException {
+    public boolean acceptARequest(String requestID, String freeSlotID) throws ClassNotFoundException, SQLException {
         boolean checkUpdate = false;
         Connection con = null;
         PreparedStatement stm = null;
@@ -250,6 +253,7 @@ public class RequestDAO implements Serializable {
             stm = con.prepareStatement(ACCEPT_REQUEST);
             stm.setInt(1, 1);
             stm.setString(2, requestID);
+            stm.setString(3, freeSlotID);
             result = stm.executeUpdate();
             if (result > 0) {
                 checkUpdate = true;

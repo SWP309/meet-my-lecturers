@@ -70,7 +70,8 @@
 
             .custom-table {
                 border-collapse: collapse;
-                width: 100%;
+                width: 80%;
+                margin: o auto;
             }
 
             .custom-table th,
@@ -221,13 +222,6 @@
                                 <input type="hidden" name="action" value="ViewRequestStatus" />
                             </form>
                             <i class="material-icons">visibility</i>View Request Status
-                        </div>
-                        <div class="frame-div request" onclick="submitFormRequest()">
-                            <form style="display: flex; justify-content: center;" action="MainController" method="POST">
-                                <input type="hidden" name="action" value="Request" />
-                                <i class="material-icons">mail_outline</i> 
-                            </form>
-                            Request
                         </div>
                         <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
                             <form style="display: flex; align-content: center;" action="MainController" method="POST">
