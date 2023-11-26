@@ -1,10 +1,12 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package sample.controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
@@ -21,7 +23,11 @@ import sample.users.Top3StudentDTO;
 import sample.users.UserDAO;
 import sample.users.UserDTO;
 
-public class SearchFreeSlotServlet extends HttpServlet {
+/**
+ *
+ * @author PC
+ */
+public class SearchByMode extends HttpServlet {
 
     private final String SUCCESS = "StudentHome_1.jsp";
     private final String ERROR = "StudentHome_1.jsp";
@@ -30,7 +36,9 @@ public class SearchFreeSlotServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
+
         try {
+
             UserDAO dao = new UserDAO();
             List<Top3StudentDTO> listTop3 = dao.GetlistTop3();
             if (listTop3 != null) {
@@ -38,47 +46,41 @@ public class SearchFreeSlotServlet extends HttpServlet {
             }
             HttpSession session = request.getSession();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
-            String subjectCode = request.getParameter("txtSubjectCode");
-            String lecturerID = request.getParameter("txtLecturerID");
-            String lecturerName = request.getParameter("txtLecturerName");
-            System.out.println(subjectCode);
-            System.out.println(lecturerName);
-            System.out.println(lecturerID);
-//            System.out.println(mode);
+            int mode = Integer.parseInt(request.getParameter("txtMode"));
+            System.out.println(mode);
             FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
+            MajorDAO majorDAO = new MajorDAO();
             Date date = new Date();
             freeSlotsDAO.updateStatusOutDate(date);
-
-            freeSlotsDAO.getFreeSlotBySubjectAndLecID(subjectCode, lecturerID, us.getUserID());
-            freeSlotsDAO.getFreeSlotByLecName(lecturerName, subjectCode, us.getUserID());
-
-            List<FreeSlotsDTO> freeSlotBySubjectAndLecID = freeSlotsDAO.getFreeSlotBySubjectAndLecID();
-            List<FreeSlotsDTO> freeSlotByLecturerName = freeSlotsDAO.getFreeSlotByLecName();
-            MajorDAO majorDAO = new MajorDAO();
-
-            if (freeSlotBySubjectAndLecID != null) {
-                for (FreeSlotsDTO freeSlotsDTO : freeSlotBySubjectAndLecID) {
-                    if (!majorDAO.select(freeSlotsDTO.getLecturerID()).isEmpty()) {
-                        freeSlotsDTO.setListMajor(majorDAO.select(freeSlotsDTO.getLecturerID()));
+            if (mode == 1) {
+                freeSlotsDAO.getFreeSlotByMode1(mode, us.getUserID());
+                List<FreeSlotsDTO> freeSlotByMode1 = freeSlotsDAO.getFreeSlotByMode1();
+                request.setAttribute("FREESLOT_BY_MODE1", freeSlotByMode1);
+                if (freeSlotByMode1 != null) {
+                    for (FreeSlotsDTO freeSlotsDTO : freeSlotByMode1) {
+                        if (!majorDAO.select(freeSlotsDTO.getLecturerID()).isEmpty()) {
+                            freeSlotsDTO.setListMajor(majorDAO.select(freeSlotsDTO.getLecturerID()));
+                            url = SUCCESS;
+                        }
                     }
-                }
-            }
-            if (freeSlotByLecturerName != null) {
-                for (FreeSlotsDTO freeSlotsDTO : freeSlotByLecturerName) {
-                    if (!majorDAO.select(freeSlotsDTO.getLecturerID()).isEmpty()) {
-                        freeSlotsDTO.setListMajor(majorDAO.select(freeSlotsDTO.getLecturerID()));
-                    }
-                }
-            }
-                if (freeSlotBySubjectAndLecID != null || freeSlotByLecturerName != null) {
-                    request.setAttribute("FREESLOT_BY_SUBJECT_AND_LECID", freeSlotBySubjectAndLecID);
-                    request.setAttribute("FREESLOT_BY_LECTURER_NAME", freeSlotByLecturerName);
-                    url = SUCCESS;
                 } else {
                     request.setAttribute("ERROR", "Dont have any slots in this time !!!");
                 }
-
-
+            } else if (mode == 2) {
+                freeSlotsDAO.getFreeSlotByMode2(mode, us.getUserID());
+                List<FreeSlotsDTO> freeSlotByMode2 = freeSlotsDAO.getFreeSlotByMode2();
+                request.setAttribute("FREESLOT_BY_MODE2", freeSlotByMode2);
+                if (freeSlotByMode2 != null) {
+                    for (FreeSlotsDTO freeSlotsDTO : freeSlotByMode2) {
+                        if (!majorDAO.select(freeSlotsDTO.getLecturerID()).isEmpty()) {
+                            freeSlotsDTO.setListMajor(majorDAO.select(freeSlotsDTO.getLecturerID()));
+                            url = SUCCESS;
+                        }
+                    }
+                } else {
+                    request.setAttribute("ERROR", "Dont have any slots in this time !!!");
+                }
+            }
         } catch (ClassNotFoundException | SQLException | ParseException ex) {
             log("Error at ViewAllRequestStatus: " + ex.toString());
         } finally {

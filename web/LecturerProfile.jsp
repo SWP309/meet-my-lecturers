@@ -102,7 +102,8 @@
                 background-color: #f27125;
             }
             .table-rounded{
-                width: 100%;
+                width: 85%;
+                margin: auto;
             }
             /* Tùy chỉnh màu nền khi hover */
             .table-rounded tbody tr:hover {

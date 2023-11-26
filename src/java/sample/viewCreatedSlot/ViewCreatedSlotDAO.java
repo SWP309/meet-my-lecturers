@@ -79,8 +79,9 @@ public class ViewCreatedSlotDAO {
     private static String UNHIDE_CREATED_SLOT = "UPDATE FreeSlots SET status = 1 WHERE freeSlotID = ?";
 
     private static String DELETE_CREATED_SLOT
-            = "DELETE FROM [dbo].[Bookings] WHERE freeSlotID = ?;\n"
-            + "    DELETE FROM [dbo].[FreeSlots] WHERE freeSlotID = ?;";
+            = "    DELETE FROM [dbo].[Requests] WHERE freeSlotID = ?;\n"
+            + "				   DELETE FROM [dbo].[Bookings] WHERE freeSlotID = ?;\n"
+            + "              DELETE FROM [dbo].[FreeSlots] WHERE freeSlotID = ?;";
 
     private static String UPDATE_CREATED_SLOT
             = "UPDATE FreeSlots \n"
@@ -757,6 +758,7 @@ public class ViewCreatedSlotDAO {
                 ptm = conn.prepareStatement(DELETE_CREATED_SLOT);
                 ptm.setString(1, freeSlotID);
                 ptm.setString(2, freeSlotID);
+                ptm.setString(3, freeSlotID);
                 checkDelete = ptm.executeUpdate() > 0 ? true : false;
             }
         } catch (Exception e) {
@@ -804,5 +806,5 @@ public class ViewCreatedSlotDAO {
         }
         return checkUpdate;
     }
-    
+
 }

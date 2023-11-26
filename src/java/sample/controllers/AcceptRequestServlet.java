@@ -32,68 +32,34 @@ public class AcceptRequestServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            boolean checkCreateFS = true;
             boolean checkMeetlink = true;
             HttpSession session = request.getSession();
             UserDTO lecturer = (UserDTO) session.getAttribute("loginedUser");
-            String lecturerID = lecturer.getUserID();
             String requestID = request.getParameter("txtRequestID");
+            String freeSlotID = request.getParameter("txtFreeSlotID");
+            FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
             String subjectCode = request.getParameter("txtSubjectCode");
-            String startTime = request.getParameter("txtStartTime");
-            String endTime = request.getParameter("txtEndTime");
-//            //tranfer String to Date
-//            DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-//            Date starts = format.parse(startTime);
-//            Date ends = format.parse(endTime);
-//            //get current date
-//            Date currentTime = new Date();
-//            // Calculate current time plus 2 hours
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.setTime(currentTime);
-//            calendar.add(Calendar.HOUR, 2);
-//            Date timeInFuture = calendar.getTime();
-//            //compare input time to current time
-//            FreeSlotError freeSlotError = new FreeSlotError();
-//            if (ends.before(timeInFuture)) {
-//                checkCreateFS = false;
-//                freeSlotError.setPastTimeError("- The start and end times must be in the future"
-//                        + " and at least 2 hours greater than the current time!!!");
-//            }
-
             String studentID = request.getParameter("txtStudentID");
-            String semesterID = request.getParameter("txtSemesterID");
-            String meetLink = request.getParameter("txtLinkMeet");
-
             RequestDAO requestDAO = new RequestDAO();
-            if (meetLink.isEmpty()) {
-                request.setAttribute("VIEW_REQUEST_MESSAGE", "Can not Accept this request !!!");
+            boolean checkAccept = requestDAO.acceptARequest(requestID,freeSlotID);
+            freeSlotsDAO.updateSubject(subjectCode, freeSlotID);
+//                requestDAO.updateStatusDuplicateAcceptedRequest(studentID);
+            BookingDTO bookingDTO = new BookingDTO();
+            bookingDTO.setStudentID(studentID);
+            bookingDTO.setFreeSlotID(freeSlotID);
+            BookingDAO bookingDAO = new BookingDAO();
+            boolean checkBooking = bookingDAO.BookFSlot(bookingDTO);
+            if (checkAccept && checkBooking) {
+                url = SUCCESS;
                 request.getRequestDispatcher(url).forward(request, response);
             } else {
-                boolean checkAccept = requestDAO.acceptARequest(requestID);
-
-                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, null, 1, meetLink, 1, lecturerID, 1, semesterID, null,2);//mode : 2 : cho request
-                FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
-                checkCreateFS = freeSlotsDAO.createFreeSlotBooking(freeSlotsDTO);
-
-                BookingDTO bookingDTO = new BookingDTO();
-                bookingDTO.setStudentID(studentID);
-                bookingDTO.setFreeSlotID(freeSlotsDAO.searchFSAccept(startTime, lecturerID));
-                BookingDAO bookingDAO = new BookingDAO();
-                boolean checkBooking = bookingDAO.BookFSlot(bookingDTO);
-                if (checkAccept && checkCreateFS && checkBooking) {
-                    url = SUCCESS;
-                    request.getRequestDispatcher(url).forward(request, response);
-                } else {
-                    request.setAttribute("VIEW_REQUEST_MESSAGE", "Can not Accept this request !!! ");
-                    request.getRequestDispatcher(url).forward(request, response);
-                }
+                request.setAttribute("VIEW_REQUEST_MESSAGE", "Can not Accept this request !!! ");
+                request.getRequestDispatcher(url).forward(request, response);
             }
 
-
         } catch (ClassNotFoundException | SQLException | ParseException ex) {
-            log("Error at AcceptRequestServlet: " + ex);
-            ex.printStackTrace();
-        }
+            log("Error at ViewAllRequestStatus: " + ex.toString());
+        } 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

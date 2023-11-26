@@ -8,6 +8,7 @@ package sample.controllers;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import sample.requests.RequestDAO;
 import sample.requests.RequestDTO;
+import sample.semester.SemesterDAO;
+import sample.semester.SemesterDTO;
 import sample.users.UserDTO;
 
 public class ViewAllRequestStatus extends HttpServlet {
@@ -27,7 +30,7 @@ public class ViewAllRequestStatus extends HttpServlet {
     private final String ERROR = "ViewRequestStatus.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
@@ -38,15 +41,15 @@ public class ViewAllRequestStatus extends HttpServlet {
             Date date = new Date();
             requestDAO.updateStatusOutDate(date);
 //            System.out.println("updateOutDate " + check);
-
+            SemesterDAO list = new SemesterDAO();
+            List<SemesterDTO> listSemes = list.select();
+            request.setAttribute("ListSemes", listSemes);
             requestDAO.getListRequest(studentID);
             List<RequestDTO> listRequest = requestDAO.getListRequest();
-            List<UserDTO> listUser = requestDAO.getListUser();
             if (listRequest != null) {
                 request.setAttribute("LIST_REQUEST", listRequest);
-                request.setAttribute("LIST_USER", listUser);
                 url = SUCCESS;
-            }else {
+            } else {
                 request.setAttribute("ERROR", "Dont have any request !!!");
             }
         } catch (ClassNotFoundException | SQLException | ParseException ex) {

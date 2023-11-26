@@ -5,6 +5,7 @@ function confirmCancel(bookingID) {
         window.location.href = 'MainController?action=cancel&bookingID=' + bookingID;
     }
 }
+
 function submitForm() {
     var form = document.querySelector('.bookingview form');
     form.submit();

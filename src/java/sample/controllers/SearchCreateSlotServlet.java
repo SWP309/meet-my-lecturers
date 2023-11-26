@@ -44,15 +44,14 @@ public class SearchCreateSlotServlet extends HttpServlet {
             int listCountPage = dao.CountPage(us.getUserEmail());
             request.setAttribute("COUNT_PAGE", listCountPage);
             ViewCreatedSlotDAO searchFSlot = new ViewCreatedSlotDAO();
-            if (!startTime.isEmpty() && !endTime.isEmpty() && subjectCode.isEmpty()) {
-                List<ViewCreatedSlotDTO> searchByStEt = searchFSlot.searchFSlotViewByStEt(startTime, endTime, userEmail);
-                if (searchByStEt != null) {
-                    request.setAttribute("SEARCH_FREE_SLOT_BY_ST_ET", searchByStEt);
-                    url = SUCCESS;
-                }
-            } else if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty()) {
+
+            if (!startTime.isEmpty() && !endTime.isEmpty() && !subjectCode.isEmpty()) {
                 List<ViewCreatedSlotDTO> searchByAll = searchFSlot.searchFSlotViewByAll(subjectCode, startTime, endTime, userEmail, semesterID);
                 if (searchByAll != null) {
+                    for (ViewCreatedSlotDTO viewCreatedSlotDTO : searchByAll) {
+                        System.out.println(viewCreatedSlotDTO.getSubjectCode());
+                    }
+
                     request.setAttribute("SEARCH_FREE_SLOT_BY_ALL", searchByAll);
                     url = SUCCESS;
                 }
