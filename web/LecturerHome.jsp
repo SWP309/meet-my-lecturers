@@ -129,6 +129,15 @@
                     }, 400);
                 }
             }
+            var userStatus = <%= us.getUserStatus()%>;
+            if (userStatus === 2) {
+                var errorMessage2 = confirm("${requestScope.showConfirmation}");
+                if (errorMessage2) {
+                    window.location.href = "MainController?action=changePass";
+                } else {
+                    event.preventDefault();
+                }
+            }
 
 
             // Lấy phần header
@@ -320,7 +329,7 @@
 
                         <i class="material-icons">send</i>
                     </div>
-                    
+
                 </div> 
             </div>
 
