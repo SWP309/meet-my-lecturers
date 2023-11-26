@@ -102,6 +102,15 @@ public class MainController extends HttpServlet {
 
     private static final String SEARCH_REQUEST_FOR_LEC = "searchRequestForLec";
     private static final String SEARCH_REQUEST_FOR_LEC_ACTION = "SearchRequestForLec";
+    
+    private static final String ADD_BLOCKLIST = "AddBL";
+    private static final String REMOVE_BLOCKLIST = "RemoveBL";
+    private static final String UPDATE_BLOCKLIST = "UpdateBL";
+    private static final String SEARCH_BLOCKLIST = "searchBlockList";
+    private static final String ADD_BLOCKLIST_ACTION = "AddBlockListServlet";
+    private static final String REMOVE_BLOCKLIST_ACTION = "DeleteBlockListServlet";
+    private static final String UPDATE_BLOCKLIST_ACTION = "UpdateBlockListServlet";
+    private static final String SEARCH_BLOCKLIST_ACTION = "SearchBlockListServlet";
 
     private static final String VIEW_BOOKING = "ViewBooking";
 
@@ -312,6 +321,14 @@ public class MainController extends HttpServlet {
                 url = SEARCH_BOOKED_SLOT_SERVLET;
             } else if (SEARCH_REQUEST_FOR_LEC.equals(action)) {
                 url = SEARCH_REQUEST_FOR_LEC_ACTION;
+            } else if (ADD_BLOCKLIST.equals(action)) {
+                url = ADD_BLOCKLIST_ACTION;
+            } else if (REMOVE_BLOCKLIST.equals(action)) {
+                url = REMOVE_BLOCKLIST_ACTION;
+            } else if (UPDATE_BLOCKLIST.equals(action)) {
+                url = UPDATE_BLOCKLIST_ACTION;
+            } else if (SEARCH_BLOCKLIST.equals(action)) {
+                url = SEARCH_BLOCKLIST_ACTION;
             } else if (CREATED_VIEW_FREE_SLOT_ACTION.equals(action)) {
                 url = CREATED_VIEW_CONTROLLER;
             } else if (SEARCH_REQUEST_STATUS.equals(action)) {

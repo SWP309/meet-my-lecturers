@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.blocklist.BlockListDAO;
 import sample.bookings.BookingDAO;
 import sample.bookings.BookingDTO;
 import sample.bookings.BookingError;
@@ -43,6 +44,7 @@ public class BookFSlotServlet extends HttpServlet {
             HttpSession session = request.getSession();
             BookingDAO dao = new BookingDAO();
             FreeSlotsDAO FsDao = new FreeSlotsDAO();
+            BlockListDAO blockListDAO = new BlockListDAO();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String studentID = us.getUserID();
             System.out.println(studentID);
@@ -60,8 +62,9 @@ public class BookFSlotServlet extends HttpServlet {
             dto.setStudentID(studentID);
             dto.setFreeSlotID(freeSlotID);
             BookingError bookingError = new BookingError();
-            boolean existsInBlockList = FsDao.checkBlockList(studentID, LecturerID);
-            if (existsInBlockList) {
+            boolean existsInBlockListFS = FsDao.checkBlockList(studentID);
+            boolean existsInBlockList = blockListDAO.checkStudentInBlockListOfLecturer(studentID, LecturerID);
+            if (existsInBlockListFS || existsInBlockList) {
                 checkValidation = false;
                 bookingError.setInBlockList("You have been BLOCKED form by ALL THE SLOTS by " + LecturerID + ", please contact your lecturer ONE BY ONE to know reasons !!!!!!!");
                 dto.setStatus(-1);
