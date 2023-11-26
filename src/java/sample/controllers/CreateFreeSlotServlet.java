@@ -203,14 +203,13 @@ public class CreateFreeSlotServlet extends HttpServlet {
 
             FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(subjectCode, startTime, endTime, password, capacity, meetLink, count, lecturerID, status, semesterID, block_list, mode);
 
-//            //*****check duplicate timetable*****
-//            Service service = new Service();
-//            boolean checkTimetableDuplicate = service.duplicateSlot(freeSlotsDTO);
-//            System.out.println(checkTimetableDuplicate);
-//            if (checkTimetableDuplicate==false) {
-//                flag=false;
-//                freeSlotError.setDuplicateTimeTableError("- The time you entered overlaps your TimeTable. Please check FAP!!!");
-//            }
+            //*****check duplicate timetable*****
+            Service service = new Service();
+            boolean checkTimetableDuplicate = service.duplicateSlot(freeSlotsDTO);
+            if (checkTimetableDuplicate==false) {
+                flag=false;
+                freeSlotError.setDuplicateTimeTableError("- The time you entered overlaps your TimeTable. Please check FAP!!!");
+            }
             request.setAttribute("FREESLOT_ERROR", freeSlotError);
 
             if (flag) {

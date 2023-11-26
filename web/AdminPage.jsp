@@ -181,7 +181,7 @@
             <form action="MainController" method="POST">
                 <div class="d-flex justify-content-between mt-2">
                     <input type="hidden" value="Find" name="action"/>
-                    <input type="text" name="txtsemester" class="form-control mx-auto" placeholder="E.g FA23">
+                    <input type="text" value="${param.txtsemester}" name="txtsemester" class="form-control mx-auto" placeholder="E.g FA23">
                     <button type="submit" value="Find" class="btn btn-primary float-right">Find</button>
                 </div>
             </form>
