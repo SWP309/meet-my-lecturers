@@ -61,20 +61,18 @@ public class UpdateFSlotController extends HttpServlet {
             System.out.println(endDate);
             FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
             MajorsDAO majorsDAO = new MajorsDAO();
+            int listCountPage = dao.CountPage(us.getUserEmail());
+            request.setAttribute("COUNT_PAGE", listCountPage);
+            ViewCreatedSlotDAO searchFSlot = new ViewCreatedSlotDAO();
 
             boolean checkStartTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(us.getUserID(), startDate);
             boolean checkEndTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(us.getUserID(), endDate);
             if (checkStartTimeDuplicateFS == false || checkEndTimeDuplicateFS == false) {
                 flag = false;
-                List<ViewCreatedSlotDTO> listbooking = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
-                request.setAttribute("LIST_CREATED_SLOT", listbooking);
+                List<ViewCreatedSlotDTO> searchByNull = searchFSlot.GetlistCreatedSlotByCount(us.getUserEmail(), 0);
+                request.setAttribute("LIST_CREATED_SLOT", searchByNull);
                 request.setAttribute("ERROR", " The time you entered overlaps with time of created FREESLOT!!! ");
             }
-            boolean checkSubjectCode = majorsDAO.getSubject(subjectCode);
-            if (checkSubjectCode == true){
-              request.setAttribute("ERROR", "The subject code need match with your major !!! ");
-            }
-            System.out.println(checkSubjectCode);
 
             if (flag == true) {
 
@@ -87,12 +85,12 @@ public class UpdateFSlotController extends HttpServlet {
                     dto.setSemesterID(semesterID);
                     if (freeSlotID != null) {
                         boolean checkUpdate = dao.update(dto);
-                        List<ViewCreatedSlotDTO> listbooking = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
-                        request.setAttribute("LIST_CREATED_SLOT", listbooking);
+                        List<ViewCreatedSlotDTO> searchByNull = searchFSlot.GetlistCreatedSlotByCount(us.getUserEmail(), 0);
+                        request.setAttribute("LIST_CREATED_SLOT", searchByNull);
                         if (checkUpdate) {
                             System.out.println(checkUpdate);
                             url = SUCCESS;
-                            if (listbooking == null || listbooking.isEmpty()) {
+                            if (searchByNull == null || searchByNull.isEmpty()) {
 //                        System.out.println("list booking is null");
                                 request.setAttribute("ERROR", "LIST_CREATED_SLOT is null. Do not have any things to show");
                             }

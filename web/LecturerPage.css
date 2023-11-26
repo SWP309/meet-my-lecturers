@@ -37,7 +37,7 @@
     position: relative;
 }
 .text-custom{
-    font-family: 'Agbalumo', 'Playfair Display', sans-serif;
+    font-family: 'Merriweather', serif;
     height: 0px;
     margin-bottom: 5%;
 }
@@ -288,19 +288,18 @@ td button {
 }
 .student-viewbookedslot {
     position: relative;
-    background-color: #fff;
+    /* background-color: #fff; */
     width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 280px;
-    text-align: left;
+    /* text-align: left; */
     font-size: 17px;
     color: #fff;
     font-family: Lexend;
-
 }
 .footer1 {
     display: flex;

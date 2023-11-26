@@ -31,6 +31,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+        <!-- Icon -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <title>File Upload</title>
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
@@ -303,16 +305,16 @@
             <%
                 if (ListSubject != null) {
             %>
-<!--            <div style="display: flex; text-align: center">
-                <div style="display: flex; width: 89%;">
-                    <span class="form-control" style="font-weight: bold;">Subject Code</span>
-                    <span class="form-control" style="font-weight: bold;">Description</span>
-                </div>
-                <div style="    display: flex;
-                     width: 17%;">
-                    <span class="form-control" style="font-weight: bold;">Manage</span>
-                </div>
-            </div>-->
+            <!--            <div style="display: flex; text-align: center">
+                            <div style="display: flex; width: 89%;">
+                                <span class="form-control" style="font-weight: bold;">Subject Code</span>
+                                <span class="form-control" style="font-weight: bold;">Description</span>
+                            </div>
+                            <div style="    display: flex;
+                                 width: 17%;">
+                                <span class="form-control" style="font-weight: bold;">Manage</span>
+                            </div>
+                        </div>-->
             <form>
                 <div class="form-group input-group" style="text-align: center;">
                     <span class="form-control" style="font-weight: bold; width: 30%; background: antiquewhite;">Subject Code</span>
