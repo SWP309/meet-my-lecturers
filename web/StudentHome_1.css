@@ -231,6 +231,9 @@
     gap: 3px;
     flex-wrap: wrap;
 }
+.frame-choice:hover{
+    opacity: 0.5;
+}
 .frame-child {
     position: relative;
     width: 48px;
