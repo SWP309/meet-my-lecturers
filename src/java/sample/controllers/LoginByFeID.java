@@ -50,33 +50,39 @@ public class LoginByFeID extends HttpServlet {
                         flag = true;
                         HttpSession session = request.getSession();
                         session.setAttribute("loginedUser", us);
+                        System.out.println("Lay dc user: " + us);
+                        if(us.getUserStatus() == 2){
+                            System.out.println("Vao status = 2");
+                            request.setAttribute("showConfirmation", "Do you want to change your password ?");
+                        }
+                        System.out.println("Role la: " + us.getRoleID());
                         if (us.getRoleID().equals("3")) {
-                            response.sendRedirect("MainController?action=StudentPage");
+//                            response.sendRedirect("MainController?action=StudentPage");
+                            request.getRequestDispatcher("MainController?action=returnHomePageStudent").forward(request, response);
                         } else if ((us.getRoleID().equals("2"))) {
-                            response.sendRedirect("MainController?action=LecturerPage");
+//                            response.sendRedirect("MainController?action=LecturerPage");
+                            request.getRequestDispatcher("MainController?action=LecturerPage").forward(request, response);
                         } else if ((us.getRoleID().equals("1"))) {
-                            response.sendRedirect("MainController?action=AdminPage");
+                            System.out.println("Vao dc role = 1");
+//                            response.sendRedirect("MainController?action=AdminPage");
+                            request.getRequestDispatcher("MainController?action=returnHomePageAdmin").forward(request, response);
                         }
                     } else {
                         String msg = "Your account has been banned";
                         request.setAttribute("ban", msg);
                         flag = false;
-//                        request.getRequestDispatcher("MainController?action=").forward(request, response);
                     }
                 } else {
                     String msg = "Invalid userid or password";
                     request.setAttribute("Error", msg);
                     flag = false;
-//                    request.getRequestDispatcher("MainController?action=").forward(request, response);
                 }
             } else {
                 String msg = "Invalid userid or password";
                 request.setAttribute("Error", msg);
                 flag = false;
-//                request.getRequestDispatcher("MainController?action=").forward(request, response);
             }
             if(!flag){
-                
             request.getRequestDispatcher("MainController?action=").forward(request, response);
             }
         } catch (Exception e) {
