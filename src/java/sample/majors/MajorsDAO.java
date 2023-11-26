@@ -25,7 +25,7 @@ public class MajorsDAO {
             + "WHERE lecturerID = ?";
     private static String SUBJECT_LECTURER = "Select [subjectCode]\n"
             + "			From  [dbo].[Majors]\n"
-            + "			Where [subjectCode] = ?";
+            + "			Where [subjectCode] = ? ";
 
     public static ArrayList<MajorsDTO> getAllMajors() throws Exception {
         ArrayList<MajorsDTO> list = new ArrayList<>();

@@ -472,10 +472,10 @@
                                                     <span class="ml-auto">${listCreatedSlot.lectureName}</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${listCreatedSlot.startTime}"  pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${listCreatedSlot.startTime}"  pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.endTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.endTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
     <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${listCreatedSlot.meetLink}"/>-->
@@ -505,7 +505,7 @@
                                                         <form action="MainController" method="GET">
                                                             <input type="hidden" name="action" value="updateFS">
                                                             <input type="hidden" name="freeSlotID" value="${listCreatedSlot.freeSlotID}">
-                                                            <input type="hidden" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}" required/>
+                                                            <input type="hidden" name="subjectCode" id="subjectCodeInput" value="${listCreatedSlot.subjectCode.trim()}" required/>
                                                             <input type="hidden" name="startTime" value="${listCreatedSlot.startTime}">
                                                             <input type="hidden" name="endTime" value="${listCreatedSlot.endTime}">
                                                             <button type="submit" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
@@ -542,10 +542,10 @@
                                                             <span class="ml-auto">${searchByStEt.lectureName}</span>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                            <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEt.startTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                            <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEt.startTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                            <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                            <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
     <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByStEt.meetLink}"/>-->
@@ -611,10 +611,10 @@
                                                                 <span class="ml-auto">${searchByAll.lectureName}</span>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByAll.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByAll.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
     <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByAll.meetLink}"/>-->
@@ -681,10 +681,10 @@
                                                                     <span class="ml-auto">${searchBySubjectCode.lectureName}</span>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${searchBySubjectCode.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                    <input type="text" class="ml-auto specific-input" name="startTime" value="${searchBySubjectCode.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.endTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b >Link Meet:</b></strong> 
 <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchBySubjectCode.meetLink}"/>-->
@@ -753,10 +753,10 @@
                                                                         <span class="ml-auto">${searchByNull.lectureName}</span>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
-                                                                        <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByNull.startTime}"  pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                        <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByNull.startTime}"  pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> 
-                                                                        <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.endTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-1]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
+                                                                        <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.endTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Link Meet:</b></strong> 
                     <!--                                                    <input type="text" class="ml-auto specific-input" name="endTime" value="${searchByNull.meetLink}"/>-->
