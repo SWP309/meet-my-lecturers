@@ -114,25 +114,34 @@ public class TimetableDAO implements Serializable {
         }
     }
 
-    public List<TimetableDTO> listByDate(String lecturerID, String day, String start, String end) throws SQLException, ClassNotFoundException {
+public List<TimetableDTO> listByDate(String lecturerID, String day, String start, String end) throws SQLException, ClassNotFoundException, ParseException {
         List<TimetableDTO> list = new ArrayList<>();
         Connection con = DBUtils.getConnection();
+        Date starts = services.Service.sdfDateTime.parse(start);
+        Date ends = services.Service.sdfDateTime.parse(end);       
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String startT = sdf.format(starts);
+        String endT = sdf.format(ends);
+        
         PreparedStatement stm = con.prepareStatement(
                 "select t.semesterID, t.lecturerID, t.slotID, s.starttime, s.endtime, s.day1, s.day2, t.subjectCode\n"
                 + "from Timetables as t\n"
                 + "left join Slots as s on t.slotID = s.slotID\n"
                 + "where lecturerID = ? and (day1 = ? or day2 = ?)\n "
                 + "and ((? between starttime and endtime) or ( ? between starttime and endtime))");
+        
         stm.setString(1, lecturerID);
         stm.setString(2, day);
         stm.setString(3, day);
-        stm.setString(4, start);
-        stm.setString(5, end);
+        stm.setString(4, startT);
+        stm.setString(5, endT);
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {
             TimetableDTO t = new TimetableDTO();
             t.setLecturerID(rs.getString("lecturerID"));
             t.setSlotID(rs.getString("slotID"));
+            System.out.println(services.Service.sdfTime.format(rs.getTime("starttime")));
             t.setStartTime(services.Service.sdfTime.format(rs.getTime("starttime")));
             t.setEndTime(services.Service.sdfTime.format(rs.getTime("endtime")));
             t.setDay1(rs.getString("day1"));

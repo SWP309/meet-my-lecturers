@@ -413,6 +413,7 @@
                 <form action="MainController" method="POST" class="d-flex justify-content-center" style="margin-top: -7px;">
                     <div class="form-group">
                         <select style="padding: 5px; width: 100px; text-align: center" class="form-control option" name="txtMode" onchange="updateHiddenField(this, 'hiddenSubjectCode')" title="Select a Mode of the slots">
+
                             <option value="0">Mode</option>
                             <option value="1" >Book</option>
                             <option value="2" >Request</option>
