@@ -38,8 +38,6 @@ public class UpdateSubject extends HttpServlet {
             String url = "MainController?action=ManageServlet";
             String subjectCode = request.getParameter("txtsubject");
             String Description = request.getParameter("txtdescription");
-            System.out.println("Subject code: " + subjectCode);
-            System.out.println("Des: " + Description);
             SubjectDTO subject = new SubjectDTO(subjectCode, Description);
             ArrayList<MajorsDTO> list = MajorsDAO.getAllMajors();
             MajorsDTO major = null;
@@ -48,11 +46,8 @@ public class UpdateSubject extends HttpServlet {
                     major = ob;
                 }
             }
-            System.out.println("Major out for: " + major);
             if (major == null) {
                 rs = SubjectDAO.updateSubject(subject);
-                System.out.println(subjectCode);
-                System.out.println(Description);
                 if (rs > 0) {
                     request.setAttribute("RemoveStatus", "Update successfully!");
                 } else {
