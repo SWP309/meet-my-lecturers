@@ -675,7 +675,7 @@ public class UserDAO implements Serializable {
                     String userName = rs.getString("userName").trim();
                     String userEmail = rs.getString("userEmail").trim();
                     int number = rs.getInt("NumberSlot");
-                   listUser.add(new UserMaxSlotDTO(userID, userName, userEmail, number));
+                    listUser.add(new UserMaxSlotDTO(userID, userName, userEmail, number));
                 }
             }
         } catch (Exception e) {
@@ -699,10 +699,11 @@ public class UserDAO implements Serializable {
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
             String sql = "select top 1 r.studentID, COUNT(*) as 'NumberRequest'\n"
-                    + "from Requests r\n"
-                    + "where r.semesterID = ?\n"
-                    + "group by r.studentID\n"
-                    + "order by NumberRequest desc";
+                    + "                    from Requests r\n"
+                    + "					JOIN FreeSlots fs ON r.freeSlotID = fs.freeSlotID\n"
+                    + "                    where fs.semesterID = ?\n"
+                    + "                    group by r.studentID\n"
+                    + "                    order by NumberRequest desc";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, semester);
             ResultSet rs = pst.executeQuery();
@@ -758,18 +759,19 @@ public class UserDAO implements Serializable {
         UserMaxRequestDTO st = null;
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
-            String sql = "select top 1 r.lecturerID, COUNT(*) as 'NumberOfRequestRev'\n"
-                    + "from Requests r\n"
-                    + "where r.semesterID = ?\n"
-                    + "group by r.lecturerID\n"
-                    + "order by [NumberOfRequestRev] desc";
+            String sql = "select top 1 fs.lecturerID, COUNT(*) as 'NumberOfRequestRec'\n"
+                    + "                    from Requests r\n"
+                    + "                   JOIN FreeSlots fs ON r.freeSlotID = fs.freeSlotID\n"
+                    + "                    where fs.semesterID = ?\n"
+                    + "                    group by fs.lecturerID\n"
+                    + "                    order by [NumberOfRequestRec] desc";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, semester);
             ResultSet rs = pst.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
                     String id = rs.getString("lecturerID").trim();
-                    int numberRequest = rs.getInt("NumberOfRequestRev");
+                    int numberRequest = rs.getInt("NumberOfRequestRec");
                     st = new UserMaxRequestDTO(id, numberRequest);
                 }
             } else {

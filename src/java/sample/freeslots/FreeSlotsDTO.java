@@ -1,5 +1,9 @@
 package sample.freeslots;
 
+import java.util.ArrayList;
+import java.util.List;
+import sample.major.MajorDTO;
+
 public class FreeSlotsDTO {
 
     private String freeSlotID;
@@ -19,6 +23,7 @@ public class FreeSlotsDTO {
     private String studentID;
     private int bookedStudent;
     private String block_list;
+    private List<MajorDTO> listMajor;
     private int mode;
 
     public FreeSlotsDTO() {
@@ -36,10 +41,15 @@ public class FreeSlotsDTO {
         this.lecturerName = "";
         this.bookedStudent = 0;
         this.block_list = null;
-        this.mode = 1; //1:Book ; 2:Request
+        this.mode = 0; //1:Book ; 2:Request
+        this.listMajor = new ArrayList<MajorDTO>();
         this.studentID = "";
     }
-    
+
+    @Override
+    public String toString() {
+        return "FreeSlotsDTO{" + "freeSlotID=" + freeSlotID + ", subjectCode=" + subjectCode + ", startTime=" + startTime + ", endTime=" + endTime + ", password=" + password + ", capacity=" + capacity + ", meetLink=" + meetLink + ", count=" + count + ", lecturerID=" + lecturerID + ", status=" + status + ", semesterID=" + semesterID + ", lecturerName=" + lecturerName + ", studentID=" + studentID + ", bookedStudent=" + bookedStudent + ", block_list=" + block_list + ", listMajor=" + listMajor + ", mode=" + mode + '}';
+    }
 
     public String getLecturerName() {
         return lecturerName;
@@ -48,7 +58,7 @@ public class FreeSlotsDTO {
     public void setLecturerName(String lecturerName) {
         this.lecturerName = lecturerName;
     }
-    
+
     public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, int status, String semesterID, String block_list, int mode) {
         this.subjectCode = subjectCode;
         this.startTime = startTime;
@@ -63,6 +73,7 @@ public class FreeSlotsDTO {
         this.block_list = block_list;
         this.mode = mode;
     }
+
     public FreeSlotsDTO(String subjectCode, String startTime, String endTime, String lecturerID) {
         this.subjectCode = subjectCode;
         this.startTime = startTime;
@@ -85,7 +96,6 @@ public class FreeSlotsDTO {
         this.lecturerName = lecturerName;
         this.bookedStudent = bookedStudent;
     }
-    
 
     public FreeSlotsDTO(String freeSlotID, String subjectCode, String startTime, String endTime, String password, int capacity, String meetLink, int count, String lecturerID, int status, String semesterID, String lecturerName) {
         this.freeSlotID = freeSlotID;
@@ -107,11 +117,16 @@ public class FreeSlotsDTO {
         this.subjectCode = ofject;
         this.lecturerID = ofject;
     }
-    public FreeSlotsDTO(String ofject,String ofject2) {
+    public FreeSlotsDTO(int ofject) {
+        this.mode = ofject;
+    }
+    
+    
+
+    public FreeSlotsDTO(String ofject, String ofject2) {
         this.subjectCode = ofject;
         this.lecturerName = ofject2;
     }
-
 
     public String getFreeSlotID() {
         return freeSlotID;
@@ -207,7 +222,6 @@ public class FreeSlotsDTO {
         this.semesterID = semesterID;
     }
 
-
     /**
      * @return the bookedStudent
      */
@@ -253,5 +267,13 @@ public class FreeSlotsDTO {
 
     public void setMode(int mode) {
         this.mode = mode;
+    }
+
+    public List<MajorDTO> getListMajor() {
+        return listMajor;
+    }
+
+    public void setListMajor(List<MajorDTO> listMajor) {
+        this.listMajor = listMajor;
     }
 }

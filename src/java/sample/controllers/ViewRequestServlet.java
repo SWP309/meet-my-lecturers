@@ -31,11 +31,11 @@ public class ViewRequestServlet extends HttpServlet {
             requestDAO.updateStatusOutDate(date);
             
             requestDAO.getRequest(userDTO.getUserID());
-            List<RequestDTO> requests = requestDAO.getListRequests();
-            List<UserDTO> users = requestDAO.getListUsers();
+            List<RequestDTO> requests = requestDAO.getListRequests();//da check
             if (requests != null) {
                     request.setAttribute("LIST_REQUESTS", requests);
-                    request.setAttribute("LIST_REQUESTS_USERS", users);
+                    session.setAttribute("LIST_REQUESTS", requests);
+
                     url = SUCCESS;
             } else {
                 request.setAttribute("VIEW_REQUEST_MESSAGE", "No request!!!");

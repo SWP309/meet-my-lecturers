@@ -15,10 +15,6 @@
         <servlet-class>sample.controllers.LoginServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CreateRequestServlet</servlet-name>
-        <servlet-class>sample.controllers.CreateRequestServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>BookingController</servlet-name>
         <servlet-class>sample.controllers.BookingController</servlet-class>
     </servlet>
@@ -43,6 +39,10 @@
         <servlet-class>sample.controllers.CreateFreeSlotServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CreateRequestServlet</servlet-name>
+        <servlet-class>sample.controllers.CreateRequestServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>UnhideFSlotController</servlet-name>
         <servlet-class>sample.controllers.UnhideFSlotController</servlet-class>
     </servlet>
@@ -65,10 +65,6 @@
     <servlet>
         <servlet-name>DashBoardServlet</servlet-name>
         <servlet-class>sample.controllers.DashBoardServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SearchFreeSlot</servlet-name>
-        <servlet-class>sample.controllers.SearchFreeSlot</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchFreeSlotServlet</servlet-name>
@@ -282,9 +278,25 @@
         <servlet-name>DeleteBlockListServlet</servlet-name>
         <servlet-class>sample.controllers.DeleteBlockListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AcceptAllRequest</servlet-name>
+        <servlet-class>sample.controllers.AcceptAllRequest</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeclineAllRequest</servlet-name>
+        <servlet-class>sample.controllers.DeclineAllRequest</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchByMode</servlet-name>
+        <servlet-class>sample.controllers.SearchByMode</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateRequestServlet</servlet-name>
+        <url-pattern>/CreateRequestServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreatedSlotController</servlet-name>
@@ -297,10 +309,6 @@
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CreateRequestServlet</servlet-name>
-        <url-pattern>/CreateRequestServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BookingController</servlet-name>
@@ -369,10 +377,6 @@
     <servlet-mapping>
         <servlet-name>DashBoardServlet</servlet-name>
         <url-pattern>/DashBoardServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchFreeSlot</servlet-name>
-        <url-pattern>/SearchFreeSlot</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchFreeSlotServlet</servlet-name>
@@ -529,6 +533,18 @@
     <servlet-mapping>
         <servlet-name>LecturerHome</servlet-name>
         <url-pattern>/LecturerHome</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AcceptAllRequest</servlet-name>
+        <url-pattern>/AcceptAllRequest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeclineAllRequest</servlet-name>
+        <url-pattern>/DeclineAllRequest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchByMode</servlet-name>
+        <url-pattern>/SearchByMode</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchBlockListServlet</servlet-name>

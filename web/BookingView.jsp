@@ -143,6 +143,10 @@
                 alert(errorMessage);
             }
             function updateHiddenField(selectElement, hiddenFieldId) {
+                var firstOption = selectElement.options[0];
+                if (firstOption.value === "") {
+                    selectElement.remove(0);
+                }
                 var selectedValue = selectElement.value;
                 document.getElementById(hiddenFieldId).value = selectedValue;
             }
@@ -190,13 +194,6 @@
                                 <input type="hidden" name="action" value="ViewRequestStatus" />
                             </form>
                             <i class="material-icons">visibility</i>View Request Status
-                        </div>
-                        <div class="frame-div request" onclick="submitFormRequest()">
-                            <form action="MainController" method="POST">
-                                <input type="hidden" name="action" value="Request" />
-                                <i class="material-icons">mail_outline</i>
-                            </form>
-                            Request
                         </div>
                         <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
                             <form action="MainController" method="POST">
@@ -268,7 +265,7 @@
                                                 <div class="d-flex justify-content-between btn-book">
                                                     <!--                                             Added d-flex justify-content-between to create a flex container -->
                                                     <div>
-                                                        <a class="d-flex justify-content-between" style="text-decoration: none;" 
+                                                        <a class="d-flex justify-content-between cancelCustom" style="text-decoration: none;" 
                                                            onclick="return confirm('Are you sure to cancel this booking')" href="MainController?action=cancel&bookingID=${listBooking.bookingID}">
                                                             <i class="material-icons">cancel</i>Cancel</a>
                                                     </div>
@@ -287,23 +284,23 @@
                 <c:if test="${not empty param.txtStartTime and not empty param.txtEndTime and not empty param.txtSubjectCode}">
                     <div class="container mt-5">
                         <div class="row justify-content-center mt-5">
-                            <c:if test="${requestScope.SEARCH_BOOKED_SLOT_BY_ALL !=null}">
-                                <c:if test="${not empty requestScope.SEARCH_BOOKED_SLOT_BY_ALL}">
-                                    <c:forEach var="searchByAll" varStatus="counter" items="${requestScope.SEARCH_BOOKED_SLOT_BY_ALL}">
+                            <c:if test="${requestScope.SEARCH_BOOKED_SLOT_BY_ST_ET_SUBJECTCODE !=null}">
+                                <c:if test="${not empty requestScope.SEARCH_BOOKED_SLOT_BY_ST_ET_SUBJECTCODE}">
+                                    <c:forEach var="searchByStEtSubject" varStatus="counter" items="${requestScope.SEARCH_BOOKED_SLOT_BY_ST_ET_SUBJECTCODE}">
                                         <div class="col-md-4"><a h>
                                                 <div class="card" style="width: 403px;  max-height: 250px; border-radius: 5%;">
                                                     <div class="card-body">
-                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject Code:</b></strong> <span class="ml-auto">${searchByAll.subjectCode.trim()}</span></div>
-                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's Name:</b></strong> <span class="ml-auto">${searchByAll.lectureName}</span></div>
-                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${searchByAll.startTime}</span></div>
-                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${searchByAll.endTime}</span></div>
-                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link"  href="https://${searchByAll.meetLink}" target="_blank" onclick="confirmCheckAttendanceLink(event, '${searchByAll.bookingID}')"> Link Meet</a></span></div>
-                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchByAll.semesterID}</span></div>
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject Code:</b></strong> <span class="ml-auto">${searchByStEtSubject.subjectCode.trim()}</span></div>
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecturer's Name:</b></strong> <span class="ml-auto">${searchByStEtSubject.lectureName}</span></div>
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> <span class="ml-auto">${searchByStEtSubject.startTime}</span></div>
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>End time:</b></strong> <span class="ml-auto">${searchByStEtSubject.endTime}</span></div>
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Meet Link:</b></strong> <span class="ml-auto"><a class="centered-link"  href="https://${searchByStEtSubject.meetLink}" target="_blank" onclick="confirmCheckAttendanceLink(event, '${searchByStEtSubject.bookingID}')"> Link Meet</a></span></div>
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Semester:</b></strong> <span class="ml-auto">${searchByStEtSubject.semesterID}</span></div>
                                                         <div class="d-flex justify-content-between btn-book">
                                                             <!--                                             Added d-flex justify-content-between to create a flex container -->
                                                             <div>
-                                                                <a class="d-flex justify-content-between" style="text-decoration: none;" 
-                                                                   onclick="return confirm('Are you sure to cancel this booking')" href="MainController?action=cancel&bookingID=${searchByAll.bookingID}">
+                                                                <a class="d-flex justify-content-between cancelCustom" style="text-decoration: none;" 
+                                                                   onclick="return confirm('Are you sure to cancel this booking')" href="MainController?action=cancel&bookingID=${searchByStEtSubject.bookingID}">
                                                                     <i class="material-icons">cancel</i>Cancel</a>
                                                             </div>
                                                         </div>
@@ -336,7 +333,7 @@
                                                         <div class="d-flex justify-content-between btn-book">
                                                             <!--                                             Added d-flex justify-content-between to create a flex container -->
                                                             <div>
-                                                                <a class="d-flex justify-content-between" style="text-decoration: none;" 
+                                                                <a class="d-flex justify-content-between cancelCustom" style="text-decoration: none;" 
                                                                    onclick="return confirm('Are you sure to cancel this booking')" href="MainController?action=cancel&bookingID=${searchByStEt.bookingID}">
                                                                     <i class="material-icons">cancel</i>Cancel</a>
                                                             </div>
@@ -370,7 +367,7 @@
                                                         <div class="d-flex justify-content-between btn-book">
                                                             <!--                                             Added d-flex justify-content-between to create a flex container -->
                                                             <div>
-                                                                <a class="d-flex justify-content-between" style="text-decoration: none;" 
+                                                                <a class="d-flex justify-content-between cancelCustom" style="text-decoration: none;" 
                                                                    onclick="return confirm('Are you sure to cancel this booking')" href="MainController?action=cancel&bookingID=${searchBySubjectCode.bookingID}">
                                                                     <i class="material-icons">cancel</i>Cancel</a>
                                                             </div>
@@ -405,7 +402,7 @@
                                                         <div class="d-flex justify-content-between btn-book">
                                                             <!--                                             Added d-flex justify-content-between to create a flex container -->
                                                             <div>
-                                                                <a class="d-flex justify-content-between" style="text-decoration: none;" 
+                                                                <a class="d-flex justify-content-between cancelCustom" style="text-decoration: none;" 
                                                                    onclick="return confirm('Are you sure to cancel this booking')" href="MainController?action=cancel&bookingID=${searchByNull.bookingID}">
                                                                     <i class="material-icons">cancel</i>Cancel</a>
                                                             </div>

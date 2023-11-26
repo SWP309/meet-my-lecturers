@@ -52,11 +52,15 @@ public class SubjectDAO {
         int rs = 0;
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
-            String sql = "Delete\n"
-                    + "From [dbo].[Subjects]\n"
-                    + "Where [subjectCode] = ?";
+            String sql = " Delete \n"
+                    + "                    From [dbo].[Majors]\n"
+                    + "                    Where [subjectCode] = ?\n"
+                    + "  Delete\n"
+                    + "                    From [dbo].[Subjects]\n"
+                    + "                    Where [subjectCode] = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, subjectCode);
+            pst.setString(2, subjectCode);
             rs = pst.executeUpdate();
             cn.close();
         }
