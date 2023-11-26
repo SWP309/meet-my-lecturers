@@ -65,6 +65,10 @@
 
         <!-- Icon -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <!------text gg ----->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
 
 
         <!-- Facebook and Twitter integration -->
@@ -269,6 +273,7 @@
                     <button data-slide="4" class="is-active"><span class="show-for-sr">Fifth slide details.</span><span class="show-for-sr">Current Slide</span></button>
                 </nav>
             </div>
+            <h1 class="text-center text-custom">Top Aggressive Students</h1>
             <div style="display: flex;">
                 <div class="col-md-11" id="fh5co-staff">
                     <div class="container">
@@ -320,7 +325,7 @@
 
                         <i class="material-icons">send</i>
                     </div>
-                    
+
                 </div> 
             </div>
 

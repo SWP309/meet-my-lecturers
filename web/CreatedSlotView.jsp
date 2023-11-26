@@ -239,10 +239,21 @@
                 text-align: center;
                 border: none; /* Lo?i b? vi?n */
             }
-            button[type="submit"]{
-                border: none; /* Lo?i b? vi?n */
+            /*            button[type="submit"]{
+                            border: none;  Lo?i b? vi?n 
+                            background-color: white;
+                            color: #007bff;
+                        }*/
+            .button-style{
+                display: flex;
+                text-decoration: none;
+                justify-content: center;
                 background-color: white;
                 color: #007bff;
+                border: none;
+            }
+            .button-style:hover{
+                opacity: 0.7;
             }
             .card-body > div {
                 margin-bottom: 0.2rem;
@@ -417,7 +428,7 @@
                     <input type="text" class="form-control" name="lecID" placeholder="E.g: GV0001" required>
                     <input type="text" class="form-control" name="semesID" placeholder="E.g: FA23" required>
                     <div class="input-group-append">
-                        <button style="background-color: #0d6efd; color: white;" type="submit" value="importTB" name="action" class="btn btn-primary custom-submit-button">Submit</button>
+                        <button type="submit" value="importTB" name="action" class="btn btn-primary custom-submit-button">Submit</button>
                     </div>
                 </div>
             </form>
@@ -443,7 +454,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-primary form-control Search-custom" style="border-color: black; background: #0d6efd; color: white;" type="submit" name="action" value="searchCSlot">Search</button>
+                                <button class="btn btn-primary form-control Search-custom" type="submit" name="action" value="searchCSlot">Search</button>
                             </div>
                         </form>
                     </div>
@@ -462,14 +473,19 @@
                         <c:if test="${not empty requestScope.LIST_CREATED_SLOT}">
                             <c:forEach var="listCreatedSlot" varStatus="counter" items="${requestScope.LIST_CREATED_SLOT}">
                                 <div class="col-md-4">
-                                    <div class="card" style="width: 357px; height:291px; border-radius: 5%;">
+                                    <div class="card" style="    width: 100%;
+                                         height: auto;
+                                         border-radius: 5%;">
                                         <div class="card-body">
                                             <form action="MainController" method="POST">
+                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture ID:</b></strong> 
+                                                    <span class="ml-auto specific-input">${listCreatedSlot.freeSlotID}</span>
+                                                </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}" />
+                                                    <span class="ml-auto specific-input">${listCreatedSlot.subjectCode.trim()}</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
-                                                    <span class="ml-auto">${listCreatedSlot.lectureName}</span>
+                                                    <span class="ml-auto specific-input">${listCreatedSlot.lectureName}</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
                                                     <input type="text" class="ml-auto specific-input" name="startTime" value="${listCreatedSlot.startTime}"  pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
@@ -508,7 +524,7 @@
                                                             <input type="hidden" name="subjectCode" id="subjectCodeInput" value="${listCreatedSlot.subjectCode.trim()}" required/>
                                                             <input type="hidden" name="startTime" value="${listCreatedSlot.startTime}">
                                                             <input type="hidden" name="endTime" value="${listCreatedSlot.endTime}">
-                                                            <button type="submit" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                            <button class="button-style" type="submit">
                                                                 <i class="material-icons">update</i>Update
                                                             </button>
                                                         </form>
@@ -532,14 +548,19 @@
                                 <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_ST_ET}">
                                     <c:forEach var="searchByStEt" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_ST_ET}">
                                         <div class="col-md-4">
-                                            <div class="card" style="width: 364px; height:291px; border-radius: 5%;">
+                                            <div class="card" style="    width: 100%;
+                                                 height: auto;
+                                                 border-radius: 5%;">
                                                 <div class="card-body">
                                                     <form action="MainController" method="POST">
+                                                        <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture ID:</b></strong> 
+                                                            <span class="ml-auto specific-input">${searchByStEt.freeSlotID}</span>
+                                                        </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                            <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByStEt.subjectCode.trim()}"/>
+                                                            <span class="ml-auto specific-input">${searchByStEt.subjectCode.trim()}</span>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
-                                                            <span class="ml-auto">${searchByStEt.lectureName}</span>
+                                                            <span class="ml-auto specific-input">${searchByStEt.lectureName}</span>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
                                                             <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByStEt.startTime}"    pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
@@ -578,7 +599,7 @@
                                                                     <input type="hidden" name="subjectCode" value="${searchByStEt.subjectCode.trim()}" required/>
                                                                     <input type="hidden" name="startTime" value="${searchByStEt.startTime}">
                                                                     <input type="hidden" name="endTime" value="${searchByStEt.endTime}">
-                                                                    <button type="submit" style="display: flex; text-decoration: none; justify-content: center; background-color: white;">
+                                                                    <button class="button-style" type="submit">
                                                                         <i class="material-icons">update</i>Update
                                                                     </button>
                                                                 </form>
@@ -601,14 +622,19 @@
                                     <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_ALL}">
                                         <c:forEach var="searchByAll" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_ALL}">
                                             <div class="col-md-4">
-                                                <div class="card" style="width: 364px; height:291px; border-radius: 5%;">
+                                                <div class="card" style="    width: 100%;
+                                                     height: auto;
+                                                     border-radius: 5%;">
                                                     <div class="card-body">
                                                         <form action="MainController" method="POST">
+                                                            <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture ID:</b></strong> 
+                                                                <span class="ml-auto specific-input">${searchByAll.freeSlotID}</span>
+                                                            </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByAll.subjectCode.trim()}" />
+                                                                <span class="ml-auto specific-input">${searchByAll.subjectCode.trim()}</span>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
-                                                                <span class="ml-auto">${searchByAll.lectureName}</span>
+                                                                <span class="ml-auto specific-input">${searchByAll.lectureName}</span>
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
                                                                 <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByAll.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
@@ -646,7 +672,7 @@
                                                                         <input type="hidden" name="subjectCode" value="${searchByAll.subjectCode.trim()}" required/>
                                                                         <input type="hidden" name="startTime" value="${searchByAll.startTime}">
                                                                         <input type="hidden" name="endTime" value="${searchByAll.endTime}">
-                                                                        <button type="submit" style="display: flex; text-decoration: none; justify-content: center; background-color: white;">
+                                                                        <<button class="button-style" type="submit">
                                                                             <i class="material-icons">update</i>Update
                                                                         </button>
                                                                     </form>
@@ -671,14 +697,19 @@
                                         <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_SUBJECT}">
                                             <c:forEach var="searchBySubjectCode" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_SUBJECT}">
                                                 <div class="col-md-4">
-                                                    <div class="card" style="width: 364px; height:291px; border-radius: 5%;">
+                                                    <div class="card" style="    width: 100%;
+                                                         height: auto;
+                                                         border-radius: 5%;">
                                                         <div class="card-body">
                                                             <form action="MainController" method="POST">
+                                                                <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture ID:</b></strong> 
+                                                                    <span class="ml-auto specific-input">${searchBySubjectCode.freeSlotID}</span>
+                                                                </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchBySubjectCode.subjectCode.trim()}" />
+                                                                    <span class="ml-auto specific-input">${searchBySubjectCode.subjectCode.trim()}</span>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
-                                                                    <span class="ml-auto">${searchBySubjectCode.lectureName}</span>
+                                                                    <span class="ml-auto specific-input">${searchBySubjectCode.lectureName}</span>
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
                                                                     <input type="text" class="ml-auto specific-input" name="startTime" value="${searchBySubjectCode.startTime}"   pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
@@ -717,7 +748,7 @@
                                                                             <input type="hidden" name="subjectCode" value="${searchBySubjectCode.subjectCode.trim()}" required/>
                                                                             <input type="hidden" name="startTime" value="${searchBySubjectCode.startTime}">
                                                                             <input type="hidden" name="endTime" value="${searchBySubjectCode.endTime}">
-                                                                            <button type="submit" style="display: flex; text-decoration: none; justify-content: center;">
+                                                                            <button class="button-style" type="submit">
                                                                                 <i class="material-icons">update</i>Update
                                                                             </button>
                                                                         </form>
@@ -743,14 +774,19 @@
                                             <c:if test="${not empty requestScope.SEARCH_FREE_SLOT_BY_NULL}">
                                                 <c:forEach var="searchByNull" varStatus="counter" items="${requestScope.SEARCH_FREE_SLOT_BY_NULL}">
                                                     <div class="col-md-4">
-                                                        <div class="card" style="width: 357px; height:291px; border-radius: 5%;">
+                                                        <div class="card" style="    width: 100%;
+                                                             height: auto;
+                                                             border-radius: 5%;">
                                                             <div class="card-body">
                                                                 <form action="MainController" method="POST">
+                                                                    <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture ID:</b></strong> 
+                                                                        <span class="ml-auto specific-input">${searchByNull.freeSlotID}</span>
+                                                                    </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                        <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByNull.subjectCode.trim()}"/>
+                                                                        <span class="ml-auto specific-input">${searchByNull.subjectCode.trim()}</span>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
-                                                                        <span class="ml-auto">${searchByNull.lectureName}</span>
+                                                                        <span class="ml-auto specific-input">${searchByNull.lectureName}</span>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Start time:</b></strong> 
                                                                         <input type="text" class="ml-auto specific-input" name="startTime" value="${searchByNull.startTime}"  pattern="[0-3]{1}[0-9]{1}/[0-1]{1}[0-2]{1}/[0-9]{4} [0-2]{1}[0-9]{1}:(0[0-9]|60|[1-5][0-9])$"/>
@@ -789,7 +825,7 @@
                                                                                 <input type="hidden" name="subjectCode" value="${searchByNull.subjectCode.trim()}" required/>
                                                                                 <input type="hidden" name="startTime" value="${searchByNull.startTime}">
                                                                                 <input type="hidden" name="endTime" value="${searchByNull.endTime}">
-                                                                                <button type="submit" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                                                <button class="button-style" type="submit">
                                                                                     <i class="material-icons">update</i>Update
                                                                                 </button>
                                                                             </form>
