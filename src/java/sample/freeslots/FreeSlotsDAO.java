@@ -40,13 +40,20 @@ public class FreeSlotsDAO {
             + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final static String CHECK_DUPLICATE_GGMEETLINK = "SELECT freeSlotID "
             + "FROM FreeSlots WHERE meetLink=?";
-    private final static String SEARCH_FREESLOT_BY_MODE = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID,fs.mode, lec.userName\n"
-            + "					FROM FreeSlots fs\n"
-            + "					JOIN Users lec ON fs.lecturerID = lec.userID\n"
-            + "					WHERE fs.mode = ? AND fs.status = 1 \n"
-            + "					AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
-            + "								FROM Bookings b\n"
-            + "								WHERE b.studentID = ? and b.status = 1)";
+    private final static String SEARCH_FREESLOT_BY_MODE1 = "  SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID,fs.mode, lec.userName\n"
+            + "                    FROM FreeSlots fs\n"
+            + "                        JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "                        WHERE fs.mode = ? AND fs.status = 1\n"
+            + "            		AND fs.freeSlotID NOT IN (SELECT b.freeSlotID\n"
+            + "            					FROM Bookings b\n"
+            + "            					WHERE b.studentID = ? and b.status = 1) ";
+    private final static String SEARCH_FREESLOT_BY_MODE2 = "  SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID,fs.mode, lec.userName\n"
+            + "                    FROM FreeSlots fs\n"
+            + "                        JOIN Users lec ON fs.lecturerID = lec.userID\n"
+            + "                        WHERE fs.mode = ? AND fs.status = 1\n"
+            + "            		AND fs.freeSlotID NOT IN (SELECT re.freeSlotID\n"
+            + "            					FROM Requests re\n"
+            + "            					WHERE re.studentID = ? and re.status = 2 or re.status= 0 or re.status = 1) ";
     private final static String SEARCH_FREESLOT_BY_LECTURERID = "SELECT fs.password, fs.freeSlotID, fs.subjectCode, fs.lecturerID, fs.startTime, fs.endTime, fs.capacity, fs.semesterID,fs.mode, lec.userName\n"
             + "            FROM FreeSlots fs\n"
             + "			JOIN Users lec ON fs.lecturerID = lec.userID\n"
@@ -591,10 +598,10 @@ public class FreeSlotsDAO {
         return list;
     }
 
-    private List<FreeSlotsDTO> freeSlotByMode;
+    private List<FreeSlotsDTO> freeSlotByMode1;
 
-    public List<FreeSlotsDTO> getFreeSlotByMode() {
-        return freeSlotByMode;
+    public List<FreeSlotsDTO> getFreeSlotByMode1() {
+        return freeSlotByMode1;
     }
 
     private String convertDateToString(Timestamp sqlTime) {
@@ -605,13 +612,13 @@ public class FreeSlotsDAO {
         return dateFormat.format(sqlTime);
     }
 
-    public void getFreeSlotByMode(int mode, String studentID) throws ClassNotFoundException, SQLException {
+    public void getFreeSlotByMode1(int mode, String studentID) throws ClassNotFoundException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             con = DBUtils.getConnection();
-            stm = con.prepareStatement(SEARCH_FREESLOT_BY_MODE);
+            stm = con.prepareStatement(SEARCH_FREESLOT_BY_MODE1);
             stm.setInt(1, mode);
             stm.setString(2, studentID);
             rs = stm.executeQuery();
@@ -631,10 +638,60 @@ public class FreeSlotsDAO {
                 int modeFS = rs.getInt("mode");
                 FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
                 freeSlotsDTO.setMode(modeFS);
-                if (this.freeSlotByMode == null) {
-                    this.freeSlotByMode = new ArrayList<>();
+                if (this.freeSlotByMode1 == null) {
+                    this.freeSlotByMode1 = new ArrayList<>();
                 }
-                this.freeSlotByMode.add(freeSlotsDTO);
+                this.freeSlotByMode1.add(freeSlotsDTO);
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+    private List<FreeSlotsDTO> freeSlotByMode2;
+
+    public List<FreeSlotsDTO> getFreeSlotByMode2() {
+        return freeSlotByMode2;
+    }
+
+    public void getFreeSlotByMode2(int mode, String studentID) throws ClassNotFoundException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(SEARCH_FREESLOT_BY_MODE2);
+            stm.setInt(1, mode);
+            stm.setString(2, studentID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String freeSlotID = rs.getString("freeSlotID");
+                String subjectCode = rs.getString("subjectCode");
+                String lecturerID = rs.getString("lecturerID");
+                String password = rs.getString("password");
+                String lecname = rs.getNString("userName");
+                Timestamp startTime = rs.getTimestamp("startTime");
+                String starts = convertDateToString(startTime);
+                Timestamp endTime = rs.getTimestamp("endTime");
+                String ends = convertDateToString(endTime);
+                int capacity = rs.getInt("capacity");
+                String semester = rs.getString("semesterID");
+                int bookedStudent = bookingDAO.getBookedStudent(freeSlotID);
+                int modeFS = rs.getInt("mode");
+                FreeSlotsDTO freeSlotsDTO = new FreeSlotsDTO(freeSlotID, subjectCode, starts, ends, password, capacity, "", 0, lecturerID, 1, semester, lecname, bookedStudent);
+                freeSlotsDTO.setMode(modeFS);
+                if (this.freeSlotByMode2 == null) {
+                    this.freeSlotByMode2 = new ArrayList<>();
+                }
+                this.freeSlotByMode2.add(freeSlotsDTO);
             }
         } finally {
             if (rs != null) {

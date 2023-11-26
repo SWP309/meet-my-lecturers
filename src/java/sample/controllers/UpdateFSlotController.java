@@ -17,6 +17,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.freeslots.FreeSlotsDTO;
+import sample.major.MajorDTO;
+import sample.majors.MajorsDAO;
+import sample.majors.MajorsDTO;
 import sample.users.UserDTO;
 import sample.viewCreatedSlot.ViewCreatedSlotDAO;
 import sample.viewCreatedSlot.ViewCreatedSlotDTO;
@@ -43,6 +47,7 @@ public class UpdateFSlotController extends HttpServlet {
             ViewCreatedSlotDAO dao = new ViewCreatedSlotDAO();
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");
             String subjectCode = request.getParameter("subjectCode");
+            System.out.println("Subject code day ne: " + subjectCode);
             String startTime = request.getParameter("startTime");
             String endTime = request.getParameter("endTime");
             String freeSlotID = request.getParameter("freeSlotID");
@@ -53,14 +58,20 @@ public class UpdateFSlotController extends HttpServlet {
             Date endDate = simpleDateFormat.parse(endTime);
             System.out.println(startDate);
             System.out.println(endDate);
-//            boolean checkStartTimeDuplicateFS = dao.checkTimeDuplicateInFreeSlot(us.getUserEmail(), startDate);
-//            boolean checkEndTimeDuplicateFS = dao.checkTimeDuplicateInFreeSlot(us.getUserEmail(), endDate);
-//            System.out.println(checkEndTimeDuplicateFS);
-//            if (checkStartTimeDuplicateFS == false || checkEndTimeDuplicateFS == false) {
-//                flag = false;
-//                request.setAttribute("ERROR"," The time you entered overlaps with time of created FREESLOT!!! ");
-//            }
-//            if (flag) {
+
+            MajorsDAO majorsDAO = new MajorsDAO();
+
+//            for (MajorsDTO majorsDTO : listSubject) {
+//                System.out.println(majorsDTO.getSubjectCode());
+//                if (subjectCode.equalsIgnoreCase(majorsDTO.getSubjectCode())) {
+//            List<MajorsDTO> Listsub = majorsDAO.getSubject(subjectCode);
+            
+//            System.out.println(Listsub.getSubjectCode());
+//            System.out.println(check.getSubjectCode());
+                boolean check = majorsDAO.getSubject(subjectCode);
+                System.out.println(check);
+            if (check == false) {
+
                 if (endDate.after(startDate) && (endDate.getTime() - startDate.getTime()) >= 15 * 60 * 1000) {
                     ViewCreatedSlotDTO dto = new ViewCreatedSlotDTO();
                     dto.setStartTime(startTime);
@@ -81,14 +92,34 @@ public class UpdateFSlotController extends HttpServlet {
                             }
                         }
 //                    }
-                } else {
-                    request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
+                    } else {
+                        request.setAttribute("ERROR", "Start Time must be less than End Time and The total study duration should be at least 15 minutes.");
 
+                    }
                 }
+
+            } else {
+                List<ViewCreatedSlotDTO> listbooking = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                request.setAttribute("LIST_CREATED_SLOT", listbooking);
+                request.setAttribute("ERROR", "Subject Code do not match with major !!");
+                System.out.println("Chay vao else");
+                
             }
+//                   
+
+//        }
+//            boolean checkStartTimeDuplicateFS = dao.checkTimeDuplicateInFreeSlot(us.getUserEmail(), startDate);
+//            boolean checkEndTimeDuplicateFS = dao.checkTimeDuplicateInFreeSlot(us.getUserEmail(), endDate);
+//            System.out.println(checkEndTimeDuplicateFS);
+//            if (checkStartTimeDuplicateFS == false || checkEndTimeDuplicateFS == false) {
+//                flag = false;
+//                request.setAttribute("ERROR"," The time you entered overlaps with time of created FREESLOT!!! ");
+//            }
+//            if (flag) {
 
         } catch (Exception e) {
             log("Error at UpdateController: " + e.toString());
+            e.printStackTrace();
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

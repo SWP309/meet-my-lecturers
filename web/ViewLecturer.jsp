@@ -143,14 +143,7 @@
                                 <input type="hidden" name="action" value="ViewRequestStatus" />
                             </form>
                             <i class="material-icons">visibility</i>View Request Status
-                        </div>
-                        <div class="frame-div request" onclick="submitFormRequest()">
-                            <form style="display: flex; justify-content: center;" action="MainController" method="POST">
-                                <input type="hidden" name="action" value="Request" />
-                                <i class="material-icons">mail_outline</i>
-                            </form>
-                            Request
-                        </div>
+                        </div>  
                         <div class="frame-div viewLecturer" style="background-color: #b7b7b7;">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="ViewAllLecturers" />
@@ -178,7 +171,7 @@
                 <i class="material-icons">history</i>
             </div>
 
-            <h1 class="text-center text-custom">Table of Lecturer</h1>
+            <h1 class="text-center text-custom">Lecturers</h1>
 
             <div id="fh5co-staff">
                 <div class="container">

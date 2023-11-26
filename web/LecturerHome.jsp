@@ -186,7 +186,7 @@
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
-                         flex-direction: column;
+                         flex-direction: column;    z-index: 999;
                          ">
                         <div class="frame-div returnHomeDiv" style="background-color: #b7b7b7;"> 
                             <form action="MainController" method="POST">
@@ -269,35 +269,63 @@
                     <button data-slide="4" class="is-active"><span class="show-for-sr">Fifth slide details.</span><span class="show-for-sr">Current Slide</span></button>
                 </nav>
             </div>
-
-
-
-            <div id="fh5co-staff">
-                <div class="container">
-                    <div class="row">
-                        <c:forEach items="${requestScope.Top5StuBookSlots}" 
-                                   var="stmbLT" varStatus="status">
-                            <div class="col-md-3 animate-box text-center">
-                                <div class="staff">
-                                    <div class="staff-img" style="background-image: url(./public/StudentHome/User-avatar.png);">
-                                        <ul class="fh5co-social" style="display: flex;
-                                            align-items: center;
-                                            justify-content: center;">
-                                            <li><a href="https://www.facebook.com/lam.cat.77770/"><i class="material-icons">facebook</i></a></li>
-                                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                            <li><a href="#"><i class="material-icons">phone</i></a></li>
-                                            <li><a href="#"><i class="fa fa-globe"></i></a></li>
-                                        </ul>
+            <div style="display: flex;">
+                <div class="col-md-11" id="fh5co-staff">
+                    <div class="container">
+                        <div class="row">
+                            <c:forEach items="${requestScope.Top5StuBookSlots}" 
+                                       var="stmbLT" varStatus="status">
+                                <div class="col-md-3 animate-box text-center">
+                                    <div class="staff">
+                                        <div class="staff-img" style="background-image: url(./public/StudentHome/User-avatar.png);">
+                                            <ul class="fh5co-social" style="display: flex;
+                                                align-items: center;
+                                                justify-content: center;">
+                                                <li><a href="https://www.facebook.com/lam.cat.77770/"><i class="material-icons">facebook</i></a></li>
+                                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                                <li><a href="#"><i class="material-icons">phone</i></a></li>
+                                                <li><a href="#"><i class="fa fa-globe"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <span>${stmbLT.userID}</span>
+                                        <h3>${stmbLT.userName}</h3>
+                                        <p>${stmbLT.userEmail}</p>
                                     </div>
-                                    <span>${stmbLT.userID}</span>
-                                    <h3>${stmbLT.userName}</h3>
-                                    <p>${stmbLT.userEmail}</p>
                                 </div>
-                            </div>
-                        </c:forEach>
+                            </c:forEach>
+                        </div>
                     </div>
                 </div>
+                <div class="col-md-1" style=" display: flex;
+                     flex-direction: column; float: right;">
+                    <div class="frame-choice CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()" title="Create free slots">
+                        <form action="MainController" method="POST">
+                            <input type="hidden" name="action" value="CreateFS" />
+                        </form>
+
+                        <i class="material-icons">add</i>
+                    </div>
+                    <div class="frame-choice history" style="cursor: pointer; color: white" onclick="submitFormHistory()"  title="View history attendance">
+                        <form action="MainController" method="POST">
+
+                            <input type="hidden" name="action" value="historyLec" />
+                        </form>
+
+                        <i class="material-icons">history</i>
+                    </div>
+                    <div class="frame-choice sendMail" style="cursor: pointer; color: white"  onclick="submitFormSendEmail()" title="Send email for students">
+                        <form action="MainController" method="POST">
+                            <input type="hidden" name="action" value="SendEmailForRemindStudent" />
+                        </form>
+
+                        <i class="material-icons">send</i>
+                    </div>
+                    
+                </div> 
             </div>
+
+
+
 
 
             <div class="footer1">

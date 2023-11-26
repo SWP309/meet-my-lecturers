@@ -74,7 +74,7 @@ public class AcceptAllRequest extends HttpServlet {
                         }
 
                     } else {
-                        requestDAO.acceptARequest(requestDTO.getRequestID());
+                        requestDAO.acceptARequest(requestDTO.getRequestID(),requestDTO.getFreeSlotID());
                         freeSlotsDAO.updateSubject(requestDTO.getSubjectCode(), requestDTO.getFreeSlotID());
                         requestDAO.updateStatusDuplicateAcceptedRequest(requestDTO.getStudentID());
                         System.out.println(requestDTO.getFreeSlotID() + " " + requestDTO.getStudentID());

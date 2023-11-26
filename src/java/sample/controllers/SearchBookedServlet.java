@@ -40,13 +40,21 @@ public class SearchBookedServlet extends HttpServlet {
             String endTime = request.getParameter("txtEndTime");
             String userEmail = us.getUserEmail();
             BookingDAO searchBSlot = new BookingDAO();
+            System.out.println(subjectCode);
+            System.out.println(startTime);
+            System.out.println(endTime);
+            System.out.println(userEmail);
+           
 
             if (!subjectCode.isEmpty() && !startTime.isEmpty() && !endTime.isEmpty()) {
-                List<BookingDTO> listBooking = searchBSlot.getListBooking(us.getUserEmail());
+//                List<BookingDTO> listBooking = searchBSlot.getListBooking(us.getUserEmail());
                 List<BookingDTO> searchByStEtSubject = searchBSlot.searchBSlotViewByStEtSubjectCode(subjectCode, startTime, endTime, userEmail);
                 if (searchByStEtSubject != null) {
+                    for (BookingDTO bookingDTO : searchByStEtSubject) {
+                        System.out.println(bookingDTO.getSubjectCode());
+                    }
                     request.setAttribute("SEARCH_BOOKED_SLOT_BY_ST_ET_SUBJECTCODE", searchByStEtSubject);
-                    request.setAttribute("LIST_BOOKING", listBooking);
+//                    request.setAttribute("LIST_BOOKING", listBooking);
                     url = SUCCESS;
                 }
             } else if (!subjectCode.isEmpty() && startTime.isEmpty() && endTime.isEmpty()) {

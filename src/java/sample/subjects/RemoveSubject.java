@@ -7,10 +7,13 @@ package sample.subjects;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import sample.majors.MajorsDAO;
+import sample.majors.MajorsDTO;
 
 /**
  *
@@ -34,16 +37,26 @@ public class RemoveSubject extends HttpServlet {
             int rs = 0;
             String url = "MainController?action=ManageServlet";
             String subjectCode = request.getParameter("txtsubject");
-            rs = SubjectDAO.removeSubject(subjectCode);
-                    if (rs > 0) {
-                        request.setAttribute("RemoveStatus", "Remove successfully!");
-                        url = "MainController?action=ManageServlet";
-                    } else {
-                        request.setAttribute("RemoveStatus", "Remove fail!");
-                        url = "MainController?action=ManageServlet";
-                    }
-                    request.getRequestDispatcher(url).forward(request, response);
-        } catch(Exception e){
+//            ArrayList<MajorsDTO> list = MajorsDAO.getAllMajors();
+//            MajorsDTO major = null;
+//            for (MajorsDTO ob : list) {
+//                if (subjectCode.equalsIgnoreCase(ob.getSubjectCode())) {
+//                    major = ob;
+//                }
+//            }
+//            if (major == null) {
+
+                rs = SubjectDAO.removeSubject(subjectCode);
+                if (rs > 0) {
+                    request.setAttribute("RemoveStatus", "Remove successfully!");
+                } else {
+                    request.setAttribute("RemoveStatus", "Remove fail!");
+                }
+//            } else{
+//                request.setAttribute("RemoveStatus", "Remove fail due to major");
+//            }
+            request.getRequestDispatcher(url).forward(request, response);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

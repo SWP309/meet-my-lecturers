@@ -29,6 +29,7 @@ public class CreateRequestServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         String url = ERROR;
+        System.out.println(url);
         try {
             HttpSession session = request.getSession();
             UserDTO student = (UserDTO) session.getAttribute("loginedUser");
@@ -41,9 +42,6 @@ public class CreateRequestServlet extends HttpServlet {
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
             String description = request.getParameter("txtDescription");
-            
-            
-            System.out.println("");
             RequestDAO requestDAO = new RequestDAO();
             RequestError requestError = new RequestError();
             boolean checkValidation = true;

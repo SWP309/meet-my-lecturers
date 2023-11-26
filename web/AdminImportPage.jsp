@@ -171,7 +171,7 @@
                 </div>
             </div>
         </div>
-        <h1 class="text-center text-custom">Import form excel</h1>
+        <h1 class="text-center text-custom">Import data</h1>
         <div class="container mt-5">
             <form action="MainController" method="POST" enctype="multipart/form-data">
                 <div style="padding-right: 100px; display: inline-block">
