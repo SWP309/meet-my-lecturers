@@ -125,6 +125,19 @@
                     }, 400);
                 }
             }
+            function confirmNeutralize() {
+                var result = confirm("Are you sure about hide this subjectCode ?");
+                if (result) {
+                    // N?u ng??i dùng ch?n OK, chuy?n ??n trang MainController ?? x? lý hành ??ng "cancel".
+                    // Ví d?:
+                    window.location.href = "MainController?action=cancel&bookingID=" + document.querySelector('[name="bookingID"]').value;
+                } else {
+                    // N?u ng??i dùng ch?n Cancel, không làm gì c?.
+//                    alert("Booking cancel canceled!"); // Hi?n th? thông báo cho ng??i dùng
+                    // N?u ng??i dùng ch?n Cancel, ng?n ch?n chuy?n h??ng trang m?c ??nh sau ?ó.
+                    event.preventDefault();
+                }
+            }
         </script>
 
         <style>
@@ -290,7 +303,7 @@
             <%
                 if (ListSubject != null) {
             %>
-            <div style="display: flex; text-align: center">
+<!--            <div style="display: flex; text-align: center">
                 <div style="display: flex; width: 89%;">
                     <span class="form-control" style="font-weight: bold;">Subject Code</span>
                     <span class="form-control" style="font-weight: bold;">Description</span>
@@ -299,25 +312,31 @@
                      width: 17%;">
                     <span class="form-control" style="font-weight: bold;">Manage</span>
                 </div>
-            </div>
-                <%
-                    for (SubjectDTO sub : ListSubject) {
-                %>
+            </div>-->
+            <form>
+                <div class="form-group input-group" style="text-align: center;">
+                    <span class="form-control" style="font-weight: bold; width: 30%; background: antiquewhite;">Subject Code</span>
+                    <span class="form-control" style="font-weight: bold; width: 31%; background: antiquewhite;">Description</span>
+                    <div class="input-group-append">
+                        <span class="form-control" style="font-weight: bold; background-color: #faebd78c;">Manage</span>
+                    </div>
+                </div>
+            </form>
+            <%
+                for (SubjectDTO sub : ListSubject) {
+            %>
             <form>
                 <div class="form-group input-group">
                     <input  style="text-align: center" type="text" class="form-control" name="txtsubject" value="<%= sub.getSubjectCode()%>" readonly>
                     <input style="color: tomato;text-align: center" type="text" class="form-control" name="txtdescription" value="<%=  sub.getSubjectName()%>" readonly>
                     <div class="input-group-append">
-                        <button id="update" type="submit" value="UpdateSub" name="action" class="btn btn-primary custom-submit-button">Neutralize</button>
-                    </div>
-                    <div class="input-group-append">
-                        <button id="remove" type="submit" value="RemoveSub" name="action" class="btn btn-primary custom-submit-button">Remove</button>
+                        <button id="update" onclick="return confirm('Are you sure to hide this subject Code ?')" type="submit" value="UpdateSub" name="action" class="btn btn-primary custom-submit-button">Neutralize</button>
                     </div>
                 </div>
             </form>
-                <%
-                    }
-                %>
+            <%
+                }
+            %>
             <%
                 }
             %>
