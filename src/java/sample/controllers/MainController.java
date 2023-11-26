@@ -183,7 +183,9 @@ public class MainController extends HttpServlet {
     private static final String SEARCH_CREATE_SLOT_SERVLET = "SearchCreateSlotServlet";
 
     private static final String SEARCH_FREE_SLOT_ACTION = "SearchFSlot";
+    private static final String SEARCH_FREE_SLOT_ACTION_BY_MODE = "SearchFSlotByMode";
     private static final String SEARCH_FREE_SLOT_SERVLET = "SearchFreeSlotServlet";
+    private static final String SEARCH_FREE_SLOT_SERVLET_BY_MODE = "SearchByMode";
 
     private static final String SEARCH_BOOKED_SLOT_ACTION = "searchBSlot";
     private static final String SEARCH_BOOKED_SLOT_SERVLET = "SearchBookedServlet";
@@ -198,6 +200,9 @@ public class MainController extends HttpServlet {
 
     private static final String SEND_EMAIL_REMIND_ACTION = "SendEmailForRemindStudent";
     private static final String SEND_EMAIL_REMIND_SERVLET = "send-email.jsp";
+    
+    private static final String CANCEL_REQUEST_STATUS = "CancelARequest";
+    private static final String CANCEL_REQUEST_STATUS_ACTION = "CancelRequestServlet";
 
     private static final String ADD_SUBJECT = "AddSub";
     private static final String REMOVE_SUBJECT = "RemoveSub";
@@ -403,6 +408,10 @@ public class MainController extends HttpServlet {
                 url = ACCEPT_ALL_REQUEST_CONTROLLER;
             } else if (DECLINE_ALL_REQUEST.equals(action)) {//declineAllRequest
                 url = DECLINE_ALL_REQUEST_CONTROLLER;
+            }else if (SEARCH_FREE_SLOT_ACTION_BY_MODE.equals(action)) {//declineAllRequest
+                url = SEARCH_FREE_SLOT_SERVLET_BY_MODE;
+            } else if (CANCEL_REQUEST_STATUS.equals(action)) {//declineAllRequest
+                url = CANCEL_REQUEST_STATUS_ACTION;
             }
 
         } catch (Exception e) {

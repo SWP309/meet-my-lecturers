@@ -335,7 +335,6 @@
                                             <td>${request.startTime}</td>
                                             <td>${request.endTime}</td>
                                             <td>${request.description}</td>
-
                                             <td>
                                                 <input type="hidden" name="txtRequestID" 
                                                        value="${request.requestID}" readonly="">
@@ -392,7 +391,6 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Description</th>
-                                            <th>Meet Link (If accept)</th>
                                             <th>Accept</th>
                                             <th>Note (If decline)</th>
                                             <th>Decline</th>
@@ -413,10 +411,6 @@
                                             <td>${request.startTime}</td>
                                             <td>${request.endTime}</td>
                                             <td>${request.description}</td>
-                                            <td>
-                                                <input type="text" name="txtLinkMeet" 
-                                                       value="${param.txtLinkMeet}" placeholder="Input MeetLink" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$">
-                                            </td>
                                             <td>
                                                 <input type="hidden" name="txtRequestID" 
                                                        value="${request.requestID}" readonly="">
@@ -474,7 +468,6 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Description</th>
-                                            <th>Meet Link (If accept)</th>
                                             <th>Accept</th>
                                             <th>Note (If decline)</th>
                                             <th>Decline</th>
@@ -495,10 +488,6 @@
                                             <td>${request.startTime}</td>
                                             <td>${request.endTime}</td>
                                             <td>${request.description}</td>
-                                            <td>
-                                                <input type="text" name="txtLinkMeet" 
-                                                       value="${param.txtLinkMeet}" placeholder="Input MeetLink" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$">
-                                            </td>
                                             <td>
                                                 <input type="hidden" name="txtRequestID" 
                                                        value="${request.requestID}" readonly="">
@@ -556,7 +545,6 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Description</th>
-                                            <th>Meet Link (If accept)</th>
                                             <th>Accept</th>
                                             <th>Note (If decline)</th>
                                             <th>Decline</th>
@@ -577,10 +565,6 @@
                                             <td>${request.startTime}</td>
                                             <td>${request.endTime}</td>
                                             <td>${request.description}</td>
-                                            <td>
-                                                <input type="text" name="txtLinkMeet" 
-                                                       value="${param.txtLinkMeet}" placeholder="Input MeetLink" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$">
-                                            </td>
                                             <td>
                                                 <input type="hidden" name="txtRequestID" 
                                                        value="${request.requestID}" readonly="">
@@ -638,7 +622,6 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Description</th>
-                                            <th>Meet Link (If accept)</th>
                                             <th>Accept</th>
                                             <th>Note (If decline)</th>
                                             <th>Decline</th>
@@ -659,10 +642,6 @@
                                             <td>${request.startTime}</td>
                                             <td>${request.endTime}</td>
                                             <td>${request.description}</td>
-                                            <td>
-                                                <input type="text" name="txtLinkMeet" 
-                                                       value="${param.txtLinkMeet}" placeholder="Input MeetLink" pattern="^https:\/\/meet.google.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$|^meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$">
-                                            </td>
                                             <td>
                                                 <input type="hidden" name="txtRequestID" 
                                                        value="${request.requestID}" readonly="">

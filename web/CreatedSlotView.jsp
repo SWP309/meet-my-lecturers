@@ -466,7 +466,7 @@
                                         <div class="card-body">
                                             <form action="MainController" method="POST">
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"/>
+                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${listCreatedSlot.subjectCode.trim()}" />
                                                 </div>
                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
                                                     <span class="ml-auto">${listCreatedSlot.lectureName}</span>
@@ -536,7 +536,7 @@
                                                 <div class="card-body">
                                                     <form action="MainController" method="POST">
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                            <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByStEt.subjectCode.trim()}" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"/>
+                                                            <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByStEt.subjectCode.trim()}"/>
                                                         </div>
                                                         <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
                                                             <span class="ml-auto">${searchByStEt.lectureName}</span>
@@ -605,7 +605,7 @@
                                                     <div class="card-body">
                                                         <form action="MainController" method="POST">
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByAll.subjectCode.trim()}" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"/>
+                                                                <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByAll.subjectCode.trim()}" />
                                                             </div>
                                                             <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
                                                                 <span class="ml-auto">${searchByAll.lectureName}</span>
@@ -675,7 +675,7 @@
                                                         <div class="card-body">
                                                             <form action="MainController" method="POST">
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchBySubjectCode.subjectCode.trim()}" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"/>
+                                                                    <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchBySubjectCode.subjectCode.trim()}" />
                                                                 </div>
                                                                 <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
                                                                     <span class="ml-auto">${searchBySubjectCode.lectureName}</span>
@@ -747,7 +747,7 @@
                                                             <div class="card-body">
                                                                 <form action="MainController" method="POST">
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Subject:</b></strong> 
-                                                                        <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByNull.subjectCode.trim()}" pattern="^(PRJ|PRM|SEP|SWD|SWP|SWR|SWT|JPD)[0-9]{3}$"/>
+                                                                        <input type="text" class="ml-auto specific-input" name="subjectCode" value="${searchByNull.subjectCode.trim()}"/>
                                                                     </div>
                                                                     <div class="d-flex justify-content-between"><strong style="color: red"><b>Lecture name:</b></strong> 
                                                                         <span class="ml-auto">${searchByNull.lectureName}</span>
@@ -783,7 +783,7 @@
                                                                             <a class="d-flex justify-content-between" style="text-decoration: none; gap: 2px; width: 11px; margin-left: 10px;" href="MainController?action=viewFS&freeSlotID=${searchByNull.freeSlotID}">
                                                                                 <i class="fas fa-search"></i>View
                                                                             </a>
-                                                                            <form action="MainController" method="GET">
+                                                                            <form action="MainController" method="POST">
                                                                                 <input type="hidden" name="action" value="updateFS">
                                                                                 <input type="hidden" name="freeSlotID" value="${searchByNull.freeSlotID}">
                                                                                 <input type="hidden" name="subjectCode" value="${searchByNull.subjectCode.trim()}" required/>

@@ -111,6 +111,9 @@ public class RequestDAO implements Serializable {
             + "   SET [note] = ?\n"
             + " WHERE requestID = ?";
 
+    private final String DELETE_REQUEST_STATUS = "DELETE FROM [dbo].[Requests]\n" +
+"      WHERE requestID = ?";
+    
     private final String UPDATE_STATUS_OUTDATE = "UPDATE [dbo].[Requests]\n"
             + "SET [status] = 3\n"
             + "WHERE requestID IN (SELECT r.requestID\n"
@@ -118,22 +121,15 @@ public class RequestDAO implements Serializable {
             + "					JOIN FreeSlots fs ON r.freeSlotID = fs.freeSlotID\n"
             + "					WHERE fs.startTime < ? ) ";
 
-    private final String UPDATE_STATUS_DUPLICATE_ACP_REQUEST = "UPDATE Requests SET status = 0\n"
-            + "WHERE studentID = ? AND status = 2 AND requestID IN (SELECT r.requestID FROM Requests r\n"
-            + "												JOIN FreeSlots fs ON r.freeSlotID = fs.freeSlotID\n"
-            + "												WHERE (fs.startTime BETWEEN (SELECT fs.startTime FROM Requests r\n"
-            + "																			JOIN FreeSlots fs ON r.freeSlotID = fs.freeSlotID\n"
-            + "																			WHERE r.status = 1 and r.studentID = ?) \n"
-            + "																	AND (SELECT fs.endTime FROM Requests r\n"
-            + "																	JOIN FreeSlots fs ON r.freeSlotID = fs.freeSlotID\n"
-            + "																	WHERE r.status = 1 and r.studentID = ?))\n"
-            + "												OR (fs.endTime BETWEEN (SELECT fs.startTime FROM Requests r\n"
-            + "																			JOIN FreeSlots fs ON r.freeSlotID = fs.freeSlotID\n"
-            + "																			WHERE r.status = 1 and r.studentID = ?) \n"
-            + "																	AND (SELECT fs.endTime FROM Requests r\n"
-            + "																	JOIN FreeSlots fs ON r.freeSlotID = fs.freeSlotID\n"
-            + "																	WHERE r.status = 1 and r.studentID = ?))\n"
-            + "												)";
+    private final String UPDATE_STATUS_DUPLICATE_ACP_REQUEST = "UPDATE Requests\n" +
+"SET status = 0 \n" +
+"FROM Requests r\n" +
+"JOIN (SELECT r1.requestID FROM Requests r1\n" +
+"       JOIN FreeSlots fs ON r1.freeSlotID = fs.freeSlotID\n" +
+"       WHERE r1.status = 2 AND r1.studentID = ?\n" +
+"       AND ((? BETWEEN fs.startTime AND fs.endTime) OR (? BETWEEN fs.startTime AND fs.endTime))) re ON re.requestID = r.requestID\n" +
+"WHERE r.requestID = Re.requestID";
+    
 //    private final String CHECK_TIMETABLE_DUPLICATE1 = "DECLARE @DayOfWeek VARCHAR(15)\n"
 //            + "SET @DayOfWeek = DATENAME(dw, ?)\n"
 //            + "SELECT s.slotID\n"
@@ -338,8 +334,32 @@ public class RequestDAO implements Serializable {
         }
         return checkUpdate;
     }
+    
+    public boolean deleteRequestStatus(String requestID) throws ClassNotFoundException, SQLException, ParseException {
+        boolean checkUpdate = false;
+        Connection con = null;
+        PreparedStatement stm = null;
+        int result = 0;
+        try {
+            con = DBUtils.getConnection();
+            stm = con.prepareStatement(DELETE_REQUEST_STATUS);
+            stm.setString(1, requestID);
+            result = stm.executeUpdate();
+            if (result > 0) {
+                checkUpdate = true;
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return checkUpdate;
+    }
 
-    public boolean updateStatusDuplicateAcceptedRequest(String studentID) throws ClassNotFoundException, SQLException, ParseException {
+    public boolean updateStatusDuplicateAcceptedRequest(String studentID, String startTime, String endTime) throws ClassNotFoundException, SQLException, ParseException {
         boolean checkUpdate = false;
         Connection con = null;
         PreparedStatement stm = null;
@@ -348,11 +368,13 @@ public class RequestDAO implements Serializable {
         try {
             con = DBUtils.getConnection();
             stm = con.prepareStatement(UPDATE_STATUS_DUPLICATE_ACP_REQUEST);
-            stm.setString(1, studentID);
-            stm.setString(2, studentID);
-            stm.setString(3, studentID);
-            stm.setString(4, studentID);
-            stm.setString(5, studentID);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                Date startTimeF = simpleDateFormat.parse(startTime);
+                Date endTimeF = simpleDateFormat.parse(endTime);
+
+                stm.setString(1, studentID);
+                stm.setTimestamp(2, new Timestamp(startTimeF.getTime()));
+                stm.setTimestamp(3, new Timestamp(endTimeF.getTime()));
             result = stm.executeUpdate();
             System.out.println("sdsas");
             if (result > 0) {

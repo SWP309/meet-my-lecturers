@@ -66,6 +66,14 @@
             td {
                 text-align: center;
             }
+            .table-rounded{
+                /* transform: scale(0.9); */
+                transform: 0.9;
+                width: 85%;
+                margin: auto;
+                /* padding: 28px; */
+                margin-top: 10%;
+            }
             .table-rounded th,
             .table-rounded td {
                 padding: 8px;
@@ -191,13 +199,6 @@
                             </form>
                             <i class="material-icons">visibility</i>View Request Status
                         </div>
-                        <div class="frame-div request" onclick="submitFormRequest()">
-                            <form style="display: flex; justify-content: center;"action="MainController" method="POST">
-                                <input type="hidden" name="action" value="Request" />
-                                <i class="material-icons">mail_outline</i>
-                            </form>
-                            Request
-                        </div>
                         <div class="frame-div viewLecturer" onclick="submitFormViewLecturer()">
                             <form action="MainController" method="POST">
                                 <input type="hidden" name="action" value="ViewAllLecturers" />
@@ -224,325 +225,481 @@
         </div>
 
         <h1 class="text-center text-custom">Table of Requests</h1>
-            <div class="row justify-content-center mt-5">
-                <c:if test="${empty param.txtSubjectCode and not empty requestScope.LIST_REQUEST}">
-                    <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
-                        <thead>
+        <div class="row justify-content-center mt-5">
+            <form action="MainController" method="POST">
+                <div class="row align-items-center">
+                    <div class="form-group">
+                        <input type="text" class="form-control " name="txtSubjectCode" value="${param.txtSubjectCode}" placeholder="SubjectCode" pattern="^[A-Z]{3}[0-9]{3}$">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="txtRequestStatus">
+                            <option value="All">All Requests</option>
+                            <option value="Accepted">Accepted</option>
+                            <option value="Declined">Declined</option>
+                            <option value="InProgress">In progress</option>
+                            <option value="Overdue">Overdue</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="txtSemesterID">
+                            <c:forEach items="${requestScope.ListSemes}" 
+                                       var="listSemes" varStatus="status">
+                                <option value="${listSemes.semesterID}" >${listSemes.semesterID}</option>
+                            </c:forEach>
+                            <!--                            <option value="FA23">FA23</option>
+                                                        <option value="SU23">SU23</option>
+                                                        <option value="SP23">SP23</option>
+                                                        <option value="FA22">FA22</option>-->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary form-control" type="submit" name="action" value="SearchRequestStatus">Search</button>
+                    </div>
+                </div>
+            </form>
+            <c:if test="${empty param.txtSubjectCode and not empty requestScope.LIST_REQUEST}">
+                <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Request ID</th>
+                            <th>Semester</th>
+                            <th>Free Slot ID</th>
+                            <th>Subject Code</th>
+                            <th>Lecturer ID</th>
+                            <th>Name</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Note</th>
+                            <th>Cancel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${requestScope.LIST_REQUEST}" 
+                                   var="request" varStatus="status">
                             <tr>
-                                <th>No.</th>
-                                <th>Request ID</th>
-                                <th>Semester</th>
-                                <th>Free Slot ID</th>
-                                <th>Subject Code</th>
-                                <th>Lecturer ID</th>
-                                <th>Name</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Description</th>
-                                <th>Status</th>
-                                <th>Note</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${requestScope.LIST_REQUEST}" 
-                                       var="request" varStatus="status">
-                                <tr>
-                                    <td>${status.count}</td>
-                                    <td>${request.requestID}</td>
-                                    <td>${request.semesterID}</td>
-                                    <td>${request.freeSlotID}</td>
-                                    <td>${request.subjectCode}</td>
-                                    <td>${request.lecturerID}</td>
-                                    <td>${request.lecturerName}</td>
-                                    <td>${request.startTime}</td>
-                                    <td>${request.endTime}</td>
-                                    <td>${request.description}</td>
-                                    <td>
-                                        <c:if test="${request.status == 1}">
-                                            <b style="color: green">Accepted</b>
-                                        </c:if>
-                                        <c:if test="${request.status == 2}">
-                                            <b style="color: #cccc00">In progress</b>
-                                        </c:if>
-                                        <c:if test="${request.status == 0}">
-                                            <b style="color: red">Declined</b>
+                        <form action="MainController" method="POST">
+                            <td>${status.count}</td>
+                            <td>${request.requestID}</td>
+                            <td>${request.semesterID}</td>
+                            <td>${request.freeSlotID}</td>
+                            <td>${request.subjectCode}</td>
+                            <td>${request.lecturerID}</td>
+                            <td>${request.lecturerName}</td>
+                            <td>${request.startTime}</td>
+                            <td>${request.endTime}</td>
+                            <td>${request.description}</td>
+                            <td>
+                                <c:if test="${request.status == 1}">
+                                    <b style="color: green">Accepted</b>
+                                </c:if>
+                                <c:if test="${request.status == 2}">
+                                    <b style="color: #cccc00">In progress</b>
+                                </c:if>
+                                <c:if test="${request.status == 0}">
+                                    <b style="color: red">Declined</b>
 
-                                            <c:if test="${request.status == 3}">
-                                                <b style="color: gray">Overdue</b>
-                                            </c:if></c:if>
-                                        <c:if test="${request.status == 3}">
-                                            <b style="color: gray">Overdue</b>
-                                        </c:if>
-                                    </td>
-                                    <c:if test="${empty request.note || request.note == null}">
-                                        <td>
-                                            <b>None</b>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${not empty request.note || request.note != null}">
-                                        <td>
-                                            <b>${request.note}</b>
-                                        </td>
-                                    </c:if>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </c:if>
-                <c:if test="${empty param.txtSubjectCode and not empty requestScope.REQUEST_BY_STATUS}">
-                    <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
-                        <thead>
+                                    <c:if test="${request.status == 3}">
+                                        <b style="color: gray">Overdue</b>
+                                    </c:if></c:if>
+                                <c:if test="${request.status == 3}">
+                                    <b style="color: gray">Overdue</b>
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test="${empty request.note || request.note == null}">
+                                    <b>None</b>
+                                </c:if>
+                                <c:if test="${not empty request.note || request.note != null}">
+                                    <b>${request.note}</b>
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test="${request.status != 2}">
+                                    Solved
+                                </c:if>
+                                <c:if test="${request.status == 2}">
+                                    <input type="hidden" name="txtRequestID" 
+                                           value="${request.requestID}" readonly="">
+                                    <button type="submit" name="action"
+                                            value="CancelARequest">Cancel</button>
+                                </c:if>
+                            </td>
+                        </form>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+            <c:if test="${empty param.txtSubjectCode and not empty requestScope.REQUEST_BY_STATUS}">
+                <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Request ID</th>
+                            <th>Semester</th>
+                            <th>Free Slot ID</th>
+                            <th>Subject Code</th>
+                            <th>Lecturer ID</th>
+                            <th>Name</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Note</th>
+                            <th>Cancel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${requestScope.REQUEST_BY_STATUS}" 
+                                   var="request" varStatus="status">
                             <tr>
-                                <th>No.</th>
-                                <th>Request ID</th>
-                                <th>Semester</th>
-                                <th>Free Slot ID</th>
-                                <th>Subject Code</th>
-                                <th>Lecturer ID</th>
-                                <th>Name</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Description</th>
-                                <th>Status</th>
-                                <th>Note</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${requestScope.REQUEST_BY_STATUS}" 
-                                       var="request" varStatus="status">
-                                <tr>
-                                    <td>${status.count}</td>
-                                    <td>${request.requestID}</td>
-                                    <td>${request.semesterID}</td>
-                                    <td>${request.freeSlotID}</td>
-                                    <td>${request.subjectCode}</td>
-                                    <td>${request.lecturerID}</td>
-                                    <td>${request.lecturerName}</td>
-                                    <td>${request.startTime}</td>
-                                    <td>${request.endTime}</td>
-                                    <td>${request.description}</td>
-                                    <td>
-                                        <c:if test="${request.status == 1}">
-                                            <b style="color: green">Accepted</b>
-                                        </c:if>
-                                        <c:if test="${request.status == 2}">
-                                            <b style="color: #cccc00">In progress</b>
-                                        </c:if>
-                                        <c:if test="${request.status == 0}">
-                                            <b style="color: red">Declined</b>
-                                        </c:if>
-                                        <c:if test="${request.status == 3}">
-                                            <b style="color: gray">Overdue</b>
-                                        </c:if>
-                                    </td>
-                                    <c:if test="${empty request.note || request.note == null}">
-                                        <td>
-                                            <b>None</b>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${not empty request.note || request.note != null}">
-                                        <td>
-                                            <b>${request.note}</b>
-                                        </td>
-                                    </c:if>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </c:if>
-                <c:if test="${not empty param.txtSubjectCode and not empty requestScope.REQUEST_BY_SUBCODE_AND_STATUS}">
-                    <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
-                        <thead>
+                        <form action="MainController" method="POST">
+                            <td>${status.count}</td>
+                            <td>${request.requestID}</td>
+                            <td>${request.semesterID}</td>
+                            <td>${request.freeSlotID}</td>
+                            <td>${request.subjectCode}</td>
+                            <td>${request.lecturerID}</td>
+                            <td>${request.lecturerName}</td>
+                            <td>${request.startTime}</td>
+                            <td>${request.endTime}</td>
+                            <td>${request.description}</td>
+                            <td>
+                                <c:if test="${request.status == 1}">
+                                    <b style="color: green">Accepted</b>
+                                </c:if>
+                                <c:if test="${request.status == 2}">
+                                    <b style="color: #cccc00">In progress</b>
+                                </c:if>
+                                <c:if test="${request.status == 0}">
+                                    <b style="color: red">Declined</b>
+                                </c:if>
+                                <c:if test="${request.status == 3}">
+                                    <b style="color: gray">Overdue</b>
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test="${empty request.note || request.note == null}">
+                                    <b>None</b>
+                                </c:if>
+                                <c:if test="${not empty request.note || request.note != null}">
+                                    <b>${request.note}</b>
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test="${request.status != 2}">
+                                    Solved
+                                </c:if>
+                                <c:if test="${request.status == 2}">
+                                    <input type="hidden" name="txtRequestID" 
+                                           value="${request.requestID}" readonly="">
+                                    <button type="submit" name="action"
+                                            value="CancelARequest">Cancel</button>
+                                </c:if>
+                            </td>
+                        </form>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+            <c:if test="${not empty param.txtSubjectCode and not empty requestScope.REQUEST_BY_SUBCODE_AND_STATUS}">
+                <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Request ID</th>
+                            <th>Semester</th>
+                            <th>Free Slot ID</th>
+                            <th>Subject Code</th>
+                            <th>Lecturer ID</th>
+                            <th>Name</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Note</th>
+                            <th>Cancel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${requestScope.REQUEST_BY_SUBCODE_AND_STATUS}" 
+                                   var="request" varStatus="status">
                             <tr>
-                                <th>No.</th>
-                                <th>Request ID</th>
-                                <th>Semester</th>
-                                <th>Free Slot ID</th>
-                                <th>Subject Code</th>
-                                <th>Lecturer ID</th>
-                                <th>Name</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Description</th>
-                                <th>Status</th>
-                                <th>Note</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${requestScope.REQUEST_BY_SUBCODE_AND_STATUS}" 
-                                       var="request" varStatus="status">
-                                <tr>
-                                    <td>${status.count}</td>
-                                    <td>${request.requestID}</td>
-                                    <td>${request.semesterID}</td>
-                                    <td>${request.freeSlotID}</td>
-                                    <td>${request.subjectCode}</td>
-                                    <td>${request.lecturerID}</td>
-                                    <td>${request.lecturerName}</td>
-                                    <td>${request.startTime}</td>
-                                    <td>${request.endTime}</td>
-                                    <td>${request.description}</td>
-                                    <td>
-                                        <c:if test="${request.status == 1}">
-                                            <b style="color: green">Accepted</b>
-                                        </c:if>
-                                        <c:if test="${request.status == 2}">
-                                            <b style="color: #cccc00">In progress</b>
-                                        </c:if>
-                                        <c:if test="${request.status == 0}">
-                                            <b style="color: red">Declined</b>
-                                        </c:if>
-                                        <c:if test="${request.status == 3}">
-                                            <b style="color: gray">Overdue</b>
-                                        </c:if>
-                                    </td>
-                                    <c:if test="${empty request.note || request.note == null}">
-                                        <td>
-                                            <b>None</b>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${not empty request.note || request.note != null}">
-                                        <td>
-                                            <b>${request.note}</b>
-                                        </td>
-                                    </c:if>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </c:if>
-                <c:if test="${empty param.txtSubjectCode and not empty requestScope.ALL_REQUEST}">
-                    <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
-                        <thead>
+                        <form action="MainController" method="POST">
+                            <td>${status.count}</td>
+                            <td>${request.requestID}</td>
+                            <td>${request.semesterID}</td>
+                            <td>${request.freeSlotID}</td>
+                            <td>${request.subjectCode}</td>
+                            <td>${request.lecturerID}</td>
+                            <td>${request.lecturerName}</td>
+                            <td>${request.startTime}</td>
+                            <td>${request.endTime}</td>
+                            <td>${request.description}</td>
+                            <td>
+                                <c:if test="${request.status == 1}">
+                                    <b style="color: green">Accepted</b>
+                                </c:if>
+                                <c:if test="${request.status == 2}">
+                                    <b style="color: #cccc00">In progress</b>
+                                </c:if>
+                                <c:if test="${request.status == 0}">
+                                    <b style="color: red">Declined</b>
+                                </c:if>
+                                <c:if test="${request.status == 3}">
+                                    <b style="color: gray">Overdue</b>
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test="${empty request.note || request.note == null}">
+                                    <b>None</b>
+                                </c:if>
+                                <c:if test="${not empty request.note || request.note != null}">
+                                    <b>${request.note}</b>
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test="${request.status != 2}">
+                                    Solved
+                                </c:if>
+                                <c:if test="${request.status == 2}">
+                                    <input type="hidden" name="txtRequestID" 
+                                           value="${request.requestID}" readonly="">
+                                    <button type="submit" name="action"
+                                            value="CancelARequest">Cancel</button>
+                                </c:if>
+                            </td>
+                        </form>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+            <c:if test="${empty param.txtSubjectCode and not empty requestScope.ALL_REQUEST}">
+                <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Request ID</th>
+                            <th>Semester</th>
+                            <th>Free Slot ID</th>
+                            <th>Subject Code</th>
+                            <th>Lecturer ID</th>
+                            <th>Name</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Note</th>
+                            <th>Cancel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${requestScope.ALL_REQUEST}" 
+                                   var="request" varStatus="status">
                             <tr>
-                                <th>No.</th>
-                                <th>Request ID</th>
-                                <th>Semester</th>
-                                <th>Free Slot ID</th>
-                                <th>Subject Code</th>
-                                <th>Lecturer ID</th>
-                                <th>Name</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Description</th>
-                                <th>Status</th>
-                                <th>Note</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${requestScope.ALL_REQUEST}" 
-                                       var="request" varStatus="status">
-                                <tr>
-                                    <td>${status.count}</td>
-                                    <td>${request.requestID}</td>
-                                    <td>${request.semesterID}</td>
-                                    <td>${request.freeSlotID}</td>
-                                    <td>${request.subjectCode}</td>
-                                    <td>${request.lecturerID}</td>
-                                    <td>${request.lecturerName}</td>
-                                    <td>${request.startTime}</td>
-                                    <td>${request.endTime}</td>
-                                    <td>${request.description}</td>
-                                    <td>
-                                        <c:if test="${request.status == 1}">
-                                            <b style="color: green">Accepted</b>
-                                        </c:if>
-                                        <c:if test="${request.status == 2}">
-                                            <b style="color: #cccc00">In progress</b>
-                                        </c:if>
-                                        <c:if test="${request.status == 0}">
-                                            <b style="color: red">Declined</b>
-                                        </c:if>
-                                        <c:if test="${request.status == 3}">
-                                            <b style="color: gray">Overdue</b>
-                                        </c:if>
-                                    </td>
-                                    <c:if test="${empty request.note || request.note == null}">
-                                        <td>
-                                            <b>None</b>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${not empty request.note || request.note != null}">
-                                        <td>
-                                            <b>${request.note}</b>
-                                        </td>
-                                    </c:if>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </c:if>
-                <c:if test="${not empty param.txtSubjectCode and not empty requestScope.ALL_REQUEST_BY_SUBCODE}">
-                    <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
-                        <thead>
+                        <form action="MainController" method="POST">
+                            <td>${status.count}</td>
+                            <td>${request.requestID}</td>
+                            <td>${request.semesterID}</td>
+                            <td>${request.freeSlotID}</td>
+                            <td>${request.subjectCode}</td>
+                            <td>${request.lecturerID}</td>
+                            <td>${request.lecturerName}</td>
+                            <td>${request.startTime}</td>
+                            <td>${request.endTime}</td>
+                            <td>${request.description}</td>
+                            <td>
+                                <c:if test="${request.status == 1}">
+                                    <b style="color: green">Accepted</b>
+                                </c:if>
+                                <c:if test="${request.status == 2}">
+                                    <b style="color: #cccc00">In progress</b>
+                                </c:if>
+                                <c:if test="${request.status == 0}">
+                                    <b style="color: red">Declined</b>
+                                </c:if>
+                                <c:if test="${request.status == 3}">
+                                    <b style="color: gray">Overdue</b>
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test="${empty request.note || request.note == null}">
+                                    <b>None</b>
+                                </c:if>
+                                <c:if test="${not empty request.note || request.note != null}">
+                                    <b>${request.note}</b>
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test="${request.status != 2}">
+                                    Solved
+                                </c:if>
+                                <c:if test="${request.status == 2}">
+                                    <input type="hidden" name="txtRequestID" 
+                                           value="${request.requestID}" readonly="">
+                                    <button type="submit" name="action"
+                                            value="CancelARequest">Cancel</button>
+                                </c:if>
+                            </td>
+                        </form>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+            <c:if test="${not empty param.txtSubjectCode and not empty requestScope.ALL_REQUEST_BY_SUBCODE}">
+                <table border="1" class="table table-hover table-primary table-rounded table-timetable-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Request ID</th>
+                            <th>Semester</th>
+                            <th>Free Slot ID</th>
+                            <th>Subject Code</th>
+                            <th>Lecturer ID</th>
+                            <th>Name</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Note</th>
+                            <th>Cancel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${requestScope.ALL_REQUEST_BY_SUBCODE}" 
+                                   var="request" varStatus="status">
                             <tr>
-                                <th>No.</th>
-                                <th>Request ID</th>
-                                <th>Semester</th>
-                                <th>Free Slot ID</th>
-                                <th>Subject Code</th>
-                                <th>Lecturer ID</th>
-                                <th>Name</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Description</th>
-                                <th>Status</th>
-                                <th>Note</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${requestScope.ALL_REQUEST_BY_SUBCODE}" 
-                                       var="request" varStatus="status">
-                                <tr>
-                                    <td>${status.count}</td>
-                                    <td>${request.requestID}</td>
-                                    <td>${request.semesterID}</td>
-                                    <td>${request.freeSlotID}</td>
-                                    <td>${request.subjectCode}</td>
-                                    <td>${request.lecturerID}</td>
-                                    <td>${request.lecturerName}</td>
-                                    <td>${request.startTime}</td>
-                                    <td>${request.endTime}</td>
-                                    <td>${request.description}</td>
-                                    <td>
-                                        <c:if test="${request.status == 1}">
-                                            <b style="color: green">Accepted</b>
-                                        </c:if>
-                                        <c:if test="${request.status == 2}">
-                                            <b style="color: #cccc00">In progress</b>
-                                        </c:if>
-                                        <c:if test="${request.status == 0}">
-                                            <b style="color: red">Declined</b>
-                                        </c:if>
-                                        <c:if test="${request.status == 3}">
-                                            <b style="color: gray">Overdue</b>
-                                        </c:if>
-                                    </td>
-                                    <c:if test="${empty request.note || request.note == null}">
-                                        <td>
-                                            <b>None</b>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${not empty request.note || request.note != null}">
-                                        <td>
-                                            <b>${request.note}</b>
-                                        </td>
-                                    </c:if>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </c:if>
-            </div>
-        </div>        
+                        <form action="MainController" method="POST">
+                            <td>${status.count}</td>
+                            <td>${request.requestID}</td>
+                            <td>${request.semesterID}</td>
+                            <td>${request.freeSlotID}</td>
+                            <td>${request.subjectCode}</td>
+                            <td>${request.lecturerID}</td>
+                            <td>${request.lecturerName}</td>
+                            <td>${request.startTime}</td>
+                            <td>${request.endTime}</td>
+                            <td>${request.description}</td>
+                            <td>
+                                <c:if test="${request.status == 1}">
+                                    <b style="color: green">Accepted</b>
+                                </c:if>
+                                <c:if test="${request.status == 2}">
+                                    <b style="color: #cccc00">In progress</b>
+                                </c:if>
+                                <c:if test="${request.status == 0}">
+                                    <b style="color: red">Declined</b>
+                                </c:if>
+                                <c:if test="${request.status == 3}">
+                                    <b style="color: gray">Overdue</b>
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test="${empty request.note || request.note == null}">
+                                    <b>None</b>
+                                </c:if>
+                                <c:if test="${not empty request.note || request.note != null}">
+                                    <b>${request.note}</b>
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test="${request.status != 2}">
+                                    Solved
+                                </c:if>
+                                <c:if test="${request.status == 2}">
+                                    <input type="hidden" name="txtRequestID" 
+                                           value="${request.requestID}" readonly="">
+                                    <button type="submit" name="action"
+                                            value="CancelARequest">Cancel</button>
+                                </c:if>
+                            </td>
+                        </form>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+        </div>
+    </div>        
+    <div id="customAlert">
+        <div id="alertContent">
+            <!-- N?i dung c?nh báo s? ???c thêm vào ?ây -->
+        </div>
+        <button class="closeButton">X</button>
+    </div>
+    <style>
+        #customAlert {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            padding: 28px;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            text-align: center;
+            z-index: 9999;
+            width: 36%;
+            color: red;
+            font-weight: bold;
+        }
+        #alertContent{
+            font-family: 'Oswald','Playpen Sans';
+            padding: 20px;
+        }
+        .closeButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+        }
+        .closeButton:hover{
+            opacity: 0.5;
+        }
 
-        <%} else {
-                response.sendRedirect("MainController");
-            }%>
-        <!-- Thêm liên kết đến Bootstrap JS và jQuery -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    </body>
+        #alertContent {
+            /* N?u b?n mu?n tu? ch?nh ki?u ch? và màu s?c, hãy ?i?u ch?nh ?o?n CSS này */
+        }
+    </style>
+    <script>
+
+        var errorMessage = "${requestScope.ERROR}";
+
+
+// Ki?m tra n?u errorMessage không r?ng, hi?n th? thông báo c?nh báo
+        if (errorMessage.trim() !== "") {
+            showAlert(errorMessage);
+        }
+
+        function showAlert(message) {
+            var alertDiv = document.getElementById("customAlert");
+            var alertContentDiv = document.getElementById("alertContent");
+            alertContentDiv.textContent = message;
+            alertDiv.style.display = "block";
+            var closeButton = alertDiv.querySelector(".closeButton");
+            closeButton.addEventListener("click", function () {
+                alertDiv.style.display = "none";
+            });
+        }
+    </script>
+    <%} else {
+            response.sendRedirect("MainController");
+        }%>
+    <!-- Thêm liên kết đến Bootstrap JS và jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-xV6VaRqI1z7MOJwz5Mz6f3GC6A5wA5CKh5uFfxn5g5crf7Sc6Pe4OdU8paHdFuI" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
