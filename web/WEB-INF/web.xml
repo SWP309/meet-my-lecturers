@@ -237,7 +237,6 @@
     <servlet>
         <servlet-name>SearchSlotAdmin</servlet-name>
         <servlet-class>sample.controllers.SearchSlotAdmin</servlet-class>
-        &gt;&gt;&gt;&gt;&gt;&gt;&gt; origin/mymain
     </servlet>
     <servlet>
         <servlet-name>AddMajorServlet</servlet-name>
@@ -262,6 +261,22 @@
     <servlet>
         <servlet-name>LecturerHome</servlet-name>
         <servlet-class>sample.controllers.LecturerHome</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchBlockListServlet</servlet-name>
+        <servlet-class>sample.controllers.SearchBlockListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddBlockListServlet</servlet-name>
+        <servlet-class>sample.controllers.AddBlockListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateBlockListServlet</servlet-name>
+        <servlet-class>sample.controllers.UpdateBlockListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteBlockListServlet</servlet-name>
+        <servlet-class>sample.controllers.DeleteBlockListServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AcceptAllRequest</servlet-name>
@@ -530,6 +545,22 @@
     <servlet-mapping>
         <servlet-name>SearchByMode</servlet-name>
         <url-pattern>/SearchByMode</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchBlockListServlet</servlet-name>
+        <url-pattern>/SearchBlockListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddBlockListServlet</servlet-name>
+        <url-pattern>/AddBlockListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateBlockListServlet</servlet-name>
+        <url-pattern>/UpdateBlockListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteBlockListServlet</servlet-name>
+        <url-pattern>/DeleteBlockListServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
