@@ -106,6 +106,15 @@
                 margin-top: 15px;
                 margin-right: 20px;
             }
+            button[type="submit"]{
+                background-color: #00ffef;
+                border-radius: 10px;
+                padding: 0 7px;
+                color: black;
+            }
+            button[type="submit"]:hover{
+                opacity: 0.5;
+            }
         </style>
         <%
             UserDTO us = (UserDTO) session.getAttribute("loginedUser");

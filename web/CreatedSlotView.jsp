@@ -239,10 +239,21 @@
                 text-align: center;
                 border: none; /* Lo?i b? vi?n */
             }
-            button[type="submit"]{
-                border: none; /* Lo?i b? vi?n */
+            /*            button[type="submit"]{
+                            border: none;  Lo?i b? vi?n 
+                            background-color: white;
+                            color: #007bff;
+                        }*/
+            .button-style{
+                display: flex;
+                text-decoration: none;
+                justify-content: center;
                 background-color: white;
                 color: #007bff;
+                border: none;
+            }
+            .button-style:hover{
+                opacity: 0.7;
             }
             .card-body > div {
                 margin-bottom: 0.2rem;
@@ -417,7 +428,7 @@
                     <input type="text" class="form-control" name="lecID" placeholder="E.g: GV0001" required>
                     <input type="text" class="form-control" name="semesID" placeholder="E.g: FA23" required>
                     <div class="input-group-append">
-                        <button style="background-color: #0d6efd; color: white;" type="submit" value="importTB" name="action" class="btn btn-primary custom-submit-button">Submit</button>
+                        <button type="submit" value="importTB" name="action" class="btn btn-primary custom-submit-button">Submit</button>
                     </div>
                 </div>
             </form>
@@ -443,7 +454,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-primary form-control Search-custom" style="border-color: black; background: #0d6efd; color: white;" type="submit" name="action" value="searchCSlot">Search</button>
+                                <button class="btn btn-primary form-control Search-custom" type="submit" name="action" value="searchCSlot">Search</button>
                             </div>
                         </form>
                     </div>
@@ -513,7 +524,7 @@
                                                             <input type="hidden" name="subjectCode" id="subjectCodeInput" value="${listCreatedSlot.subjectCode.trim()}" required/>
                                                             <input type="hidden" name="startTime" value="${listCreatedSlot.startTime}">
                                                             <input type="hidden" name="endTime" value="${listCreatedSlot.endTime}">
-                                                            <button type="submit" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                            <button class="button-style" type="submit">
                                                                 <i class="material-icons">update</i>Update
                                                             </button>
                                                         </form>
@@ -588,7 +599,7 @@
                                                                     <input type="hidden" name="subjectCode" value="${searchByStEt.subjectCode.trim()}" required/>
                                                                     <input type="hidden" name="startTime" value="${searchByStEt.startTime}">
                                                                     <input type="hidden" name="endTime" value="${searchByStEt.endTime}">
-                                                                    <button type="submit" style="display: flex; text-decoration: none; justify-content: center; background-color: white;">
+                                                                    <button class="button-style" type="submit">
                                                                         <i class="material-icons">update</i>Update
                                                                     </button>
                                                                 </form>
@@ -661,7 +672,7 @@
                                                                         <input type="hidden" name="subjectCode" value="${searchByAll.subjectCode.trim()}" required/>
                                                                         <input type="hidden" name="startTime" value="${searchByAll.startTime}">
                                                                         <input type="hidden" name="endTime" value="${searchByAll.endTime}">
-                                                                        <button type="submit" style="display: flex; text-decoration: none; justify-content: center; background-color: white;">
+                                                                        <<button class="button-style" type="submit">
                                                                             <i class="material-icons">update</i>Update
                                                                         </button>
                                                                     </form>
@@ -737,7 +748,7 @@
                                                                             <input type="hidden" name="subjectCode" value="${searchBySubjectCode.subjectCode.trim()}" required/>
                                                                             <input type="hidden" name="startTime" value="${searchBySubjectCode.startTime}">
                                                                             <input type="hidden" name="endTime" value="${searchBySubjectCode.endTime}">
-                                                                            <button type="submit" style="display: flex; text-decoration: none; justify-content: center;">
+                                                                            <button class="button-style" type="submit">
                                                                                 <i class="material-icons">update</i>Update
                                                                             </button>
                                                                         </form>
@@ -814,7 +825,7 @@
                                                                                 <input type="hidden" name="subjectCode" value="${searchByNull.subjectCode.trim()}" required/>
                                                                                 <input type="hidden" name="startTime" value="${searchByNull.startTime}">
                                                                                 <input type="hidden" name="endTime" value="${searchByNull.endTime}">
-                                                                                <button type="submit" style="display: flex; text-decoration: none; justify-content: center;  background-color: white;">
+                                                                                <button class="button-style" type="submit">
                                                                                     <i class="material-icons">update</i>Update
                                                                                 </button>
                                                                             </form>

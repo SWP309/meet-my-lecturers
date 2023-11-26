@@ -256,6 +256,9 @@
     background-color: #f27125;
     color: white;
 }
+.frame-choice:hover{
+    opacity: 0.5;
+}
 
 /* Tùy chỉnh màu nền khi hover */
 .table-rounded tbody tr:hover {
