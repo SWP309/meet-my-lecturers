@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sample.freeslots.FreeSlotsDAO;
 import sample.freeslots.FreeSlotsDTO;
 import sample.major.MajorDTO;
 import sample.majors.MajorsDAO;
@@ -58,19 +59,24 @@ public class UpdateFSlotController extends HttpServlet {
             Date endDate = simpleDateFormat.parse(endTime);
             System.out.println(startDate);
             System.out.println(endDate);
-
+            FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
             MajorsDAO majorsDAO = new MajorsDAO();
 
-//            for (MajorsDTO majorsDTO : listSubject) {
-//                System.out.println(majorsDTO.getSubjectCode());
-//                if (subjectCode.equalsIgnoreCase(majorsDTO.getSubjectCode())) {
-//            List<MajorsDTO> Listsub = majorsDAO.getSubject(subjectCode);
-            
-//            System.out.println(Listsub.getSubjectCode());
-//            System.out.println(check.getSubjectCode());
-                boolean check = majorsDAO.getSubject(subjectCode);
-                System.out.println(check);
-            if (check == false) {
+            boolean checkStartTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(us.getUserID(), startDate);
+            boolean checkEndTimeDuplicateFS = freeSlotsDAO.checkTimeDuplicateInFreeSlot(us.getUserID(), endDate);
+            if (checkStartTimeDuplicateFS == false || checkEndTimeDuplicateFS == false) {
+                flag = false;
+                List<ViewCreatedSlotDTO> listbooking = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
+                request.setAttribute("LIST_CREATED_SLOT", listbooking);
+                request.setAttribute("ERROR", " The time you entered overlaps with time of created FREESLOT!!! ");
+            }
+            boolean checkSubjectCode = majorsDAO.getSubject(subjectCode);
+            if (checkSubjectCode == true){
+              request.setAttribute("ERROR", "The subject code need match with your major !!! ");
+            }
+            System.out.println(checkSubjectCode);
+
+            if (flag == true) {
 
                 if (endDate.after(startDate) && (endDate.getTime() - startDate.getTime()) >= 15 * 60 * 1000) {
                     ViewCreatedSlotDTO dto = new ViewCreatedSlotDTO();
@@ -98,12 +104,6 @@ public class UpdateFSlotController extends HttpServlet {
                     }
                 }
 
-            } else {
-                List<ViewCreatedSlotDTO> listbooking = dao.GetlistCreatedSlot(us.getUserEmail()); // Thay thế bằng cách lấy danh sách cập nhật từ cơ sở dữ liệu hoặc nguồn dữ liệu khác
-                request.setAttribute("LIST_CREATED_SLOT", listbooking);
-                request.setAttribute("ERROR", "Subject Code do not match with major !!");
-                System.out.println("Chay vao else");
-                
             }
 //                   
 
@@ -116,7 +116,6 @@ public class UpdateFSlotController extends HttpServlet {
 //                request.setAttribute("ERROR"," The time you entered overlaps with time of created FREESLOT!!! ");
 //            }
 //            if (flag) {
-
         } catch (Exception e) {
             log("Error at UpdateController: " + e.toString());
             e.printStackTrace();

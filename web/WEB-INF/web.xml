@@ -290,6 +290,10 @@
         <servlet-name>SearchByMode</servlet-name>
         <servlet-class>sample.controllers.SearchByMode</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CancelRequestServlet</servlet-name>
+        <servlet-class>sample.controllers.CancelRequestServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateFreeSlotServlet</servlet-name>
         <url-pattern>/newfreeslot</url-pattern>
@@ -561,6 +565,10 @@
     <servlet-mapping>
         <servlet-name>DeleteBlockListServlet</servlet-name>
         <url-pattern>/DeleteBlockListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelRequestServlet</servlet-name>
+        <url-pattern>/CancelRequestServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
