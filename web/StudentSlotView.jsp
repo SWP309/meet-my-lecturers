@@ -201,6 +201,13 @@
                     <div id="myDropdown" class="dropdown-content" style="right: 0px;
                          flex-direction: column;
                          ">
+                        <div class="frame-div returnHomeDiv" onclick="submitFormHomePageDiv()"> 
+                            <form action="MainController" method="POST">
+                                <input type="hidden" name="action" value="returnHomePageLecturer" />
+                                <i class="material-icons">home</i>
+                            </form>
+                            Home
+                        </div>
                         <div class="frame-div viewCreateSlot" onclick="submitForm()" >
                             <form action="MainController" method="POST" style="display: none;">
                                 <input type="hidden" name="action" value="viewFSlotLecturer" />
@@ -264,49 +271,51 @@
             </div>
         </div>
         <h1 class="text-center text-custom">Students in Slot</h1>
-        <div class="student-viewbookedslot">
-            <div class="boxoftable"style=" margin-top: -30%;">
-                <c:if test="${requestScope.LIST_STUDENT !=null}">
-                    <c:if test="${not empty requestScope.LIST_STUDENT}">
-                        <table class="table table-hover table-primary table-rounded">
-                            <thead>
-                                <tr class="table-danger">
-                                    <th>No</th>
-                                    <th>Student ID</th>
-                                    <th>Student's Name</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
+
+        <div class="boxoftable" style="    width: 90%;
+             margin: auto;
+             margin-top: 10%;">
+            <c:if test="${requestScope.LIST_STUDENT !=null}">
+                <c:if test="${not empty requestScope.LIST_STUDENT}">
+                    <table class=" table-hover table-rounded">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Student ID</th>
+                                <th>Student's Name</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <form action="MainController" method="POST">
+                            <c:forEach var="liststudent" varStatus="counter" items="${requestScope.LIST_STUDENT}">
+                                <tr>
+                                    <td>${counter.count}</td>
+                                    <td>
+                                        <span>${liststudent.studentID}</span>
+                                    </td>
+                                    <td>
+                                        <span>${liststudent.studentName}</span>
+                                    </td>
+                                    <td>
+                                        <span>${liststudent.startTime}</span>
+                                    </td>
+                                    <td>
+                                        <span>${liststudent.endTime}</span>
+                                    </td>
+
                                 </tr>
-                            </thead>
-                            <tbody>
-                            <form action="MainController" method="POST">
-                                <c:forEach var="liststudent" varStatus="counter" items="${requestScope.LIST_STUDENT}">
-                                    <tr>
-                                        <td>${counter.count}</td>
-                                        <td>
-                                            <span>${liststudent.studentID}</span>
-                                        </td>
-                                        <td>
-                                            <span>${liststudent.studentName}</span>
-                                        </td>
-                                        <td>
-                                            <span>${liststudent.startTime}</span>
-                                        </td>
-                                        <td>
-                                            <span>${liststudent.endTime}</span>
-                                        </td>
+                            </form>
+                        </c:forEach>
 
-                                    </tr>
-                                </form>
-                            </c:forEach>
-
-                            </tbody>
-                        </table>
-                    </c:if>
+                        </tbody>
+                    </table>
                 </c:if>
+            </c:if>
 
-            </div>
         </div>
+
 
         <script>
             // L?y thông tin l?i t? bi?n requestScope.ERROR
