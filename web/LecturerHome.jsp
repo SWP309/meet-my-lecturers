@@ -311,7 +311,7 @@
                     </div>
                 </div>
                 <div class="col-md-1" style=" display: flex;
-                     flex-direction: column; float: right;">
+                     flex-direction: column; float: right; align-items: center;">
                     <div class="frame-choice CreateFSlot" style="cursor: pointer; color: white" onclick="submitFormCreate()" title="Create free slots">
                         <form action="MainController" method="POST">
                             <input type="hidden" name="action" value="CreateFS" />
