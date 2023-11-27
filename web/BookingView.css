@@ -20,6 +20,9 @@
     font-family: 'Calisto-MT-Bold';
     src: url(../fonts/Calisto-MT-Bold.ttf);
 }
+.frame-History:hover{
+    opacity: 0.5;
+}
 
 /* Colors */
 /* Universal style */

@@ -249,10 +249,18 @@ td button {
     border-radius: 15px;
 }
 .custom-table .btn-accept{
+    padding: 0 10px;
     background-color: greenyellow;
 }
 .custom-table .btn-decline{
+    padding: 0 10px;
     background-color: red;
+}
+.custom-table .btn-accept:hover{
+    opacity: 0.5;
+}
+.custom-table .btn-decline:hover{
+    opacity: 0.5;
 }
 
 #user-id, #user-name, #user-email {

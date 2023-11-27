@@ -32,38 +32,33 @@ public class AcceptRequestServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            boolean checkMeetlink = true;
             HttpSession session = request.getSession();
             UserDTO lecturer = (UserDTO) session.getAttribute("loginedUser");
             String requestID = request.getParameter("txtRequestID");
             String freeSlotID = request.getParameter("txtFreeSlotID");
             String startTime = request.getParameter("txtStartTime");
             String endTime = request.getParameter("txtEndTime");
+            String subjectCode = request.getParameter("txtSubjectCode");
 
             String studentID = request.getParameter("txtStudentID");
-            String meetLink = request.getParameter("txtLinkMeet");
 
             RequestDAO requestDAO = new RequestDAO();
-            if (meetLink.isEmpty()) {
-                request.setAttribute("VIEW_REQUEST_MESSAGE", "Must input meet link before accepting!!!");
+
+            boolean checkAccept = requestDAO.acceptARequest(requestID);
+            FreeSlotsDAO freeSlotsDAO = new FreeSlotsDAO();
+            freeSlotsDAO.updateSubject(subjectCode, freeSlotID);
+            System.out.println("awdaw");
+            BookingDTO bookingDTO = new BookingDTO();
+            bookingDTO.setStudentID(studentID);
+            bookingDTO.setFreeSlotID(freeSlotID);
+            BookingDAO bookingDAO = new BookingDAO();
+            boolean checkBooking = bookingDAO.BookFSlot(bookingDTO);
+            if (checkAccept && checkBooking) {
+                url = SUCCESS;
                 request.getRequestDispatcher(url).forward(request, response);
             } else {
-                boolean checkAccept = requestDAO.acceptARequest(requestID);
-                
-                requestDAO.updateStatusDuplicateAcceptedRequest(studentID, startTime, endTime);
-
-                BookingDTO bookingDTO = new BookingDTO();
-                bookingDTO.setStudentID(studentID);
-                bookingDTO.setFreeSlotID(freeSlotID);
-                BookingDAO bookingDAO = new BookingDAO();
-                boolean checkBooking = bookingDAO.BookFSlot(bookingDTO);
-                if (checkAccept && checkBooking) {
-                    url = SUCCESS;
-                    request.getRequestDispatcher(url).forward(request, response);
-                } else {
-                    request.setAttribute("VIEW_REQUEST_MESSAGE", "Can not Accept this request !!! ");
-                    request.getRequestDispatcher(url).forward(request, response);
-                }
+                request.setAttribute("VIEW_REQUEST_MESSAGE", "Can not Accept this request !!! ");
+                request.getRequestDispatcher(url).forward(request, response);
             }
 
         } catch (ClassNotFoundException | SQLException | ParseException ex) {

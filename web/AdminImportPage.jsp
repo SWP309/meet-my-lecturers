@@ -214,7 +214,7 @@
                 <%
                     }
                 %>
-                <a href="https://drive.google.com/drive/folders/1s_yu8ElI5rP6RaON6SLxFOIN5kmEUh4D?usp=drive_link" target="_blank" style="color: blueviolet">Download template</a>
+                <a href="https://drive.google.com/drive/folders/1kSh3lDguxIpYRaxSJXcQHVd77jaf4Pee?usp=sharing" target="_blank" style="color: blueviolet">Download template</a>
                 <div class="form-group input-group">
                     <div class="custom-file">
                         <input type="file" name="txtexcel" class="custom-file-input" id="subject"  onchange="updateFileName('subject')" required>
