@@ -21,8 +21,8 @@ import javax.mail.internet.MimeMessage;
  */
 public class EmailDAO {
         public static void sendMail(String userEmail, String subject, String text) {
-        final String userName = "mml-mailer@example.com";
-        final String password = "REPLACE_WITH_APP_PASSWORD";
+        final String userName = System.getenv("MML_MAIL_USER");
+        final String password = System.getenv("MML_MAIL_APP_PASSWORD");
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");
         prop.put("mail.smtp.port", "587");

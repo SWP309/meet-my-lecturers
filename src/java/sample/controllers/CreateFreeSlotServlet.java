@@ -223,8 +223,8 @@ public class CreateFreeSlotServlet extends HttpServlet {
                     if (checkCreated) {
                         String freeSlotID = freeSlotsDAO.getFreeSlotID(sTime, eTime);
 
-                        final String from = "mml-mailer@example.com";
-                        final String mailpassword = "REPLACE_WITH_APP_PASSWORD";
+                        final String from = System.getenv("MML_MAIL_USER");
+                        final String mailpassword = System.getenv("MML_MAIL_APP_PASSWORD");
                         Properties prop = new Properties();
                         prop.put("mail.smtp.host", "smtp.gmail.com");
                         prop.put("mail.smtp.port", "587");

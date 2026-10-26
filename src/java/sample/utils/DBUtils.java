@@ -19,8 +19,8 @@ import java.util.Date;
  */
 public class DBUtils {
 
-    private static final String USERNAME = "sa";
-    private static final String PASSWORD = "REPLACE_WITH_DB_PASSWORD";    
+    private static final String USERNAME = System.getenv("MML_DB_USER");
+    private static final String PASSWORD = System.getenv("MML_DB_PASSWORD");    
     public static Connection getConnection() 
             throws ClassNotFoundException, SQLException{
         Connection con = null;
