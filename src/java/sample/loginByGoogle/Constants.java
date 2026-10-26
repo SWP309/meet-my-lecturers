@@ -8,7 +8,7 @@ public class Constants {
 
 	public static String GOOGLE_CLIENT_ID = "79561996257-0ctstd2ursldvmmufi3vpq6k6rp4ftrg.apps.googleusercontent.com";
 
-	public static String GOOGLE_CLIENT_SECRET = "REPLACE_WITH_GOOGLE_CLIENT_SECRET";
+	public static String GOOGLE_CLIENT_SECRET = System.getenv("MML_GOOGLE_CLIENT_SECRET");
 
 	public static String GOOGLE_REDIRECT_URI = "http://localhost:8080/meet-my-lecturers/LoginGoogleHandler";
 
